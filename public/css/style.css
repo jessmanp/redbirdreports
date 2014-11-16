@@ -1,0 +1,658 @@
+/* Main CSS */
+
+html {
+	font-size: 100%;
+	-webkit-text-size-adjust: 100%;
+}
+body	{	
+	margin:0;
+	padding:0;
+	border:0;
+	/*background-image:url(images/main_bg2.jpg);*/
+	background-color:#ffffff;
+	font-family: Helvetica, Arial, Verdana, sans-serif;
+	font-size:16px;
+	color:#000000;
+	text-align:center;
+}
+header {
+	width:100%;
+	height:320px;
+	position:fixed; 
+	top:0;
+	left:0;
+	right:0;
+	background-color:#ffffff;
+	z-index:10;
+}
+footer {
+	min-width:900px;
+	width:100%;
+	height:32px;
+	padding:0 0 0 20px;
+	position:fixed; 
+	bottom:0;
+	left:0;
+	right:0;
+	background-color:#a20004;
+	color:#cccccc;
+	font-size:12px;
+	line-height:32px;
+	z-index:10;
+	text-align:left;
+}
+
+#top {
+	float:right;
+	width:105px;
+	font-size:12px;
+	color:#ffffff;
+	text-decoration:none;
+	cursor:pointer;
+}
+
+#top:hover {
+	text-decoration:underline;
+}
+
+::-ms-clear { display: none; }
+
+/* INFO WINDOW */
+#info-window {
+	position:fixed;
+	margin:60px 0 0 3px;
+	padding:10px;
+	z-index:300;
+	width:290px;
+	background-color:#ffffff;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius:8px;
+	border:2px solid #ff0000;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;    
+	user-select:none;
+	cursor:pointer;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-box-shadow: 1px 3px 8px #666666;
+	/* for FireFox 3.6+ */
+	-moz-box-shadow: 1px 3px 8px #666666;
+	/* for IE 5.5 - 9 */
+	box-shadow: 1px 3px 8px #666666;
+}
+
+/* PROGRESS BAR STYLE */
+.meter { 
+	height: 20px;  /* Can be anything */
+	position: relative;
+	margin: 5px 10px 10px 10px; /* Just for demo spacing */
+	background: #ffffff;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	padding: 5px;
+	border:2px solid #ff0000;
+}
+.meter > span {
+	display: block;
+	height: 100%;
+	   -webkit-border-top-right-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+		   -moz-border-radius-topright: 4px;
+		-moz-border-radius-bottomright: 4px;
+			   border-top-right-radius: 4px;
+			border-bottom-right-radius: 4px;
+		-webkit-border-top-left-radius: 4px;
+	 -webkit-border-bottom-left-radius: 4px;
+			-moz-border-radius-topleft: 4px;
+		 -moz-border-radius-bottomleft: 4px;
+				border-top-left-radius: 4px;
+			 border-bottom-left-radius: 4px;
+	background-color:#ffffff;
+	position: relative;
+	overflow: hidden;
+}
+.meter > span:after, .animate > span > span {
+	content: "";
+	position: absolute;
+	top: 0; left: 0; bottom: 0; right: 0;
+	z-index: 1;
+	-webkit-background-size: 50px 50px;
+	-moz-background-size: 50px 50px;
+	-webkit-animation: move 2s linear infinite;
+	   -webkit-border-top-right-radius: 8px;
+	-webkit-border-bottom-right-radius: 8px;
+		   -moz-border-radius-topright: 8px;
+		-moz-border-radius-bottomright: 8px;
+			   border-top-right-radius: 8px;
+			border-bottom-right-radius: 8px;
+		-webkit-border-top-left-radius: 8px;
+	 -webkit-border-bottom-left-radius: 8px;
+			-moz-border-radius-topleft: 8px;
+		 -moz-border-radius-bottomleft: 8px;
+				border-top-left-radius: 8px;
+			 border-bottom-left-radius: 8px;
+	overflow: hidden;
+}
+
+.animate > span:after {
+	display: none;
+}
+
+@-webkit-keyframes move {
+	0% {
+	   background-position: 0 0;
+	}
+	100% {
+	   background-position: 50px 50px;
+	}
+}
+
+.red > span {
+	background-color: #a20004;
+}
+
+.nostripes > span > span, .nostripes > span:after {
+	-webkit-animation: none;
+	background-image: none;
+}
+
+/* ///////////////// DIVISION LAYOUTS /////////////////// */
+
+#menu {
+	margin:0 auto 0 auto;
+	width:900px;
+	height:110px;
+	background-color:#ffffff;
+}
+
+#sub-menu {
+	clear:both;
+	background-color:#a20004;
+	min-width:900px;
+	height:210px;
+}
+
+#logo {
+	float:left;
+	width:196px;
+	height:110px;
+}
+
+.home-logo {
+	margin:10px 0 0 0;
+	width:176px;
+	height:84px;
+	border:0;
+}
+
+#agency-name {
+	padding:0 0 0 25px;
+	width:470px;
+	height:25px;
+	float:left;
+	text-align:left;
+	font-size:16px;
+	font-weight:bold;
+	line-height:28px;
+}
+
+#user-name {
+	width:205px;
+	height:25px;
+	float:left;
+	text-align:right;
+	font-size:14px;
+	line-height:26px;
+}
+
+#main-buttons {
+	float:left;
+	width:700px;
+	height:85px;
+	text-align:left;
+}
+
+.main-button {
+	float:left;
+	margin:4px 0 0 25px;
+	width:75px;
+	height:75px;
+	background-color:#ffffff;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	cursor:pointer;
+}
+
+.main-button:hover {
+	background-color:#cccccc;
+}
+
+.main-btn-text {
+	color:#000000;
+	font-size:12px;
+	text-align:center;
+}
+
+.main-btn-icon {
+	margin:4px 0 0 8px;
+	width:60px;
+	height:45px;
+	border:0;
+}
+
+#sub-buttons {
+	margin:0 auto 0 auto;
+	width:900px;
+	height:85px;
+}
+
+.sub-button {
+	float:left;
+	margin:8px 0 0 25px;
+	width:75px;
+	height:75px;
+	background-color:#a20004;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	cursor:pointer;
+}
+
+.sub-button:hover {
+	background-color:#000000;
+}
+
+.sub-btn-text {
+	color:#ffffff;
+	font-size:12px;
+	text-align:center;
+}
+
+.sub-btn-icon {
+	margin:4px 0 0 0;
+	width:60px;
+	height:45px;
+	border:0;
+}
+
+#search-area {
+	margin:5px auto 5px auto;
+	width:890px;
+	clear:both;
+	height:40px;
+	padding:5px;
+	background-color:#cccccc;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	text-align:left;
+	font-size:14px;
+	color:#333333;
+	line-height:38px;
+}
+
+.date-pickers {
+	margin:0 0 0 5px;
+	float:left;
+}	
+
+	#datepick1 {
+		float:left;
+		display:inline-block;
+		padding:0 8px 0 8px;
+		margin:3px 0 0 5px;
+		cursor:pointer; 
+		width:70px; 
+		height:30px;
+		font-size:12px;
+		background-color:#ffffff;
+		color:#000000;
+		border:2px solid #a20004;
+		/* for Chrome 10+ and Safari 5+ */
+		-webkit-border-radius:10px;
+		/* for FireFox 3.6 - 12 */
+		-moz-border-radius:10px;
+		/* for IE 5.5 - 9 & firefox 13+ */
+		border-radius:10px;
+	}
+
+	#datepick2 {
+		float:left;
+		display:inline-block;
+		padding:0 8px 0 8px;
+		margin:3px 0 0 10px;
+		cursor:pointer; 
+		width:70px; 
+		height:30px;
+		font-size:12px;
+		background-color:#ffffff;
+		color:#000000;
+		border:2px solid #a20004;
+		/* for Chrome 10+ and Safari 5+ */
+		-webkit-border-radius:10px;
+		/* for FireFox 3.6 - 12 */
+		-moz-border-radius:10px;
+		/* for IE 5.5 - 9 & firefox 13+ */
+		border-radius:10px;
+	}
+
+#pre-dates {
+	float:left;
+	margin:3px 2px 0 7px;
+    cursor:pointer; 
+    width:155px; 
+    height:34px; 
+    background-color:#a20004;
+    color:#ffffff;
+    border:2px solid #a20004;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+	font-size:12px;
+	text-align:right;
+}
+
+#pre-dates:hover {
+    background-color:#000000;
+    border:2px solid #000000;
+}
+
+#pre-dates-container {
+	display:none;
+	margin:40px 0 0 8px;
+	position:absolute;
+	z-index:200;
+	background-color:#ffffff;
+	color:#333333;
+	border:2px solid #ffffff;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	padding:5px;
+	width:400px;
+	height:210px;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-box-shadow: 1px 3px 8px #666666;
+	/* for FireFox 3.6+ */
+	-moz-box-shadow: 1px 3px 8px #666666;
+	/* for IE 5.5 - 9 */
+	box-shadow: 1px 3px 8px #666666;
+}
+
+.pre-dates-btn {
+	float:left;
+	margin:3px 2px 0 5px;
+    cursor:pointer; 
+    width:190px; 
+    height:26px; 
+    background-color:#a20004;
+    color:#ffffff;
+    border:2px solid #a20004;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+	font-size:12px;
+	text-align:center;
+}
+
+.pre-dates-btn:hover {
+    background-color:#000000;
+    border:2px solid #000000;
+}
+
+#filter-container {
+	display:none;
+	margin:40px 0 0 470px;
+	position:absolute;
+	z-index:200;
+	background-color:#ffffff;
+	color:#333333;
+	border:2px solid #ffffff;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	padding:5px;
+	width:400px;
+	height:210px;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-box-shadow: 1px 3px 8px #666666;
+	/* for FireFox 3.6+ */
+	-moz-box-shadow: 1px 3px 8px #666666;
+	/* for IE 5.5 - 9 */
+	box-shadow: 1px 3px 8px #666666;
+}
+
+.filter-btn {
+	float:left;
+	margin:3px 2px 0 5px;
+    cursor:pointer; 
+    width:190px; 
+    height:26px; 
+    background-color:#a20004;
+    color:#ffffff;
+    border:2px solid #a20004;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+	font-size:12px;
+	text-align:center;
+}
+
+.filter-btn:hover {
+    background-color:#000000;
+    border:2px solid #000000;
+}
+
+#field {
+    float:left; 
+    margin:3px 8px 0 10px;
+    width:240px; 
+    height:28px;
+    padding:1px;
+    text-indent:10px;
+    font-size:12px; 
+    background-color:#ffffff; 
+    border-top:2px solid #a20004;
+    border-bottom:2px solid #a20004;
+    border-left:2px solid #a20004;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-top-left-radius:10px;
+	-webkit-border-bottom-left-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius-topleft:10px;
+	-moz-border-radius-bottomleft:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-top-left-radius:10px;
+	border-bottom-left-radius:10px;
+}
+
+#submit {
+	float:left;
+	margin:3px 2px 0 -12px;
+    cursor:pointer; 
+    padding:0;
+    width:50px; 
+    height:34px; 
+    background-color:#a20004;
+    color:#ffffff;
+    border:2px solid #a20004;
+    /* for Chrome 10+ and Safari 5+ */
+	-webkit-border-top-right-radius:10px;
+	-webkit-border-bottom-right-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius-topright:10px;
+	-moz-border-radius-bottomright:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-top-right-radius:10px;
+	border-bottom-right-radius:10px;
+}
+
+#submit:hover {
+    background-color:#000000;
+    border:2px solid #000000;
+}
+
+#filter {
+	float:left;
+	margin:3px 2px 0 8px;
+    cursor:pointer; 
+    width:125px; 
+    height:34px; 
+    background-color:#a20004;
+    color:#ffffff;
+    border:2px solid #a20004;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+	font-size:12px;
+	text-align:right;
+}
+
+#filter:hover {
+    background-color:#000000;
+    border:2px solid #000000;
+}
+
+.search-btn-icon {
+	margin:0 0 2px 0;
+	vertical-align:middle;
+	width:33px;
+	height:28px;
+	border:0;
+}
+
+#status-area {
+	margin:10px auto 5px auto;
+	width:886px;
+	clear:both;
+	height:36px;
+	padding:5px;
+	background-color:#a20004;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	border:2px solid #ffffff;
+	text-align:left;
+	font-size:13px;
+	color:#ffffff;
+	line-height:18px;
+}
+
+#content {
+	clear:both;
+	margin:310px 0 32px 0;
+	min-height:600px;
+}
+
+.policy-listing-button {
+	margin:5px 0 5px 0;
+	vertical-align:middle;
+	width:28px;
+	height:28px;
+	border:0;
+	cursor:pointer;
+}
+
+.table-container {
+	margin:0 auto 0 auto;
+    display:table;
+    width:100%;
+	min-width:900px;
+    border-collapse:collapse;
+	font-size:14px;
+}
+
+.heading {
+     display:table-row;
+     text-align:center;
+     line-height:30px;
+}
+
+.table-row {
+     display:table-row;
+     text-align:center;
+}
+
+.table-row-alt {
+     display:table-row;
+     text-align:center;
+	background-color:#cccccc;
+}
+
+.heading .col {
+	display:table-cell;
+	background-color:#a20004;
+	color:#ffffff;
+}
+
+.sort-link {
+	font-size:12px;
+	color:#ffffff;
+	text-decoration:none;
+}
+a.sort-link,  a.sort-link:visited {
+	font-size:12px;
+	color:#ffffff;
+	text-decoration:none;
+}
+a.sort-link:hover {
+	color:#ffffff;
+	text-decoration:underline;
+}
+
+.col {
+	display:table-cell;
+}
+
+
+
+
+
+
+
+
+
+
+#resend {
+	margin:0 auto 0 auto;
+	text-align:center;
+}
+
+#resend .plain-btn {
+	float:none;
+	margin:0 auto;
+	clear:both;
+	cursor:pointer; 
+	width:230px; 
+	height:45px; 
+	background-color:#a20004;
+	color:#ffffff;
+	border:2px solid #a20004;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+	font-size:18px;
+	line-height:40px;
+}
+#resend .plain-btn:hover {
+	background-color:#000000;
+	border:2px solid #000000;
+}

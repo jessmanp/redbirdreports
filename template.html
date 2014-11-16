@@ -1,0 +1,307 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Red Bird Reports - Application</title>
+<meta name="author" content="" />
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<!-- mobile device meta data -->
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+<!-- css -->
+<link rel="stylesheet" href="/public/css/style.css">
+<link rel="stylesheet" href="/public/css/datepicker.css">
+<!-- jQuery -->
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+<!-- JavaScript -->
+<script src="/public/js/global.js"></script>
+<script src="/public/js/application.js"></script>
+<script src="/public/js/datepicker.js"></script>
+<!-- google analytics tracking -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-XXXXXXXX-0', 'redbirdreports.com');
+  ga('send', 'pageview');
+</script>
+</head>
+<body>
+<noscript>
+  <meta http-equiv='refresh' content='0;url=/upgrade.html'>
+  This web application requires JavaScript. Please enable JavaScript or upgrade your browser.
+</noscript>
+<div id="viewport">
+<!-- BEGIN CANVAS AREA -->
+
+<header>
+	<div id="menu">
+		<div id="logo"><img src="/public/img/redbird_logo.png" class="home-logo" alt="Red Bird Reports" /></div>
+		<div id="agency-name">My Cool Super Long Agency Name Here and Stuff</div>
+		<div id="user-name">Johnny Middlename Appleseed</div>
+		<div id="main-buttons">
+			<div class="main-button">
+				<img id="dashboard" src="/public/img/btn_dashboard.png" class="main-btn-icon" alt="Dashboard" />
+				<div class="main-btn-text">Dashboard</div>
+			</div>
+			<div class="main-button">
+				<img id="policies" src="/public/img/btn_policies.png" class="main-btn-icon" alt="Policies" />
+				<div class="main-btn-text">&nbsp;Policies</div>
+			</div>
+			<div class="main-button">
+				<img id="payroll" src="/public/img/btn_payroll.png" class="main-btn-icon" alt="Payroll" />
+				<div class="main-btn-text">Payroll</div>
+			</div>
+			<div class="main-button">
+				<img id="agency" src="/public/img/btn_agency.png" class="main-btn-icon" alt="My Agency" />
+				<div class="main-btn-text">My Agency</div>
+			</div>
+			<div class="main-button">
+				<img id="support" src="/public/img/btn_support.png" class="main-btn-icon" alt="Support" />
+				<div class="main-btn-text">Support</div>
+			</div>
+			<div class="main-button">
+				<img id="settings" src="/public/img/btn_settings.png" class="main-btn-icon" alt="Settings" />
+				<div class="main-btn-text">Settings</div>
+			</div>
+			<div class="main-button">
+				<img id="logout" src="/public/img/btn_logout.png" class="main-btn-icon" alt="Logout" />
+				<div class="main-btn-text">Logout</div>
+			</div>
+		</div>
+	</div>
+	<div id="sub-menu">
+		<div id="sub-buttons">
+			<div class="sub-button">
+				<img id="" src="/public/img/btn_add.png" class="sub-btn-icon" alt="Add New" />
+				<div class="sub-btn-text">Add New</div>
+			</div>
+			<div class="sub-button">
+				<img id="" src="/public/img/btn_all.png" class="sub-btn-icon" alt="View All" />
+				<div class="sub-btn-text">View All</div>
+			</div>
+			<div class="sub-button">
+				<img id="" src="/public/img/btn_auto.png" class="sub-btn-icon" alt="Auto" />
+				<div class="sub-btn-text">Auto</div>
+			</div>
+			<div class="sub-button">
+				<img id="" src="/public/img/btn_fire.png" class="sub-btn-icon" alt="Fire" />
+				<div class="sub-btn-text">Fire</div>
+			</div>
+			<div class="sub-button">
+				<img id="" src="/public/img/btn_life.png" class="sub-btn-icon" alt="Life" />
+				<div class="sub-btn-text">Life</div>
+			</div>
+			<div class="sub-button">
+				<img id="" src="/public/img/btn_health.png" class="sub-btn-icon" alt="Health" />
+				<div class="sub-btn-text">Health</div>
+			</div>
+			<div class="sub-button">
+				<img id="" src="/public/img/btn_deposit.png" class="sub-btn-icon" alt="Deposit" />
+				<div class="sub-btn-text">Deposit</div>
+			</div>
+			<div class="sub-button">
+				<img id="" src="/public/img/btn_loan.png" class="sub-btn-icon" alt="Loan" />
+				<div class="sub-btn-text">Loan</div>
+			</div>
+			<div class="sub-button">
+				<img id="" src="/public/img/btn_fund.png" class="sub-btn-icon" alt="Mutual Fund" />
+				<div class="sub-btn-text">Mutual Fund</div>
+			</div>
+		</div>
+		<div id="search-area">
+			<button id="pre-dates">Predefined Dates&nbsp;&nbsp;<img src="/public/img/btn_dates.png" class="search-btn-icon" alt="" /></button>
+			<div id="pre-dates-container">
+				<button id="" class="pre-dates-btn">Today</button>
+				<button id="" class="pre-dates-btn">This Week</button>
+				<button id="" class="pre-dates-btn">Last Week</button>
+				<button id="" class="pre-dates-btn">This Month</button>
+				<button id="" class="pre-dates-btn">Last Month</button>
+				<button id="" class="pre-dates-btn">This Quarter</button>
+				<button id="" class="pre-dates-btn">1st Quarter</button>
+				<button id="" class="pre-dates-btn">2nd Quarter</button>
+				<button id="" class="pre-dates-btn">3rd Quarter</button>
+				<button id="" class="pre-dates-btn">4th Quarter</button>
+				<button id="" class="pre-dates-btn">Last 6 Months</button>
+				<button id="" class="pre-dates-btn">This Year</button>
+				<button id="" class="pre-dates-btn">Last 2 Years</button>
+				<button id="" class="pre-dates-btn">All Time</button>
+			</div>
+			<form name="search-dates-form" action="" method="post">
+				<div class="date-pickers">&nbsp;Date Range:</div>
+				<input id="datepick1" name="datepick1" placeholder="" />
+				<input id="datepick2" name="datepick2" placeholder="" />
+			</form>
+			<form name="search-test-form" action="" method="post">
+				<input id="field" name="field" type="text" placeholder="Search" />
+				<button id="submit"><img src="/public/img/btn_search.png" class="search-btn-icon" alt="Search" /></button>
+			</form>
+			<button id="filter">Filter Results<img src="/public/img/btn_filter.png" class="search-btn-icon" alt="" /></button>
+			<div id="filter-container">
+				<button id="" class="filter-btn">Clear All</button>
+				<button id="" class="filter-btn">First Name</button>
+				<button id="" class="filter-btn">Last Name</button>
+				<button id="" class="filter-btn">Description</button>
+				<button id="" class="filter-btn">Category</button>
+				<button id="" class="filter-btn">Premium</button>
+				<button id="" class="filter-btn">Type</button>
+				<button id="" class="filter-btn">Sold By</button>
+				<button id="" class="filter-btn">Source</button>
+				<button id="" class="filter-btn">Length</button>
+				<button id="" class="filter-btn">Date Written</button>
+				<button id="" class="filter-btn">Date Issued</button>
+				<button id="" class="filter-btn">Date Effective</button>
+			</div>
+		</div>
+		<div id="status-area">
+			<div style="font-size:12px;">Current Result(s) Contains</div>
+			Written: <strong>465</strong>
+		</div>
+	</div>
+</header>
+
+<div id="content">
+
+		<div class="table-container">
+			<div class="heading">
+				<div class="col"></div>
+				<div class="col"><span class="sort-link">Edit</span></div>
+				<div class="col"><a class="sort-link" href="#">First</a></div>
+				<div class="col"><a class="sort-link" href="#">Last</a></div>
+				<div class="col"><a class="sort-link" href="#">Description</a></div>
+				<div class="col"><a class="sort-link" href="#">Category</a></div>
+				<div class="col"><a class="sort-link" href="#">Premium</a></div>
+				<div class="col"><a class="sort-link" href="#">Type</a></div>
+				<div class="col"><a class="sort-link" href="#">Sold By</a></div>
+				<div class="col"><a class="sort-link" href="#">Source</a></div>
+				<div class="col"><a class="sort-link" href="#">Length</a></div>
+				<div class="col"><span class="sort-link">Notes</span></div>
+				<div class="col"><a class="sort-link" href="#">Written</a></div>
+				<div class="col"><a class="sort-link" href="#">Issued</a></div>
+				<div class="col"><a class="sort-link" href="#">Effective</a></div>
+				<div class="col"><span class="sort-link">Delete</span></div>
+			</div>
+
+			<div class="table-row">
+				<div class="col">&nbsp;<em>1</em></div>
+				<div class="col"><a href=""><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt=""></a></div>
+				<div class="col">Jane</div>
+				<div class="col">Doe</div>
+				<div class="col">toyota corolla</div>
+				<div class="col">Auto DSS</div>
+				<div class="col">$500</div>
+				<div class="col">New</div>
+				<div class="col">Joe Agent</div>
+				<div class="col">Cold Call</div>
+				<div class="col">Semi-Annually</div>
+				<div class="col"><img src="/public/img/policy_note_btn.png" class="policy-listing-button" alt=""></div>
+				<div class="col">2/20/2014</div>
+				<div class="col">2/24/2014</div>
+				<div class="col">3/30/2014</div>
+				<div class="col"><a href="#"><img src="/public/img/policy_delete_btn.png" class="policy-listing-button" alt=""></a></div>
+			</div>
+
+			<div class="table-row-alt">
+				<div class="col">&nbsp;<em>2</em></div>
+				<div class="col"><a href=""><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt=""></a></div>
+				<div class="col">John</div>
+				<div class="col">Smith</div>
+				<div class="col">chevy pickup</div>
+				<div class="col">Auto</div>
+				<div class="col">$500</div>
+				<div class="col">Renewal</div>
+				<div class="col">Jane Agent</div>
+				<div class="col">Internet</div>
+				<div class="col">Annually</div>
+				<div class="col"><img src="/public/img/policy_note_btn.png" class="policy-listing-button" alt=""></div>
+				<div class="col">4/24/2014</div>
+				<div class="col">5/14/2014</div>
+				<div class="col">5/18/2014</div>
+				<div class="col"><a href="#"><img src="/public/img/policy_delete_btn.png" class="policy-listing-button" alt=""></a></div>
+			</div>
+
+		</div>
+
+</div>
+
+<footer>
+	<div id="top">Back to Top</div>
+	&copy; 2014 Red Bird Reports. All Rights Reserved.
+</footer>
+
+<!-- END CANVAS AREA -->
+</div>
+<!-- Scripts -->
+<script>
+// LOAD DATE BOXES ON PAGE
+$(document).ready(function() {
+
+	function loadDatePickers(){
+		new datepickr("datepick1", {
+			"dateFormat": "m/d/Y"
+		});
+		new datepickr("datepick2", {
+			"dateFormat": "m/d/Y"
+		});
+	}
+
+	//bind orientation change to date picker event
+	$(window).bind("orientationchange", loadDatePickers);
+	$(window).resize(function() {
+		loadDatePickers();
+	});
+
+	// SET DATE PICKERS
+	$("#datepick1").attr("placeholder", currentdate());
+	$("#datepick2").attr("placeholder", currentdate());
+	loadDatePickers();
+
+	// SHOW/HIDE PREDEFINED DATES
+	$("#pre-dates").on("click", function(event) {
+		event.preventDefault();
+   		$("#pre-dates-container").toggle();
+		$("#filter-container").hide();
+		$(".calendar").hide();
+		event.stopPropagation();
+	});
+	$("#pre-dates-container").click(function(event) {
+		event.stopPropagation();
+	});
+
+	// SHOW/HIDE FILTER
+	$("#filter").on("click", function(event) {
+		event.preventDefault();
+   		$("#filter-container").toggle();
+		$("#pre-dates-container").hide();
+		$(".calendar").hide();
+		event.stopPropagation();
+	});
+	$("#filter-container").click(function(event) {
+		event.stopPropagation();
+	});
+
+	$("body").click(function(event) {
+		// hide layer code here
+		$("#pre-dates-container").hide();
+		$("#filter-container").hide();
+	});
+
+	
+	// SCROLL TO TOP
+	$("#top").on("click", function(event) {
+		event.preventDefault();
+		window.scrollTo(0, 0);
+	});
+
+});
+
+</script>
+<script src="/public/js/retina.js"></script>
+</body>
+</html>

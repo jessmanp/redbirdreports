@@ -1,0 +1,9 @@
+# secure uploads directory
+<Files ~ ".*\..*">
+	Order Allow,Deny
+	Deny from all
+</Files>
+<FilesMatch "\.(csv|doc|txt)$">
+	Order Deny,Allow
+	Allow from all
+</FilesMatch>
