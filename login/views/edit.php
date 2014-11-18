@@ -14,7 +14,7 @@
 	</div>
 </div>
 <header>
-	<img src="<?php echo URL; ?>public/img/agency_nerd_app_logo.png" class="home-logo" alt="" />
+	<img src="<?php echo URL; ?>public/img/redbird_logo_sm.png" class="home-logo" alt="" />
  	<div class="button-right"><div class="icon-user"></div></div>
 </header>
 <div style="background-color:#eeeeee;">

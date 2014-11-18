@@ -1,5 +1,5 @@
 <header>
-	<img src="<?php echo URL; ?>public/img/logo.png" class="home-logo" alt="" />
+	<img src="<?php echo URL; ?>public/img/redbird_logo_sm.png" class="home-logo" alt="" />
 </header>
 <div style="background-color:#eeeeee;">
 	<br />
@@ -41,7 +41,7 @@ $msg = '';
 			<br /><br />
 			<!-- <input id="login-btn" name="login" type="submit" value="Login" /> -->
 			<input name="login" type="hidden" value="1" />
-			<button id="login-btn"><span class="icon-key">Login</span></button>
+			<button id="login-btn">Login<img src="/public/img/btn_login.png" style="width:40px;height:40px;border:0;vertical-align:middle;margin:-6px 0 0 10px;" /></button>
 		</form>
 		<br />
 		Not a member? <a href="/login/?register" class="content-link">Register Now</a>.<br />

@@ -1,6 +1,6 @@
 <?php include('../application/views/_templates/header.php'); ?>
 <header>
-	<img src="<?php echo URL; ?>public/img/agency_nerd_app_logo.png" class="home-logo" alt="" />
+	<img src="<?php echo URL; ?>public/img/redbird_logo_sm.png" class="home-logo" alt="" />
 </header>
 <div style="background-color:#eeeeee;">
 <br />
@@ -40,7 +40,7 @@
 	
 	<div style="clear:both;"></div>
 	<br />
-	<button id="register-btn"><span class="icon-policy-entry">Register</span></button>
+	<button class="plain-btn">Register</button>
 	<br />
     <!-- <input type="submit" name="register" value="<?php echo WORDING_REGISTER; ?>" /> -->
 </form>
@@ -52,15 +52,15 @@
 
 <h1>Welcome New User</h1>
 <br />
-<p>You will receive your first email with a link to activate your account and setup your agency. It only takes a few minutes to setup and start using <span style="font-weight:bold; color:#000000;">AGENCY</span> <span style="font-family:Courier, 'Courier New Bold', monospace; color:#ff0000; font-style:normal; font-weight:normal;">nerd</span>&trade; to make your agency smarter!</p>
+<p>You will receive your first email with a link to activate your account and setup your agency. It only takes a few minutes to setup and start using <span style="font-weight:bold; color:#000000;">Red Bird</span> <span style="font-family:Courier, 'Courier New Bold', monospace; color:#ff0000; font-style:normal; font-weight:normal;">reports</span>&trade; to make your agency smarter!</p>
 <div class="signup-icons">
 <img src="<?php echo URL; ?>public/img/check_inbox_icon.png" class="signup-icon" alt="Check Your Inbox" />
 <img src="<?php echo URL; ?>public/img/setup_agency_icon.png" class="signup-icon" alt="Setup Your Agency" />
 <img src="<?php echo URL; ?>public/img/test_drive_icon.png" class="signup-icon" alt="Test Drive the App" />
 <div style="clear:both;"></div>
 </div>
-<p>If you need help you can email us at <a href="mailto:support@agencynerd.com">support@agencynerd.com</a> or use the support section of our application to get more details and instructions on how to get started. You will need to activate your account, login and complete the setup to use our online support and how-to videos. Check your email for further instructions on how to activate your new account.</p>
-<p>If you have not received your activation email from us please check your &quot;spam&quot; or &quot;junk&quot; folder in your email and add our support email address (support@agencynerd.com) to your email contacts. You can also try to resend the activation email below.</p>
+<p>If you need help you can email us at <a href="mailto:support@redbirdreports.com">support@redbirdreports.com</a> or use the support section of our application to get more details and instructions on how to get started. You will need to activate your account, login and complete the setup to use our online support and how-to videos. Check your email for further instructions on how to activate your new account.</p>
+<p>If you have not received your activation email from us please check your &quot;spam&quot; or &quot;junk&quot; folder in your email and add our support email address (support@redbirdreports.com) to your email contacts. You can also try to resend the activation email below.</p>
 <div id="resend">
 <form method="post" action="/login/?register" id="resendform" name="resendform">
 <input type="hidden" id="resend" name="resend" value="1" />

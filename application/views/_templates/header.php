@@ -11,34 +11,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <!-- css -->
-<script>
-function detectIE() {
-    var ua = window.navigator.userAgent;
-    var msie = ua.indexOf('MSIE ');
-    var trident = ua.indexOf('Trident/');
-
-    if (msie > 0) {
-        // IE 10 or older => return version number
-        return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
-    }
-
-    if (trident > 0) {
-        // IE 11 (or newer) => return version number
-        var rv = ua.indexOf('rv:');
-        return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
-    }
-
-    // other browser
-    return false;
-}
-	if (detectIE() !== false) {
-		document.write("<link type=\"text/css\" rel=\"stylesheet\" href=\"<?php echo URL; ?>public/css/ie_only_font_style.css\">");
-	} else {
-		document.write("<link type=\"text/css\" rel=\"stylesheet\" href=\"<?php echo URL; ?>public/css/font_style.css\">");
-	}
-</script>
-<link rel="stylesheet" href="<?php echo URL; ?>public/css/style.css">
-<link rel="stylesheet" href="<?php echo URL; ?>public/css/app_style.css">
+<link rel="stylesheet" href="<?php echo URL; ?>public/css/setup_style.css">
 <link rel="stylesheet" href="<?php echo URL; ?>public/css/datepicker.css">
 <!-- jQuery -->
 <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>

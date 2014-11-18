@@ -1,7 +1,7 @@
 <?php include('../application/views/_templates/header.php'); ?>
 
 <header>
-	<img src="<?php echo URL; ?>public/img/agency_nerd_app_logo.png" class="home-logo" alt="" />
+	<img src="<?php echo URL; ?>public/img/redbird_logo_sm.png" class="home-logo" alt="" />
 </header>
 <div style="background-color:#eeeeee;">
 <br />
@@ -46,9 +46,9 @@
     <input id="user_name" type="text" name="user_name" required />
 	<div style="clear:both;"></div>
 	<br />
-	<button id="login-btn"><span class="icon-key">Reset Password</span></button>
+	<button class="plain-btn">Reset Password</button>
 	<br /><br /><br />
-	<span style="font-size:12px;"><strong>NOTE:</strong> If you do not remember your Username you can email us at <a href="mailto:support@agencynerd.com">support@agencynerd.com</a> for instructions on how to reset your password.</span>
+	<span style="font-size:12px;"><strong>NOTE:</strong> If you do not remember your Username you can email us at <a href="mailto:support@redbirdreports.com">support@redbirdreports.com</a> for instructions on how to reset your password.</span>
     <!-- <input type="submit" name="request_password_reset" value="<?php echo WORDING_RESET_PASSWORD; ?>" /> -->
 </form>
 <?php } ?>

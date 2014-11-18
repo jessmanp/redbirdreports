@@ -1,6 +1,6 @@
 
 <footer>
-	&copy; 2014 Sea Cloud Media. All Rights Reserved.
+	&copy; <?php echo date("Y",time()); ?> Red Bird Reports. All Rights Reserved.
 </footer>
 <!-- END CANVAS AREA -->
 </div>

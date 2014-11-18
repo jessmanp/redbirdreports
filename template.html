@@ -12,7 +12,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <!-- css -->
-<link rel="stylesheet" href="/public/css/style.css">
+<link rel="stylesheet" href="/public/css/app_style.css">
 <link rel="stylesheet" href="/public/css/datepicker.css">
 <!-- jQuery -->
 <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
@@ -70,8 +70,8 @@
 				<img id="settings" src="/public/img/btn_settings.png" class="main-btn-icon" alt="Settings" />
 				<div class="main-btn-text">Settings</div>
 			</div>
-			<div class="main-button">
-				<img id="logout" src="/public/img/btn_logout.png" class="main-btn-icon" alt="Logout" />
+			<div id="logout" class="main-button">
+				<img src="/public/img/btn_logout.png" class="main-btn-icon" alt="Logout" />
 				<div class="main-btn-text">Logout</div>
 			</div>
 		</div>
@@ -144,94 +144,139 @@
 			</form>
 			<button id="filter">Filter Results<img src="/public/img/btn_filter.png" class="search-btn-icon" alt="" /></button>
 			<div id="filter-container">
-				<button id="" class="filter-btn">Clear All</button>
-				<button id="" class="filter-btn">First Name</button>
-				<button id="" class="filter-btn">Last Name</button>
-				<button id="" class="filter-btn">Description</button>
-				<button id="" class="filter-btn">Category</button>
-				<button id="" class="filter-btn">Premium</button>
-				<button id="" class="filter-btn">Type</button>
-				<button id="" class="filter-btn">Sold By</button>
-				<button id="" class="filter-btn">Source</button>
-				<button id="" class="filter-btn">Length</button>
-				<button id="" class="filter-btn">Date Written</button>
-				<button id="" class="filter-btn">Date Issued</button>
-				<button id="" class="filter-btn">Date Effective</button>
+				<div style="width:100%;"><button id="" class="filter-btn">Clear All Filters</button></div>
+				<div style="clear:both;padding:5px;"></div>
+				<div class="filter-checkboxes">
+				<em>Only Search Field(s)</em><br />
+				<input type="checkbox" id="first" name="first" value="1"><label for="first"><span><span></span></span>First Name</label><br />
+				<input type="checkbox" id="last" name="last" value="1"><label for="last"><span><span></span></span>Last Name</label><br />
+				<input type="checkbox" id="description" name="description" value="1"><label for="description"><span><span></span></span>Description</label><br />
+				<input type="checkbox" id="premium" name="premium" value="1"><label for="premium"><span><span></span></span>Premium</label><br />
+				<input type="checkbox" id="notes" name="notes" value="1"><label for="notes"><span><span></span></span>Notes</label><br />
+				</div>
+				<div class="filter-checkboxes">
+				Category<br />
+				<select name="category" class="filter-dropdown">
+					<option value="0"> - None - </option>
+					<option value="25">Auto</option>
+				</select><br />
+				Type<br />
+				<select name="type" class="filter-dropdown">
+					<option value="0"> - None - </option>
+					<option value="33">Renewal</option>
+				</select><br />
+				Sold By<br />
+				<select name="soldby" class="filter-dropdown">
+					<option value="0"> - None - </option>
+					<option value="23">Joe Agent</option>
+				</select><br />
+				Source<br />
+				<select name="source" class="filter-dropdown">
+					<option value="0"> - None - </option>
+					<option value="24">Internet</option>
+				</select><br />
+				Length<br />
+				<select name="length" class="filter-dropdown">
+					<option value="0"> - None - </option>
+					<option value="45">Annually</option>
+				</select><br />
+				<div style="height:8px;"></div>
+				</div>
+				<div class="filter-dates">
+				<em>Only Search Date(s)</em><br />
+				<input type="checkbox" id="written" name="written" value="1"><label for="written"><span><span></span></span>Date Written</label><br />
+				<input type="checkbox" id="issued" name="issued" value="1"><label for="issued"><span><span></span></span>Date Issued</label><br />
+				<input type="checkbox" id="effective" name="effective" value="1"><label for="effective"><span><span></span></span>Date Effective</label><br />
+				</div>
 			</div>
 		</div>
 		<div id="status-area">
-			<div style="font-size:12px;">Current Result(s) Contains</div>
-			Written: <strong>465</strong>
+			<div class="status-text">Policy Type: <strong>Auto</strong></div>
+			<div class="status-text">Written: <strong>1,465</strong></div>
+			<div class="status-text">Issued: <strong>1,235</strong></div>
+			<div class="status-text">DTI: <strong>500</strong></div>
+			<div class="status-text">Average Premium: <strong>$1,465.00</strong></div>
+			<div class="status-text-right">Record Count: <strong>50,000</strong></div>
 		</div>
 	</div>
+
+			<div class="heading">
+				<div class="col" style="width:2%;"></div>
+				<div class="col" style="width:3%;"><span class="sort-link">Edit</span></div>
+				<div class="col" style="width:10%;"><a class="sort-link" href="#">First</a></div>
+				<div class="col" style="width:10%;"><a class="sort-link" href="#">Last</a></div>
+				<div class="col" style="width:10%;"><a class="sort-link" href="#">Description</a></div>
+				<div class="col" style="width:6%;"><a class="sort-link" href="#">Category</a></div>
+				<div class="col" style="width:6%;"><a class="sort-link" href="#">Premium</a></div>
+				<div class="col" style="width:6%;"><a class="sort-link" href="#">Type</a></div>
+				<div class="col" style="width:8%;"><a class="sort-link" href="#">Sold By</a></div>
+				<div class="col" style="width:6%;"><a class="sort-link" href="#">Source</a></div>
+				<div class="col" style="width:9%;"><a class="sort-link" href="#">Length</a></div>
+				<div class="col" style="width:4%;"><span class="sort-link">Notes</span></div>
+				<div class="col" style="width:6%;"><a class="sort-link" href="#">Written</a></div>
+				<div class="col" style="width:6%;"><a class="sort-link" href="#">Issued</a></div>
+				<div class="col" style="width:6%;"><a class="sort-link" href="#">Effective</a></div>
+				<div class="col" style="width:1%;"><span class="sort-link">Delete</span></div>
+				<div class="col" style="width:1%;"></div>
+			</div>
+
 </header>
 
 <div id="content">
 
+
+
+
+
 		<div class="table-container">
-			<div class="heading">
-				<div class="col"></div>
-				<div class="col"><span class="sort-link">Edit</span></div>
-				<div class="col"><a class="sort-link" href="#">First</a></div>
-				<div class="col"><a class="sort-link" href="#">Last</a></div>
-				<div class="col"><a class="sort-link" href="#">Description</a></div>
-				<div class="col"><a class="sort-link" href="#">Category</a></div>
-				<div class="col"><a class="sort-link" href="#">Premium</a></div>
-				<div class="col"><a class="sort-link" href="#">Type</a></div>
-				<div class="col"><a class="sort-link" href="#">Sold By</a></div>
-				<div class="col"><a class="sort-link" href="#">Source</a></div>
-				<div class="col"><a class="sort-link" href="#">Length</a></div>
-				<div class="col"><span class="sort-link">Notes</span></div>
-				<div class="col"><a class="sort-link" href="#">Written</a></div>
-				<div class="col"><a class="sort-link" href="#">Issued</a></div>
-				<div class="col"><a class="sort-link" href="#">Effective</a></div>
-				<div class="col"><span class="sort-link">Delete</span></div>
-			</div>
 
 			<div class="table-row">
-				<div class="col">&nbsp;<em>1</em></div>
-				<div class="col"><a href=""><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt=""></a></div>
-				<div class="col">Jane</div>
-				<div class="col">Doe</div>
-				<div class="col">toyota corolla</div>
-				<div class="col">Auto DSS</div>
-				<div class="col">$500</div>
-				<div class="col">New</div>
-				<div class="col">Joe Agent</div>
-				<div class="col">Cold Call</div>
-				<div class="col">Semi-Annually</div>
-				<div class="col"><img src="/public/img/policy_note_btn.png" class="policy-listing-button" alt=""></div>
-				<div class="col">2/20/2014</div>
-				<div class="col">2/24/2014</div>
-				<div class="col">3/30/2014</div>
-				<div class="col"><a href="#"><img src="/public/img/policy_delete_btn.png" class="policy-listing-button" alt=""></a></div>
+				<div class="col" style="width:2%;">&nbsp;<em>1</em></div>
+				<div class="col" style="width:3%;"><a href=""><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt=""></a></div>
+				<div class="col" style="width:10%;">Jane</div>
+				<div class="col" style="width:10%;">Doe</div>
+				<div class="col" style="width:10%;">toyota corolla</div>
+				<div class="col" style="width:6%;">Auto DSS</div>
+				<div class="col" style="width:6%;">$500</div>
+				<div class="col" style="width:6%;">New</div>
+				<div class="col" style="width:8%;">Joe Agent</div>
+				<div class="col" style="width:6%;">Cold Call</div>
+				<div class="col" style="width:9%;">Semi-Annually</div>
+				<div class="col" style="width:4%;"><img src="/public/img/policy_note_btn.png" class="policy-listing-button" alt=""></div>
+				<div class="col" style="width:6%;">2/20/2014</div>
+				<div class="col" style="width:6%;">2/24/2014</div>
+				<div class="col" style="width:6%;">3/30/2014</div>
+				<div class="col" style="width:1%;"><a href="#"><img src="/public/img/policy_delete_btn.png" class="policy-listing-button" alt=""></a></div>
+				<div class="col" style="width:1%;"></div>
 			</div>
 
 			<div class="table-row-alt">
-				<div class="col">&nbsp;<em>2</em></div>
-				<div class="col"><a href=""><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt=""></a></div>
-				<div class="col">John</div>
-				<div class="col">Smith</div>
-				<div class="col">chevy pickup</div>
-				<div class="col">Auto</div>
-				<div class="col">$500</div>
-				<div class="col">Renewal</div>
-				<div class="col">Jane Agent</div>
-				<div class="col">Internet</div>
-				<div class="col">Annually</div>
-				<div class="col"><img src="/public/img/policy_note_btn.png" class="policy-listing-button" alt=""></div>
-				<div class="col">4/24/2014</div>
-				<div class="col">5/14/2014</div>
-				<div class="col">5/18/2014</div>
-				<div class="col"><a href="#"><img src="/public/img/policy_delete_btn.png" class="policy-listing-button" alt=""></a></div>
+				<div class="col" style="width:1%;">&nbsp;<em>2</em></div>
+				<div class="col" style="width:3%;"><a href=""><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt=""></a></div>
+				<div class="col" style="width:10%;">John</div>
+				<div class="col" style="width:10%;">Smith</div>
+				<div class="col" style="width:10%;">chevy pickup</div>
+				<div class="col" style="width:6%;">Auto</div>
+				<div class="col" style="width:6%;">$500</div>
+				<div class="col" style="width:6%;">Renewal</div>
+				<div class="col" style="width:8%;">Jane Agent</div>
+				<div class="col" style="width:6%;">Internet</div>
+				<div class="col" style="width:9%;">Annually</div>
+				<div class="col" style="width:4%;"><img src="/public/img/policy_note_btn.png" class="policy-listing-button" alt=""></div>
+				<div class="col" style="width:6%;">4/24/2014</div>
+				<div class="col" style="width:6%;">5/14/2014</div>
+				<div class="col" style="width:6%;">5/18/2014</div>
+				<div class="col" style="width:1%;"><a href="#"><img src="/public/img/policy_delete_btn.png" class="policy-listing-button" alt=""></a></div>
+				<div class="col" style="width:1%;"></div>
 			</div>
-
 		</div>
+
+
 
 </div>
 
 <footer>
-	<div id="top">Back to Top</div>
+	<div id="top">&#9650; Back to Top</div>
 	&copy; 2014 Red Bird Reports. All Rights Reserved.
 </footer>
 
@@ -241,6 +286,12 @@
 <script>
 // LOAD DATE BOXES ON PAGE
 $(document).ready(function() {
+
+	// DO LOGOUT
+	$("#logout").on("click", function(event) {
+		event.preventDefault();
+   		window.location.href = "/login/?logout";
+	});
 
 	function loadDatePickers(){
 		new datepickr("datepick1", {

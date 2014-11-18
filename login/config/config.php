@@ -26,6 +26,12 @@ define("DB_USER", "redbird-app");
 define("DB_PASS", "r3db1rdR3ports");
 
 /**
+ * Configuration for: Project URL
+ * Put your URL here, for local development "127.0.0.1" or "localhost" (plus sub-folder) is fine
+ */
+define("URL", "http://dev.redbirdreports.com/");
+
+/**
  * Configuration for: Cookies
  * Please note: The COOKIE_DOMAIN needs the domain where your app is,
  * in a format like this: .mydomain.com
