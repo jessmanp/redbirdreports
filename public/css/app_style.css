@@ -16,9 +16,20 @@ body	{
 	text-align:center;
 	min-width:1000px;
 }
-header {
+#main-header {
 	width:100%;
-	height:300px;
+	height:110px;
+	position:fixed; 
+	top:0;
+	left:0;
+	right:0;
+	background-color:#ffffff;
+	z-index:11;
+}
+#policy-header {
+	width:100%;
+	margin:110px 0 0 0;
+	height:190px;
 	position:fixed; 
 	top:0;
 	left:0;
@@ -42,6 +53,9 @@ footer {
 	z-index:10;
 	text-align:left;
 }
+button {
+	font-family: Helvetica, Arial, Verdana, sans-serif;
+}
 
 input[type=checkbox]:not(old),
 input[type=radio]:not(old){
@@ -50,6 +64,7 @@ input[type=radio]:not(old){
 	padding:0;
 	font-size:16px;
 	opacity:0;
+	-webkit-appearance:none;
 }
 
 input[type=checkbox]:not(old) + label,
@@ -80,11 +95,11 @@ input[type=radio]:not(old):checked + label > span{
 input[type=checkbox]:not(old):checked + label > span:before{
 	content:'✓';
 	display:block;
-	margin-left:1px;
+	margin-left:2px;
 	width:12px;
 	color:#ffffff;
 	font-size:12px;
-	line-height:16px;
+	line-height:15px;
 	font-weight:bold;
 }
 
@@ -123,7 +138,7 @@ input[type=radio]:not(old):checked + label > span > span{
 	clear:both;
 	background-color:#a20004;
 	min-width:900px;
-	height:190px;
+	height:220px;
 }
 
 #logo {
@@ -168,13 +183,14 @@ input[type=radio]:not(old):checked + label > span > span{
 
 .main-button {
 	float:left;
-	margin:4px 0 0 25px;
+	margin:4px 0 0 20px;
 	width:75px;
-	height:75px;
+	height:70px;
 	background-color:#ffffff;
 	-moz-border-radius:8px;
 	-webkit-border-radius:8px;
 	border-radius:8px;
+	border:2px solid #cccccc;
 	cursor:pointer;
 }
 
@@ -197,20 +213,21 @@ input[type=radio]:not(old):checked + label > span > span{
 
 #sub-buttons {
 	margin:0 auto 0 auto;
-	width:900px;
+	width:905px;
 	height:85px;
 }
 
 .sub-button {
 	float:left;
-	margin:8px 0 0 25px;
+	margin:8px 0 0 20px;
 	width:75px;
-	height:75px;
+	height:70px;
 	background-color:#a20004;
 	-moz-border-radius:8px;
 	-webkit-border-radius:8px;
 	border-radius:8px;
 	cursor:pointer;
+	border:2px solid #ffffff;
 }
 
 .sub-button:hover {
@@ -231,7 +248,7 @@ input[type=radio]:not(old):checked + label > span > span{
 }
 
 #search-area {
-	margin:5px auto 5px auto;
+	margin:10px auto 5px auto;
 	width:890px;
 	clear:both;
 	height:40px;
@@ -310,7 +327,7 @@ input[type=radio]:not(old):checked + label > span > span{
 	border-radius:10px;
 	font-size:12px;
 	text-align:left;
-	line-height:32px;
+	line-height:30px;
 }
 
 #pre-dates:hover {
@@ -376,9 +393,9 @@ input[type=radio]:not(old):checked + label > span > span{
 	-moz-border-radius:6px;
 	-webkit-border-radius:6px;
 	border-radius:6px;
-	padding:5px 5px 5px 0;
+	padding:10px 5px 5px 0;
 	width:325px;
-	height:295px;
+	height:165px;
 	/* for Chrome 10+ and Safari 5+ */
 	-webkit-box-shadow: 1px 3px 8px #666666;
 	/* for FireFox 3.6+ */
@@ -400,7 +417,7 @@ input[type=radio]:not(old):checked + label > span > span{
 .filter-dates {
 	float:left;
 	width:130px;
-	margin:-109px 0 0 10px;
+	margin:0 0 0 10px;
 	padding:5px 5px 10px 15px;
 	font-size:12px;
 	background-color:#cccccc;
@@ -446,7 +463,7 @@ input[type=radio]:not(old):checked + label > span > span{
 #field {
     float:left; 
     margin:3px 8px 0 10px;
-    width:232px; 
+    width:200px; 
     height:28px;
     padding:1px;
     text-indent:10px;
@@ -493,12 +510,12 @@ input[type=radio]:not(old):checked + label > span > span{
     border:2px solid #000000;
 }
 
-#filter {
+#advanced-search {
 	float:left;
 	margin:3px 2px 0 8px;
 	padding:0 0 0 8px;
     cursor:pointer; 
-    width:128px; 
+    width:160px; 
     height:34px; 
     background-color:#a20004;
     color:#ffffff;
@@ -511,17 +528,17 @@ input[type=radio]:not(old):checked + label > span > span{
 	border-radius:10px;
 	font-size:12px;
 	text-align:left;
-	line-height:32px;
+	line-height:30px;
 }
 
-#filter:hover {
+#advanced-search:hover {
     background-color:#000000;
     border:2px solid #000000;
 }
 
 .search-btn-icon {
 	float:right;
-	margin:0 4px 0 0;
+	margin:0 6px 0 0;
 	vertical-align:middle;
 	width:33px;
 	height:28px;
@@ -537,14 +554,13 @@ input[type=radio]:not(old):checked + label > span > span{
 	margin:12px auto 5px auto;
 	width:880px;
 	clear:both;
-	height:18px;
+	height:40px;
 	padding:5px 5px 5px 10px;
 	background-color:#a20004;
 	-moz-border-radius:8px;
 	-webkit-border-radius:8px;
 	border-radius:8px;
 	border:2px solid #ffffff;
-	text-align:left;
 	font-size:13px;
 	color:#ffffff;
 	line-height:18px;
@@ -552,17 +568,26 @@ input[type=radio]:not(old):checked + label > span > span{
 
 .status-text {
 	float:left;
-	margin:0 50px 0 0;
+	margin:0 25px 0 0;
+	width:200px;
+	color:#cccccc;
 }
 
 .status-text-right {
-	float:left;
+	float:right;
+	width:200px;
+	color:#cccccc;
 }
 
-#content {
+.status-item {
+	font-weight:bold;
+	color:#ffffff;
+}
+
+#policy-content {
 	clear:both;
-	margin:330px 0 32px 0;
-	height:600px;
+	margin:360px 0 32px 0;
+	min-height:600px;
 }
 
 .policy-listing-button {
@@ -574,13 +599,14 @@ input[type=radio]:not(old):checked + label > span > span{
 	cursor:pointer;
 }
 
-
-
-
-
-
-
-
+a.status-link,  a.status-link:visited {
+	color:#ffffff;
+	text-decoration:underline;
+}
+a.status-link:hover {
+	color:#ffffff;
+	text-decoration:none;
+}
 
 .table-container {
 	margin:0 auto 0 auto;
@@ -616,28 +642,80 @@ input[type=radio]:not(old):checked + label > span > span{
 	color:#ffffff;
 }
 
-.sort-link {
+.sort-text {
 	font-size:12px;
-	color:#ffffff;
-	text-decoration:none;
+	color:#cccccc;
 }
+
 a.sort-link,  a.sort-link:visited {
 	font-size:12px;
 	color:#ffffff;
-	text-decoration:none;
+	text-decoration:underline;
 }
 a.sort-link:hover {
 	color:#ffffff;
-	text-decoration:underline;
+	text-decoration:none;
 }
 
+.sort-link-asc:before {
+	content:'▲';
+	font-size:10px;
+	color:#ffffff;
+}
+a.sort-link-asc,  a.sort-link-asc:visited {
+	font-size:12px;
+	color:#ffffff;
+	text-decoration:underline;
+}
+a.sort-link-asc:hover {
+	color:#ffffff;
+	text-decoration:none;
+}
+.sort-link-desc {
+	font-size:12px;
+	color:#ffffff;
+}
+.sort-link-desc:before {
+	content:'▼';
+	font-size:10px;
+	color:#ffffff;
+}
+a.sort-link-desc,  a.sort-link-desc:visited {
+	font-size:12px;
+	color:#ffffff;
+	text-decoration:underline;
+}
+a.sort-link-desc:hover {
+	color:#ffffff;
+	text-decoration:none;
+}
 .col {
 	display:table-cell;
 }
 
+#dashboard-content {
+	clear:both;
+	margin:160px 0 32px 0;
+	min-height:600px;
+}
 
+#payroll-content {
+	clear:both;
+	margin:160px 0 32px 0;
+	min-height:600px;
+}
 
+#myagency-content {
+	clear:both;
+	margin:160px 0 32px 0;
+	min-height:600px;
+}
 
+#support-content {
+	clear:both;
+	margin:160px 0 32px 0;
+	min-height:600px;
+}
 
 
 

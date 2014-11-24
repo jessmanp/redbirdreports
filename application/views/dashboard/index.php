@@ -1,4 +1,7 @@
-		<div class="container">
-		<h2>Reports</h2>
-		Reports content will be placed in this area.
-		</div>
+<!-- begin content area -->
+<div id="dashboard-content">
+
+dashboard
+
+</div>
+<!-- end content area -->

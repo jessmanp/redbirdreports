@@ -1,4 +1,7 @@
-		<div class="container">
-		<h2>Support</h2>
-		Support content will be placed in this area.
-		</div>
+<!-- begin content area -->
+<div id="support-content">
+
+support
+
+</div>
+<!-- end content area -->

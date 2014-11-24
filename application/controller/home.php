@@ -34,6 +34,8 @@ class Home extends Controller
 			// pass on to main page
 			header("location: /app/dashboard");
 		}
+		// load CSS based on method
+		$css = 'setup_style.css';
         // load jQuery script based on method
 		$navScript = 'login.js';
         require 'application/views/_templates/header.php';
@@ -51,6 +53,9 @@ class Home extends Controller
      */
     public function setup()
     {
+		// load CSS based on method
+		$css = 'setup_style.css';
+
 		// load a model, perform an action, pass the returned data to a variable
         // NOTE: please write the name of the model "LikeThis"
         $setup_model = $this->loadModel('SetupModel');

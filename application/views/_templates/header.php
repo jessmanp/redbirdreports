@@ -11,19 +11,19 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <!-- css -->
-<link rel="stylesheet" href="<?php echo URL; ?>public/css/setup_style.css">
+<link rel="stylesheet" href="<?php echo URL; ?>public/css/<?php echo $css; ?>">
 <link rel="stylesheet" href="<?php echo URL; ?>public/css/datepicker.css">
 <!-- jQuery -->
 <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 <!-- JavaScript -->
 <script src="<?php echo URL; ?>public/js/global.js"></script>
-<?php if (isset($uploadScript)) { ?>
-<script src="<?php echo URL; ?>public/js/<?php echo $uploadScript; ?>"></script>
-<?php } ?>
-<script src="<?php echo URL; ?>public/js/<?php echo $navScript; ?>"></script>
+<script src="<?php echo URL; ?>public/js/application.js"></script>
 <?php if (isset($dateScript)) { ?>
 <script src="<?php echo URL; ?>public/js/<?php echo $dateScript; ?>"></script>
+<?php } ?>
+<?php if (isset($uploadScript)) { ?>
+<script src="<?php echo URL; ?>public/js/<?php echo $uploadScript; ?>"></script>
 <?php } ?>
 <!-- google analytics tracking -->
 <script>

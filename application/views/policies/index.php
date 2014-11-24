@@ -1,22 +1,48 @@
-		<div class="menu-container">
-			<div class="menu-item"><img src="<?php echo URL; ?>public/img/policy_auto_btn.png" class="policy-icon" alt="" />Auto<br /><div class="policy-count">160,000 policies</div></div><div class="menu-buttons"><a href="<?php echo URL; ?>app/policies?listing=auto"><img src="<?php echo URL; ?>public/img/policy_list_btn.png" class="policy-button" alt="" /></a><a href="<?php echo URL; ?>app/policies?add=auto"><img src="<?php echo URL; ?>public/img/policy_new_btn.png" class="policy-button" alt="" /></a></div>
-			<div class="menu-separator"></div>
+<!-- begin content area -->
+<div id="policy-content">
 
-			<div class="menu-item"><img src="<?php echo URL; ?>public/img/policy_fire_btn.png" class="policy-icon" alt="" />Fire<br /><div class="policy-count">160,000 policies</div></div><div class="menu-buttons"><a href="<?php echo URL; ?>app/policies?listing=fire"><img src="<?php echo URL; ?>public/img/policy_list_btn.png" class="policy-button" alt="" /></a><a href="<?php echo URL; ?>app/policies?add=fire"><img src="<?php echo URL; ?>public/img/policy_new_btn.png" class="policy-button" alt="" /></a></div>
-			<div class="menu-separator"></div>
+		<div class="table-container">
 
-			<div class="menu-item"><img src="<?php echo URL; ?>public/img/policy_life_btn.png" class="policy-icon" alt="" />Life<br /><div class="policy-count">160,000 policies</div></div><div class="menu-buttons"><a href="<?php echo URL; ?>app/policies?listing=life"><img src="<?php echo URL; ?>public/img/policy_list_btn.png" class="policy-button" alt="" /></a><a href="<?php echo URL; ?>app/policies?add=life"><img src="<?php echo URL; ?>public/img/policy_new_btn.png" class="policy-button" alt="" /></a></div>
-			<div class="menu-separator"></div>
+			<div class="table-row">
+				<div class="col" style="width:2%;">&nbsp;<em>1</em></div>
+				<div class="col" style="width:3%;"><a href=""><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt=""></a></div>
+				<div class="col" style="width:10%;">Jane</div>
+				<div class="col" style="width:10%;">Doe</div>
+				<div class="col" style="width:10%;">toyota corolla</div>
+				<div class="col" style="width:6%;">Auto DSS</div>
+				<div class="col" style="width:6%;">$500</div>
+				<div class="col" style="width:6%;">New</div>
+				<div class="col" style="width:8%;">Joe Agent</div>
+				<div class="col" style="width:6%;">Cold Call</div>
+				<div class="col" style="width:9%;">Semi-Annually</div>
+				<div class="col" style="width:4%;"><img src="/public/img/policy_note_btn.png" class="policy-listing-button" alt=""></div>
+				<div class="col" style="width:6%;">2/20/2014</div>
+				<div class="col" style="width:6%;">2/24/2014</div>
+				<div class="col" style="width:6%;">3/30/2014</div>
+				<div class="col" style="width:1%;"><a href="#"><img src="/public/img/policy_delete_btn.png" class="policy-listing-button" alt=""></a></div>
+				<div class="col" style="width:1%;"></div>
+			</div>
 
-			<div class="menu-item"><img src="<?php echo URL; ?>public/img/policy_health_btn.png" class="policy-icon" alt="" />Health<br /><div class="policy-count">160,000 policies</div></div><div class="menu-buttons"><a href="<?php echo URL; ?>app/policies?listing=health"><img src="<?php echo URL; ?>public/img/policy_list_btn.png" class="policy-button" alt="" /></a><a href="<?php echo URL; ?>app/policies?add=health"><img src="<?php echo URL; ?>public/img/policy_new_btn.png" class="policy-button" alt="" /></a></div>
-			<div class="menu-separator"></div>
-
-			<div class="menu-item"><img src="<?php echo URL; ?>public/img/policy_loan_btn.png" class="policy-icon" alt="" />Loan<br /><div class="policy-count">160,000 policies</div></div><div class="menu-buttons"><a href="<?php echo URL; ?>app/policies?listing=loan"><img src="<?php echo URL; ?>public/img/policy_list_btn.png" class="policy-button" alt="" /></a><a href="<?php echo URL; ?>app/policies?add=loan"><img src="<?php echo URL; ?>public/img/policy_new_btn.png" class="policy-button" alt="" /></a></div>
-			<div class="menu-separator"></div>
-
-			<div class="menu-item"><img src="<?php echo URL; ?>public/img/policy_deposit_btn.png" class="policy-icon" alt="" />Deposit<br /><div class="policy-count">160,000 policies</div></div><div class="menu-buttons"><a href="<?php echo URL; ?>app/policies?listing=deposit"><img src="<?php echo URL; ?>public/img/policy_list_btn.png" class="policy-button" alt="" /></a><a href="<?php echo URL; ?>app/policies?add=deposit"><img src="<?php echo URL; ?>public/img/policy_new_btn.png" class="policy-button" alt="" /></a></div>
-			<div class="menu-separator"></div>
-
-			<div class="menu-item"><img src="<?php echo URL; ?>public/img/policy_fund_btn.png" class="policy-icon" alt="" />Fund<br /><div class="policy-count">160,000 policies</div></div><div class="menu-buttons"><a href="<?php echo URL; ?>app/policies?listing=fund"><img src="<?php echo URL; ?>public/img/policy_list_btn.png" class="policy-button" alt="" /></a><a href="<?php echo URL; ?>app/policies?add=fund"><img src="<?php echo URL; ?>public/img/policy_new_btn.png" class="policy-button" alt="" /></a></div>
-			<div style="clear:both;"></div>
+			<div class="table-row-alt">
+				<div class="col" style="width:1%;">&nbsp;<em>2</em></div>
+				<div class="col" style="width:3%;"><a href=""><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt=""></a></div>
+				<div class="col" style="width:10%;">John</div>
+				<div class="col" style="width:10%;">Smith</div>
+				<div class="col" style="width:10%;">chevy pickup</div>
+				<div class="col" style="width:6%;">Auto</div>
+				<div class="col" style="width:6%;">$500</div>
+				<div class="col" style="width:6%;">Renewal</div>
+				<div class="col" style="width:8%;">Jane Agent</div>
+				<div class="col" style="width:6%;">Internet</div>
+				<div class="col" style="width:9%;">Annually</div>
+				<div class="col" style="width:4%;"><img src="/public/img/policy_note_btn.png" class="policy-listing-button" alt=""></div>
+				<div class="col" style="width:6%;">4/24/2014</div>
+				<div class="col" style="width:6%;">5/14/2014</div>
+				<div class="col" style="width:6%;">5/18/2014</div>
+				<div class="col" style="width:1%;"><a href="#"><img src="/public/img/policy_delete_btn.png" class="policy-listing-button" alt=""></a></div>
+				<div class="col" style="width:1%;"></div>
+			</div>
 		</div>
+
+</div>
+<!-- end content area -->

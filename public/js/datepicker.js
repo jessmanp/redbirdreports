@@ -309,7 +309,7 @@ var datepickr = (function() {
 		calendarContainer.appendChild(months);
 		calendarContainer.appendChild(calendar);
 		
-		var search = document.getElementById('search-area');
+		var search = document.getElementById('main-header');
 		search.appendChild(calendarContainer);
 
 		//document.body.appendChild(calendarContainer);

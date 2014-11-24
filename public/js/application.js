@@ -1,5 +1,5 @@
 /* <![CDATA[ */
-		
+
 // CREATE TODAY DATE
 function currentdate() {
 	var currentDate = new Date()
@@ -34,9 +34,9 @@ $(document).ready(function() {
 	});
 
 	// AGENCY
-	$("#agency").on("click", function(event) {
+	$("#myagency").on("click", function(event) {
 		event.preventDefault();
-		window.location.href = "/app/agency";
+		window.location.href = "/app/myagency";
 	});
 
 	// SUPPORT
@@ -48,17 +48,14 @@ $(document).ready(function() {
 	// SETTINGS
 	$("#settings").on("click", function(event) {
 		event.preventDefault();
-		window.location.href = "/app/settings";
+		window.location.href = "/login/?edit";
 	});
 
 	// LOGOUT
 	$("#logout").on("click", function(event) {
 		event.preventDefault();
-		//window.location.href = "/";
+		window.location.href = "/login?logout";
 	});
-
-
-
 
 	
 });

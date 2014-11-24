@@ -1,3 +1,4 @@
+<?php $css = 'setup_style.css'; ?>
 <?php include('../application/views/_templates/header.php'); ?>
 <header>
 	<img src="<?php echo URL; ?>public/img/redbird_logo_sm.png" class="home-logo" alt="" />
