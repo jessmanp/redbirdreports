@@ -1,8 +1,122 @@
 /* <![CDATA[ */
 
-// LOAD DATE BOXES ON PAGE
+// LOAD
 $(document).ready(function() {
 
+	// HIGHLIGHT MAIN SECTION
+	$("#policies").closest(".main-button").css("background-color","#cccccc");
+	// HIGHLIGHT SUB SECTION
+	$("#all").closest(".sub-button").css("background-color","#000000");
+
+// =============== BEGIN SUB NAV =============== //
+
+	// VIEW ALL
+	$("#all").closest(".sub-button").on("click", function(event) {
+		event.preventDefault();
+		$(this).closest(".sub-button").css("background-color","#000000");
+		$("#auto").closest(".sub-button").css("background-color","#a20004");
+		$("#fire").closest(".sub-button").css("background-color","#a20004");
+		$("#life").closest(".sub-button").css("background-color","#a20004");
+		$("#health").closest(".sub-button").css("background-color","#a20004");
+		$("#deposit").closest(".sub-button").css("background-color","#a20004");
+		$("#loan").closest(".sub-button").css("background-color","#a20004");
+		$("#fund").closest(".sub-button").css("background-color","#a20004");
+	});
+
+	// AUTO
+	$("#auto").closest(".sub-button").on("click", function(event) {
+		event.preventDefault();
+		$(this).closest(".sub-button").css("background-color","#000000");
+		$("#all").closest(".sub-button").css("background-color","#a20004");
+		$("#fire").closest(".sub-button").css("background-color","#a20004");
+		$("#life").closest(".sub-button").css("background-color","#a20004");
+		$("#health").closest(".sub-button").css("background-color","#a20004");
+		$("#deposit").closest(".sub-button").css("background-color","#a20004");
+		$("#loan").closest(".sub-button").css("background-color","#a20004");
+		$("#fund").closest(".sub-button").css("background-color","#a20004");
+	});
+
+	// FIRE
+	$("#fire").closest(".sub-button").on("click", function(event) {
+		event.preventDefault();
+		$(this).closest(".sub-button").css("background-color","#000000");
+		$("#all").closest(".sub-button").css("background-color","#a20004");
+		$("#auto").closest(".sub-button").css("background-color","#a20004");
+		$("#life").closest(".sub-button").css("background-color","#a20004");
+		$("#health").closest(".sub-button").css("background-color","#a20004");
+		$("#deposit").closest(".sub-button").css("background-color","#a20004");
+		$("#loan").closest(".sub-button").css("background-color","#a20004");
+		$("#fund").closest(".sub-button").css("background-color","#a20004");
+	});
+
+	// LIFE
+	$("#life").closest(".sub-button").on("click", function(event) {
+		event.preventDefault();
+		$(this).closest(".sub-button").css("background-color","#000000");
+		$("#all").closest(".sub-button").css("background-color","#a20004");
+		$("#auto").closest(".sub-button").css("background-color","#a20004");
+		$("#fire").closest(".sub-button").css("background-color","#a20004");
+		$("#health").closest(".sub-button").css("background-color","#a20004");
+		$("#deposit").closest(".sub-button").css("background-color","#a20004");
+		$("#loan").closest(".sub-button").css("background-color","#a20004");
+		$("#fund").closest(".sub-button").css("background-color","#a20004");
+	});
+
+	// HEALTH
+	$("#health").closest(".sub-button").on("click", function(event) {
+		event.preventDefault();
+		$(this).closest(".sub-button").css("background-color","#000000");
+		$("#all").closest(".sub-button").css("background-color","#a20004");
+		$("#auto").closest(".sub-button").css("background-color","#a20004");
+		$("#fire").closest(".sub-button").css("background-color","#a20004");
+		$("#life").closest(".sub-button").css("background-color","#a20004");
+		$("#deposit").closest(".sub-button").css("background-color","#a20004");
+		$("#loan").closest(".sub-button").css("background-color","#a20004");
+		$("#fund").closest(".sub-button").css("background-color","#a20004");
+	});
+
+	// DEPOSIT
+	$("#deposit").closest(".sub-button").on("click", function(event) {
+		event.preventDefault();
+		$(this).closest(".sub-button").css("background-color","#000000");
+		$("#all").closest(".sub-button").css("background-color","#a20004");
+		$("#auto").closest(".sub-button").css("background-color","#a20004");
+		$("#fire").closest(".sub-button").css("background-color","#a20004");
+		$("#life").closest(".sub-button").css("background-color","#a20004");
+		$("#health").closest(".sub-button").css("background-color","#a20004");
+		$("#loan").closest(".sub-button").css("background-color","#a20004");
+		$("#fund").closest(".sub-button").css("background-color","#a20004");
+	});
+
+	// LOAN
+	$("#loan").closest(".sub-button").on("click", function(event) {
+		event.preventDefault();
+		$(this).closest(".sub-button").css("background-color","#000000");
+		$("#all").closest(".sub-button").css("background-color","#a20004");
+		$("#auto").closest(".sub-button").css("background-color","#a20004");
+		$("#fire").closest(".sub-button").css("background-color","#a20004");
+		$("#life").closest(".sub-button").css("background-color","#a20004");
+		$("#health").closest(".sub-button").css("background-color","#a20004");
+		$("#deposit").closest(".sub-button").css("background-color","#a20004");
+		$("#fund").closest(".sub-button").css("background-color","#a20004");
+	});
+
+	// FUND
+	$("#fund").closest(".sub-button").on("click", function(event) {
+		event.preventDefault();
+		$(this).closest(".sub-button").css("background-color","#000000");
+		$("#all").closest(".sub-button").css("background-color","#a20004");
+		$("#auto").closest(".sub-button").css("background-color","#a20004");
+		$("#fire").closest(".sub-button").css("background-color","#a20004");
+		$("#life").closest(".sub-button").css("background-color","#a20004");
+		$("#health").closest(".sub-button").css("background-color","#a20004");
+		$("#deposit").closest(".sub-button").css("background-color","#a20004");
+		$("#loan").closest(".sub-button").css("background-color","#a20004");
+	});
+
+// =============== END SUB NAV =============== //
+
+	// LOAD DATE PICKERS
 	function loadDatePickers(){
 		new datepickr("datepick1", {
 			"dateFormat": "m/d/Y"
@@ -53,12 +167,6 @@ $(document).ready(function() {
 		$("#filter-container").hide();
 	});
 
-	
-	// SCROLL TO TOP
-	$("#top").on("click", function(event) {
-		event.preventDefault();
-		window.scrollTo(0, 0);
-	});
 
 });
 

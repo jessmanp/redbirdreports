@@ -45,6 +45,10 @@ class App extends Controller
 		$dateScript = 'datepicker.js';
 		$sectionScript = 'policy.js';
 
+		// load listing model
+		$policy_listing_model = $this->loadModel('PolicyListingModel');
+		$policy_data = $policy_listing_model->getAllPolicies();
+
         	// load views.
         	require 'application/views/_templates/header.php';
         	require 'application/views/_templates/main_header.php';

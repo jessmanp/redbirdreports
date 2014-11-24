@@ -16,11 +16,11 @@ class PolicyListingModel
 
 
     /**
-     * Get all songs from database
+     * Get all policies from database
      */
-    public function getAllSongs()
+    public function getAllPolicies()
     {
-        $sql = "SELECT id, artist, track, link FROM song";
+        $sql = "SELECT policies.id, policies.first, policies.last, policies.description, policy_categories.name AS cat_name, policies.premium, policy_business_types.name AS busi_name, users.user_first_name, users.user_last_name, policy_source_types.name AS src_name, policy_length_types.name AS len_name, policies.notes, policies.date_written, policies.date_issued, policies.date_effective FROM policies, policy_categories, policy_business_types, policy_source_types, policy_length_types, users WHERE policies.active = 1 AND policy_categories.id = policies.category_id AND policy_business_types.id = policies.business_type_id AND users.user_id = policies.user_id AND policy_source_types.id = policies.source_type_id AND policy_length_types.id = policies.length_type_id ORDER BY policies.date_written, policies.last";
         $query = $this->db->prepare($sql);
         $query->execute();
 
@@ -33,15 +33,13 @@ class PolicyListingModel
 
   
     /**
-     * Delete a song in the database
-     * Please note: this is just an example! In a real application you would not simply let everybody
-     * add/update/delete stuff!
-     * @param int $song_id Id of song
+     * Delete a policy in the database
      */
-    public function deleteSong($song_id)
+    public function deletePolicy($policy_id)
     {
-        $sql = "DELETE FROM song WHERE id = :song_id";
-        $query = $this->db->prepare($sql);
-        $query->execute(array(':song_id' => $song_id));
+		$sql = "UPDATE policies SET active = 0 WHERE id = :policy_id";
+		$query_delete_policy = $this->db->prepare($sql);
+		$query_delete_policy->bindValue(':policy_id', $policy_id, PDO::PARAM_INT);
+		$query_delete_policy->execute();
     }
 }

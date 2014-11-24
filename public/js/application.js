@@ -14,47 +14,71 @@ function currentdate() {
 $(document).ready(function() {
 
 	window.scrollTo(0, 0);
+
+	// MAIN LOGO
+	$("#logo").on("click", function(event) {
+		event.preventDefault();
+		window.open("http://www.redbirdreports.com");
+	});	
 	
 	// DASHBOARD
-	$("#dashboard").on("click", function(event) {
+	$("#dashboard").closest(".main-button").on("click", function(event) {
 		event.preventDefault();
 		window.location.href = "/app/dashboard";
 	});
 
 	// POLICIES
-	$("#policies").on("click", function(event) {
+	$("#policies").closest(".main-button").on("click", function(event) {
 		event.preventDefault();
 		window.location.href = "/app/policies";
 	});
 
 	// PAYROLL
-	$("#payroll").on("click", function(event) {
+	$("#payroll").closest(".main-button").on("click", function(event) {
 		event.preventDefault();
 		window.location.href = "/app/payroll";
 	});
 
 	// AGENCY
-	$("#myagency").on("click", function(event) {
+	$("#myagency").closest(".main-button").on("click", function(event) {
 		event.preventDefault();
 		window.location.href = "/app/myagency";
 	});
 
 	// SUPPORT
-	$("#support").on("click", function(event) {
+	$("#support").closest(".main-button").on("click", function(event) {
 		event.preventDefault();
 		window.location.href = "/app/support";
 	});
 
 	// SETTINGS
-	$("#settings").on("click", function(event) {
+	$("#settings").closest(".main-button").on("click", function(event) {
 		event.preventDefault();
 		window.location.href = "/login/?edit";
 	});
 
 	// LOGOUT
-	$("#logout").on("click", function(event) {
+	$("#logout").closest(".main-button").on("click", function(event) {
 		event.preventDefault();
 		window.location.href = "/login?logout";
+	});
+
+	// SETTINGS DASHBOARD
+	$("#settings-dashboard").closest(".button-right").on("click", function(event) {
+		event.preventDefault();
+		window.location.href = "/app/dashboard";
+	});	
+
+	// SETTINGS LOGO
+	$("#settings-logo").on("click", function(event) {
+		event.preventDefault();
+		window.open("http://www.redbirdreports.com");
+	});	
+	
+	// SCROLL TO TOP
+	$("#top").on("click", function(event) {
+		event.preventDefault();
+		window.scrollTo(0, 0);
 	});
 
 	

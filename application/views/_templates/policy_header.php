@@ -3,39 +3,39 @@
 	<div id="sub-menu">
 		<div id="sub-buttons">
 			<div class="sub-button">
-				<img id="" src="/public/img/btn_add.png" class="sub-btn-icon" alt="Add New" />
+				<img id="add" src="/public/img/btn_add.png" class="sub-btn-icon" alt="Add New" />
 				<div class="sub-btn-text">Add New</div>
 			</div>
 			<div class="sub-button">
-				<img id="" src="/public/img/btn_all.png" class="sub-btn-icon" alt="View All" />
+				<img id="all" src="/public/img/btn_all.png" class="sub-btn-icon" alt="View All" />
 				<div class="sub-btn-text">View All</div>
 			</div>
 			<div class="sub-button">
-				<img id="" src="/public/img/btn_auto.png" class="sub-btn-icon" alt="Auto" />
+				<img id="auto" src="/public/img/btn_auto.png" class="sub-btn-icon" alt="Auto" />
 				<div class="sub-btn-text">Auto</div>
 			</div>
 			<div class="sub-button">
-				<img id="" src="/public/img/btn_fire.png" class="sub-btn-icon" alt="Fire" />
+				<img id="fire" src="/public/img/btn_fire.png" class="sub-btn-icon" alt="Fire" />
 				<div class="sub-btn-text">Fire</div>
 			</div>
 			<div class="sub-button">
-				<img id="" src="/public/img/btn_life.png" class="sub-btn-icon" alt="Life" />
+				<img id="life" src="/public/img/btn_life.png" class="sub-btn-icon" alt="Life" />
 				<div class="sub-btn-text">Life</div>
 			</div>
 			<div class="sub-button">
-				<img id="" src="/public/img/btn_health.png" class="sub-btn-icon" alt="Health" />
+				<img id="health" src="/public/img/btn_health.png" class="sub-btn-icon" alt="Health" />
 				<div class="sub-btn-text">Health</div>
 			</div>
 			<div class="sub-button">
-				<img id="" src="/public/img/btn_deposit.png" class="sub-btn-icon" alt="Deposit" />
+				<img id="deposit" src="/public/img/btn_deposit.png" class="sub-btn-icon" alt="Deposit" />
 				<div class="sub-btn-text">Deposit</div>
 			</div>
 			<div class="sub-button">
-				<img id="" src="/public/img/btn_loan.png" class="sub-btn-icon" alt="Loan" />
+				<img id="loan" src="/public/img/btn_loan.png" class="sub-btn-icon" alt="Loan" />
 				<div class="sub-btn-text">Loan</div>
 			</div>
 			<div class="sub-button">
-				<img id="" src="/public/img/btn_fund.png" class="sub-btn-icon" alt="Mutual Fund" />
+				<img id="fund" src="/public/img/btn_fund.png" class="sub-btn-icon" alt="Mutual Fund" />
 				<div class="sub-btn-text">Mutual Fund</div>
 			</div>
 		</div>

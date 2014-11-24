@@ -37,6 +37,17 @@ body	{
 	background-color:#ffffff;
 	z-index:10;
 }
+#sub-header {
+	width:100%;
+	margin:110px 0 0 0;
+	height:40px;
+	position:fixed; 
+	top:0;
+	left:0;
+	right:0;
+	background-color:#a20004;
+	z-index:10;
+}
 footer {
 	min-width:900px;
 	width:100%;
@@ -145,6 +156,7 @@ input[type=radio]:not(old):checked + label > span > span{
 	float:left;
 	width:196px;
 	height:110px;
+	cursor:pointer;
 }
 
 .home-logo {

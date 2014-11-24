@@ -2,7 +2,7 @@
 <?php include('../application/views/_templates/header.php'); ?>
 
 <header>
-	<img src="<?php echo URL; ?>public/img/redbird_logo_sm.png" class="home-logo" alt="" />
+	<img id="settings-logo" src="<?php echo URL; ?>public/img/redbird_logo_sm.png" class="home-logo" alt="" />
 </header>
 <div style="background-color:#eeeeee;">
 <br />
