@@ -599,7 +599,6 @@ input[type=radio]:not(old):checked + label > span > span{
 #policy-content {
 	clear:both;
 	margin:360px 0 32px 0;
-	min-height:600px;
 }
 
 .policy-listing-button {
@@ -663,6 +662,7 @@ a.sort-link,  a.sort-link:visited {
 	font-size:12px;
 	color:#ffffff;
 	text-decoration:underline;
+	cursor:pointer;
 }
 a.sort-link:hover {
 	color:#ffffff;

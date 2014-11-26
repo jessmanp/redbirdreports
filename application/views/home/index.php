@@ -29,7 +29,7 @@ $msg = '';
 ?>
 
 	<div id="login">
-		<h1>Login to Red Bird Reports</h1>
+		<h1>Application Login</h1>
 		<br />
 		<form name="login" action="/login/index.php" method="post">
 			<input id="username" name="user_name" type="text" placeholder="Enter Username" required />

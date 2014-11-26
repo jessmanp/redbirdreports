@@ -85,7 +85,7 @@
 			</div>
 		</div>
 		<div id="status-area">
-			<div class="status-text"><a class="status-link" href="#">Policy Type</a>: <span class="status-item">Mutual Fund</span></div>
+			<div class="status-text">Policy Type: <span id="statuscat" class="status-item"></span></div>
 			<div class="status-text"><a class="status-link" href="#">Written</a>: <span class="status-item">1,465</span></div>
 			<div class="status-text"><a class="status-link" href="#">Not Issued</a>: <span class="status-item">1,235</span></div>
 			<div class="status-text-right"><a class="status-link" href="#">Pending Renewal</a>: <span class="status-item">1,235</span></div>
@@ -100,19 +100,19 @@
 			<div class="heading">
 				<div class="col" style="width:2%;"></div>
 				<div class="col" style="width:3%;"><span class="sort-text">Edit</span></div>
-				<div class="col" style="width:10%;"><a class="sort-link" href="#">First</a></div>
-				<div class="col" style="width:10%;"><a class="sort-link" href="#">Last</a></div>
-				<div class="col" style="width:10%;"><a class="sort-link" href="#">Description</a></div>
-				<div class="col" style="width:6%;"><a class="sort-link" href="#">Category</a></div>
-				<div class="col" style="width:6%;"><a class="sort-link" href="#">Premium</a></div>
-				<div class="col" style="width:6%;"><a class="sort-link" href="#">Type</a></div>
-				<div class="col" style="width:8%;"><a class="sort-link" href="#">Sold By</a></div>
-				<div class="col" style="width:6%;"><a class="sort-link" href="#">Source</a></div>
-				<div class="col" style="width:9%;"><a class="sort-link" href="#">Length</a></div>
+				<div class="col" style="width:10%;"><a id="sortfirst" class="sort-link">First</a></div>
+				<div class="col" style="width:10%;"><a id="sortlast" class="sort-link">Last</a></div>
+				<div class="col" style="width:10%;"><a id="sortdesc" class="sort-link">Description</a></div>
+				<div class="col" style="width:6%;"><a id="sortcat" class="sort-link">Category</a></div>
+				<div class="col" style="width:6%;"><a id="sortprem" class="sort-link">Premium</a></div>
+				<div class="col" style="width:6%;"><a id="sorttype" class="sort-link" href="#">Type</a></div>
+				<div class="col" style="width:8%;"><a id="sortsold" class="sort-link" href="#">Sold By</a></div>
+				<div class="col" style="width:6%;"><a id="sortsrc" class="sort-link" href="#">Source</a></div>
+				<div class="col" style="width:9%;"><a id="sortlen" class="sort-link" href="#">Length</a></div>
 				<div class="col" style="width:4%;"><span class="sort-text">&nbsp;Notes</span></div>
-				<div class="col" style="width:6%;"><a class="sort-link" href="#">Written</a></div>
-				<div class="col" style="width:6%;"><a class="sort-link" href="#">Issued</a></div>
-				<div class="col" style="width:6%;"><a class="sort-link" href="#">Effective</a></div>
+				<div class="col" style="width:6%;"><a id="sortwdate" class="sort-link" href="#">Written</a></div>
+				<div class="col" style="width:6%;"><a id="sortidate" class="sort-link" href="#">Issued</a></div>
+				<div class="col" style="width:6%;"><a id="sortedate" class="sort-link" href="#">Effective</a></div>
 				<div class="col" style="width:1%;"><span class="sort-text">Erase</span></div>
 				<div class="col" style="width:1%;"></div>
 			</div>

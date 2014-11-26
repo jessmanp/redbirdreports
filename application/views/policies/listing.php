@@ -1,7 +1,6 @@
-<!-- begin content area -->
-<div id="policy-content">
-		<div id="listing-table" class="table-container">
+<div id="listing-table" class="table-container">
 <?php
+  if ($policy_data) {
 	$rowcnt = 1;
 	foreach ($policy_data as $policy) {
 		if ($rowcnt & 1) {
@@ -32,7 +31,10 @@
 <?php
 		$rowcnt++;
 	}
+  } else {
 ?>
-		</div>
+<br /><br />
+No Results Found.
+<br /><br />
+<?php } ?>
 </div>
-<!-- end content area -->

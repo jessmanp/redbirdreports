@@ -16,11 +16,82 @@ class PolicyListingModel
 
 
     /**
-     * Get all policies from database
+     * Get ALL policies from database
      */
-    public function getAllPolicies()
+    public function getAllPolicies($category = 'all', $orderby = 'default')
     {
-        $sql = "SELECT policies.id, policies.first, policies.last, policies.description, policy_categories.name AS cat_name, policies.premium, policy_business_types.name AS busi_name, users.user_first_name, users.user_last_name, policy_source_types.name AS src_name, policy_length_types.name AS len_name, policies.notes, policies.date_written, policies.date_issued, policies.date_effective FROM policies, policy_categories, policy_business_types, policy_source_types, policy_length_types, users WHERE policies.active = 1 AND policy_categories.id = policies.category_id AND policy_business_types.id = policies.business_type_id AND users.user_id = policies.user_id AND policy_source_types.id = policies.source_type_id AND policy_length_types.id = policies.length_type_id ORDER BY policies.date_written, policies.last";
+		// set category
+		switch ($category) {
+    			case 'all':
+        			$addedSQL = '';
+        			break;
+    			case 'auto':
+        			$addedSQL = ' AND (policy_categories.id = 1 OR policy_categories.parent_id = 1)';
+        			break;
+    			case 'fire':
+        			$addedSQL = ' AND (policy_categories.id = 9 OR policy_categories.parent_id = 9)';
+        			break;
+    			case 'life':
+        			$addedSQL = ' AND (policy_categories.id = 26 OR policy_categories.parent_id = 26)';
+        			break;
+    			case 'health':
+        			$addedSQL = ' AND (policy_categories.id = 40 OR policy_categories.parent_id = 40)';
+        			break;
+    			case 'deposit':
+        			$addedSQL = ' AND (policy_categories.id = 58 OR policy_categories.parent_id = 58)';
+        			break;
+    			case 'loan':
+        			$addedSQL = ' AND (policy_categories.id = 50 OR policy_categories.parent_id = 50)';
+        			break;
+    			case 'fund':
+        			$addedSQL = ' AND (policy_categories.id = 70 OR policy_categories.parent_id = 70)';
+        			break;
+		}
+
+		// set order by
+		switch ($orderby) {
+    			case 'default':
+        			$orderbySQL = ' policies.date_written, policies.last';
+        			break;
+    			case 'firstname':
+        			$orderbySQL = ' policies.first';
+        			break;
+    			case 'lastname':
+        			$orderbySQL = ' policies.last';
+        			break;
+    			case 'description':
+        			$orderbySQL = ' policies.description';
+        			break;
+    			case 'category':
+        			$orderbySQL = ' policy_categories.name';
+        			break;
+    			case 'premium':
+        			$orderbySQL = ' policies.premium';
+        			break;
+    			case 'type':
+        			$orderbySQL = ' policy_business_types.name';
+        			break;
+    			case 'soldby':
+        			$orderbySQL = ' users.user_last_name';
+        			break;
+    			case 'source':
+        			$orderbySQL = ' policy_source_types.name';
+        			break;
+    			case 'length':
+        			$orderbySQL = ' policy_length_types.name';
+        			break;
+    			case 'written':
+        			$orderbySQL = ' policies.date_written';
+        			break;
+    			case 'issued':
+        			$orderbySQL = ' policies.date_issued';
+        			break;
+    			case 'effective':
+        			$orderbySQL = ' policies.date_effective';
+        			break;
+		}
+		
+		$sql = "SELECT policies.id, policies.first, policies.last, policies.description, policy_categories.name AS cat_name, policies.premium, policy_business_types.name AS busi_name, users.user_first_name, users.user_last_name, policy_source_types.name AS src_name, policy_length_types.name AS len_name, policies.notes, policies.date_written, policies.date_issued, policies.date_effective FROM policies, policy_categories, policy_business_types, policy_source_types, policy_length_types, users WHERE policies.active = 1 AND policy_categories.id = policies.category_id AND policy_business_types.id = policies.business_type_id AND users.user_id = policies.user_id AND policy_source_types.id = policies.source_type_id AND policy_length_types.id = policies.length_type_id".$addedSQL." ORDER BY".$orderbySQL;
         $query = $this->db->prepare($sql);
         $query->execute();
 
@@ -42,4 +113,5 @@ class PolicyListingModel
 		$query_delete_policy->bindValue(':policy_id', $policy_id, PDO::PARAM_INT);
 		$query_delete_policy->execute();
     }
+
 }

@@ -37,7 +37,7 @@ class App extends Controller
         require 'application/views/_templates/footer.php';
     }
 
-	public function policies($sub = 'index')
+	public function policies($sub = 'index', $param = 'default')
     {
 		// load CSS based on method
 		$css = 'app_style.css';
@@ -47,15 +47,36 @@ class App extends Controller
 
 		// load listing model
 		$policy_listing_model = $this->loadModel('PolicyListingModel');
-		$policy_data = $policy_listing_model->getAllPolicies();
 
-        	// load views.
-        	require 'application/views/_templates/header.php';
-        	require 'application/views/_templates/main_header.php';
-        	require 'application/views/_templates/policy_header.php';
-        	require 'application/views/policies/'.$sub.'.php';
-        	require 'application/views/_templates/footer.php';
+		if ($sub == 'listall' || $sub == 'index') {
+			$policy_data = $policy_listing_model->getAllPolicies('all',$param);
+		} else if ($sub == 'listauto') {
+			$policy_data = $policy_listing_model->getAllPolicies('auto',$param);
+		} else if ($sub == 'listfire') {
+			$policy_data = $policy_listing_model->getAllPolicies('fire',$param);
+		} else if ($sub == 'listlife') {
+			$policy_data = $policy_listing_model->getAllPolicies('life',$param);
+		} else if ($sub == 'listhealth') {
+			$policy_data = $policy_listing_model->getAllPolicies('health',$param);
+		} else if ($sub == 'listdeposit') {
+			$policy_data = $policy_listing_model->getAllPolicies('deposit',$param);
+		} else if ($sub == 'listloan') {
+			$policy_data = $policy_listing_model->getAllPolicies('loan',$param);
+		} else if ($sub == 'listfund') {
+			$policy_data = $policy_listing_model->getAllPolicies('fund',$param);
+		}
 
+		if ($sub == 'index') {
+        		// load views.
+        		require 'application/views/_templates/header.php';
+        		require 'application/views/_templates/main_header.php';
+        		require 'application/views/_templates/policy_header.php';
+        		require 'application/views/policies/index.php';
+        		require 'application/views/_templates/footer.php';
+		} else {
+			// load table view to be refreshed by ajax
+        		require 'application/views/policies/listing.php';
+		}
     }
 
 	public function payroll($sub = 'index')

@@ -3,6 +3,15 @@
 // LOAD
 $(document).ready(function() {
 
+	var currcat = 'listall';
+	$("#statuscat").text('All');
+
+// =============== BEGIN AJAX =============== //
+
+
+
+// =============== END AJAX =============== //
+
 	// HIGHLIGHT MAIN SECTION
 	$("#policies").closest(".main-button").css("background-color","#cccccc");
 	// HIGHLIGHT SUB SECTION
@@ -21,6 +30,9 @@ $(document).ready(function() {
 		$("#deposit").closest(".sub-button").css("background-color","#a20004");
 		$("#loan").closest(".sub-button").css("background-color","#a20004");
 		$("#fund").closest(".sub-button").css("background-color","#a20004");
+		$("#statuscat").text('All');
+		$("#policy-content").load("/app/policies/listall");
+		currcat = 'listall';
 	});
 
 	// AUTO
@@ -34,6 +46,9 @@ $(document).ready(function() {
 		$("#deposit").closest(".sub-button").css("background-color","#a20004");
 		$("#loan").closest(".sub-button").css("background-color","#a20004");
 		$("#fund").closest(".sub-button").css("background-color","#a20004");
+		$("#statuscat").text('Auto');
+		$("#policy-content").load("/app/policies/listauto");
+		currcat = 'listauto';
 	});
 
 	// FIRE
@@ -47,6 +62,9 @@ $(document).ready(function() {
 		$("#deposit").closest(".sub-button").css("background-color","#a20004");
 		$("#loan").closest(".sub-button").css("background-color","#a20004");
 		$("#fund").closest(".sub-button").css("background-color","#a20004");
+		$("#statuscat").text('Fire');
+		$("#policy-content").load("/app/policies/listfire");
+		currcat = 'listfire';
 	});
 
 	// LIFE
@@ -60,6 +78,9 @@ $(document).ready(function() {
 		$("#deposit").closest(".sub-button").css("background-color","#a20004");
 		$("#loan").closest(".sub-button").css("background-color","#a20004");
 		$("#fund").closest(".sub-button").css("background-color","#a20004");
+		$("#statuscat").text('Life');
+		$("#policy-content").load("/app/policies/listlife");
+		currcat = 'listlife';
 	});
 
 	// HEALTH
@@ -73,6 +94,9 @@ $(document).ready(function() {
 		$("#deposit").closest(".sub-button").css("background-color","#a20004");
 		$("#loan").closest(".sub-button").css("background-color","#a20004");
 		$("#fund").closest(".sub-button").css("background-color","#a20004");
+		$("#statuscat").text('Health');
+		$("#policy-content").load("/app/policies/listhealth");
+		currcat = 'listhealth';
 	});
 
 	// DEPOSIT
@@ -86,6 +110,9 @@ $(document).ready(function() {
 		$("#health").closest(".sub-button").css("background-color","#a20004");
 		$("#loan").closest(".sub-button").css("background-color","#a20004");
 		$("#fund").closest(".sub-button").css("background-color","#a20004");
+		$("#statuscat").text('Deposit');
+		$("#policy-content").load("/app/policies/listdeposit");
+		currcat = 'listdeposit';
 	});
 
 	// LOAN
@@ -99,6 +126,9 @@ $(document).ready(function() {
 		$("#health").closest(".sub-button").css("background-color","#a20004");
 		$("#deposit").closest(".sub-button").css("background-color","#a20004");
 		$("#fund").closest(".sub-button").css("background-color","#a20004");
+		$("#statuscat").text('Loan');
+		$("#policy-content").load("/app/policies/listloan");
+		currcat = 'listloan';
 	});
 
 	// FUND
@@ -112,9 +142,66 @@ $(document).ready(function() {
 		$("#health").closest(".sub-button").css("background-color","#a20004");
 		$("#deposit").closest(".sub-button").css("background-color","#a20004");
 		$("#loan").closest(".sub-button").css("background-color","#a20004");
+		$("#statuscat").text('Mutual Fund');
+		$("#policy-content").load("/app/policies/listfund");
+		currcat = 'listfund';
 	});
 
 // =============== END SUB NAV =============== //
+
+// =============== BEGIN SORT NAV =============== //
+
+	// SORTING
+	$("#sortfirst").on("click", function(event) {
+		event.preventDefault();
+		$("#policy-content").load("/app/policies/"+currcat+"/firstname");
+	});
+	$("#sortlast").on("click", function(event) {
+		event.preventDefault();
+		$("#policy-content").load("/app/policies/"+currcat+"/lastname");
+	});
+	$("#sortdesc").on("click", function(event) {
+		event.preventDefault();
+		$("#policy-content").load("/app/policies/"+currcat+"/description");
+	});
+	$("#sortcat").on("click", function(event) {
+		event.preventDefault();
+		$("#policy-content").load("/app/policies/"+currcat+"/category");
+	});
+	$("#sortprem").on("click", function(event) {
+		event.preventDefault();
+		$("#policy-content").load("/app/policies/"+currcat+"/premium");
+	});
+	$("#sorttype").on("click", function(event) {
+		event.preventDefault();
+		$("#policy-content").load("/app/policies/"+currcat+"/type");
+	});
+	$("#sortsold").on("click", function(event) {
+		event.preventDefault();
+		$("#policy-content").load("/app/policies/"+currcat+"/soldby");
+	});
+	$("#sortsrc").on("click", function(event) {
+		event.preventDefault();
+		$("#policy-content").load("/app/policies/"+currcat+"/source");
+	});
+	$("#sortlen").on("click", function(event) {
+		event.preventDefault();
+		$("#policy-content").load("/app/policies/"+currcat+"/length");
+	});
+	$("#sortwdate").on("click", function(event) {
+		event.preventDefault();
+		$("#policy-content").load("/app/policies/"+currcat+"/written");
+	});
+	$("#sortidate").on("click", function(event) {
+		event.preventDefault();
+		$("#policy-content").load("/app/policies/"+currcat+"/issued");
+	});
+	$("#sortedate").on("click", function(event) {
+		event.preventDefault();
+		$("#policy-content").load("/app/policies/"+currcat+"/effective");
+	});
+
+// =============== END SORT NAV =============== //
 
 	// LOAD DATE PICKERS
 	function loadDatePickers(){
