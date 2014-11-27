@@ -18,8 +18,11 @@ class PolicyListingModel
     /**
      * Get ALL policies from database
      */
-    public function getAllPolicies($category = 'all', $orderby = 'default')
+    public function getAllPolicies($category = 'all', $orderby = 'default', $status = '')
     {
+
+//echo "category=[".$category."] orderby=[".$orderby."] status=[".$status."]\n<hr />";
+
 		// set category
 		switch ($category) {
     			case 'all':
@@ -48,50 +51,103 @@ class PolicyListingModel
         			break;
 		}
 
+		if ($status != '') {
+			// set status filter
+			switch ($status) {
+    				case 'written':
+        				$addedSQL .= ' AND policies.renewal = 0 AND policies.date_written IS NOT null';
+        				break;
+    				case 'notissued':
+        				$addedSQL .= ' AND policies.renewal = 0 AND policies.date_issued IS null';
+        				break;
+    				case 'renewal':
+        				$addedSQL .= ' AND policies.renewal = 1';
+        				break;
+			}
+		}
+
 		// set order by
 		switch ($orderby) {
     			case 'default':
         			$orderbySQL = ' policies.date_written, policies.last';
         			break;
     			case 'firstname':
-        			$orderbySQL = ' policies.first';
+        			$orderbySQL = ' policies.first ASC';
+        			break;
+			case 'firstnamedesc':
+        			$orderbySQL = ' policies.first DESC';
         			break;
     			case 'lastname':
-        			$orderbySQL = ' policies.last';
+        			$orderbySQL = ' policies.last ASC';
+        			break;
+    			case 'lastnamedesc':
+        			$orderbySQL = ' policies.last DESC';
         			break;
     			case 'description':
-        			$orderbySQL = ' policies.description';
+        			$orderbySQL = ' policies.description ASC';
+        			break;
+    			case 'descriptiondesc':
+        			$orderbySQL = ' policies.description DESC';
         			break;
     			case 'category':
-        			$orderbySQL = ' policy_categories.name';
+        			$orderbySQL = ' policy_categories.name ASC';
+        			break;
+    			case 'categorydesc':
+        			$orderbySQL = ' policy_categories.name DESC';
         			break;
     			case 'premium':
-        			$orderbySQL = ' policies.premium';
+        			$orderbySQL = ' policies.premium ASC';
+        			break;
+    			case 'premiumdesc':
+        			$orderbySQL = ' policies.premium DESC';
         			break;
     			case 'type':
-        			$orderbySQL = ' policy_business_types.name';
+        			$orderbySQL = ' policy_business_types.name ASC';
+        			break;
+    			case 'typedesc':
+        			$orderbySQL = ' policy_business_types.name DESC';
         			break;
     			case 'soldby':
-        			$orderbySQL = ' users.user_last_name';
+        			$orderbySQL = ' users.user_last_name ASC';
+        			break;
+    			case 'soldbydesc':
+        			$orderbySQL = ' users.user_last_name DESC';
         			break;
     			case 'source':
-        			$orderbySQL = ' policy_source_types.name';
+        			$orderbySQL = ' policy_source_types.name ASC';
+        			break;
+    			case 'sourcedesc':
+        			$orderbySQL = ' policy_source_types.name DESC';
         			break;
     			case 'length':
-        			$orderbySQL = ' policy_length_types.name';
+        			$orderbySQL = ' policy_length_types.name ASC';
+        			break;
+    			case 'lengthdesc':
+        			$orderbySQL = ' policy_length_types.name DESC';
         			break;
     			case 'written':
-        			$orderbySQL = ' policies.date_written';
+        			$orderbySQL = ' policies.date_written ASC';
+        			break;
+    			case 'writtendesc':
+        			$orderbySQL = ' policies.date_written DESC';
         			break;
     			case 'issued':
-        			$orderbySQL = ' policies.date_issued';
+        			$orderbySQL = ' policies.date_issued ASC';
+        			break;
+    			case 'issueddesc':
+        			$orderbySQL = ' policies.date_issued DESC';
         			break;
     			case 'effective':
-        			$orderbySQL = ' policies.date_effective';
+        			$orderbySQL = ' policies.date_effective ASC';
+        			break;
+    			case 'effectivedesc':
+        			$orderbySQL = ' policies.date_effective DESC';
         			break;
 		}
+
+//echo "add=[".$addedSQL."] sort=[".$orderbySQL."]";
 		
-		$sql = "SELECT policies.id, policies.first, policies.last, policies.description, policy_categories.name AS cat_name, policies.premium, policy_business_types.name AS busi_name, users.user_first_name, users.user_last_name, policy_source_types.name AS src_name, policy_length_types.name AS len_name, policies.notes, policies.date_written, policies.date_issued, policies.date_effective FROM policies, policy_categories, policy_business_types, policy_source_types, policy_length_types, users WHERE policies.active = 1 AND policy_categories.id = policies.category_id AND policy_business_types.id = policies.business_type_id AND users.user_id = policies.user_id AND policy_source_types.id = policies.source_type_id AND policy_length_types.id = policies.length_type_id".$addedSQL." ORDER BY".$orderbySQL;
+		$sql = "SELECT policies.id, policies.renewal, policies.first, policies.last, policies.description, policy_categories.name AS cat_name, policies.premium, policy_business_types.name AS busi_name, users.user_first_name, users.user_last_name, policy_source_types.name AS src_name, policy_length_types.name AS len_name, policies.notes, policies.date_written, policies.date_issued, policies.date_effective FROM policies, policy_categories, policy_business_types, policy_source_types, policy_length_types, users WHERE policies.active = 1 AND policy_categories.id = policies.category_id AND policy_business_types.id = policies.business_type_id AND users.user_id = policies.user_id AND policy_source_types.id = policies.source_type_id AND policy_length_types.id = policies.length_type_id".$addedSQL." ORDER BY".$orderbySQL;
         $query = $this->db->prepare($sql);
         $query->execute();
 

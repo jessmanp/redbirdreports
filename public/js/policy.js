@@ -1,5 +1,20 @@
 /* <![CDATA[ */
 
+function resetSortLinks() {
+	// setup array of sort link IDs
+	var sortLinkArray = ["#sortfirst","#sortlast","#sortdesc","#sortcat","#sortprem","#sorttype","#sortsold","#sortsrc","#sortlen","#sortwdate","#sortidate","#sortedate"];
+		
+	// loop over sort links
+		for (var i=0; i < sortLinkArray.length; i++) {
+ 			// reset all sort link classes that do NOT have default class
+			if (!$(sortLinkArray[i]).hasClass("sort-link")) {
+				// swap class back to default
+				$(sortLinkArray[i]).removeClass();
+				$(sortLinkArray[i]).addClass("sort-link");
+			}
+		}
+}
+
 // LOAD
 $(document).ready(function() {
 
@@ -22,6 +37,7 @@ $(document).ready(function() {
 	// VIEW ALL
 	$("#all").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
+		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#auto").closest(".sub-button").css("background-color","#a20004");
 		$("#fire").closest(".sub-button").css("background-color","#a20004");
@@ -38,6 +54,7 @@ $(document).ready(function() {
 	// AUTO
 	$("#auto").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
+		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").css("background-color","#a20004");
 		$("#fire").closest(".sub-button").css("background-color","#a20004");
@@ -54,6 +71,7 @@ $(document).ready(function() {
 	// FIRE
 	$("#fire").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
+		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").css("background-color","#a20004");
 		$("#auto").closest(".sub-button").css("background-color","#a20004");
@@ -70,6 +88,7 @@ $(document).ready(function() {
 	// LIFE
 	$("#life").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
+		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").css("background-color","#a20004");
 		$("#auto").closest(".sub-button").css("background-color","#a20004");
@@ -86,6 +105,7 @@ $(document).ready(function() {
 	// HEALTH
 	$("#health").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
+		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").css("background-color","#a20004");
 		$("#auto").closest(".sub-button").css("background-color","#a20004");
@@ -102,6 +122,7 @@ $(document).ready(function() {
 	// DEPOSIT
 	$("#deposit").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
+		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").css("background-color","#a20004");
 		$("#auto").closest(".sub-button").css("background-color","#a20004");
@@ -118,6 +139,7 @@ $(document).ready(function() {
 	// LOAN
 	$("#loan").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
+		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").css("background-color","#a20004");
 		$("#auto").closest(".sub-button").css("background-color","#a20004");
@@ -134,6 +156,7 @@ $(document).ready(function() {
 	// FUND
 	$("#fund").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
+		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").css("background-color","#a20004");
 		$("#auto").closest(".sub-button").css("background-color","#a20004");
@@ -149,56 +172,203 @@ $(document).ready(function() {
 
 // =============== END SUB NAV =============== //
 
+// =============== BEGIN STATUS NAV =============== //
+
+	// VIEW ALL WRITTEN ONLY
+	$("#allwritten").on("click", function(event) {
+		event.preventDefault();
+		resetSortLinks();
+		$("#policy-content").load("/app/policies/"+currcat+"/allwritten");
+	});
+
+	// VIEW NOT ISSUED ONLY
+	$("#notissued").on("click", function(event) {
+		event.preventDefault();
+		resetSortLinks();
+		$("#policy-content").load("/app/policies/"+currcat+"/notissued");
+	});
+
+	// VIEW ALL PENDING RENEWAL ONLY
+	$("#pendingrenewal").on("click", function(event) {
+		event.preventDefault();
+		resetSortLinks();
+		$("#policy-content").load("/app/policies/"+currcat+"/pendingrenewal");
+	});
+
+// =============== END STATUS NAV =============== //
+
 // =============== BEGIN SORT NAV =============== //
+
+	var order = 'asc';
 
 	// SORTING
 	$("#sortfirst").on("click", function(event) {
 		event.preventDefault();
-		$("#policy-content").load("/app/policies/"+currcat+"/firstname");
+		resetSortLinks();
+		$(this).removeClass();
+		if (order == "desc") {
+    			$(this).addClass('sort-link-desc');
+			$("#policy-content").load("/app/policies/"+currcat+"/firstnamedesc");
+			order = "asc";
+		} else {
+    			$(this).addClass('sort-link-asc');
+			$("#policy-content").load("/app/policies/"+currcat+"/firstname");
+			order = "desc";
+		}
 	});
 	$("#sortlast").on("click", function(event) {
 		event.preventDefault();
-		$("#policy-content").load("/app/policies/"+currcat+"/lastname");
+		resetSortLinks();
+		$(this).removeClass();
+		if (order == "desc") {
+    			$(this).addClass('sort-link-desc');
+			$("#policy-content").load("/app/policies/"+currcat+"/lastnamedesc");
+			order = "asc";
+		} else {
+    			$(this).addClass('sort-link-asc');
+			$("#policy-content").load("/app/policies/"+currcat+"/lastname");
+			order = "desc";
+		}
 	});
 	$("#sortdesc").on("click", function(event) {
 		event.preventDefault();
-		$("#policy-content").load("/app/policies/"+currcat+"/description");
+		resetSortLinks();
+		$(this).removeClass();
+		if (order == "desc") {
+    			$(this).addClass('sort-link-desc');
+			$("#policy-content").load("/app/policies/"+currcat+"/descriptiondesc");
+			order = "asc";
+		} else {
+    			$(this).addClass('sort-link-asc');
+			$("#policy-content").load("/app/policies/"+currcat+"/description");
+			order = "desc";
+		}
 	});
 	$("#sortcat").on("click", function(event) {
 		event.preventDefault();
-		$("#policy-content").load("/app/policies/"+currcat+"/category");
+		resetSortLinks();
+		$(this).removeClass();
+		if (order == "desc") {
+    			$(this).addClass('sort-link-desc');
+			$("#policy-content").load("/app/policies/"+currcat+"/categorydesc");
+			order = "asc";
+		} else {
+    			$(this).addClass('sort-link-asc');
+			$("#policy-content").load("/app/policies/"+currcat+"/category");
+			order = "desc";
+		}
 	});
 	$("#sortprem").on("click", function(event) {
 		event.preventDefault();
-		$("#policy-content").load("/app/policies/"+currcat+"/premium");
+		resetSortLinks();
+		$(this).removeClass();
+		if (order == "desc") {
+    			$(this).addClass('sort-link-desc');
+			$("#policy-content").load("/app/policies/"+currcat+"/premiumdesc");
+			order = "asc";
+		} else {
+    			$(this).addClass('sort-link-asc');
+			$("#policy-content").load("/app/policies/"+currcat+"/premium");
+			order = "desc";
+		}
 	});
 	$("#sorttype").on("click", function(event) {
 		event.preventDefault();
-		$("#policy-content").load("/app/policies/"+currcat+"/type");
+		resetSortLinks();
+		$(this).removeClass();
+		if (order == "desc") {
+    			$(this).addClass('sort-link-desc');
+			$("#policy-content").load("/app/policies/"+currcat+"/typedesc");
+			order = "asc";
+		} else {
+    			$(this).addClass('sort-link-asc');
+			$("#policy-content").load("/app/policies/"+currcat+"/type");
+			order = "desc";
+		}
 	});
 	$("#sortsold").on("click", function(event) {
 		event.preventDefault();
-		$("#policy-content").load("/app/policies/"+currcat+"/soldby");
+		resetSortLinks();
+		$(this).removeClass();
+		if (order == "desc") {
+    			$(this).addClass('sort-link-desc');
+			$("#policy-content").load("/app/policies/"+currcat+"/soldbydesc");
+			order = "asc";
+		} else {
+    			$(this).addClass('sort-link-asc');
+			$("#policy-content").load("/app/policies/"+currcat+"/soldby");
+			order = "desc";
+		}
 	});
 	$("#sortsrc").on("click", function(event) {
 		event.preventDefault();
-		$("#policy-content").load("/app/policies/"+currcat+"/source");
+		resetSortLinks();
+		$(this).removeClass();
+		if (order == "desc") {
+    			$(this).addClass('sort-link-desc');
+			$("#policy-content").load("/app/policies/"+currcat+"/sourcedesc");
+			order = "asc";
+		} else {
+    			$(this).addClass('sort-link-asc');
+			$("#policy-content").load("/app/policies/"+currcat+"/source");
+			order = "desc";
+		}
 	});
 	$("#sortlen").on("click", function(event) {
 		event.preventDefault();
-		$("#policy-content").load("/app/policies/"+currcat+"/length");
+		resetSortLinks();
+		$(this).removeClass();
+		if (order == "desc") {
+    			$(this).addClass('sort-link-desc');
+			$("#policy-content").load("/app/policies/"+currcat+"/lengthdesc");
+			order = "asc";
+		} else {
+    			$(this).addClass('sort-link-asc');
+			$("#policy-content").load("/app/policies/"+currcat+"/length");
+			order = "desc";
+		}
 	});
 	$("#sortwdate").on("click", function(event) {
 		event.preventDefault();
-		$("#policy-content").load("/app/policies/"+currcat+"/written");
+		resetSortLinks();
+		$(this).removeClass();
+		if (order == "desc") {
+    			$(this).addClass('sort-link-desc');
+			$("#policy-content").load("/app/policies/"+currcat+"/writtendesc");
+			order = "asc";
+		} else {
+    			$(this).addClass('sort-link-asc');
+			$("#policy-content").load("/app/policies/"+currcat+"/written");
+			order = "desc";
+		}
 	});
 	$("#sortidate").on("click", function(event) {
 		event.preventDefault();
-		$("#policy-content").load("/app/policies/"+currcat+"/issued");
+		resetSortLinks();
+		$(this).removeClass();
+		if (order == "desc") {
+    			$(this).addClass('sort-link-desc');
+			$("#policy-content").load("/app/policies/"+currcat+"/issueddesc");
+			order = "asc";
+		} else {
+    			$(this).addClass('sort-link-asc');
+			$("#policy-content").load("/app/policies/"+currcat+"/issued");
+			order = "desc";
+		}
 	});
 	$("#sortedate").on("click", function(event) {
 		event.preventDefault();
-		$("#policy-content").load("/app/policies/"+currcat+"/effective");
+		resetSortLinks();
+		$(this).removeClass();
+		if (order == "desc") {
+    			$(this).addClass('sort-link-desc');
+			$("#policy-content").load("/app/policies/"+currcat+"/effectivedesc");
+			order = "asc";
+		} else {
+    			$(this).addClass('sort-link-asc');
+			$("#policy-content").load("/app/policies/"+currcat+"/effective");
+			order = "desc";
+		}
 	});
 
 // =============== END SORT NAV =============== //

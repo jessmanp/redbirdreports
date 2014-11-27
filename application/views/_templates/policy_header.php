@@ -86,14 +86,14 @@
 		</div>
 		<div id="status-area">
 			<div class="status-text">Policy Type: <span id="statuscat" class="status-item"></span></div>
-			<div class="status-text"><a class="status-link" href="#">Written</a>: <span class="status-item">1,465</span></div>
-			<div class="status-text"><a class="status-link" href="#">Not Issued</a>: <span class="status-item">1,235</span></div>
-			<div class="status-text-right"><a class="status-link" href="#">Pending Renewal</a>: <span class="status-item">1,235</span></div>
+			<div class="status-text"><a id="allwritten" class="status-link">Written</a>: <span id="totwritten" class="status-item">0</span></div>
+			<div class="status-text"><a id="notissued" class="status-link">Not Issued</a>: <span id="totnotissued" class="status-item">0</span></div>
+			<div class="status-text-right"><a id="pendingrenewal" class="status-link">Pending Renewal</a>: <span id="totpending" class="status-item">0</span></div>
 			<div style="clear:both;height:5px;"></div>
-			<div class="status-text">Average DTI: <span class="status-item">500</span></div>
-			<div class="status-text">Average Premium: <span class="status-item">$465.00</span></div>
-			<div class="status-text">Total Premium: <span class="status-item">$1,465.00</span></div>
-			<div class="status-text-right">Record(s): <span class="status-item">500,000</span></div>
+			<div class="status-text">Average DTI: <span id="avgdti" class="status-item">0</span></div>
+			<div class="status-text">Average Premium: <span id="avgprem" class="status-item">$0</span></div>
+			<div class="status-text">Total Premium: <span id="totprem" class="status-item">$0</span></div>
+			<div class="status-text-right">Record Count: <span id="rowcnt" class="status-item">0</span></div>
 		</div>
 	</div>
 

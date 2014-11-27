@@ -2,8 +2,8 @@
 <div id="main-header">
 	<div id="menu">
 		<div id="logo"><img src="/public/img/redbird_logo.png" class="home-logo" alt="Red Bird Reports" /></div>
-		<div id="agency-name">My Cool Super Long Agency Name Here and Stuff</div>
-		<div id="user-name">Johnny Middlename Appleseed</div>
+		<div id="agency-name"><?php echo $header_data[0]->agency_name; ?></div>
+		<div id="user-name"><?php echo $header_data[0]->user_first_name; ?> <?php echo $header_data[0]->user_last_name; ?></div>
 		<div id="main-buttons">
 			<div class="main-button">
 				<img id="dashboard" src="/public/img/btn_dashboard.png" class="main-btn-icon" alt="Dashboard" />

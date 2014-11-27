@@ -613,6 +613,7 @@ input[type=radio]:not(old):checked + label > span > span{
 a.status-link,  a.status-link:visited {
 	color:#ffffff;
 	text-decoration:underline;
+	cursor:pointer;
 }
 a.status-link:hover {
 	color:#ffffff;
@@ -678,6 +679,7 @@ a.sort-link-asc,  a.sort-link-asc:visited {
 	font-size:12px;
 	color:#ffffff;
 	text-decoration:underline;
+	cursor:pointer;
 }
 a.sort-link-asc:hover {
 	color:#ffffff;
@@ -696,6 +698,7 @@ a.sort-link-desc,  a.sort-link-desc:visited {
 	font-size:12px;
 	color:#ffffff;
 	text-decoration:underline;
+	cursor:pointer;
 }
 a.sort-link-desc:hover {
 	color:#ffffff;

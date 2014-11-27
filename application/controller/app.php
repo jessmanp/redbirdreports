@@ -10,6 +10,7 @@
  */
 class App extends Controller
 {
+
     /**
      * PAGE: index
      * This method handles what happens when you move to http://yourproject/home/index (which is the default page btw)
@@ -26,6 +27,10 @@ class App extends Controller
 
 	public function dashboard($sub = 'index')
     {
+		// load main model
+		$main_model = $this->loadModel('MainModel');
+		$header_data = $main_model->getHeaderInfo($_SESSION['user_id']);
+
 		// load CSS based on method
 		$css = 'app_style.css';
 		// load jQuery script based on method
@@ -39,6 +44,10 @@ class App extends Controller
 
 	public function policies($sub = 'index', $param = 'default')
     {
+		// load main model
+		$main_model = $this->loadModel('MainModel');
+		$header_data = $main_model->getHeaderInfo($_SESSION['user_id']);
+
 		// load CSS based on method
 		$css = 'app_style.css';
 		// load scripts based on method
@@ -49,21 +58,85 @@ class App extends Controller
 		$policy_listing_model = $this->loadModel('PolicyListingModel');
 
 		if ($sub == 'listall' || $sub == 'index') {
-			$policy_data = $policy_listing_model->getAllPolicies('all',$param);
+			if ($param == 'allwritten') {
+				$policy_data = $policy_listing_model->getAllPolicies('all','default','written');
+			} else if ($param == 'notissued') {
+				$policy_data = $policy_listing_model->getAllPolicies('all','default','notissued');
+			} else if ($param == 'pendingrenewal') {
+				$policy_data = $policy_listing_model->getAllPolicies('all','default','renewal');
+			} else {
+				$policy_data = $policy_listing_model->getAllPolicies('all',$param);
+			}
 		} else if ($sub == 'listauto') {
-			$policy_data = $policy_listing_model->getAllPolicies('auto',$param);
+			if ($param == 'allwritten') {
+				$policy_data = $policy_listing_model->getAllPolicies('auto','default','written');
+			} else if ($param == 'notissued') {
+				$policy_data = $policy_listing_model->getAllPolicies('auto','default','notissued');
+			} else if ($param == 'pendingrenewal') {
+				$policy_data = $policy_listing_model->getAllPolicies('auto','default','renewal');
+			} else {
+				$policy_data = $policy_listing_model->getAllPolicies('auto',$param);
+			}
 		} else if ($sub == 'listfire') {
-			$policy_data = $policy_listing_model->getAllPolicies('fire',$param);
+			if ($param == 'allwritten') {
+				$policy_data = $policy_listing_model->getAllPolicies('fire','default','written');
+			} else if ($param == 'notissued') {
+				$policy_data = $policy_listing_model->getAllPolicies('fire','default','notissued');
+			} else if ($param == 'pendingrenewal') {
+				$policy_data = $policy_listing_model->getAllPolicies('fire','default','renewal');
+			} else {
+				$policy_data = $policy_listing_model->getAllPolicies('fire',$param);
+			}
 		} else if ($sub == 'listlife') {
-			$policy_data = $policy_listing_model->getAllPolicies('life',$param);
+			if ($param == 'allwritten') {
+				$policy_data = $policy_listing_model->getAllPolicies('life','default','written');
+			} else if ($param == 'notissued') {
+				$policy_data = $policy_listing_model->getAllPolicies('life','default','notissued');
+			} else if ($param == 'pendingrenewal') {
+				$policy_data = $policy_listing_model->getAllPolicies('life','default','renewal');
+			} else {
+				$policy_data = $policy_listing_model->getAllPolicies('life',$param);
+			}
 		} else if ($sub == 'listhealth') {
-			$policy_data = $policy_listing_model->getAllPolicies('health',$param);
+			if ($param == 'allwritten') {
+				$policy_data = $policy_listing_model->getAllPolicies('health','default','written');
+			} else if ($param == 'notissued') {
+				$policy_data = $policy_listing_model->getAllPolicies('health','default','notissued');
+			} else if ($param == 'pendingrenewal') {
+				$policy_data = $policy_listing_model->getAllPolicies('health','default','renewal');
+			} else {
+				$policy_data = $policy_listing_model->getAllPolicies('health',$param);
+			}
 		} else if ($sub == 'listdeposit') {
-			$policy_data = $policy_listing_model->getAllPolicies('deposit',$param);
+			if ($param == 'allwritten') {
+				$policy_data = $policy_listing_model->getAllPolicies('deposit','default','written');
+			} else if ($param == 'notissued') {
+				$policy_data = $policy_listing_model->getAllPolicies('deposit','default','notissued');
+			} else if ($param == 'pendingrenewal') {
+				$policy_data = $policy_listing_model->getAllPolicies('deposit','default','renewal');
+			} else {
+				$policy_data = $policy_listing_model->getAllPolicies('deposit',$param);
+			}
 		} else if ($sub == 'listloan') {
-			$policy_data = $policy_listing_model->getAllPolicies('loan',$param);
+			if ($param == 'allwritten') {
+				$policy_data = $policy_listing_model->getAllPolicies('loan','default','written');
+			} else if ($param == 'notissued') {
+				$policy_data = $policy_listing_model->getAllPolicies('loan','default','notissued');
+			} else if ($param == 'pendingrenewal') {
+				$policy_data = $policy_listing_model->getAllPolicies('loan','default','renewal');
+			} else {
+				$policy_data = $policy_listing_model->getAllPolicies('loan',$param);
+			}
 		} else if ($sub == 'listfund') {
-			$policy_data = $policy_listing_model->getAllPolicies('fund',$param);
+			if ($param == 'allwritten') {
+				$policy_data = $policy_listing_model->getAllPolicies('fund','default','written');
+			} else if ($param == 'notissued') {
+				$policy_data = $policy_listing_model->getAllPolicies('fund','default','notissued');
+			} else if ($param == 'pendingrenewal') {
+				$policy_data = $policy_listing_model->getAllPolicies('fund','default','renewal');
+			} else {
+				$policy_data = $policy_listing_model->getAllPolicies('fund',$param);
+			}
 		}
 
 		if ($sub == 'index') {
@@ -81,6 +154,10 @@ class App extends Controller
 
 	public function payroll($sub = 'index')
     {
+		// load main model
+		$main_model = $this->loadModel('MainModel');
+		$header_data = $main_model->getHeaderInfo($_SESSION['user_id']);
+
 		// load CSS based on method
 		$css = 'app_style.css';
 		// load jQuery script based on method
@@ -95,6 +172,10 @@ class App extends Controller
 
 	public function myagency($sub = 'index')
     {
+		// load main model
+		$main_model = $this->loadModel('MainModel');
+		$header_data = $main_model->getHeaderInfo($_SESSION['user_id']);
+
 		// load CSS based on method
 		$css = 'app_style.css';
 		// load jQuery script based on method
@@ -109,6 +190,10 @@ class App extends Controller
 
 	public function support($sub = 'index')
     {
+		// load main model
+		$main_model = $this->loadModel('MainModel');
+		$header_data = $main_model->getHeaderInfo($_SESSION['user_id']);
+
 		// load CSS based on method
 		$css = 'app_style.css';
 		// load jQuery script based on method
