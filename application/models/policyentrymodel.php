@@ -114,7 +114,7 @@ class PolicyEntryModel
     }
 
 	/**
-     * Mark policy as NOT active in the database
+     * Add NEW policy in the database
      */
     public function addPolicy($first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip)
     {
@@ -138,6 +138,35 @@ class PolicyEntryModel
 			return true;
 		}
 	}
+
+
+	/**
+     * Edit EXISTING policy in the database
+     */
+    public function updatePolicy($id,$first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip)
+    {
+		// write new policy data into database
+		$sql = "UPDATE policies SET user_id = :user_id, first = :first, last = :last, description = :description, category_id = :category_id, premium = :premium, business_type_id = :business_type_id, source_type_id = :source_type_id, length_type_id = :length_type_id, notes = :notes, zip_code = :zip_code WHERE id = :id";
+		$query_policy_update = $this->db->prepare($sql);
+		$query_policy_update->bindValue(':id', $id, PDO::PARAM_INT);
+		$query_policy_update->bindValue(':user_id', $sold, PDO::PARAM_INT);
+		$query_policy_update->bindValue(':first', $first, PDO::PARAM_STR);
+		$query_policy_update->bindValue(':last', $last, PDO::PARAM_STR);
+		$query_policy_update->bindValue(':description', $desc, PDO::PARAM_STR);
+		$query_policy_update->bindValue(':category_id', $catr, PDO::PARAM_INT);
+		$query_policy_update->bindValue(':premium', $prem, PDO::PARAM_STR);
+		$query_policy_update->bindValue(':business_type_id', $busi, PDO::PARAM_INT);
+		$query_policy_update->bindValue(':source_type_id', $srct, PDO::PARAM_INT);
+		$query_policy_update->bindValue(':length_type_id', $lent, PDO::PARAM_INT);
+		$query_policy_update->bindValue(':notes', $notes, PDO::PARAM_STR);
+		$query_policy_update->bindValue(':zip_code', $zip, PDO::PARAM_STR);
+		$query_policy_update->execute();
+
+		if ($query_policy_update) {
+			return true;
+		}
+	}
+
 
     /**
      * Mark policy as NOT active in the database

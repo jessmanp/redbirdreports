@@ -20,7 +20,7 @@
 ?>
 			<div class="<?php echo $rowclass; ?>">
 				<div class="col" style="width:2%;">&nbsp;<em><?php echo $rowcnt; ?></em></div>
-				<div class="col" style="width:3%;"><a class="policy-edit-action" data-id="<?php echo $policy->id; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt="Edit" /></a></div>
+				<div class="col" style="width:3%;"><a class="policy-edit-action" data-info="<?php echo $policy->id."','".$policy->first."','".$policy->last."','".$policy->description."','".$policy->category_id."','".$policy->premium."','".$policy->business_type_id."','".$policy->user_id."','".$policy->source_type_id."','".$policy->length_type_id."','".$policy->notes."','".$policy->date_written."','".$policy->date_issued."','".$policy->date_effective."','".$policy->zip_code; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt="Edit" /></a></div>
 				<div class="col" style="width:10%;"><?php echo $policy->first; ?></div>
 				<div class="col" style="width:10%;"><?php echo $policy->last; ?></div>
 				<div class="col" style="width:10%;"><?php if (strlen($policy->description) > 12) { echo '<a class="policy-desc-action" data-desc="'.$policy->description.'">'.substr($policy->description, 0, 12).'&hellip;</a>'; } else { echo $policy->description; } ?></div>
@@ -104,8 +104,26 @@ $(document).ready(function() {
 
 	// OPEN EDIT POLICY WINDOW
 	$('.policy-edit-action').click(function(){
-		var id = $(this).data('id');
-    		openPolicyEditWindow(id);
+		var info = $(this).data('info');
+		var info = info.split("','");
+		// assign values to pass to edit window
+		var id = info[0];
+		var fname = info[1];
+		var lname = info[2];
+		var desc = info[3];
+		var cat = info[4];
+		var prem = info[5];
+		var busi = info[6];
+		var sold = info[7];
+		var src = info[8];
+		var len = info[9];
+		var text = info[10];
+		var dw = info[11];
+		var di = info[12];
+		var de = info[13];
+		var zip = info[14];
+		// do edit
+		openPolicyEditWindow(id,text,fname,lname,desc,prem,zip,cat,busi,sold,src,len,dw,di,de,zip);
 	});
 
 	// OPEN DESCRIPTION TEXT WINDOW

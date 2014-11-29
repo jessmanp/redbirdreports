@@ -82,7 +82,7 @@ class App extends Controller
 			$lent = (int) trim(@$_POST['policy_length_type']);
 			$zip = trim(@$_POST['policy_zip']);
 
-			if (isset($first) && isset($last) && isset($desc) && isset($prem) && isset($notes) && isset($catr) && $catr != 0 && isset($busi) && isset($sold) && isset($srct) && isset($lent) && isset($zip)) {
+			if (isset($first) && isset($last) && isset($desc) && isset($prem) && isset($notes) && isset($catr) && $catr != 0 && isset($busi) && $busi != 0 && isset($sold) && $sold != 0 && isset($srct) && $srct != 0 && isset($lent) && $lent != 0 && isset($zip)) {
 				// load entry model
 				$policy_entry_model = $this->loadModel('PolicyEntryModel');
 				$policy_added = $policy_entry_model->addPolicy($first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip);
@@ -102,6 +102,46 @@ class App extends Controller
 
 	} else if ($sub == 'editrec') {
 
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+
+			if (@$_POST['policy_premium'] == null) {
+				$prem = 0;
+			} else {
+				$prem = number_format(trim(@$_POST['policy_premium']), 2, '.', '');
+			}
+
+			$id = (int) trim(@$_POST['id']);
+			$first = trim(@$_POST['policy_first_name']);
+			$last = trim(@$_POST['policy_last_name']);
+			$desc = trim(@$_POST['policy_description']);
+			$notes = trim(@$_POST['policy_notes']);	
+			$catr = (int) trim(@$_POST['policy_sub_category']);
+			$busi = (int) trim(@$_POST['policy_business_type']);
+			$sold = (int) trim(@$_POST['policy_team_member']);
+			$srct = (int) trim(@$_POST['policy_source_type']);
+			$lent = (int) trim(@$_POST['policy_length_type']);
+			$zip = trim(@$_POST['policy_zip']);
+
+			if (isset($id) && $id != 0 && isset($first) && isset($last) && isset($desc) && isset($prem) && isset($notes) && isset($catr) && $catr != 0 && isset($busi) && $busi != 0 && isset($sold) && $sold != 0 && isset($srct) && $srct != 0 && isset($lent) && $lent != 0 && isset($zip)) {
+				// load entry model
+				$policy_entry_model = $this->loadModel('PolicyEntryModel');
+				$policy_updated = $policy_entry_model->updatePolicy($id,$first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip);
+				if ($policy_updated) {
+					$return['msg'] = 'Success, Policy Updated.';
+				} else {
+					$return['error'] = true;
+					$return['msg'] .= 'Update Failed. Policy Was Not Updated.';
+				}
+			} else {
+				$return['error'] = true;
+				$return['msg'] .= 'Edit Policy Failed. One or More of the Required Fields Was Missing.';
+			}
+ 
+			//Return json encoded results
+			echo json_encode($return);
 
 	} else if ($sub == 'deleterec') {
 			

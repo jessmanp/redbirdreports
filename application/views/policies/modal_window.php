@@ -7,7 +7,7 @@
 	</div>
 	<div id="policy-edit">
 		<div class="policy-message"></div>
-			<form action="/app/policies/addrec" id="policy_entry_form" name="policy_entry_form">
+			<form id="policy_entry_form" name="policy_entry_form">
 			<input type="hidden" id="id" name="id" value="-2" />
 <!-- begin edit left box -->
 		<div class="edit-left-box">
@@ -53,6 +53,7 @@
 				<div class="edit-col">Business Type:</div>
 				<div class="edit-col">
 					<select class="policy-entry-select" id="policy_business_type" name="policy_business_type">
+						<option value="0">- Select -</option>
 <?php foreach ($policy_business_types as $business_types) { ?>
                 			<option value="<?php echo $business_types->id; ?>"><?php echo $business_types->name; ?></option>
 <?php } ?>
@@ -63,6 +64,7 @@
 				<div class="edit-col">Sold By:</div>
 				<div class="edit-col">
 					<select class="policy-entry-select" id="policy_team_member" name="policy_team_member">
+						<option value="0">- Select -</option>
 <?php foreach ($agency_employees as $employee) { ?>
                 			<option value="<?php echo $employee->user_id; ?>"><?php echo $employee->user_first_name.' '.$employee->user_last_name; ?></option>
 <?php } ?>
@@ -73,6 +75,7 @@
 				<div class="edit-col">Lead Source:</div>
 				<div class="edit-col">
 					<select class="policy-entry-select" id="policy_source_type" name="policy_source_type">
+						<option value="0">- Select -</option>
 <?php foreach ($policy_source_types as $source_types) { ?>
                 			<option value="<?php echo $source_types->id; ?>"><?php echo $source_types->name; ?></option>
 <?php } ?>
@@ -83,6 +86,7 @@
 				<div class="edit-col">Policy Length:</div>
 				<div class="edit-col">
 					<select class="policy-entry-select" id="policy_length_type" name="policy_length_type">
+						<option value="0">- Select -</option>
 <?php foreach ($policy_length_types as $length_types) { ?>
                 			<option value="<?php echo $length_types->id; ?>"><?php echo $length_types->name; ?></option>
 <?php } ?>
