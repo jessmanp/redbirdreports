@@ -158,16 +158,4 @@ class PolicyListingModel
         return $query->fetchAll();
     }
 
-  
-    /**
-     * Delete a policy in the database
-     */
-    public function deletePolicy($policy_id)
-    {
-		$sql = "UPDATE policies SET active = 0 WHERE id = :policy_id";
-		$query_delete_policy = $this->db->prepare($sql);
-		$query_delete_policy->bindValue(':policy_id', $policy_id, PDO::PARAM_INT);
-		$query_delete_policy->execute();
-    }
-
 }

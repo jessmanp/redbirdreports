@@ -1,3 +1,9 @@
+<div id="modal"></div>
+<div id="popupmessage">
+	<div id="message"></div>
+	<button class="plain-btn">OK</button>
+	<br /><br />
+</div>
 <!-- begin header area -->
 <div id="main-header">
 	<div id="menu">

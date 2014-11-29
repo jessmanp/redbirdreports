@@ -139,11 +139,21 @@ class App extends Controller
 			}
 		}
 
+		// load entry (add/edit) models
+		$policy_entry_model = $this->loadModel('PolicyEntryModel');
+		$agency_id = $policy_entry_model->getAgencyID($_SESSION['user_id']);
+		$agency_employees = $policy_entry_model->getAllEmployees($agency_id);
+		$policy_categories = $policy_entry_model->getAllCategories(str_replace('list','',$sub));
+		$policy_business_types = $policy_entry_model->getAllBusinessTypes();
+		$policy_source_types = $policy_entry_model->getAllSourceTypes();
+		$policy_length_types = $policy_entry_model->getAllLengthTypes();
+
 		if ($sub == 'index') {
         		// load views.
         		require 'application/views/_templates/header.php';
         		require 'application/views/_templates/main_header.php';
-        		require 'application/views/_templates/policy_header.php';
+			require 'application/views/policies/modal_window.php';
+        		require 'application/views/policies/header.php';
         		require 'application/views/policies/index.php';
         		require 'application/views/_templates/footer.php';
 		} else {

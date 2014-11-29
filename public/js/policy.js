@@ -1,5 +1,58 @@
 /* <![CDATA[ */
 
+// OPEN POPUP WINDOW
+function openWindow(type,message,id,text) {
+
+	var winh = $(window).height();
+	var doch = $(document).height();
+	if (winh > doch) {
+		$("#policy-popup").height(winh);
+	} else {
+		$("#policy-popup").height(doch);
+	}
+	$("#policy-popup").fadeIn();
+				
+	var winw = $(window).width();
+	var neww = (winw/2)-398;
+	var scrolled_val = $(document).scrollTop().valueOf();
+	var newh = (scrolled_val+25);
+	$("#policy-window").css({ "margin-left": neww+"px", "margin-top": "-330px" });
+	$("#policy-window").fadeIn();
+	$(".policy-message").fadeIn();
+	$(".policy-message").text(message);
+	if (type == 'edit') {
+		$("#policy-edit").fadeIn();
+		//$("#policy-edit #icon").html('<img src="/public/img/icon_'+cat+'.png class="policy-entry-icon" />');
+		$("#policy-edit #id").val(id);
+	}
+	if (type == 'text') {
+		$("#policy-text").fadeIn();
+		$(".policy-message").append('<p>'+formatText(text)+'</p>');
+	}
+	if (type == 'delete') {
+		$("#policy-delete").fadeIn();
+		$("#policy-delete #id").val(id);
+	}
+			
+}
+function closeWindow() {
+	$("#policy-popup").fadeOut();
+	$("#policy-window").fadeOut();
+	$(".policy-message").fadeOut();
+	$("#policy-edit").fadeOut();
+	$("#policy-text").fadeOut();
+	$("#policy-delete").fadeOut();
+}
+
+// FORMAT TEXT
+// format text with line braks and links
+function formatText(str) {
+	var regxp = /[\r\n]/g
+	str = str.replace(regxp, "<br />");
+	return str;
+}
+
+// CLEAR ALL SORT CLASSES
 function resetSortLinks() {
 	// setup array of sort link IDs
 	var sortLinkArray = ["#sortfirst","#sortlast","#sortdesc","#sortcat","#sortprem","#sorttype","#sortsold","#sortsrc","#sortlen","#sortwdate","#sortidate","#sortedate"];
@@ -15,17 +68,42 @@ function resetSortLinks() {
 		}
 }
 
+// ADD POLICY
+function openPolicyAddWindow(id) {
+	openWindow('edit','Add New Policy',id,'');
+}
+
+// EDIT POLICY
+function openPolicyEditWindow(id) {
+	openWindow('edit','Edit Policy ',id,'');
+}
+
+// SHOW DESC TEXT IN A WINDOW
+function openPolicyDescWindow(text) {
+	openWindow('text','Policy Description','-1',text);
+}
+
+// SHOW NOTE TEXT IN A WINDOW
+function openPolicyTextWindow(text) {
+	openWindow('text','Policy Notes','-1',text);
+}
+
+// DELETE POLICY
+function doPolicyDelete(id) {
+	openWindow('delete','Delete Policy',id,'');
+}
+
 // LOAD
 $(document).ready(function() {
 
 	var currcat = 'listall';
 	$("#statuscat").text('All');
 
-// =============== BEGIN AJAX =============== //
-
-
-
-// =============== END AJAX =============== //
+	// CLOSE POPUPS
+	$(".plain-btn-close").on("click", function(event) {
+		event.preventDefault();
+		closeWindow();
+	});
 
 	// HIGHLIGHT MAIN SECTION
 	$("#policies").closest(".main-button").css("background-color","#cccccc");
@@ -33,6 +111,12 @@ $(document).ready(function() {
 	$("#all").closest(".sub-button").css("background-color","#000000");
 
 // =============== BEGIN SUB NAV =============== //
+
+	// ADD NEW
+	$("#add").closest(".sub-button").on("click", function(event) {
+		event.preventDefault();
+		openPolicyAddWindow(0);
+	});
 
 	// VIEW ALL
 	$("#all").closest(".sub-button").on("click", function(event) {

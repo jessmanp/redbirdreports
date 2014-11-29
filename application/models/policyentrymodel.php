@@ -31,7 +31,7 @@ class PolicyEntryModel
      */
     public function getAllEmployees($agency_id)
     {
-        $sql = "SELECT users.user_id, users.user_first_name, users.user_last_name FROM users, agencies_users WHERE users.user_id = agencies_users.user_id AND agencies_users.agency_id = ".$agency_id;
+        $sql = "SELECT users.user_id, users.user_first_name, users.user_last_name FROM users, agencies_users WHERE users.user_id = agencies_users.user_id AND agencies_users.agency_id = ".$agency_id." ORDER BY users.user_last_name";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -41,9 +41,40 @@ class PolicyEntryModel
 	/**
      * Get all policy categories from database
      */
-    public function getAllCategories($category_id)
+    public function getAllCategories($category)
     {
-        $sql = "SELECT id,name FROM policy_categories WHERE id = ".$category_id." OR parent_id = ".$category_id;
+		// set category
+		switch ($category) {
+    			case 'index':
+        			$addedSQL = '';
+        			break;
+    			case 'all':
+        			$addedSQL = '';
+        			break;
+    			case 'auto':
+        			$addedSQL = ' WHERE (policy_categories.id = 1 OR policy_categories.parent_id = 1)';
+        			break;
+    			case 'fire':
+        			$addedSQL = ' WHERE (policy_categories.id = 9 OR policy_categories.parent_id = 9)';
+        			break;
+    			case 'life':
+        			$addedSQL = ' WHERE (policy_categories.id = 26 OR policy_categories.parent_id = 26)';
+        			break;
+    			case 'health':
+        			$addedSQL = ' WHERE (policy_categories.id = 40 OR policy_categories.parent_id = 40)';
+        			break;
+    			case 'deposit':
+        			$addedSQL = ' WHERE (policy_categories.id = 58 OR policy_categories.parent_id = 58)';
+        			break;
+    			case 'loan':
+        			$addedSQL = ' WHERE (policy_categories.id = 50 OR policy_categories.parent_id = 50)';
+        			break;
+    			case 'fund':
+        			$addedSQL = ' WHERE (policy_categories.id = 70 OR policy_categories.parent_id = 70)';
+        			break;
+		}
+
+        $sql = "SELECT policy_categories.id,policy_categories.parent_id,policy_categories.name FROM policy_categories".$addedSQL." ORDER BY policy_categories.id,policy_categories.parent_id,policy_categories.name";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -54,7 +85,7 @@ class PolicyEntryModel
      */
     public function getAllBusinessTypes()
     {
-        $sql = "SELECT id,name FROM policy_business_types";
+        $sql = "SELECT id,name FROM policy_business_types ORDER BY name";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -65,7 +96,7 @@ class PolicyEntryModel
      */
     public function getAllSourceTypes()
     {
-        $sql = "SELECT id,name FROM policy_source_types";
+        $sql = "SELECT id,name FROM policy_source_types ORDER BY name";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -76,7 +107,7 @@ class PolicyEntryModel
      */
     public function getAllLengthTypes()
     {
-        $sql = "SELECT id,name FROM policy_length_types";
+        $sql = "SELECT id,name FROM policy_length_types ORDER BY name";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();

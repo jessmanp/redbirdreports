@@ -19,21 +19,21 @@
 ?>
 			<div class="<?php echo $rowclass; ?>">
 				<div class="col" style="width:2%;">&nbsp;<em><?php echo $rowcnt; ?></em></div>
-				<div class="col" style="width:3%;"><a href=""><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt="" data-id="<?php echo $policy->id; ?>" /></a></div>
+				<div class="col" style="width:3%;"><a class="policy-edit-action" data-id="<?php echo $policy->id; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt="Edit" /></a></div>
 				<div class="col" style="width:10%;"><?php echo $policy->first; ?></div>
 				<div class="col" style="width:10%;"><?php echo $policy->last; ?></div>
-				<div class="col" style="width:10%;"><?php echo $policy->description; ?></div>
+				<div class="col" style="width:10%;"><?php if (strlen($policy->description) > 12) { echo '<a class="policy-desc-action" data-desc="'.$policy->description.'">'.substr($policy->description, 0, 12).'&hellip;</a>'; } else { echo $policy->description; } ?></div>
 				<div class="col" style="width:6%;"><?php echo $policy->cat_name; ?></div>
-				<div class="col" style="width:6%;"><?php echo $policy->premium; ?></div>
+				<div class="col" style="width:6%;"><?php echo '$'.number_format($policy->premium, 2); ?></div>
 				<div class="col" style="width:6%;"><?php echo $policy->busi_name; ?></div>
 				<div class="col" style="width:8%;"><?php echo $policy->user_first_name." ".$policy->user_last_name; ?></div>
 				<div class="col" style="width:6%;"><?php echo $policy->src_name; ?></div>
 				<div class="col" style="width:9%;"><?php echo $policy->len_name; ?></div>
-				<div class="col" style="width:4%;"><img src="/public/img/policy_note_btn.png" class="policy-listing-button" alt=""></div>
+				<div class="col" style="width:4%;"><a class="policy-note-action" data-notes="<?php echo $policy->notes; ?>"><img src="/public/img/policy_note_btn.png" class="policy-listing-button" alt="Notes" /></a></div>
 				<div class="col" style="width:6%;"><?php if ($policy->date_written) { echo date('m/d/y',strtotime($policy->date_written)); } else { echo "&nbsp;";} ?></div>
 				<div class="col" style="width:6%;"><?php if ($policy->date_issued) { echo date('m/d/y',strtotime($policy->date_issued)); } else { echo "&nbsp;";} ?></div>
 				<div class="col" style="width:6%;"><?php if ($policy->date_effective) { echo date('m/d/y',strtotime($policy->date_effective)); } else { echo "&nbsp;";} ?></div>
-				<div class="col" style="width:1%;"><a href="#"><img src="/public/img/policy_delete_btn.png" class="policy-listing-button" alt=""></a></div>
+				<div class="col" style="width:1%;"><a class="policy-delete-action" data-id="<?php echo $policy->id; ?>"><img src="/public/img/policy_delete_btn.png" class="policy-listing-button" alt="Delete" /></a></div>
 				<div class="col" style="width:1%;"></div>
 			</div>
 <?php
@@ -80,7 +80,7 @@
   } else {
 ?>
 <br /><br />
-No Results Found.
+No Policies Found.
 <br /><br />
 <?php
 }
@@ -102,6 +102,34 @@ $(document).ready(function() {
 	$("#avgdti").text('<?php echo $avgdti; ?>');
 	$("#avgprem").text('<?php echo $avgpremium; ?>');
 	$("#totprem").text('<?php echo $totalpremium; ?>');
+
+// =============== BEGIN LISTING ACTIONS =============== //
+
+	// OPEN EDIT POLICY WINDOW
+	$('.policy-edit-action').click(function(){
+		var id = $(this).data('id');
+    		openPolicyEditWindow(id);
+	});
+
+	// OPEN DESCRIPTION TEXT WINDOW
+	$('.policy-desc-action').click(function(){
+		var text = $(this).data('desc');
+    		openPolicyDescWindow(text);
+	});
+
+	// OPEN NOTES TEXT WINDOW
+	$('.policy-note-action').click(function(){
+		var text = $(this).data('notes');
+    		openPolicyTextWindow(text);
+	});
+
+	// DELETE PLOICY
+	$('.policy-delete-action').click(function(){
+		var id = $(this).data('id');
+    		doPolicyDelete(id);
+	});
+
+// =============== END LISTING ACTIONS =============== //
 
 });
 </script>
