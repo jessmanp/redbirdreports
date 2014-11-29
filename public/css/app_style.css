@@ -903,8 +903,12 @@ a.policy-desc-action:hover {
 	text-align:left;
 	font-size:14px;
 }
-
-
+#policy-add {
+	display:none;
+}
+#policy-save {
+	display:none;
+}
 
 
 

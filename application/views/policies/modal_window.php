@@ -20,18 +20,18 @@
 			</div>
 			<div class="policy-entry-field">
 				Description: 
-				<input type="text" maxlength="100" style="width:340px;" id="policy_description" name="policy_description" placeholder="Brief Description" value="" />
+				<input type="text" maxlength="100" style="width:340px;" id="policy_description" name="policy_description" placeholder="Enter a Brief Description" value="" />
 			</div>
 			<div class="policy-entry-field">
 				Premium: 
 				<span style="font-size:12px;font-weight:bold;">$</span> <input style="width:50px;" type="text" maxlength="20" id="policy_premium" name="policy_premium" placeholder="0.00" value="" />
-				&nbsp;&nbsp;&nbsp;
-				Optional Zip Code<sup>*</sup>: 
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				Zip Code <em>(Optional)</em>: 
 				<input style="width:50px;" type="text" maxlength="11" id="policy_zip" name="policy_zip" placeholder="90210" value="" />
 			</div>
 			<div class="policy-entry-field">
 				Notes:<br />
-				<textarea style="width:420px;height:45px;" id="policy_notes" name="policy_notes" value=""></textarea>
+				<textarea style="width:420px;height:45px;" id="policy_notes" name="policy_notes" placeholder="Describe this policy or add keywords" value=""></textarea>
 			</div>
 		</div>
 <!-- end edit left box -->
@@ -42,6 +42,7 @@
 				<div class="edit-col">Category:</div>
 				<div class="edit-col">
 					<select class="policy-entry-select" id="policy_sub_category" name="policy_sub_category">
+						<option value="0">- Select -</option>
 <?php foreach ($policy_categories as $category) { ?>
                 			<option value="<?php echo $category->id; ?>"><?php if ($category->parent_id == 0) { echo $category->name; } else { echo '&nbsp;&nbsp;-'.$category->name; } ?></option>
 <?php } ?>
@@ -110,7 +111,7 @@
 			<div style="clear:both;"></div>
 			</form>
 			<br />
-		<button class="plain-btn-close">Cancel</button>&nbsp;&nbsp;&nbsp;<button id="policy-save" class="plain-btn">Save</button>
+		<button class="plain-btn-close">Cancel</button>&nbsp;&nbsp;&nbsp;<button id="policy-add" data-type="add" class="plain-btn">Add</button><button id="policy-save" data-type="edit" class="plain-btn">Save</button>
 	</div>
 	<div id="policy-delete">
 		<div class="policy-message"></div>

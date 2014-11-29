@@ -48,10 +48,18 @@ function openWindow(type,message,id,text) {
 	$("#policy-window").fadeIn();
 	$(".policy-message").fadeIn();
 	$(".policy-message").text(message);
+	if (type == 'add') {
+		$("#policy-edit").fadeIn();
+		$("#policy-edit #id").val(id);
+		$("#policy-save").hide();
+		$("#policy-add").fadeIn();
+	}
 	if (type == 'edit') {
 		$("#policy-edit").fadeIn();
 		//$("#policy-edit #icon").html('<img src="/public/img/icon_'+cat+'.png class="policy-entry-icon" />');
 		$("#policy-edit #id").val(id);
+		$("#policy-add").hide();
+		$("#policy-save").fadeIn();
 	}
 	if (type == 'text') {
 		$("#policy-text").fadeIn();
@@ -98,7 +106,7 @@ function resetSortLinks() {
 
 // ADD POLICY
 function openPolicyAddWindow(id) {
-	openWindow('edit','Add New Policy',id,'');
+	openWindow('add','Add New Policy',id,'');
 }
 
 // EDIT POLICY
@@ -159,6 +167,12 @@ $(document).ready(function() {
 
 // =============== BEGIN ADD/EDIT/DELETE POLICY =============== //
 
+	$("#policy-add").on("click", function(event) {
+		event.preventDefault();
+		$('#policy_entry_form').submit();
+		closeWindow();
+	});
+
 	$("#policy-save").on("click", function(event) {
 		event.preventDefault();
 		$('#policy_entry_form').submit();
@@ -166,6 +180,8 @@ $(document).ready(function() {
 	});
 			
 	$('#policy_entry_form').submit(function(event) {
+
+			if ($("#policy-edit #id").val() == 0) {
                 $.ajax({
 					type: 'POST',
 					url: '/app/policies/addrec',
@@ -188,6 +204,12 @@ $(document).ready(function() {
         					console.log(error);
 				}
                 });
+			} // end if add
+
+			if ($("#policy-edit #id").val() > 0) {
+				alert('do edit here');
+			}
+
 		event.preventDefault();
 	});
 

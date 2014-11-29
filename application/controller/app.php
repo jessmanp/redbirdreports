@@ -65,10 +65,15 @@ class App extends Controller
 			$return['msg'] = '';
 			$return['error'] = false;
 
+			if (@$_POST['policy_premium'] == null) {
+				$prem = 0;
+			} else {
+				$prem = number_format(trim(@$_POST['policy_premium']), 2, '.', '');
+			}
+
 			$first = trim(@$_POST['policy_first_name']);
 			$last = trim(@$_POST['policy_last_name']);
 			$desc = trim(@$_POST['policy_description']);
-			$prem = (int) trim(@$_POST['policy_premium']);
 			$notes = trim(@$_POST['policy_notes']);	
 			$catr = (int) trim(@$_POST['policy_sub_category']);
 			$busi = (int) trim(@$_POST['policy_business_type']);
@@ -77,7 +82,7 @@ class App extends Controller
 			$lent = (int) trim(@$_POST['policy_length_type']);
 			$zip = trim(@$_POST['policy_zip']);
 
-			if (isset($first) && isset($last) && isset($desc) && isset($prem) && isset($notes) && isset($catr) && isset($busi) && isset($sold) && isset($srct) && isset($lent) && isset($zip)) {
+			if (isset($first) && isset($last) && isset($desc) && isset($prem) && isset($notes) && isset($catr) && $catr != 0 && isset($busi) && isset($sold) && isset($srct) && isset($lent) && isset($zip)) {
 				// load entry model
 				$policy_entry_model = $this->loadModel('PolicyEntryModel');
 				$policy_added = $policy_entry_model->addPolicy($first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip);
