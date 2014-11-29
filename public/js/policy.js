@@ -1,6 +1,34 @@
 /* <![CDATA[ */
 
-// OPEN POPUP WINDOW
+// OPEN/CLOSE MESSAGE WINDOW
+function openModal(type,message) {
+			
+	var winh = $(window).height();
+	var doch = $(document).height();
+	if (winh > doch) {
+		$("#modal").height(winh);
+	} else {
+		$("#modal").height(doch);
+	}
+	$("#modal").fadeIn();
+				
+	var winw = $(window).width();
+	var neww = (winw/2)-298;
+	var scrolled_val = $(document).scrollTop().valueOf();
+	var newh = (scrolled_val+25);
+	$("#popupmessage").css({ "margin-left": neww+"px", "margin-top": "-330px" });
+	$("#popupmessage").fadeIn();
+	$("#message").fadeIn();
+	$("#message").html(message);
+			
+}
+function closeModal() {
+	$("#modal").fadeOut();
+	$("#popupmessage").fadeOut();
+	$("#message").fadeOut();
+}
+
+// OPEN/CLOSE POPUP WINDOW
 function openWindow(type,message,id,text) {
 
 	var winh = $(window).height();
@@ -96,6 +124,11 @@ function doPolicyDelete(id) {
 // LOAD
 $(document).ready(function() {
 
+	// CLOSE MODAL WINDOW
+	$("#popupmessage").find(".plain-btn").on("click", function() {
+		closeModal();
+	});
+
 	var currcat = 'listall';
 	$("#statuscat").text('All');
 
@@ -105,10 +138,92 @@ $(document).ready(function() {
 		closeWindow();
 	});
 
+	$("#policy_premium").focusout(function() {
+
+		if($(this).val().indexOf('.')!=-1){         
+            if($(this).val().split(".")[1].length > 2){                
+                if( isNaN( parseFloat( this.value ) ) ) return;
+                this.value = parseFloat(this.value).toFixed(2);
+            }  
+         } 
+
+    		if (isNaN(Number($(this).val()))) {
+        		$(this).val('');
+    		}
+	});
+
 	// HIGHLIGHT MAIN SECTION
 	$("#policies").closest(".main-button").css("background-color","#cccccc");
 	// HIGHLIGHT SUB SECTION
 	$("#all").closest(".sub-button").css("background-color","#000000");
+
+// =============== BEGIN ADD/EDIT/DELETE POLICY =============== //
+
+	$("#policy-save").on("click", function(event) {
+		event.preventDefault();
+		$('#policy_entry_form').submit();
+		closeWindow();
+	});
+			
+	$('#policy_entry_form').submit(function(event) {
+                $.ajax({
+					type: 'POST',
+					url: '/app/policies/addrec',
+					data: $(this).serialize(),
+					dataType: 'json',
+					cache: false,
+        			async: true,
+				success: function (data) {
+						console.log(data);
+						if (data.error == true) {
+							// show returned error msg here
+							openModal('error',data.msg);
+						} else {
+							$("#policy-content").load("/app/policies/"+currcat);
+							// show success message...
+							openModal('info',data.msg);
+						}	
+				},
+					error: function (request, status, error) {
+        					console.log(error);
+				}
+                });
+		event.preventDefault();
+	});
+
+	$("#policy-disable").on("click", function(event) {
+		event.preventDefault();
+		$('#policy_delete_form').submit();
+		closeWindow();
+	});
+			
+	$('#policy_delete_form').submit(function(event) {
+                $.ajax({
+					type: 'POST',
+					url: '/app/policies/deleterec',
+					data: $(this).serialize(),
+					dataType: 'json',
+					cache: false,
+        			async: true,
+				success: function (data) {
+						console.log(data);
+						if (data.error == true) {
+							// show returned error msg here
+							openModal('error',data.msg);
+						} else {
+							$("#policy-content").load("/app/policies/"+currcat);
+							// show success message...
+							openModal('info',data.msg);
+						}	
+				},
+					error: function (request, status, error) {
+        					console.log(error);
+				}
+                });
+		event.preventDefault();
+	});
+
+// =============== END ADD/EDIT/DELETE POLICY =============== //
 
 // =============== BEGIN SUB NAV =============== //
 

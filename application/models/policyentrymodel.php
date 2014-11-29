@@ -113,29 +113,44 @@ class PolicyEntryModel
         return $query->fetchAll();
     }
 
+	/**
+     * Mark policy as NOT active in the database
+     */
+    public function addPolicy($first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip)
+    {
+		// write new policy data into database
+		$sql = "INSERT INTO policies (user_id, first, last, description, category_id, premium, business_type_id, source_type_id, length_type_id, notes, zip_code, date_written) VALUES (:user_id, :first, :last, :description, :category_id, :premium, :business_type_id, :source_type_id, :length_type_id, :notes, :zip_code, now())";
+		$query_policy_insert = $this->db->prepare($sql);
+		$query_policy_insert->bindValue(':user_id', $sold, PDO::PARAM_INT);
+		$query_policy_insert->bindValue(':first', $first, PDO::PARAM_STR);
+		$query_policy_insert->bindValue(':last', $last, PDO::PARAM_STR);
+		$query_policy_insert->bindValue(':description', $desc, PDO::PARAM_STR);
+		$query_policy_insert->bindValue(':category_id', $catr, PDO::PARAM_INT);
+		$query_policy_insert->bindValue(':premium', $prem, PDO::PARAM_STR);
+		$query_policy_insert->bindValue(':business_type_id', $busi, PDO::PARAM_INT);
+		$query_policy_insert->bindValue(':source_type_id', $srct, PDO::PARAM_INT);
+		$query_policy_insert->bindValue(':length_type_id', $lent, PDO::PARAM_INT);
+		$query_policy_insert->bindValue(':notes', $notes, PDO::PARAM_STR);
+		$query_policy_insert->bindValue(':zip_code', $zip, PDO::PARAM_STR);
+		$query_policy_insert->execute();
 
-
-
-
-
-
+		if ($query_policy_insert) {
+			return true;
+		}
+	}
 
     /**
-     * Add a song to database
-     * @param string $artist Artist
-     * @param string $track Track
-     * @param string $link Link
+     * Mark policy as NOT active in the database
      */
-    public function addSong($artist, $track, $link)
+    public function deletePolicy($id)
     {
-        // clean the input from javascript code for example
-        $artist = strip_tags($artist);
-        $track = strip_tags($track);
-        $link = strip_tags($link);
-
-        $sql = "INSERT INTO song (artist, track, link) VALUES (:artist, :track, :link)";
+        $sql = "UPDATE policies SET active = 0 WHERE id = :id";
         $query = $this->db->prepare($sql);
-        $query->execute(array(':artist' => $artist, ':track' => $track, ':link' => $link));
+        $query->execute(array(':id' => $id));
+
+		if ($query) {
+			return true;
+		}
     }
 
 

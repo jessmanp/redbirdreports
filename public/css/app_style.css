@@ -42,7 +42,7 @@ body	{
 }
 #popupmessage {
 	display:none;
-	position:absolute;
+	position:fixed;
 	z-index:101;
 	width:600px;
 	text-align:center;
@@ -96,7 +96,6 @@ body	{
 	font-weight:bold;
 	min-height:25px;
 	padding:25px 25px 10px 25px;
-	text-transform:capitalize;
 }
 .policy-message p {
 	text-align:left;

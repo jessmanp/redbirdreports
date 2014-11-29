@@ -57,6 +57,75 @@ class App extends Controller
 		// load listing model
 		$policy_listing_model = $this->loadModel('PolicyListingModel');
 
+	// do delete
+	if ($sub == 'addrec') {
+			
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+
+			$first = trim(@$_POST['policy_first_name']);
+			$last = trim(@$_POST['policy_last_name']);
+			$desc = trim(@$_POST['policy_description']);
+			$prem = (int) trim(@$_POST['policy_premium']);
+			$notes = trim(@$_POST['policy_notes']);	
+			$catr = (int) trim(@$_POST['policy_sub_category']);
+			$busi = (int) trim(@$_POST['policy_business_type']);
+			$sold = (int) trim(@$_POST['policy_team_member']);
+			$srct = (int) trim(@$_POST['policy_source_type']);
+			$lent = (int) trim(@$_POST['policy_length_type']);
+			$zip = trim(@$_POST['policy_zip']);
+
+			if (isset($first) && isset($last) && isset($desc) && isset($prem) && isset($notes) && isset($catr) && isset($busi) && isset($sold) && isset($srct) && isset($lent) && isset($zip)) {
+				// load entry model
+				$policy_entry_model = $this->loadModel('PolicyEntryModel');
+				$policy_added = $policy_entry_model->addPolicy($first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip);
+				if ($policy_added) {
+					$return['msg'] = 'Success, Policy Added.';
+				} else {
+					$return['error'] = true;
+					$return['msg'] .= 'Insert Failed. Policy Was Not Added.';
+				}
+			} else {
+				$return['error'] = true;
+				$return['msg'] .= 'Add Policy Failed. One or More of the Required Fields Was Missing.';
+			}
+ 
+			//Return json encoded results
+			echo json_encode($return);
+
+	} else if ($sub == 'editrec') {
+
+
+	} else if ($sub == 'deleterec') {
+			
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+
+			$delID = @$_POST['id'];
+			if (isset($delID) && is_numeric($delID)) {
+				// load entry model
+				$policy_entry_model = $this->loadModel('PolicyEntryModel');
+				$policy_deleted = $policy_entry_model->deletePolicy($delID);
+				if ($policy_deleted) {
+					$return['msg'] = 'Success, Policy Erased.';
+				} else {
+					$return['error'] = true;
+					$return['msg'] .= 'Erase Failed. Policy Was Not Erased.';
+				}
+			} else {
+				$return['error'] = true;
+				$return['msg'] .= 'Erase Failed. Policy ID is empty.';
+			}
+ 
+			//Return json encoded results
+			echo json_encode($return);
+
+	} else {
+
 		if ($sub == 'listall' || $sub == 'index') {
 			if ($param == 'allwritten') {
 				$policy_data = $policy_listing_model->getAllPolicies('all','default','written');
@@ -160,6 +229,9 @@ class App extends Controller
 			// load table view to be refreshed by ajax
         		require 'application/views/policies/listing.php';
 		}
+
+	} //end if add/edit/delete
+
     }
 
 	public function payroll($sub = 'index')

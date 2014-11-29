@@ -7,7 +7,7 @@
 	</div>
 	<div id="policy-edit">
 		<div class="policy-message"></div>
-			<form id="policy_entry_form" name="policy_entry_form">
+			<form action="/app/policies/addrec" id="policy_entry_form" name="policy_entry_form">
 			<input type="hidden" id="id" name="id" value="-2" />
 <!-- begin edit left box -->
 		<div class="edit-left-box">
@@ -25,10 +25,13 @@
 			<div class="policy-entry-field">
 				Premium: 
 				<span style="font-size:12px;font-weight:bold;">$</span> <input style="width:50px;" type="text" maxlength="20" id="policy_premium" name="policy_premium" placeholder="0.00" value="" />
+				&nbsp;&nbsp;&nbsp;
+				Optional Zip Code<sup>*</sup>: 
+				<input style="width:50px;" type="text" maxlength="11" id="policy_zip" name="policy_zip" placeholder="90210" value="" />
 			</div>
 			<div class="policy-entry-field">
 				Notes:<br />
-				<textarea style="width:420px;height:45px;" id="policy_first_name" name="policy_first_name" value=""></textarea>
+				<textarea style="width:420px;height:45px;" id="policy_notes" name="policy_notes" value=""></textarea>
 			</div>
 		</div>
 <!-- end edit left box -->
@@ -112,7 +115,7 @@
 	<div id="policy-delete">
 		<div class="policy-message"></div>
 			Are you sure you want to &quot;ERASE&quot; this Policy?<br /><br />Click &quot;Cancel&quot; if you want to keep this policy.<br /><br />
-			<form id="" name="">
+			<form id="policy_delete_form" name="policy_delete_form">
 			<input type="hidden" id="id" name="id" value="-2" />
 			</form>
 			<br />
