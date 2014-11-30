@@ -57,15 +57,12 @@
 				<button id="last_two_years" data-dates="<?php echo $last_two_years.".a"; ?>" class="pre-dates-btn">Last 2 Years</button>
 				<button id="all_time" class="pre-dates-btn">All Time</button>
 			</div>
-			<form name="search-dates-form" action="" method="post">
+			<form id="search_text_form" name="search_text_form">
 				<div class="date-pickers">&nbsp;Date Range:</div>
 				<input id="datepick1" name="datepick1" placeholder="" />
 				<input id="datepick2" name="datepick2" placeholder="" />
-			</form>
-			<form name="search-test-form" action="" method="post">
 				<input id="field" name="field" type="text" placeholder="Search" />
 				<button id="submit"><img src="/public/img/btn_search.png" class="search-btn-icon" alt="Search" /></button>
-			</form>
 			<button id="advanced-search">Advanced Search<img src="/public/img/btn_advanced_search.png" class="search-btn-icon" alt="Advanced Search" /></button>
 			<div id="filter-container">
 				<div class="filter-checkboxes">
@@ -83,6 +80,7 @@
 				<input type="checkbox" id="effective" name="effective" value="1"><label for="effective"><span><span></span></span>Date Effective</label><br />
 				</div>
 			</div>
+			</form>
 		</div>
 		<div id="status-area">
 			<div class="status-text">Policy Type: <span id="statuscat" class="status-item"></span></div>

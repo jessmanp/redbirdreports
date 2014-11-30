@@ -181,6 +181,16 @@ $(document).ready(function() {
         		$(this).val('');
     		}
 	});
+	
+	$("#field").focusout(function() {
+	
+		var regex = new RegExp("^[a-zA-Z0-9 ]+$");
+    	var str = $(this).val();
+    	if (!regex.test(str)) {
+        	$(this).val('');
+    	}
+    	
+	});
 
 	// HIGHLIGHT MAIN SECTION
 	$("#policies").closest(".main-button").css("background-color","#cccccc");
@@ -305,13 +315,13 @@ $(document).ready(function() {
 		$("#datepick2").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
-		$("#auto").closest(".sub-button").css("background-color","#a20004");
-		$("#fire").closest(".sub-button").css("background-color","#a20004");
-		$("#life").closest(".sub-button").css("background-color","#a20004");
-		$("#health").closest(".sub-button").css("background-color","#a20004");
-		$("#deposit").closest(".sub-button").css("background-color","#a20004");
-		$("#loan").closest(".sub-button").css("background-color","#a20004");
-		$("#fund").closest(".sub-button").css("background-color","#a20004");
+		$("#auto").closest(".sub-button").removeAttr("style");
+		$("#fire").closest(".sub-button").removeAttr("style");
+		$("#life").closest(".sub-button").removeAttr("style");
+		$("#health").closest(".sub-button").removeAttr("style");
+		$("#deposit").closest(".sub-button").removeAttr("style");
+		$("#loan").closest(".sub-button").removeAttr("style");
+		$("#fund").closest(".sub-button").removeAttr("style");
 		$("#statuscat").text('All');
 		$("#policy-content").load("/app/policies/listall");
 		currcat = 'listall';
@@ -324,13 +334,13 @@ $(document).ready(function() {
 		$("#datepick2").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
-		$("#all").closest(".sub-button").css("background-color","#a20004");
-		$("#fire").closest(".sub-button").css("background-color","#a20004");
-		$("#life").closest(".sub-button").css("background-color","#a20004");
-		$("#health").closest(".sub-button").css("background-color","#a20004");
-		$("#deposit").closest(".sub-button").css("background-color","#a20004");
-		$("#loan").closest(".sub-button").css("background-color","#a20004");
-		$("#fund").closest(".sub-button").css("background-color","#a20004");
+		$("#all").closest(".sub-button").removeAttr("style");
+		$("#fire").closest(".sub-button").removeAttr("style");
+		$("#life").closest(".sub-button").removeAttr("style");
+		$("#health").closest(".sub-button").removeAttr("style");
+		$("#deposit").closest(".sub-button").removeAttr("style");
+		$("#loan").closest(".sub-button").removeAttr("style");
+		$("#fund").closest(".sub-button").removeAttr("style");
 		$("#statuscat").text('Auto');
 		$("#policy-content").load("/app/policies/listauto");
 		currcat = 'listauto';
@@ -343,13 +353,13 @@ $(document).ready(function() {
 		$("#datepick2").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
-		$("#all").closest(".sub-button").css("background-color","#a20004");
-		$("#auto").closest(".sub-button").css("background-color","#a20004");
-		$("#life").closest(".sub-button").css("background-color","#a20004");
-		$("#health").closest(".sub-button").css("background-color","#a20004");
-		$("#deposit").closest(".sub-button").css("background-color","#a20004");
-		$("#loan").closest(".sub-button").css("background-color","#a20004");
-		$("#fund").closest(".sub-button").css("background-color","#a20004");
+		$("#all").closest(".sub-button").removeAttr("style");
+		$("#auto").closest(".sub-button").removeAttr("style");
+		$("#life").closest(".sub-button").removeAttr("style");
+		$("#health").closest(".sub-button").removeAttr("style");
+		$("#deposit").closest(".sub-button").removeAttr("style");
+		$("#loan").closest(".sub-button").removeAttr("style");
+		$("#fund").closest(".sub-button").removeAttr("style");
 		$("#statuscat").text('Fire');
 		$("#policy-content").load("/app/policies/listfire");
 		currcat = 'listfire';
@@ -362,13 +372,13 @@ $(document).ready(function() {
 		$("#datepick2").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
-		$("#all").closest(".sub-button").css("background-color","#a20004");
-		$("#auto").closest(".sub-button").css("background-color","#a20004");
-		$("#fire").closest(".sub-button").css("background-color","#a20004");
-		$("#health").closest(".sub-button").css("background-color","#a20004");
-		$("#deposit").closest(".sub-button").css("background-color","#a20004");
-		$("#loan").closest(".sub-button").css("background-color","#a20004");
-		$("#fund").closest(".sub-button").css("background-color","#a20004");
+		$("#all").closest(".sub-button").removeAttr("style");
+		$("#auto").closest(".sub-button").removeAttr("style");
+		$("#fire").closest(".sub-button").removeAttr("style");
+		$("#health").closest(".sub-button").removeAttr("style");
+		$("#deposit").closest(".sub-button").removeAttr("style");
+		$("#loan").closest(".sub-button").removeAttr("style");
+		$("#fund").closest(".sub-button").removeAttr("style");
 		$("#statuscat").text('Life');
 		$("#policy-content").load("/app/policies/listlife");
 		currcat = 'listlife';
@@ -381,13 +391,13 @@ $(document).ready(function() {
 		$("#datepick2").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
-		$("#all").closest(".sub-button").css("background-color","#a20004");
-		$("#auto").closest(".sub-button").css("background-color","#a20004");
-		$("#fire").closest(".sub-button").css("background-color","#a20004");
-		$("#life").closest(".sub-button").css("background-color","#a20004");
-		$("#deposit").closest(".sub-button").css("background-color","#a20004");
-		$("#loan").closest(".sub-button").css("background-color","#a20004");
-		$("#fund").closest(".sub-button").css("background-color","#a20004");
+		$("#all").closest(".sub-button").removeAttr("style");
+		$("#auto").closest(".sub-button").removeAttr("style");
+		$("#fire").closest(".sub-button").removeAttr("style");
+		$("#life").closest(".sub-button").removeAttr("style");
+		$("#deposit").closest(".sub-button").removeAttr("style");
+		$("#loan").closest(".sub-button").removeAttr("style");
+		$("#fund").closest(".sub-button").removeAttr("style");
 		$("#statuscat").text('Health');
 		$("#policy-content").load("/app/policies/listhealth");
 		currcat = 'listhealth';
@@ -400,13 +410,13 @@ $(document).ready(function() {
 		$("#datepick2").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
-		$("#all").closest(".sub-button").css("background-color","#a20004");
-		$("#auto").closest(".sub-button").css("background-color","#a20004");
-		$("#fire").closest(".sub-button").css("background-color","#a20004");
-		$("#life").closest(".sub-button").css("background-color","#a20004");
-		$("#health").closest(".sub-button").css("background-color","#a20004");
-		$("#loan").closest(".sub-button").css("background-color","#a20004");
-		$("#fund").closest(".sub-button").css("background-color","#a20004");
+		$("#all").closest(".sub-button").removeAttr("style");
+		$("#auto").closest(".sub-button").removeAttr("style");
+		$("#fire").closest(".sub-button").removeAttr("style");
+		$("#life").closest(".sub-button").removeAttr("style");
+		$("#health").closest(".sub-button").removeAttr("style");
+		$("#loan").closest(".sub-button").removeAttr("style");
+		$("#fund").closest(".sub-button").removeAttr("style");
 		$("#statuscat").text('Deposit');
 		$("#policy-content").load("/app/policies/listdeposit");
 		currcat = 'listdeposit';
@@ -419,13 +429,13 @@ $(document).ready(function() {
 		$("#datepick2").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
-		$("#all").closest(".sub-button").css("background-color","#a20004");
-		$("#auto").closest(".sub-button").css("background-color","#a20004");
-		$("#fire").closest(".sub-button").css("background-color","#a20004");
-		$("#life").closest(".sub-button").css("background-color","#a20004");
-		$("#health").closest(".sub-button").css("background-color","#a20004");
-		$("#deposit").closest(".sub-button").css("background-color","#a20004");
-		$("#fund").closest(".sub-button").css("background-color","#a20004");
+		$("#all").closest(".sub-button").removeAttr("style");
+		$("#auto").closest(".sub-button").removeAttr("style");
+		$("#fire").closest(".sub-button").removeAttr("style");
+		$("#life").closest(".sub-button").removeAttr("style");
+		$("#health").closest(".sub-button").removeAttr("style");
+		$("#deposit").closest(".sub-button").removeAttr("style");
+		$("#fund").closest(".sub-button").removeAttr("style");
 		$("#statuscat").text('Loan');
 		$("#policy-content").load("/app/policies/listloan");
 		currcat = 'listloan';
@@ -438,13 +448,13 @@ $(document).ready(function() {
 		$("#datepick2").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
-		$("#all").closest(".sub-button").css("background-color","#a20004");
-		$("#auto").closest(".sub-button").css("background-color","#a20004");
-		$("#fire").closest(".sub-button").css("background-color","#a20004");
-		$("#life").closest(".sub-button").css("background-color","#a20004");
-		$("#health").closest(".sub-button").css("background-color","#a20004");
-		$("#deposit").closest(".sub-button").css("background-color","#a20004");
-		$("#loan").closest(".sub-button").css("background-color","#a20004");
+		$("#all").closest(".sub-button").removeAttr("style");
+		$("#auto").closest(".sub-button").removeAttr("style");
+		$("#fire").closest(".sub-button").removeAttr("style");
+		$("#life").closest(".sub-button").removeAttr("style");
+		$("#health").closest(".sub-button").removeAttr("style");
+		$("#deposit").closest(".sub-button").removeAttr("style");
+		$("#loan").closest(".sub-button").removeAttr("style");
 		$("#statuscat").text('Mutual Fund');
 		$("#policy-content").load("/app/policies/listfund");
 		currcat = 'listfund';
@@ -820,6 +830,178 @@ $(document).ready(function() {
 	});
 
 // =============== END PREDEFINED DATES =============== //
+
+// =============== BEGIN SEARCH TEXT =============== //
+
+	$("#submit").on("click", function(event) {
+		event.preventDefault();
+		$("#search_text_form").submit();
+	});
+
+	$("#search_text_form").submit(function(event) {
+		if ($("#datepick1").val() != '' && $("#datepick2").val() != '') {
+			// do date range searches
+			if ($("#field").val() != '') {
+				var text = $("#field").val().replace(/ /g, "-");
+				var phrase = text+".a";
+			} else {
+				var phrase = '';
+			}
+			var datetype = "any";
+			// format dates for link
+			var sdate = $("#datepick1").val().replace(/\//g, "-");
+			var edate = $("#datepick2").val().replace(/\//g, "-");
+			if ($("#written").prop('checked') === true && $("#issued").prop('checked') === false && $("#effective").prop('checked') === false) {
+				datetype = ".w";
+			}
+			if ($("#issued").prop('checked') === true && $("#written").prop('checked') === false && $("#effective").prop('checked') === false) {
+				datetype = ".i";
+			}
+			if ($("#effective").prop('checked') === true && $("#written").prop('checked') === false && $("#issued").prop('checked') === false) {
+				datetype = ".e";
+			}
+			if ($("#written").prop('checked') === true && $("#issued").prop('checked') === true && $("#effective").prop('checked') === false) {
+				datetype = ".wi";
+			}
+			if ($("#written").prop('checked') === true && $("#effective").prop('checked') === true && $("#issued").prop('checked') === false) {
+				datetype = ".we";
+			}
+			if ($("#effective").prop('checked') === true && $("#issued").prop('checked') === true && $("#written").prop('checked') === false) {
+				datetype = ".ei";
+			}
+			if ($("#written").prop('checked') === true && $("#issued").prop('checked') === true && $("#effective").prop('checked') === true) {
+				datetype = ".a";
+			}
+			var dateRange = sdate+"."+edate+datetype;
+			if (datetype == 'any') {
+				var path = "/app/policies/"+currcat+"/default/any/"+phrase;
+			} else {
+				var path = "/app/policies/"+currcat+"/default/"+dateRange+"/"+phrase;
+			}
+			$("#policy-content").load(path);
+		} else {
+			// do keyword searches
+			var type = '';
+			if ($("#field").val() != '') {
+				var text = $("#field").val().replace(/ /g, "-");
+				type = ".z";
+				var phrase = text;
+			} else {
+				var phrase = '';
+			}
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#premium").prop('checked') === true && $("#notes").prop('checked') === true) {
+				type = ".a";
+			}
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#premium").prop('checked') === false && $("#notes").prop('checked') === false) {
+				type = ".f";
+			}
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#premium").prop('checked') === false && $("#notes").prop('checked') === false) {
+				type = ".l";
+			}
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#premium").prop('checked') === false && $("#notes").prop('checked') === false) {
+				type = ".d";
+			}
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#premium").prop('checked') === true && $("#notes").prop('checked') === false) {
+				type = ".p";
+			}
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#premium").prop('checked') === false && $("#notes").prop('checked') === true) {
+				type = ".n";
+			}
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#premium").prop('checked') === false && $("#notes").prop('checked') === false) {
+				type = ".fl";
+			}
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#premium").prop('checked') === false && $("#notes").prop('checked') === false) {
+				type = ".fd";
+			}
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#premium").prop('checked') === true && $("#notes").prop('checked') === false) {
+				type = ".fp";
+			}
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#premium").prop('checked') === false && $("#notes").prop('checked') === true) {
+				type = ".fn";
+			}
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#premium").prop('checked') === false && $("#notes").prop('checked') === false) {
+				type = ".ld";
+			}
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#premium").prop('checked') === true && $("#notes").prop('checked') === false) {
+				type = ".lp";
+			}
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#premium").prop('checked') === false && $("#notes").prop('checked') === true) {
+				type = ".ln";
+			}
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#premium").prop('checked') === true && $("#notes").prop('checked') === false) {
+				type = ".dp";
+			}
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#premium").prop('checked') === false && $("#notes").prop('checked') === true) {
+				type = ".dn";
+			}
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#premium").prop('checked') === true && $("#notes").prop('checked') === true) {
+				type = ".pn";
+			}
+			phrase = phrase+type;
+			var path = "/app/policies/"+currcat+"/default/any/"+phrase;
+			alert(path);
+			$("#policy-content").load(path);
+		}
+	});
+	
+	// turn on all text fields by default
+	$("#first").prop('checked', true);
+	$("#last").prop('checked', true);
+	$("#description").prop('checked', true);
+	$("#premium").prop('checked', true);
+	$("#notes").prop('checked', true);
+	
+	// turn on all dates by default
+	$("#written").prop('checked', true);
+	$("#issued").prop('checked', true);
+	$("#effective").prop('checked', true);
+
+// =============== END SEARCH TEXT =============== //
+
+// =============== BEGIN SEARCH DATES =============== //
+
+/*
+	$("#written").on("click", function(event) {
+		if ($("#datepick1").val() != '' && $("#datepick2").val() != '') {
+			$("#issued").prop('checked', false);
+			$("#effective").prop('checked', false);
+			// format dates for link
+			var sdate = $("#datepick1").val().replace(/\//g, "-");
+			var edate = $("#datepick2").val().replace(/\//g, "-");
+			var dateRange = sdate+"."+edate+".w";
+			$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+   			$("#filter-container").toggle();
+		}
+	});
+
+	$("#issued").on("click", function(event) {
+		if ($("#datepick1").val() != '' && $("#datepick2").val() != '') {
+			$("#written").prop('checked', false);
+			$("#effective").prop('checked', false);
+			// format dates for link
+			var sdate = $("#datepick1").val().replace(/\//g, "-");
+			var edate = $("#datepick2").val().replace(/\//g, "-");
+			var dateRange = sdate+"."+edate+".i";
+			$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+   			$("#filter-container").toggle();
+		}
+	});
+
+	$("#effective").on("click", function(event) {
+		if ($("#datepick1").val() != '' && $("#datepick2").val() != '') {
+			$("#written").prop('checked', false);
+			$("#issued").prop('checked', false);
+			// format dates for link
+			var sdate = $("#datepick1").val().replace(/\//g, "-");
+			var edate = $("#datepick2").val().replace(/\//g, "-");
+			var dateRange = sdate+"."+edate+".e";
+			$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+   			$("#filter-container").toggle();
+		}
+	});
+*/
+
+// =============== END SEARCH DATES =============== //
 
 	// LOAD DATE PICKERS
 	function loadDatePickers(){

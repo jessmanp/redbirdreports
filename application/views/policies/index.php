@@ -51,11 +51,11 @@
 			// track total days
 			$days = $difference->d;
 			$totaldays = ($avgdti+$days);
+			// do average calc
+			$avgdti = round(($totaldays/$rowswithdays));
 		} else {
 			$avgdti = 0;
 		}
-		// do average calc
-		$avgdti = round(($totaldays/$rowswithdays));
 		
 		if ($policy->premium != null) {
 			$rowswithpremium++;

@@ -10,73 +10,73 @@ class MainModel
 
 		function this_week($date) {
 		  $ts = strtotime($date);
-		  $start = (date('w', $ts) == 0) ? $ts : strtotime('last monday', $ts);
+		  $start = strtotime('last monday', $ts);
 		  return array(date('m-d-Y', $start), date('m-d-Y', strtotime('next sunday', $start)));
 		}
 
 		function last_week($date) {
 		  $ts = strtotime($date);
-		  $start = (date('w', $ts) == 0) ? $ts : strtotime('monday last week', $ts);
-		  return array(date('m-d-Y', $start), date('m-d-Y', strtotime('last sunday', $start)));
+		  $start = strtotime('monday 1 week ago', $ts);
+		  return array(date('m-d-Y', $start), date('m-d-Y', strtotime('+6 days', $start)));
 		}
 
 		function this_month($date) {
 		  $ts = strtotime($date);
-		  $start = (date('w', $ts) == 0) ? $ts : strtotime('first day of this month', $ts);
+		  $start = strtotime('first day of this month', $ts);
 		  return array(date('m-d-Y', $start), date('m-d-Y', strtotime('last day of this month', $start)));
 		}
 
 		function last_month($date) {
 		  $ts = strtotime($date);
-		  $start = (date('w', $ts) == 0) ? $ts : strtotime('first day of previous month', $ts);
+		  $start = strtotime('first day of previous month', $ts);
 		  return array(date('m-d-Y', $start), date('m-d-Y', strtotime('last day of this month', $start)));
 		}
 
 		function this_quarter($date) {
 		  $ts = strtotime($date);
-		  $start = (date('w', $ts) == 0) ? $ts : strtotime('first day of last month', $ts);
+		  $start = strtotime('first day of last month', $ts);
 		  return array(date('m-d-Y', $start), date('m-d-Y', strtotime('+3 months -1 day', $start)));
 		}
 
 		function first_quarter($date) {
 		  $ts = strtotime($date);
-		  $start = (date('w', $ts) == 0) ? $ts : strtotime('first day of january', $ts);
+		  $start = strtotime('first day of january', $ts);
 		  return array(date('m-d-Y', $start), date('m-d-Y', strtotime('+3 months -1 day', $start)));
 		}
 
 		function second_quarter($date) {
 		  $ts = strtotime($date);
-		  $start = (date('w', $ts) == 0) ? $ts : strtotime('first day of april', $ts);
+		  $start = strtotime('first day of april', $ts);
 		  return array(date('m-d-Y', $start), date('m-d-Y', strtotime('+3 months -1 day', $start)));
 		}
 
 		function third_quarter($date) {
 		  $ts = strtotime($date);
-		  $start = (date('w', $ts) == 0) ? $ts : strtotime('first day of july', $ts);
+		  $start = strtotime('first day of july', $ts);
 		  return array(date('m-d-Y', $start), date('m-d-Y', strtotime('+3 months -1 day', $start)));
 		}
 
 		function fourth_quarter($date) {
 		  $ts = strtotime($date);
-		  $start = (date('w', $ts) == 0) ? $ts : strtotime('first day of october', $ts);
+		  $start = strtotime('first day of october', $ts);
 		  return array(date('m-d-Y', $start), date('m-d-Y', strtotime('+3 months -1 day', $start)));
 		}
 
 		function last_six_months($date) {
 		  $ts = strtotime($date);
-		  $start = (date('w', $ts) == 0) ? $ts : strtotime('first day of -5 months', $ts);
+		  $start = strtotime('first day of -5 months', $ts);
 		  return array(date('m-d-Y', $start), date('m-d-Y', strtotime('+6 months -1 day', $start)));
 		}
 
 		function this_year($date) {
 		  $ts = strtotime($date);
-		  $start = (date('w', $ts) == 0) ? $ts : strtotime('first day of january', $ts);
+		  $start = strtotime('first day of january', $ts);
 		  return array(date('m-d-Y', $start), date('m-d-Y', strtotime('+12 months -1 day', $start)));
 		}
 
 		function last_two_years($date) {
 		  $ts = strtotime($date);
-		  $start = (date('w', $ts) == 0) ? $ts : strtotime('first day of -2 years', $ts);
+		  $start = strtotime('first day of -2 years', $ts);
 		  return array(date('m-d-Y', $start), date('m-d-Y', strtotime('+25 months -1 day', $start)));
 		}
 
@@ -115,7 +115,6 @@ class MainModel
 			$theFormattedDate = $this->todays(date('Y-m-d',time()));
 			$theStartDate = $theFormattedDate[0];
 			$theEndDate = $theFormattedDate[1];
-			
 			// format date into single phrase
 			$readyDate = $theStartDate.".".$theEndDate;
 			return $readyDate;

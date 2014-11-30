@@ -86,26 +86,90 @@ class PolicyListingModel
 					$addedSQL .= " AND (policies.date_issued >= '".$startDate."' AND policies.date_issued <= '".$endDate."')";
 				} else if ($single == 'e') {
 					$addedSQL .= " AND (policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."')";
+				} else if ($single == 'we') {
+					$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."' OR policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."')";
+				} else if ($single == 'wi') {
+					$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."' OR policies.date_issued >= '".$startDate."' AND policies.date_issued <= '".$endDate."')";
+				} else if ($single == 'ei') {
+					$addedSQL .= " AND (policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."' OR policies.date_issued >= '".$startDate."' AND policies.date_issued <= '".$endDate."')";
 				} else {
+					// covers all $single = a
 					$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."' OR policies.date_issued >= '".$startDate."' AND policies.date_issued <= '".$endDate."' OR policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."')";
 				}
 			}
 		}
 
 		if ($phrase != '') {
+			// break out phrase
+			$phrasetype = explode('.',$phrase);
+			$text = $phrasetype[0];
+			$searchfield = $phrasetype[1];
+			$searchtext = str_replace("-"," ",$text);
+			
 			// search based on keywords
-			$addedSQL .= " AND (policies.first LIKE '%".$phrase."%' OR policies.last LIKE '%".$phrase."%' OR policies.description LIKE '%".$phrase."%' OR policies.notes LIKE '%".$phrase."%')";
+			if (preg_match("/^[a-zA-Z0-9 ]+$/", $searchtext)) {
+				switch ($searchfield) {
+    				case 'a':
+        				$addedSQL .= " AND (policies.first LIKE '%".$searchtext."%' OR policies.last LIKE '%".$searchtext."%' OR policies.description LIKE '%".$searchtext."%' OR policies.premium LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
+        				break;
+        			case 'f':
+        				$addedSQL = " AND policies.first LIKE '%".$searchtext."%'";
+        				break;
+        			case 'l':
+        				$addedSQL = " AND policies.last LIKE '%".$searchtext."%'";
+        				break;
+        			case 'd':
+        				$addedSQL = " AND policies.description LIKE '%".$searchtext."%'";
+        				break;
+        			case 'p':
+        				$addedSQL = " AND policies.premium LIKE '%".$searchtext."%'";
+        				break;
+        			case 'n':
+        				$addedSQL = " AND policies.notes LIKE '%".$searchtext."%'";
+        				break;
+        			case 'fl':
+        				$addedSQL = " AND (policies.first LIKE '%".$searchtext."%' OR policies.last LIKE '%".$searchtext."%')";
+        				break;
+        			case 'fd':
+        				$addedSQL = " AND (policies.first LIKE '%".$searchtext."%' OR policies.description LIKE '%".$searchtext."%')";
+        				break;
+        			case 'fp':
+        				$addedSQL = " AND (policies.first LIKE '%".$searchtext."%' OR policies.premium LIKE '%".$searchtext."%')";
+        				break;
+        			case 'fn':
+        				$addedSQL = " AND (policies.first LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
+        				break;
+        			case 'ld':
+        				$addedSQL = " AND (policies.last LIKE '%".$searchtext."%' OR policies.description LIKE '%".$searchtext."%')";
+        				break;
+        			case 'lp':
+        				$addedSQL = " AND (policies.last LIKE '%".$searchtext."%' OR policies.premium LIKE '%".$searchtext."%')";
+        				break;
+        			case 'ln':
+        				$addedSQL = " AND (policies.last LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
+        				break;
+        			case 'dp':
+        				$addedSQL = " AND (policies.description LIKE '%".$searchtext."%' OR policies.premium LIKE '%".$searchtext."%')";
+        				break;	
+        			case 'dn':
+        				$addedSQL = " AND (policies.description LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
+        				break;
+        			case 'pn':
+        				$addedSQL = " AND (policies.premium LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
+        				break;
+				}
+			}
 		}
 
 		// set order by
 		switch ($orderby) {
     			case 'default':
-        			$orderbySQL = ' policies.date_written, policies.last';
+        			$orderbySQL = ' policies.date_written DESC';
         			break;
     			case 'firstname':
         			$orderbySQL = ' policies.first ASC';
         			break;
-			case 'firstnamedesc':
+				case 'firstnamedesc':
         			$orderbySQL = ' policies.first DESC';
         			break;
     			case 'lastname':
