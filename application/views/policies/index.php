@@ -138,7 +138,7 @@ $(document).ready(function() {
     		openPolicyTextWindow(text);
 	});
 
-	// DELETE PLOICY
+	// DELETE POLICY
 	$('.policy-delete-action').click(function(){
 		var id = $(this).data('id');
     		doPolicyDelete(id);

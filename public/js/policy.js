@@ -301,6 +301,8 @@ $(document).ready(function() {
 	// VIEW ALL
 	$("#all").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
+		$("#datepick1").val('');
+		$("#datepick2").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#auto").closest(".sub-button").css("background-color","#a20004");
@@ -318,6 +320,8 @@ $(document).ready(function() {
 	// AUTO
 	$("#auto").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
+		$("#datepick1").val('');
+		$("#datepick2").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").css("background-color","#a20004");
@@ -335,6 +339,8 @@ $(document).ready(function() {
 	// FIRE
 	$("#fire").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
+		$("#datepick1").val('');
+		$("#datepick2").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").css("background-color","#a20004");
@@ -352,6 +358,8 @@ $(document).ready(function() {
 	// LIFE
 	$("#life").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
+		$("#datepick1").val('');
+		$("#datepick2").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").css("background-color","#a20004");
@@ -369,6 +377,8 @@ $(document).ready(function() {
 	// HEALTH
 	$("#health").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
+		$("#datepick1").val('');
+		$("#datepick2").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").css("background-color","#a20004");
@@ -386,6 +396,8 @@ $(document).ready(function() {
 	// DEPOSIT
 	$("#deposit").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
+		$("#datepick1").val('');
+		$("#datepick2").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").css("background-color","#a20004");
@@ -403,6 +415,8 @@ $(document).ready(function() {
 	// LOAN
 	$("#loan").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
+		$("#datepick1").val('');
+		$("#datepick2").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").css("background-color","#a20004");
@@ -420,6 +434,8 @@ $(document).ready(function() {
 	// FUND
 	$("#fund").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
+		$("#datepick1").val('');
+		$("#datepick2").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").css("background-color","#a20004");
@@ -636,6 +652,174 @@ $(document).ready(function() {
 	});
 
 // =============== END SORT NAV =============== //
+
+// =============== BEGIN PREDEFINED DATES =============== //
+
+	$("#all_time").on("click", function(event) {
+		event.preventDefault();
+		$("#datepick1").val('');
+		$("#datepick2").val('');
+		$("#policy-content").load("/app/policies/"+currcat);
+   		$("#pre-dates-container").toggle();
+	});
+
+	$("#today").on("click", function(event) {
+		event.preventDefault();
+		var dateRange = $(this).data('dates');
+		var dates = dateRange.split(".");
+		var sdate = dates[0].replace(/-/g, "/");
+		var edate = dates[1].replace(/-/g, "/");
+		$("#datepick1").val(sdate);
+		$("#datepick2").val(edate);
+		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+   		$("#pre-dates-container").toggle();
+	});
+
+	$("#this_week").on("click", function(event) {
+		event.preventDefault();
+		var dateRange = $(this).data('dates');
+		var dates = dateRange.split(".");
+		var sdate = dates[0].replace(/-/g, "/");
+		var edate = dates[1].replace(/-/g, "/");
+		$("#datepick1").val(sdate);
+		$("#datepick2").val(edate);
+		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+   		$("#pre-dates-container").toggle();
+	});
+
+	$("#last_week").on("click", function(event) {
+		event.preventDefault();
+		var dateRange = $(this).data('dates');
+		var dates = dateRange.split(".");
+		var sdate = dates[0].replace(/-/g, "/");
+		var edate = dates[1].replace(/-/g, "/");
+		$("#datepick1").val(sdate);
+		$("#datepick2").val(edate);
+		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+   		$("#pre-dates-container").toggle();
+	});
+
+	$("#this_month").on("click", function(event) {
+		event.preventDefault();
+		var dateRange = $(this).data('dates');
+		var dates = dateRange.split(".");
+		var sdate = dates[0].replace(/-/g, "/");
+		var edate = dates[1].replace(/-/g, "/");
+		$("#datepick1").val(sdate);
+		$("#datepick2").val(edate);
+		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+   		$("#pre-dates-container").toggle();
+	});
+
+	$("#last_month").on("click", function(event) {
+		event.preventDefault();
+		var dateRange = $(this).data('dates');
+		var dates = dateRange.split(".");
+		var sdate = dates[0].replace(/-/g, "/");
+		var edate = dates[1].replace(/-/g, "/");
+		$("#datepick1").val(sdate);
+		$("#datepick2").val(edate);
+		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+   		$("#pre-dates-container").toggle();
+	});
+
+	$("#this_quarter").on("click", function(event) {
+		event.preventDefault();
+		var dateRange = $(this).data('dates');
+		var dates = dateRange.split(".");
+		var sdate = dates[0].replace(/-/g, "/");
+		var edate = dates[1].replace(/-/g, "/");
+		$("#datepick1").val(sdate);
+		$("#datepick2").val(edate);
+		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+   		$("#pre-dates-container").toggle();
+	});
+
+	$("#first_quarter").on("click", function(event) {
+		event.preventDefault();
+		var dateRange = $(this).data('dates');
+		var dates = dateRange.split(".");
+		var sdate = dates[0].replace(/-/g, "/");
+		var edate = dates[1].replace(/-/g, "/");
+		$("#datepick1").val(sdate);
+		$("#datepick2").val(edate);
+		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+   		$("#pre-dates-container").toggle();
+	});
+
+	$("#second_quarter").on("click", function(event) {
+		event.preventDefault();
+		var dateRange = $(this).data('dates');
+		var dates = dateRange.split(".");
+		var sdate = dates[0].replace(/-/g, "/");
+		var edate = dates[1].replace(/-/g, "/");
+		$("#datepick1").val(sdate);
+		$("#datepick2").val(edate);
+		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+   		$("#pre-dates-container").toggle();
+	});
+
+	$("#third_quarter").on("click", function(event) {
+		event.preventDefault();
+		var dateRange = $(this).data('dates');
+		var dates = dateRange.split(".");
+		var sdate = dates[0].replace(/-/g, "/");
+		var edate = dates[1].replace(/-/g, "/");
+		$("#datepick1").val(sdate);
+		$("#datepick2").val(edate);
+		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+   		$("#pre-dates-container").toggle();
+	});
+
+	$("#fourth_quarter").on("click", function(event) {
+		event.preventDefault();
+		var dateRange = $(this).data('dates');
+		var dates = dateRange.split(".");
+		var sdate = dates[0].replace(/-/g, "/");
+		var edate = dates[1].replace(/-/g, "/");
+		$("#datepick1").val(sdate);
+		$("#datepick2").val(edate);
+		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+   		$("#pre-dates-container").toggle();
+	});
+
+	$("#last_six_months").on("click", function(event) {
+		event.preventDefault();
+		var dateRange = $(this).data('dates');
+		var dates = dateRange.split(".");
+		var sdate = dates[0].replace(/-/g, "/");
+		var edate = dates[1].replace(/-/g, "/");
+		$("#datepick1").val(sdate);
+		$("#datepick2").val(edate);
+		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+   		$("#pre-dates-container").toggle();
+	});
+
+	$("#this_year").on("click", function(event) {
+		event.preventDefault();
+		var dateRange = $(this).data('dates');
+		var dates = dateRange.split(".");
+		var sdate = dates[0].replace(/-/g, "/");
+		var edate = dates[1].replace(/-/g, "/");
+		$("#datepick1").val(sdate);
+		$("#datepick2").val(edate);
+		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+   		$("#pre-dates-container").toggle();
+	});
+
+	$("#last_two_years").on("click", function(event) {
+		event.preventDefault();
+		var dateRange = $(this).data('dates');
+		var dates = dateRange.split(".");
+		var sdate = dates[0].replace(/-/g, "/");
+		var edate = dates[1].replace(/-/g, "/");
+		$("#datepick1").val(sdate);
+		$("#datepick2").val(edate);
+		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+   		$("#pre-dates-container").toggle();
+	});
+
+// =============== END PREDEFINED DATES =============== //
 
 	// LOAD DATE PICKERS
 	function loadDatePickers(){

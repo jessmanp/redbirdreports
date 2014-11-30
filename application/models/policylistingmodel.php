@@ -18,10 +18,10 @@ class PolicyListingModel
     /**
      * Get ALL policies from database
      */
-    public function getAllPolicies($category = 'all', $orderby = 'default', $status = '')
+    public function getAllPolicies($category = 'all', $orderby = 'default', $status = '', $date = '', $phrase = '')
     {
 
-//echo "category=[".$category."] orderby=[".$orderby."] status=[".$status."]\n<hr />";
+//echo "category=[".$category."] orderby=[".$orderby."] status=[".$status."] date=[".$date."] phrase=[".$phrase."]\n<hr />";
 
 		// set category
 		switch ($category) {
@@ -64,6 +64,37 @@ class PolicyListingModel
         				$addedSQL .= ' AND policies.renewal = 1';
         				break;
 			}
+		}
+
+		if ($date != '' && $date != 'any') {
+			// break out and validate date range
+			$drange = explode('.',$date);
+
+			$sdate = $drange[0];
+			$edate = $drange[1];
+			$single = $drange[2];
+			
+			$test_sdate = explode('-',$sdate);
+			$test_edate = explode('-',$edate);
+			if (checkdate($test_sdate[0], $test_sdate[1], $test_sdate[2]) && checkdate($test_edate[0], $test_edate[1], $test_edate[2])) {
+				// date range is valid, set date filter
+				$startDate = $test_sdate[2]."-".$test_sdate[0]."-".$test_sdate[1]." 00:00:00";
+				$endDate = $test_edate[2]."-".$test_edate[0]."-".$test_edate[1]." 23:59:59";
+				if ($single == 'w') {
+					$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."')";
+				} else if ($single == 'i') {
+					$addedSQL .= " AND (policies.date_issued >= '".$startDate."' AND policies.date_issued <= '".$endDate."')";
+				} else if ($single == 'e') {
+					$addedSQL .= " AND (policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."')";
+				} else {
+					$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."' OR policies.date_issued >= '".$startDate."' AND policies.date_issued <= '".$endDate."' OR policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."')";
+				}
+			}
+		}
+
+		if ($phrase != '') {
+			// search based on keywords
+			$addedSQL .= " AND (policies.first LIKE '%".$phrase."%' OR policies.last LIKE '%".$phrase."%' OR policies.description LIKE '%".$phrase."%' OR policies.notes LIKE '%".$phrase."%')";
 		}
 
 		// set order by
@@ -148,6 +179,7 @@ class PolicyListingModel
 //echo "add=[".$addedSQL."] sort=[".$orderbySQL."]";
 		
 		$sql = "SELECT policies.id, policies.renewal, policies.first, policies.last, policies.description, policies.category_id, policy_categories.name AS cat_name, policies.premium, policies.business_type_id, policy_business_types.name AS busi_name, policies.user_id, users.user_first_name, users.user_last_name, policies.source_type_id, policy_source_types.name AS src_name, policies.length_type_id, policy_length_types.name AS len_name, policies.notes, policies.date_written, policies.date_issued, policies.date_effective, policies.zip_code FROM policies, policy_categories, policy_business_types, policy_source_types, policy_length_types, users WHERE policies.active = 1 AND policy_categories.id = policies.category_id AND policy_business_types.id = policies.business_type_id AND users.user_id = policies.user_id AND policy_source_types.id = policies.source_type_id AND policy_length_types.id = policies.length_type_id".$addedSQL." ORDER BY".$orderbySQL;
+//echo $sql;
         $query = $this->db->prepare($sql);
         $query->execute();
 

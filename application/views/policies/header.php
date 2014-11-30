@@ -42,20 +42,20 @@
 		<div id="search-area">
 			<button id="pre-dates">Predefined Dates&nbsp;&nbsp;<img src="/public/img/btn_dates.png" class="search-btn-icon" alt="" /></button>
 			<div id="pre-dates-container">
-				<button id="" class="pre-dates-btn">Today</button>
-				<button id="" class="pre-dates-btn">This Week</button>
-				<button id="" class="pre-dates-btn">Last Week</button>
-				<button id="" class="pre-dates-btn">This Month</button>
-				<button id="" class="pre-dates-btn">Last Month</button>
-				<button id="" class="pre-dates-btn">This Quarter</button>
-				<button id="" class="pre-dates-btn">1st Quarter</button>
-				<button id="" class="pre-dates-btn">2nd Quarter</button>
-				<button id="" class="pre-dates-btn">3rd Quarter</button>
-				<button id="" class="pre-dates-btn">4th Quarter</button>
-				<button id="" class="pre-dates-btn">Last 6 Months</button>
-				<button id="" class="pre-dates-btn">This Year</button>
-				<button id="" class="pre-dates-btn">Last 2 Years</button>
-				<button id="" class="pre-dates-btn">All Time</button>
+				<button id="today" data-dates="<?php echo $today.".a"; ?>" class="pre-dates-btn">Today</button>
+				<button id="this_week" data-dates="<?php echo $this_week.".a"; ?>" class="pre-dates-btn">This Week</button>
+				<button id="last_week" data-dates="<?php echo $last_week.".a"; ?>" class="pre-dates-btn">Last Week</button>
+				<button id="this_month" data-dates="<?php echo $this_month.".a"; ?>" class="pre-dates-btn">This Month</button>
+				<button id="last_month" data-dates="<?php echo $last_month.".a"; ?>" class="pre-dates-btn">Last Month</button>
+				<button id="this_quarter" data-dates="<?php echo $this_quarter.".a"; ?>" class="pre-dates-btn">This Quarter</button>
+				<button id="first_quarter" data-dates="<?php echo $first_quarter.".a"; ?>" class="pre-dates-btn">1st Quarter</button>
+				<button id="second_quarter" data-dates="<?php echo $second_quarter.".a"; ?>" class="pre-dates-btn">2nd Quarter</button>
+				<button id="third_quarter" data-dates="<?php echo $third_quarter.".a"; ?>" class="pre-dates-btn">3rd Quarter</button>
+				<button id="fourth_quarter" data-dates="<?php echo $fourth_quarter.".a"; ?>" class="pre-dates-btn">4th Quarter</button>
+				<button id="last_six_months" data-dates="<?php echo $last_six_months.".a"; ?>" class="pre-dates-btn">Last 6 Months</button>
+				<button id="this_year" data-dates="<?php echo $this_year.".a"; ?>" class="pre-dates-btn">This Year</button>
+				<button id="last_two_years" data-dates="<?php echo $last_two_years.".a"; ?>" class="pre-dates-btn">Last 2 Years</button>
+				<button id="all_time" class="pre-dates-btn">All Time</button>
 			</div>
 			<form name="search-dates-form" action="" method="post">
 				<div class="date-pickers">&nbsp;Date Range:</div>
