@@ -66,7 +66,7 @@
 			<button id="advanced-search">Advanced Search<img src="/public/img/btn_advanced_search.png" class="search-btn-icon" alt="Advanced Search" /></button>
 			<div id="filter-container">
 				<div class="filter-checkboxes">
-				<em>Only Search Field(s)</em><br />
+				<em>Search These Field(s)</em><br />
 				<input type="checkbox" id="first" name="first" value="1"><label for="first"><span><span></span></span>First Name</label><br />
 				<input type="checkbox" id="last" name="last" value="1"><label for="last"><span><span></span></span>Last Name</label><br />
 				<input type="checkbox" id="description" name="description" value="1"><label for="description"><span><span></span></span>Description</label><br />
@@ -74,7 +74,7 @@
 				<input type="checkbox" id="notes" name="notes" value="1"><label for="notes"><span><span></span></span>Notes</label><br />
 				</div>
 				<div class="filter-dates">
-				<em>Only Search Date(s)</em><br />
+				<em>Search These Date(s)</em><br />
 				<input type="checkbox" id="written" name="written" value="1"><label for="written"><span><span></span></span>Date Written</label><br />
 				<input type="checkbox" id="issued" name="issued" value="1"><label for="issued"><span><span></span></span>Date Issued</label><br />
 				<input type="checkbox" id="effective" name="effective" value="1"><label for="effective"><span><span></span></span>Date Effective</label><br />
@@ -91,7 +91,7 @@
 			<div class="status-text">Average DTI: <span id="avgdti" class="status-item">0</span></div>
 			<div class="status-text">Average Premium: <span id="avgprem" class="status-item">$0</span></div>
 			<div class="status-text">Total Premium: <span id="totprem" class="status-item">$0</span></div>
-			<div class="status-text-right">Record Count: <span id="rowcnt" class="status-item">0</span></div>
+			<div class="status-text-right">Total Policy Count: <span id="rowcnt" class="status-item">0</span></div>
 		</div>
 	</div>
 

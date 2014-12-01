@@ -148,7 +148,7 @@ function openPolicyTextWindow(text) {
 
 // DELETE POLICY
 function doPolicyDelete(id) {
-	openWindow('delete','Delete Policy',id,'');
+	openWindow('delete','Erase Policy',id,'');
 }
 
 // LOAD
@@ -306,6 +306,7 @@ $(document).ready(function() {
 	$("#add").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
 		openPolicyAddWindow(0);
+		$("#field").val('');
 	});
 
 	// VIEW ALL
@@ -313,6 +314,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		$("#datepick1").val('');
 		$("#datepick2").val('');
+		$("#field").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#auto").closest(".sub-button").removeAttr("style");
@@ -332,6 +334,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		$("#datepick1").val('');
 		$("#datepick2").val('');
+		$("#field").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").removeAttr("style");
@@ -351,6 +354,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		$("#datepick1").val('');
 		$("#datepick2").val('');
+		$("#field").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").removeAttr("style");
@@ -370,6 +374,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		$("#datepick1").val('');
 		$("#datepick2").val('');
+		$("#field").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").removeAttr("style");
@@ -389,6 +394,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		$("#datepick1").val('');
 		$("#datepick2").val('');
+		$("#field").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").removeAttr("style");
@@ -408,6 +414,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		$("#datepick1").val('');
 		$("#datepick2").val('');
+		$("#field").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").removeAttr("style");
@@ -427,6 +434,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		$("#datepick1").val('');
 		$("#datepick2").val('');
+		$("#field").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").removeAttr("style");
@@ -446,6 +454,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		$("#datepick1").val('');
 		$("#datepick2").val('');
+		$("#field").val('');
 		resetSortLinks();
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").removeAttr("style");
@@ -468,6 +477,9 @@ $(document).ready(function() {
 	$("#allwritten").on("click", function(event) {
 		event.preventDefault();
 		resetSortLinks();
+		$("#datepick1").val('');
+		$("#datepick2").val('');
+		$("#field").val('');
 		$("#policy-content").load("/app/policies/"+currcat+"/allwritten");
 	});
 
@@ -475,6 +487,9 @@ $(document).ready(function() {
 	$("#notissued").on("click", function(event) {
 		event.preventDefault();
 		resetSortLinks();
+		$("#datepick1").val('');
+		$("#datepick2").val('');
+		$("#field").val('');
 		$("#policy-content").load("/app/policies/"+currcat+"/notissued");
 	});
 
@@ -482,6 +497,9 @@ $(document).ready(function() {
 	$("#pendingrenewal").on("click", function(event) {
 		event.preventDefault();
 		resetSortLinks();
+		$("#datepick1").val('');
+		$("#datepick2").val('');
+		$("#field").val('');
 		$("#policy-content").load("/app/policies/"+currcat+"/pendingrenewal");
 	});
 
@@ -669,12 +687,14 @@ $(document).ready(function() {
 		event.preventDefault();
 		$("#datepick1").val('');
 		$("#datepick2").val('');
+		$("#field").val('');
 		$("#policy-content").load("/app/policies/"+currcat);
    		$("#pre-dates-container").toggle();
 	});
 
 	$("#today").on("click", function(event) {
 		event.preventDefault();
+		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
 		var sdate = dates[0].replace(/-/g, "/");
@@ -687,6 +707,7 @@ $(document).ready(function() {
 
 	$("#this_week").on("click", function(event) {
 		event.preventDefault();
+		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
 		var sdate = dates[0].replace(/-/g, "/");
@@ -699,6 +720,7 @@ $(document).ready(function() {
 
 	$("#last_week").on("click", function(event) {
 		event.preventDefault();
+		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
 		var sdate = dates[0].replace(/-/g, "/");
@@ -711,6 +733,7 @@ $(document).ready(function() {
 
 	$("#this_month").on("click", function(event) {
 		event.preventDefault();
+		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
 		var sdate = dates[0].replace(/-/g, "/");
@@ -723,6 +746,7 @@ $(document).ready(function() {
 
 	$("#last_month").on("click", function(event) {
 		event.preventDefault();
+		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
 		var sdate = dates[0].replace(/-/g, "/");
@@ -735,6 +759,7 @@ $(document).ready(function() {
 
 	$("#this_quarter").on("click", function(event) {
 		event.preventDefault();
+		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
 		var sdate = dates[0].replace(/-/g, "/");
@@ -747,6 +772,7 @@ $(document).ready(function() {
 
 	$("#first_quarter").on("click", function(event) {
 		event.preventDefault();
+		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
 		var sdate = dates[0].replace(/-/g, "/");
@@ -759,6 +785,7 @@ $(document).ready(function() {
 
 	$("#second_quarter").on("click", function(event) {
 		event.preventDefault();
+		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
 		var sdate = dates[0].replace(/-/g, "/");
@@ -771,6 +798,7 @@ $(document).ready(function() {
 
 	$("#third_quarter").on("click", function(event) {
 		event.preventDefault();
+		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
 		var sdate = dates[0].replace(/-/g, "/");
@@ -783,6 +811,7 @@ $(document).ready(function() {
 
 	$("#fourth_quarter").on("click", function(event) {
 		event.preventDefault();
+		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
 		var sdate = dates[0].replace(/-/g, "/");
@@ -795,6 +824,7 @@ $(document).ready(function() {
 
 	$("#last_six_months").on("click", function(event) {
 		event.preventDefault();
+		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
 		var sdate = dates[0].replace(/-/g, "/");
@@ -807,6 +837,7 @@ $(document).ready(function() {
 
 	$("#this_year").on("click", function(event) {
 		event.preventDefault();
+		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
 		var sdate = dates[0].replace(/-/g, "/");
@@ -819,6 +850,7 @@ $(document).ready(function() {
 
 	$("#last_two_years").on("click", function(event) {
 		event.preventDefault();
+		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
 		var sdate = dates[0].replace(/-/g, "/");
@@ -839,14 +871,11 @@ $(document).ready(function() {
 	});
 
 	$("#search_text_form").submit(function(event) {
+		// set path even if date is blank
+		var path = "/app/policies/"+currcat+"/default/any/";
+			
 		if ($("#datepick1").val() != '' && $("#datepick2").val() != '') {
 			// do date range searches
-			if ($("#field").val() != '') {
-				var text = $("#field").val().replace(/ /g, "-");
-				var phrase = text+".a";
-			} else {
-				var phrase = '';
-			}
 			var datetype = "any";
 			// format dates for link
 			var sdate = $("#datepick1").val().replace(/\//g, "-");
@@ -874,21 +903,18 @@ $(document).ready(function() {
 			}
 			var dateRange = sdate+"."+edate+datetype;
 			if (datetype == 'any') {
-				var path = "/app/policies/"+currcat+"/default/any/"+phrase;
+				var path = "/app/policies/"+currcat+"/default/any/";
 			} else {
-				var path = "/app/policies/"+currcat+"/default/"+dateRange+"/"+phrase;
+				var path = "/app/policies/"+currcat+"/default/"+dateRange+"/";
 			}
-			$("#policy-content").load(path);
-		} else {
-			// do keyword searches
-			var type = '';
-			if ($("#field").val() != '') {
-				var text = $("#field").val().replace(/ /g, "-");
-				type = ".z";
-				var phrase = text;
-			} else {
-				var phrase = '';
-			}
+		}
+		// do keyword searches
+		var type = null;
+		var phrase = '';
+		if ($("#field").val() != '') {
+			var text = $("#field").val().replace(/ /g, "-");
+			var phrase = text;
+			// do search based on checkboxes
 			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#premium").prop('checked') === true && $("#notes").prop('checked') === true) {
 				type = ".a";
 			}
@@ -937,11 +963,55 @@ $(document).ready(function() {
 			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#premium").prop('checked') === true && $("#notes").prop('checked') === true) {
 				type = ".pn";
 			}
-			phrase = phrase+type;
-			var path = "/app/policies/"+currcat+"/default/any/"+phrase;
-			alert(path);
-			$("#policy-content").load(path);
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#premium").prop('checked') === false && $("#notes").prop('checked') === false) {
+				type = ".fld";
+			}
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#premium").prop('checked') === true && $("#notes").prop('checked') === false) {
+				type = ".flp";
+			}
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#premium").prop('checked') === false && $("#notes").prop('checked') === true) {
+				type = ".fln";
+			}
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#premium").prop('checked') === true && $("#notes").prop('checked') === false) {
+				type = ".fdp";
+			}
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#premium").prop('checked') === false && $("#notes").prop('checked') === true) {
+				type = ".fdn";
+			}
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#premium").prop('checked') === true && $("#notes").prop('checked') === true) {
+				type = ".fpn";
+			}
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#premium").prop('checked') === true && $("#notes").prop('checked') === false) {
+				type = ".ldp";
+			}
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#premium").prop('checked') === true && $("#notes").prop('checked') === true) {
+				type = ".lpn";
+			}
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#premium").prop('checked') === true && $("#notes").prop('checked') === true) {
+				type = ".dpn";
+			}
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#premium").prop('checked') === true && $("#notes").prop('checked') === false) {
+				type = ".fldp";
+			}
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#premium").prop('checked') === false && $("#notes").prop('checked') === true) {
+				type = ".fldn";
+			}
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#premium").prop('checked') === false && $("#notes").prop('checked') === false) {
+				type = ".ldpn";
+			}
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#premium").prop('checked') === true && $("#notes").prop('checked') === true) {
+				type = ".fdpn";
+			}
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#premium").prop('checked') === true && $("#notes").prop('checked') === true) {
+				type = ".dfpn";
+			}
+			if (type) {
+				phrase = phrase+type;
+			}
 		}
+		// update path
+		path = path+phrase;
+		$("#policy-content").load(path);
 	});
 	
 	// turn on all text fields by default

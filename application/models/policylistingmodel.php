@@ -113,49 +113,91 @@ class PolicyListingModel
         				$addedSQL .= " AND (policies.first LIKE '%".$searchtext."%' OR policies.last LIKE '%".$searchtext."%' OR policies.description LIKE '%".$searchtext."%' OR policies.premium LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
         				break;
         			case 'f':
-        				$addedSQL = " AND policies.first LIKE '%".$searchtext."%'";
+        				$addedSQL .= " AND policies.first LIKE '%".$searchtext."%'";
         				break;
         			case 'l':
-        				$addedSQL = " AND policies.last LIKE '%".$searchtext."%'";
+        				$addedSQL .= " AND policies.last LIKE '%".$searchtext."%'";
         				break;
         			case 'd':
-        				$addedSQL = " AND policies.description LIKE '%".$searchtext."%'";
+        				$addedSQL .= " AND policies.description LIKE '%".$searchtext."%'";
         				break;
         			case 'p':
-        				$addedSQL = " AND policies.premium LIKE '%".$searchtext."%'";
+        				$addedSQL .= " AND policies.premium LIKE '%".$searchtext."%'";
         				break;
         			case 'n':
-        				$addedSQL = " AND policies.notes LIKE '%".$searchtext."%'";
+        				$addedSQL .= " AND policies.notes LIKE '%".$searchtext."%'";
         				break;
         			case 'fl':
-        				$addedSQL = " AND (policies.first LIKE '%".$searchtext."%' OR policies.last LIKE '%".$searchtext."%')";
+        				$addedSQL .= " AND (policies.first LIKE '%".$searchtext."%' OR policies.last LIKE '%".$searchtext."%')";
         				break;
         			case 'fd':
-        				$addedSQL = " AND (policies.first LIKE '%".$searchtext."%' OR policies.description LIKE '%".$searchtext."%')";
+        				$addedSQL .= " AND (policies.first LIKE '%".$searchtext."%' OR policies.description LIKE '%".$searchtext."%')";
         				break;
         			case 'fp':
-        				$addedSQL = " AND (policies.first LIKE '%".$searchtext."%' OR policies.premium LIKE '%".$searchtext."%')";
+        				$addedSQL .= " AND (policies.first LIKE '%".$searchtext."%' OR policies.premium LIKE '%".$searchtext."%')";
         				break;
         			case 'fn':
-        				$addedSQL = " AND (policies.first LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
+        				$addedSQL .= " AND (policies.first LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
         				break;
         			case 'ld':
-        				$addedSQL = " AND (policies.last LIKE '%".$searchtext."%' OR policies.description LIKE '%".$searchtext."%')";
+        				$addedSQL .= " AND (policies.last LIKE '%".$searchtext."%' OR policies.description LIKE '%".$searchtext."%')";
         				break;
         			case 'lp':
-        				$addedSQL = " AND (policies.last LIKE '%".$searchtext."%' OR policies.premium LIKE '%".$searchtext."%')";
+        				$addedSQL .= " AND (policies.last LIKE '%".$searchtext."%' OR policies.premium LIKE '%".$searchtext."%')";
         				break;
         			case 'ln':
-        				$addedSQL = " AND (policies.last LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
+        				$addedSQL .= " AND (policies.last LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
         				break;
         			case 'dp':
-        				$addedSQL = " AND (policies.description LIKE '%".$searchtext."%' OR policies.premium LIKE '%".$searchtext."%')";
+        				$addedSQL .= " AND (policies.description LIKE '%".$searchtext."%' OR policies.premium LIKE '%".$searchtext."%')";
         				break;	
         			case 'dn':
-        				$addedSQL = " AND (policies.description LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
+        				$addedSQL .= " AND (policies.description LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
         				break;
         			case 'pn':
-        				$addedSQL = " AND (policies.premium LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
+        				$addedSQL .= " AND (policies.premium LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
+        				break;
+        			case 'fld':
+        				$addedSQL .= " AND (policies.first LIKE '%".$searchtext."%' OR policies.last LIKE '%".$searchtext."%' OR policies.description LIKE '%".$searchtext."%')";
+        				break;
+        			case 'flp':
+        				$addedSQL .= " AND (policies.first LIKE '%".$searchtext."%' OR policies.last LIKE '%".$searchtext."%' OR policies.premium LIKE '%".$searchtext."%')";
+        				break;
+        			case 'fln':
+        				$addedSQL .= " AND (policies.first LIKE '%".$searchtext."%' OR policies.last LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
+        				break;
+        			case 'fdp':
+        				$addedSQL .= " AND (policies.first LIKE '%".$searchtext."%' OR policies.description LIKE '%".$searchtext."%' OR policies.premium LIKE '%".$searchtext."%')";
+        				break;
+        			case 'fdn':
+        				$addedSQL .= " AND (policies.first LIKE '%".$searchtext."%' OR policies.description LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
+        				break;
+        			case 'fpn':
+        				$addedSQL .= " AND (policies.first LIKE '%".$searchtext."%' OR policies.premium LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
+        				break;
+        			case 'ldp':
+        				$addedSQL .= " AND (policies.last LIKE '%".$searchtext."%' OR policies.description LIKE '%".$searchtext."%' OR policies.premium LIKE '%".$searchtext."%')";
+        				break;
+        			case 'lpn':
+        				$addedSQL .= " AND (policies.last LIKE '%".$searchtext."%' OR policies.premium LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
+        				break;
+        			case 'dpn':
+        				$addedSQL .= " AND (policies.description LIKE '%".$searchtext."%' OR policies.premium LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
+        				break;
+        			case 'fldp':
+        				$addedSQL .= " AND (policies.first LIKE '%".$searchtext."%' OR policies.last LIKE '%".$searchtext."%' OR policies.description LIKE '%".$searchtext."%' OR policies.premium LIKE '%".$searchtext."%')";
+        				break;
+        			case 'fldn':
+        				$addedSQL .= " AND (policies.first LIKE '%".$searchtext."%' OR policies.last LIKE '%".$searchtext."%' OR policies.description LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
+        				break;
+        			case 'ldpn':
+        				$addedSQL .= " AND (policies.last LIKE '%".$searchtext."%' OR policies.description LIKE '%".$searchtext."%' OR policies.premium LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
+        				break;
+        			case 'fdpn':
+        				$addedSQL .= " AND (policies.first LIKE '%".$searchtext."%' OR policies.description LIKE '%".$searchtext."%' OR policies.premium LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
+        				break;
+        			case 'dfpn':
+        				$addedSQL .= " AND (policies.description LIKE '%".$searchtext."%' OR policies.first LIKE '%".$searchtext."%' OR policies.premium LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
         				break;
 				}
 			}
