@@ -59,10 +59,10 @@
 			</div>
 			<form id="search_text_form" name="search_text_form">
 				<div class="date-pickers">&nbsp;Date Range:</div>
-				<input id="datepick1" name="datepick1" placeholder="" />
-				<input id="datepick2" name="datepick2" placeholder="" />
+				<input id="datepick1" name="datepick1" placeholder="" readonly />
+				<input id="datepick2" name="datepick2" placeholder="" readonly />
 				<input id="field" name="field" type="text" placeholder="Search" />
-				<button id="submit"><img src="/public/img/btn_search.png" class="search-btn-icon" alt="Search" /></button>
+				<button id="dosubmit"><img src="/public/img/btn_search.png" class="search-btn-icon" alt="Search" /></button>
 			<button id="advanced-search">Advanced Search<img src="/public/img/btn_advanced_search.png" class="search-btn-icon" alt="Advanced Search" /></button>
 			<div id="filter-container">
 				<div class="filter-checkboxes">
@@ -98,10 +98,10 @@
 			<div class="heading">
 				<div class="col" style="width:2%;"></div>
 				<div class="col" style="width:3%;"><span class="sort-text">Edit</span></div>
-				<div class="col" style="width:10%;"><a id="sortfirst" class="sort-link">First</a></div>
+				<div class="col" style="width:6%;"><a id="sortfirst" class="sort-link">First</a></div>
 				<div class="col" style="width:10%;"><a id="sortlast" class="sort-link">Last</a></div>
 				<div class="col" style="width:10%;"><a id="sortdesc" class="sort-link">Description</a></div>
-				<div class="col" style="width:6%;"><a id="sortcat" class="sort-link">Category</a></div>
+				<div class="col" style="width:10%;"><a id="sortcat" class="sort-link">Category</a></div>
 				<div class="col" style="width:6%;"><a id="sortprem" class="sort-link">Premium</a></div>
 				<div class="col" style="width:6%;"><a id="sorttype" class="sort-link" href="#">Type</a></div>
 				<div class="col" style="width:8%;"><a id="sortsold" class="sort-link" href="#">Sold By</a></div>

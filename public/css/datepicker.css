@@ -96,7 +96,7 @@
 	border: 1px solid #000000;
 }
 
-.calendar td.today span {
+.calendar .today {
 	background-color: #a20004;
 	border: 1px solid #cccccc;
 	color: #ffffff;

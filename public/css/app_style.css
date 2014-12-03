@@ -419,8 +419,10 @@ input[type=radio]:not(old):checked + label > span > span{
 }
 
 .date-pickers {
+	width:83px;
 	margin:0 0 0 5px;
 	float:left;
+	text-align:right;
 	color:#a20004;
 }	
 
@@ -638,7 +640,7 @@ input[type=radio]:not(old):checked + label > span > span{
 	border-bottom-left-radius:10px;
 }
 
-#submit {
+#dosubmit {
 	float:left;
 	margin:3px 2px 0 -12px;
     cursor:pointer; 
@@ -660,7 +662,7 @@ input[type=radio]:not(old):checked + label > span > span{
 	line-height:24px;
 }
 
-#submit:hover {
+#dosubmit:hover {
     background-color:#000000;
     border:2px solid #000000;
 }

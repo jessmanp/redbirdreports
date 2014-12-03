@@ -61,6 +61,9 @@ var datepickr = (function() {
 					case 'day':
 						this.element.value = formatDate(new Date(this.currentYearView, this.currentMonthView, e.target.innerHTML).getTime(), this.config);
 						this.close();
+						unHighlightDay(e.target);
+						e.target.className = 'today';
+						submitSearchForm.call(this);
 					break;
 				}
 			}
@@ -80,6 +83,16 @@ var datepickr = (function() {
 			}
 		}
 	};
+	
+	function submitSearchForm() {
+		// call submit using jQuery
+		calendarPickerSubmit();
+	}
+
+	function unHighlightDay(target) {
+		// remove last highlight day using jQuery
+		calendarUnHighlightDay(target);
+	}
 	
 	function formatDate(milliseconds, config) {
 		var formattedDate = '',
@@ -263,7 +276,8 @@ var datepickr = (function() {
 				dayCount = 0;
 			}
 			
-			var todayClassName = isToday(i, currentMonthView, currentYearView) ? { className: 'today' } : null;
+			//var todayClassName = isToday(i, currentMonthView, currentYearView) ? { className: 'today' } : null;
+			var todayClassName = null;
 			row.appendChild(buildNode('td', todayClassName, buildNode('span', { className: 'day' }, i)));
 			
 			dayCount++;
