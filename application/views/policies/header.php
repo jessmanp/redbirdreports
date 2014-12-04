@@ -41,7 +41,15 @@
 		</div>
 		<div id="search-area">
 			<button id="pre-dates">Predefined Dates&nbsp;&nbsp;<img src="/public/img/btn_dates.png" class="search-btn-icon" alt="" /></button>
+			<form id="search_text_form" name="search_text_form">
 			<div id="pre-dates-container">
+				<div class="filter-dates">
+				<strong>Search Selected Date(s)</strong><br />
+				<input type="checkbox" id="written" name="written" value="1"><label for="written"><span><span></span></span>Written</label>&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" id="issued" name="issued" value="1"><label for="issued"><span><span></span></span>Issued</label>&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" id="effective" name="effective" value="1"><label for="effective"><span><span></span></span>Effective</label>&nbsp;&nbsp;&nbsp;
+				<input type="checkbox" id="canceled" name="canceled" value="1"><label for="canceled"><span><span></span></span>Canceled</label>
+				</div>
 				<button id="today" data-dates="<?php echo $today.".a"; ?>" class="pre-dates-btn">Today</button>
 				<button id="this_week" data-dates="<?php echo $this_week.".a"; ?>" class="pre-dates-btn">This Week</button>
 				<button id="last_week" data-dates="<?php echo $last_week.".a"; ?>" class="pre-dates-btn">Last Week</button>
@@ -57,7 +65,6 @@
 				<button id="last_two_years" data-dates="<?php echo $last_two_years.".a"; ?>" class="pre-dates-btn">Last 2 Years</button>
 				<button id="all_time" class="pre-dates-btn">All Time</button>
 			</div>
-			<form id="search_text_form" name="search_text_form">
 				<div class="date-pickers">&nbsp;Date Range:</div>
 				<input id="datepick1" name="datepick1" placeholder="" readonly />
 				<input id="datepick2" name="datepick2" placeholder="" readonly />
@@ -65,20 +72,17 @@
 				<button id="dosubmit"><img src="/public/img/btn_search.png" class="search-btn-icon" alt="Search" /></button>
 			<button id="advanced-search">Advanced Search<img src="/public/img/btn_advanced_search.png" class="search-btn-icon" alt="Advanced Search" /></button>
 			<div id="filter-container">
-				<div class="filter-checkboxes">
-				<em>Search These Field(s)</em><br />
-				<input type="checkbox" id="first" name="first" value="1"><label for="first"><span><span></span></span>First Name</label><br />
-				<input type="checkbox" id="last" name="last" value="1"><label for="last"><span><span></span></span>Last Name</label><br />
-				<input type="checkbox" id="description" name="description" value="1"><label for="description"><span><span></span></span>Description</label><br />
-				<input type="checkbox" id="premium" name="premium" value="1"><label for="premium"><span><span></span></span>Premium</label><br />
-				<input type="checkbox" id="notes" name="notes" value="1"><label for="notes"><span><span></span></span>Notes</label><br />
+			  <div class="filter-checkboxes">
+				<strong>Search Selected Field(s)</strong><br />
+				<div class="filter-checkboxes-left">
+					<input type="checkbox" id="first" name="first" value="1"><label for="first"><span><span></span></span>First Name</label><br />
+					<input type="checkbox" id="last" name="last" value="1"><label for="last"><span><span></span></span>Last Name</label><br />
 				</div>
-				<div class="filter-dates">
-				<em>Search These Date(s)</em><br />
-				<input type="checkbox" id="written" name="written" value="1"><label for="written"><span><span></span></span>Date Written</label><br />
-				<input type="checkbox" id="issued" name="issued" value="1"><label for="issued"><span><span></span></span>Date Issued</label><br />
-				<input type="checkbox" id="effective" name="effective" value="1"><label for="effective"><span><span></span></span>Date Effective</label><br />
+				<div class="filter-checkboxes-right">
+					<input type="checkbox" id="description" name="description" value="1"><label for="description"><span><span></span></span>Description</label><br />
+					<input type="checkbox" id="notes" name="notes" value="1"><label for="notes"><span><span></span></span>Notes</label><br />
 				</div>
+			  </div>
 			</div>
 			</form>
 		</div>

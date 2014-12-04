@@ -504,8 +504,8 @@ input[type=radio]:not(old):checked + label > span > span{
 	-webkit-border-radius:6px;
 	border-radius:6px;
 	padding:5px;
-	width:400px;
-	height:210px;
+	width:318px;
+	height:285px;
 	/* for Chrome 10+ and Safari 5+ */
 	-webkit-box-shadow: 1px 3px 8px #666666;
 	/* for FireFox 3.6+ */
@@ -518,8 +518,8 @@ input[type=radio]:not(old):checked + label > span > span{
 	float:left;
 	margin:3px 2px 0 5px;
     cursor:pointer; 
-    width:190px; 
-    height:26px; 
+    width:150px; 
+    height:28px; 
     background-color:#a20004;
     color:#ffffff;
     border:2px solid #a20004;
@@ -541,7 +541,7 @@ input[type=radio]:not(old):checked + label > span > span{
 
 #filter-container {
 	display:none;
-	margin:40px 0 0 550px;
+	margin:40px 0 0 600px;
 	position:absolute;
 	z-index:20;
 	background-color:#ffffff;
@@ -551,33 +551,54 @@ input[type=radio]:not(old):checked + label > span > span{
 	-webkit-border-radius:6px;
 	border-radius:6px;
 	padding:10px 5px 5px 0;
-	width:325px;
-	height:165px;
+	width:275px;
+	height:96px;
 	/* for Chrome 10+ and Safari 5+ */
 	-webkit-box-shadow: 1px 3px 8px #666666;
 	/* for FireFox 3.6+ */
 	-moz-box-shadow: 1px 3px 8px #666666;
 	/* for IE 5.5 - 9 */
 	box-shadow: 1px 3px 8px #666666;
-	line-height:22px;
 }
 
 .filter-checkboxes {
 	float:left;
-	width:130px;
+	width:250px;
 	margin:0 0 0 10px;
-	padding:5px 5px 10px 15px;
+	padding:5px;
 	font-size:12px;
 	background-color:#cccccc;
+	line-height:22px;
+	text-align:center;
+}
+
+.filter-checkboxes-left {
+	float:left;
+	width:100px;
+	padding:5px 5px 10px 15px;
+	font-size:12px;
+	background-color:transparent;
+	line-height:22px;
+	text-align:left;
+}
+
+.filter-checkboxes-right {
+	float:right;
+	width:90px;
+	padding:5px 15px 10px 5px;
+	font-size:12px;
+	background-color:transparent;
+	line-height:22px;
+	text-align:left;
 }
 
 .filter-dates {
-	float:left;
-	width:130px;
-	margin:0 0 0 10px;
-	padding:5px 5px 10px 15px;
+	margin:4px 4px 4px 6px;
+	padding:5px;
 	font-size:12px;
 	background-color:#cccccc;
+	line-height:22px;
+	text-align:center;
 }
 
 .filter-btn {

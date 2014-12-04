@@ -137,7 +137,7 @@ function formatText(str) {
 }
 
 // CLEAR ALL SORT CLASSES
-function resetSortLinks() {
+function resetSortLinks(searchSubmit) {
 	// setup array of sort link IDs
 	var sortLinkArray = ["#sortfirst","#sortlast","#sortdesc","#sortcat","#sortprem","#sorttype","#sortsold","#sortsrc","#sortlen","#sortwdate","#sortidate","#sortedate"];
 		
@@ -151,17 +151,20 @@ function resetSortLinks() {
 			}
 		}
 
-	// turn on all text fields by default
-	$("#first").prop('checked', true);
-	$("#last").prop('checked', true);
-	$("#description").prop('checked', true);
-	$("#premium").prop('checked', true);
-	$("#notes").prop('checked', true);
+	if (searchSubmit == 0) {
+		// reset text fields by default
+		$("#first").prop('checked', true);
+		$("#last").prop('checked', true);
+		$("#description").prop('checked', true);
+		//$("#premium").prop('checked', true);
+		$("#notes").prop('checked', true);
 	
-	// turn on all dates by default
-	$("#written").prop('checked', true);
-	$("#issued").prop('checked', true);
-	$("#effective").prop('checked', true);
+		// reset dates by default
+		$("#written").prop('checked', true);
+		$("#issued").prop('checked', true);
+		$("#effective").prop('checked', true);
+		$("#canceled").prop('checked', true);
+	}
 }
 
 // ADD POLICY
@@ -373,7 +376,7 @@ $(document).ready(function() {
 		$("#datepick1").val('');
 		$("#datepick2").val('');
 		$("#field").val('');
-		resetSortLinks();
+		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#auto").closest(".sub-button").removeAttr("style");
 		$("#fire").closest(".sub-button").removeAttr("style");
@@ -409,7 +412,7 @@ $(document).ready(function() {
 		$("#datepick1").val('');
 		$("#datepick2").val('');
 		$("#field").val('');
-		resetSortLinks();
+		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").removeAttr("style");
 		$("#fire").closest(".sub-button").removeAttr("style");
@@ -445,7 +448,7 @@ $(document).ready(function() {
 		$("#datepick1").val('');
 		$("#datepick2").val('');
 		$("#field").val('');
-		resetSortLinks();
+		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").removeAttr("style");
 		$("#auto").closest(".sub-button").removeAttr("style");
@@ -481,7 +484,7 @@ $(document).ready(function() {
 		$("#datepick1").val('');
 		$("#datepick2").val('');
 		$("#field").val('');
-		resetSortLinks();
+		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").removeAttr("style");
 		$("#auto").closest(".sub-button").removeAttr("style");
@@ -517,7 +520,7 @@ $(document).ready(function() {
 		$("#datepick1").val('');
 		$("#datepick2").val('');
 		$("#field").val('');
-		resetSortLinks();
+		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").removeAttr("style");
 		$("#auto").closest(".sub-button").removeAttr("style");
@@ -553,7 +556,7 @@ $(document).ready(function() {
 		$("#datepick1").val('');
 		$("#datepick2").val('');
 		$("#field").val('');
-		resetSortLinks();
+		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").removeAttr("style");
 		$("#auto").closest(".sub-button").removeAttr("style");
@@ -589,7 +592,7 @@ $(document).ready(function() {
 		$("#datepick1").val('');
 		$("#datepick2").val('');
 		$("#field").val('');
-		resetSortLinks();
+		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").removeAttr("style");
 		$("#auto").closest(".sub-button").removeAttr("style");
@@ -625,7 +628,7 @@ $(document).ready(function() {
 		$("#datepick1").val('');
 		$("#datepick2").val('');
 		$("#field").val('');
-		resetSortLinks();
+		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").removeAttr("style");
 		$("#auto").closest(".sub-button").removeAttr("style");
@@ -662,7 +665,7 @@ $(document).ready(function() {
 	// VIEW ALL WRITTEN ONLY
 	$("#allwritten").on("click", function(event) {
 		event.preventDefault();
-		resetSortLinks();
+		resetSortLinks(0);
 		$("#datepick1").val('');
 		$("#datepick2").val('');
 		$("#field").val('');
@@ -672,7 +675,7 @@ $(document).ready(function() {
 	// VIEW NOT ISSUED ONLY
 	$("#notissued").on("click", function(event) {
 		event.preventDefault();
-		resetSortLinks();
+		resetSortLinks(0);
 		$("#datepick1").val('');
 		$("#datepick2").val('');
 		$("#field").val('');
@@ -682,7 +685,7 @@ $(document).ready(function() {
 	// VIEW ALL PENDING RENEWAL ONLY
 	$("#pendingrenewal").on("click", function(event) {
 		event.preventDefault();
-		resetSortLinks();
+		resetSortLinks(0);
 		$("#datepick1").val('');
 		$("#datepick2").val('');
 		$("#field").val('');
@@ -698,7 +701,7 @@ $(document).ready(function() {
 	// SORTING
 	$("#sortfirst").on("click", function(event) {
 		event.preventDefault();
-		resetSortLinks();
+		resetSortLinks(0);
 		$(this).removeClass();
 		if (order == "desc") {
     			$(this).addClass('sort-link-desc');
@@ -712,7 +715,7 @@ $(document).ready(function() {
 	});
 	$("#sortlast").on("click", function(event) {
 		event.preventDefault();
-		resetSortLinks();
+		resetSortLinks(0);
 		$(this).removeClass();
 		if (order == "desc") {
     			$(this).addClass('sort-link-desc');
@@ -726,7 +729,7 @@ $(document).ready(function() {
 	});
 	$("#sortdesc").on("click", function(event) {
 		event.preventDefault();
-		resetSortLinks();
+		resetSortLinks(0);
 		$(this).removeClass();
 		if (order == "desc") {
     			$(this).addClass('sort-link-desc');
@@ -740,7 +743,7 @@ $(document).ready(function() {
 	});
 	$("#sortcat").on("click", function(event) {
 		event.preventDefault();
-		resetSortLinks();
+		resetSortLinks(0);
 		$(this).removeClass();
 		if (order == "desc") {
     			$(this).addClass('sort-link-desc');
@@ -754,7 +757,7 @@ $(document).ready(function() {
 	});
 	$("#sortprem").on("click", function(event) {
 		event.preventDefault();
-		resetSortLinks();
+		resetSortLinks(0);
 		$(this).removeClass();
 		if (order == "desc") {
     			$(this).addClass('sort-link-desc');
@@ -768,7 +771,7 @@ $(document).ready(function() {
 	});
 	$("#sorttype").on("click", function(event) {
 		event.preventDefault();
-		resetSortLinks();
+		resetSortLinks(0);
 		$(this).removeClass();
 		if (order == "desc") {
     			$(this).addClass('sort-link-desc');
@@ -782,7 +785,7 @@ $(document).ready(function() {
 	});
 	$("#sortsold").on("click", function(event) {
 		event.preventDefault();
-		resetSortLinks();
+		resetSortLinks(0);
 		$(this).removeClass();
 		if (order == "desc") {
     			$(this).addClass('sort-link-desc');
@@ -796,7 +799,7 @@ $(document).ready(function() {
 	});
 	$("#sortsrc").on("click", function(event) {
 		event.preventDefault();
-		resetSortLinks();
+		resetSortLinks(0);
 		$(this).removeClass();
 		if (order == "desc") {
     			$(this).addClass('sort-link-desc');
@@ -810,7 +813,7 @@ $(document).ready(function() {
 	});
 	$("#sortlen").on("click", function(event) {
 		event.preventDefault();
-		resetSortLinks();
+		resetSortLinks(0);
 		$(this).removeClass();
 		if (order == "desc") {
     			$(this).addClass('sort-link-desc');
@@ -824,7 +827,7 @@ $(document).ready(function() {
 	});
 	$("#sortwdate").on("click", function(event) {
 		event.preventDefault();
-		resetSortLinks();
+		resetSortLinks(0);
 		$(this).removeClass();
 		if (order == "desc") {
     			$(this).addClass('sort-link-desc');
@@ -838,7 +841,7 @@ $(document).ready(function() {
 	});
 	$("#sortidate").on("click", function(event) {
 		event.preventDefault();
-		resetSortLinks();
+		resetSortLinks(0);
 		$(this).removeClass();
 		if (order == "desc") {
     			$(this).addClass('sort-link-desc');
@@ -852,7 +855,7 @@ $(document).ready(function() {
 	});
 	$("#sortedate").on("click", function(event) {
 		event.preventDefault();
-		resetSortLinks();
+		resetSortLinks(0);
 		$(this).removeClass();
 		if (order == "desc") {
     			$(this).addClass('sort-link-desc');
@@ -900,7 +903,6 @@ $(document).ready(function() {
 		$(this).css("background-color","#000000");
 		$(this).css("border-color","#000000");
 		$("#all_time").removeAttr("style");
-		$("#today").removeAttr("style");
 		$("#this_week").removeAttr("style");
 		$("#last_week").removeAttr("style");
 		$("#this_month").removeAttr("style");
@@ -922,7 +924,8 @@ $(document).ready(function() {
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("Today:");
 		loadDatePickers();
-		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
 	});
 
@@ -952,7 +955,8 @@ $(document).ready(function() {
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("This Week:");
 		loadDatePickers();
-		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
 	});
 
@@ -982,7 +986,8 @@ $(document).ready(function() {
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("Last Week:");
 		loadDatePickers();
-		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
 	});
 
@@ -1012,7 +1017,8 @@ $(document).ready(function() {
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("This Month:");
 		loadDatePickers();
-		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
 	});
 
@@ -1042,7 +1048,8 @@ $(document).ready(function() {
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("Last Month:");
 		loadDatePickers();
-		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
 	});
 
@@ -1072,7 +1079,8 @@ $(document).ready(function() {
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("This Quarter:");
 		loadDatePickers();
-		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
 	});
 
@@ -1102,7 +1110,8 @@ $(document).ready(function() {
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("1st Quarter:");
 		loadDatePickers();
-		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
 	});
 
@@ -1132,7 +1141,8 @@ $(document).ready(function() {
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("2nd Quarter:");
 		loadDatePickers();
-		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
 	});
 
@@ -1162,7 +1172,8 @@ $(document).ready(function() {
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("3rd Quarter:");
 		loadDatePickers();
-		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
 	});
 
@@ -1192,7 +1203,8 @@ $(document).ready(function() {
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("4th Quarter:");
 		loadDatePickers();
-		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
 	});
 
@@ -1222,7 +1234,8 @@ $(document).ready(function() {
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("Last 6 Mos.:");
 		loadDatePickers();
-		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
 	});
 
@@ -1252,7 +1265,8 @@ $(document).ready(function() {
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("This Year:");
 		loadDatePickers();
-		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
 	});
 
@@ -1282,13 +1296,21 @@ $(document).ready(function() {
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("Last 2 Years:");
 		loadDatePickers();
-		$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
+		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
 	});
 
 // =============== END PREDEFINED DATES =============== //
 
 // =============== BEGIN SEARCH TEXT =============== //
+
+	$("#field").keypress(function(e) {
+  		if (e.which == 13) {
+    		$("#search_text_form").submit();
+    		return false;    //<---- Add this to do preventDefault and propagation
+  		}
+	});
 
 	$("#submit").on("click", function(event) {
 		event.preventDefault();
@@ -1306,25 +1328,46 @@ $(document).ready(function() {
 			// format dates for link
 			var sdate = $("#datepick1").val().replace(/\//g, "-");
 			var edate = $("#datepick2").val().replace(/\//g, "-");
-			if ($("#written").prop('checked') === true && $("#issued").prop('checked') === false && $("#effective").prop('checked') === false) {
+			if ($("#written").prop('checked') === true && $("#issued").prop('checked') === false && $("#effective").prop('checked') === false && $("#canceled").prop('checked') === false) {
 				datetype = ".w";
 			}
-			if ($("#issued").prop('checked') === true && $("#written").prop('checked') === false && $("#effective").prop('checked') === false) {
+			if ($("#issued").prop('checked') === true && $("#written").prop('checked') === false && $("#effective").prop('checked') === false && $("#canceled").prop('checked') === false) {
 				datetype = ".i";
 			}
-			if ($("#effective").prop('checked') === true && $("#written").prop('checked') === false && $("#issued").prop('checked') === false) {
+			if ($("#effective").prop('checked') === true && $("#written").prop('checked') === false && $("#issued").prop('checked') === false && $("#canceled").prop('checked') === false) {
 				datetype = ".e";
 			}
-			if ($("#written").prop('checked') === true && $("#issued").prop('checked') === true && $("#effective").prop('checked') === false) {
+			if ($("#effective").prop('checked') === false && $("#written").prop('checked') === false && $("#issued").prop('checked') === false && $("#canceled").prop('checked') === true) {
+				datetype = ".c";
+			}
+			if ($("#written").prop('checked') === true && $("#issued").prop('checked') === true && $("#effective").prop('checked') === false && $("#canceled").prop('checked') === false) {
 				datetype = ".wi";
 			}
-			if ($("#written").prop('checked') === true && $("#effective").prop('checked') === true && $("#issued").prop('checked') === false) {
+			if ($("#written").prop('checked') === true && $("#effective").prop('checked') === true && $("#issued").prop('checked') === false && $("#canceled").prop('checked') === false) {
 				datetype = ".we";
 			}
-			if ($("#effective").prop('checked') === true && $("#issued").prop('checked') === true && $("#written").prop('checked') === false) {
+			if ($("#written").prop('checked') === true && $("#effective").prop('checked') === true && $("#issued").prop('checked') === false && $("#canceled").prop('checked') === true) {
+				datetype = ".wc";
+			}
+			if ($("#effective").prop('checked') === true && $("#issued").prop('checked') === true && $("#written").prop('checked') === false && $("#canceled").prop('checked') === false) {
 				datetype = ".ei";
 			}
-			if ($("#written").prop('checked') === true && $("#issued").prop('checked') === true && $("#effective").prop('checked') === true) {
+			if ($("#effective").prop('checked') === true && $("#issued").prop('checked') === false && $("#written").prop('checked') === false && $("#canceled").prop('checked') === true) {
+				datetype = ".ec";
+			}
+			if ($("#written").prop('checked') === true && $("#issued").prop('checked') === true && $("#effective").prop('checked') === true && $("#canceled").prop('checked') === false) {
+				datetype = ".wie";
+			}
+			if ($("#written").prop('checked') === true && $("#issued").prop('checked') === false && $("#effective").prop('checked') === true && $("#canceled").prop('checked') === true) {
+				datetype = ".wec";
+			}
+			if ($("#written").prop('checked') === true && $("#issued").prop('checked') === true && $("#effective").prop('checked') === false && $("#canceled").prop('checked') === true) {
+				datetype = ".iwc";
+			}
+			if ($("#written").prop('checked') === false && $("#issued").prop('checked') === true && $("#effective").prop('checked') === true && $("#canceled").prop('checked') === true) {
+				datetype = ".eic";
+			}
+			if ($("#written").prop('checked') === true && $("#issued").prop('checked') === true && $("#effective").prop('checked') === true && $("#canceled").prop('checked') === true) {
 				datetype = ".a";
 			}
 			var dateRange = sdate+"."+edate+datetype;
@@ -1341,94 +1384,97 @@ $(document).ready(function() {
 			var text = $("#field").val().replace(/ /g, "-");
 			var phrase = text;
 			// do search based on checkboxes
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#premium").prop('checked') === true && $("#notes").prop('checked') === true) {
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#notes").prop('checked') === true) {
 				type = ".a";
 			}
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#premium").prop('checked') === false && $("#notes").prop('checked') === false) {
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#notes").prop('checked') === false) {
 				type = ".f";
 			}
-			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#premium").prop('checked') === false && $("#notes").prop('checked') === false) {
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#notes").prop('checked') === false) {
 				type = ".l";
 			}
-			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#premium").prop('checked') === false && $("#notes").prop('checked') === false) {
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#notes").prop('checked') === false) {
 				type = ".d";
 			}
-			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#premium").prop('checked') === true && $("#notes").prop('checked') === false) {
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#notes").prop('checked') === false) {
 				type = ".p";
 			}
-			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#premium").prop('checked') === false && $("#notes").prop('checked') === true) {
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#notes").prop('checked') === true) {
 				type = ".n";
 			}
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#premium").prop('checked') === false && $("#notes").prop('checked') === false) {
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#notes").prop('checked') === false) {
 				type = ".fl";
 			}
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#premium").prop('checked') === false && $("#notes").prop('checked') === false) {
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#notes").prop('checked') === false) {
 				type = ".fd";
 			}
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#premium").prop('checked') === true && $("#notes").prop('checked') === false) {
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#notes").prop('checked') === false) {
 				type = ".fp";
 			}
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#premium").prop('checked') === false && $("#notes").prop('checked') === true) {
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#notes").prop('checked') === true) {
 				type = ".fn";
 			}
-			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#premium").prop('checked') === false && $("#notes").prop('checked') === false) {
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#notes").prop('checked') === false) {
 				type = ".ld";
 			}
-			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#premium").prop('checked') === true && $("#notes").prop('checked') === false) {
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#notes").prop('checked') === false) {
 				type = ".lp";
 			}
-			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#premium").prop('checked') === false && $("#notes").prop('checked') === true) {
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#notes").prop('checked') === true) {
 				type = ".ln";
 			}
-			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#premium").prop('checked') === true && $("#notes").prop('checked') === false) {
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#notes").prop('checked') === false) {
 				type = ".dp";
 			}
-			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#premium").prop('checked') === false && $("#notes").prop('checked') === true) {
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#notes").prop('checked') === true) {
 				type = ".dn";
 			}
-			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#premium").prop('checked') === true && $("#notes").prop('checked') === true) {
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#notes").prop('checked') === true) {
 				type = ".pn";
 			}
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#premium").prop('checked') === false && $("#notes").prop('checked') === false) {
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#notes").prop('checked') === false) {
 				type = ".fld";
 			}
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#premium").prop('checked') === true && $("#notes").prop('checked') === false) {
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#notes").prop('checked') === false) {
 				type = ".flp";
 			}
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#premium").prop('checked') === false && $("#notes").prop('checked') === true) {
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#notes").prop('checked') === true) {
 				type = ".fln";
 			}
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#premium").prop('checked') === true && $("#notes").prop('checked') === false) {
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#notes").prop('checked') === false) {
 				type = ".fdp";
 			}
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#premium").prop('checked') === false && $("#notes").prop('checked') === true) {
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#notes").prop('checked') === true) {
 				type = ".fdn";
 			}
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#premium").prop('checked') === true && $("#notes").prop('checked') === true) {
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#notes").prop('checked') === true) {
 				type = ".fpn";
 			}
-			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#premium").prop('checked') === true && $("#notes").prop('checked') === false) {
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#notes").prop('checked') === false) {
 				type = ".ldp";
 			}
-			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#premium").prop('checked') === true && $("#notes").prop('checked') === true) {
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#notes").prop('checked') === true) {
 				type = ".lpn";
 			}
-			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#premium").prop('checked') === true && $("#notes").prop('checked') === true) {
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#notes").prop('checked') === true) {
 				type = ".dpn";
 			}
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#premium").prop('checked') === true && $("#notes").prop('checked') === false) {
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#notes").prop('checked') === true) {
+				type = ".dln";
+			}
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#notes").prop('checked') === false) {
 				type = ".fldp";
 			}
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#premium").prop('checked') === false && $("#notes").prop('checked') === true) {
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#notes").prop('checked') === true) {
 				type = ".fldn";
 			}
-			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#premium").prop('checked') === false && $("#notes").prop('checked') === false) {
+			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#notes").prop('checked') === false) {
 				type = ".ldpn";
 			}
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#premium").prop('checked') === true && $("#notes").prop('checked') === true) {
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#notes").prop('checked') === true) {
 				type = ".fdpn";
 			}
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#premium").prop('checked') === true && $("#notes").prop('checked') === true) {
+			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#notes").prop('checked') === true) {
 				type = ".dfpn";
 			}
 			if (type) {
@@ -1437,20 +1483,24 @@ $(document).ready(function() {
 		}
 		// update path
 		path = path+phrase;
+		//alert(path);
 		$("#policy-content").load(path);
+		// clear any sorting that might be clicked
+		resetSortLinks(1);
 	});
 	
 	// turn on all text fields by default
 	$("#first").prop('checked', true);
 	$("#last").prop('checked', true);
 	$("#description").prop('checked', true);
-	$("#premium").prop('checked', true);
+	//$("#premium").prop('checked', true);
 	$("#notes").prop('checked', true);
 	
 	// turn on all dates by default
 	$("#written").prop('checked', true);
 	$("#issued").prop('checked', true);
 	$("#effective").prop('checked', true);
+	$("#canceled").prop('checked', true);
 
 // =============== END SEARCH TEXT =============== //
 
@@ -1516,8 +1566,8 @@ $(document).ready(function() {
 	});
 
 	// SET DATE PICKERS
-	//$("#datepick1").attr("placeholder", currentdate());
-	//$("#datepick2").attr("placeholder", currentdate());
+	$("#datepick1").attr("placeholder", "Start Date");
+	$("#datepick2").attr("placeholder", "End Date");
 	loadDatePickers();
 
 	// SHOW/HIDE PREDEFINED DATES
