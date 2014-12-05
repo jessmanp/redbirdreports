@@ -3,12 +3,23 @@
 <div id="policy-window">
 	<div id="policy-text">
 		<div class="policy-message"></div>
+		<p class="policy-text-box"></p>
+<div class="policy-edit-bar"></div>
 		<button class="plain-btn-close">Close</button>
 	</div>
 	<div id="policy-edit">
 		<div class="policy-message"></div>
 			<form id="policy_entry_form" name="policy_entry_form">
+			<input type="hidden" id="path" name="path" value="" />
 			<input type="hidden" id="id" name="id" value="-2" />
+			<input type="hidden" id="captionsall" name="captionsall" value='<option value="0">- Select -</option><?php foreach ($policy_categories_all as $category) { ?><option value="<?php echo $category->id; ?>"><?php if ($category->parent_id == 0) { echo $category->name; } else { echo "&nbsp;&nbsp;-".$category->name; } ?></option><?php } ?>' />
+			<input type="hidden" id="captionsauto" name="captionsauto" value='<?php foreach ($policy_categories_auto as $category) { ?><option value="<?php echo $category->id; ?>"<?php if ($category->parent_id == 0) { echo " selected"; } ?>><?php if ($category->parent_id == 0) { echo $category->name; } else { echo "&nbsp;&nbsp;-".$category->name; } ?></option><?php } ?>' />
+			<input type="hidden" id="captionsfire" name="captionsfire" value='<?php foreach ($policy_categories_fire as $category) { ?><option value="<?php echo $category->id; ?>"<?php if ($category->parent_id == 0) { echo " selected"; } ?>><?php if ($category->parent_id == 0) { echo $category->name; } else { echo "&nbsp;&nbsp;-".$category->name; } ?></option><?php } ?>' />
+			<input type="hidden" id="captionslife" name="captionslife" value='<?php foreach ($policy_categories_life as $category) { ?><option value="<?php echo $category->id; ?>"<?php if ($category->parent_id == 0) { echo " selected"; } ?>><?php if ($category->parent_id == 0) { echo $category->name; } else { echo "&nbsp;&nbsp;-".$category->name; } ?></option><?php } ?>' />
+			<input type="hidden" id="captionshealth" name="captionshealth" value='<?php foreach ($policy_categories_health as $category) { ?><option value="<?php echo $category->id; ?>"<?php if ($category->parent_id == 0) { echo " selected"; } ?>><?php if ($category->parent_id == 0) { echo $category->name; } else { echo "&nbsp;&nbsp;-".$category->name; } ?></option><?php } ?>' />
+			<input type="hidden" id="captionsdeposit" name="captionsdeposit" value='<?php foreach ($policy_categories_deposit as $category) { ?><option value="<?php echo $category->id; ?>"<?php if ($category->parent_id == 0) { echo " selected"; } ?>><?php if ($category->parent_id == 0) { echo $category->name; } else { echo "&nbsp;&nbsp;-".$category->name; } ?></option><?php } ?>' />
+			<input type="hidden" id="captionsloan" name="captionsloan" value='<?php foreach ($policy_categories_loan as $category) { ?><option value="<?php echo $category->id; ?>"<?php if ($category->parent_id == 0) { echo " selected"; } ?>><?php if ($category->parent_id == 0) { echo $category->name; } else { echo "&nbsp;&nbsp;-".$category->name; } ?></option><?php } ?>' />
+			<input type="hidden" id="captionsfund" name="captionsfund" value='<?php foreach ($policy_categories_fund as $category) { ?><option value="<?php echo $category->id; ?>"<?php if ($category->parent_id == 0) { echo " selected"; } ?>><?php if ($category->parent_id == 0) { echo $category->name; } else { echo "&nbsp;&nbsp;-".$category->name; } ?></option><?php } ?>' />
 <!-- begin edit left box -->
 		<div class="edit-left-box">
 			<div class="policy-entry-field">
@@ -40,12 +51,8 @@
 		<div class="edit-table-container">
 			<div class="edit-heading">
 				<div class="edit-col">Category:</div>
-				<div class="edit-col">
+				<div id="catselect" class="edit-col">
 					<select class="policy-entry-select" id="policy_sub_category" name="policy_sub_category">
-						<option value="0">- Select -</option>
-<?php foreach ($policy_categories as $category) { ?>
-                			<option value="<?php echo $category->id; ?>"><?php if ($category->parent_id == 0) { echo $category->name; } else { echo '&nbsp;&nbsp;-'.$category->name; } ?></option>
-<?php } ?>
 					</select>
 				</div>
 			</div>
@@ -96,34 +103,23 @@
 		</div>
 	</div>
 <!-- end edit right box -->
-
-<!--
-			<div id="policy-entry-field">
-				<div class="policy-left">Date Written</div>
-				<div class="policy-right"><input id="policy_date_written" name="policy_date_written" class="policy-date" placeholder="" readonly /></div>
-			</div>
-			<div id="policy-entry-field">
-				<div class="policy-left">Date Issued</div>
-				<div class="policy-right"><input id="policy_date_issued" name="policy_date_issued" class="policy-date" placeholder="" readonly /></div>
-			</div>
-			<div id="policy-entry-field">
-				<div class="policy-left">Date Effective</div>
-				<div class="policy-right"><input id="policy_date_effective" name="policy_date_effective" class="policy-date" placeholder="" readonly /></div>
-			</div>
--->
-
-			<div style="clear:both;"></div>
+	<div class="policy-date-fields">
+		Written:<input id="writtendate" name="writtendate" value="" placeholder="" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+		Issued:<input id="issueddate" name="issueddate" value="" placeholder="" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+		Effective:<input id="effectivedate" name="effectivedate" value="" placeholder="" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+		Canceled:<input id="canceleddate" name="canceleddate" value="" placeholder="" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+	</div>
 			</form>
-			<br />
+<div class="policy-edit-bar"></div>
 		<button class="plain-btn-close">Cancel</button>&nbsp;&nbsp;&nbsp;<button id="policy-add" data-type="add" class="plain-btn">Add</button><button id="policy-save" data-type="edit" class="plain-btn">Save</button>
 	</div>
 	<div id="policy-delete">
 		<div class="policy-message"></div>
-			Are you sure you want to &quot;ERASE&quot; this Policy?<br /><br />Click &quot;Cancel&quot; if you want to keep this policy.<br /><br />
+			Are you sure you want to &quot;ERASE&quot; this Policy?<br /><br />Click &quot;Cancel&quot; if you want to keep this policy.<br />
 			<form id="policy_delete_form" name="policy_delete_form">
 			<input type="hidden" id="id" name="id" value="-2" />
 			</form>
-			<br />
+<div class="policy-edit-bar"></div>
 		<button class="plain-btn-close">Cancel</button>&nbsp;&nbsp;&nbsp;<button id="policy-disable" class="plain-btn">Erase</button>
 	</div>
 	<br /><br />

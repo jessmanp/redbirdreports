@@ -29,7 +29,7 @@ function closeModal() {
 }
 
 // OPEN/CLOSE POPUP WINDOW
-function openWindow(type,message,id,text,fname,lname,desc,prem,zip,cat,busi,sold,src,len,dw,di,de,zip) {
+function openWindow(currcat,type,message,id,text,fname,lname,desc,prem,zip,cat,busi,sold,src,len,dw,di,de,dc,zip) {
 
 	var winh = $(window).height();
 	var doch = $(document).height();
@@ -44,10 +44,40 @@ function openWindow(type,message,id,text,fname,lname,desc,prem,zip,cat,busi,sold
 	var neww = (winw/2)-398;
 	var scrolled_val = $(document).scrollTop().valueOf();
 	var newh = (scrolled_val+25);
+	
+	var category = currcat.replace(/list/g, "");
+	categoryName = category.charAt(0).toUpperCase() + category.slice(1);
+	if (categoryName == "All") {
+		categoryName = "";
+	}
+
 	$("#policy-window").css({ "margin-left": neww+"px", "margin-top": "-330px" });
 	$("#policy-window").fadeIn();
 	$(".policy-message").fadeIn();
 	$(".policy-message").text(message);
+	if (category != '') {
+		$(".policy-message").prepend('<img src="/public/img/icon_'+category+'.png" class="modal-icon" alt="'+categoryName+'" />');
+		$(".policy-message").append(' '+categoryName+' Policy');
+	}
+	// display category options based on current category
+	$("#policy_sub_category").empty();
+	if (category == 'auto') {
+		$("#policy_sub_category").append($("#captionsauto").val());
+	} else if (category == 'fire') {
+		$("#policy_sub_category").append($("#captionsfire").val());
+	} else if (category == 'life') {
+		$("#policy_sub_category").append($("#captionslife").val());
+	} else if (category == 'health') {
+		$("#policy_sub_category").append($("#captionshealth").val());
+	} else if (category == 'deposit') {
+		$("#policy_sub_category").append($("#captionsdeposit").val());
+	} else if (category == 'loan') {
+		$("#policy_sub_category").append($("#captionsloan").val());
+	} else if (category == 'fund') {
+		$("#policy_sub_category").append($("#captionsfund").val());
+	} else {
+		$("#policy_sub_category").append($("#captionsall").val());
+	}
 	if (type == 'add') {
 		$("#policy-edit").fadeIn();
 		$("#policy-edit #id").val(id);
@@ -59,11 +89,22 @@ function openWindow(type,message,id,text,fname,lname,desc,prem,zip,cat,busi,sold
 		$("#policy_premium").val(prem);
 		$("#policy_zip").val(zip);
 		$("#policy_notes").val(text);
-		$("#policy_sub_category option[value="+cat+"]").prop("selected", true);
 		$("#policy_business_type option[value="+busi+"]").prop("selected", true);
 		$("#policy_team_member option[value="+sold+"]").prop("selected", true);
 		$("#policy_source_type option[value="+src+"]").prop("selected", true);
-		$("#policy_length_type option[value="+len+"]").prop("selected", true);
+		if (category == 'auto') {
+			$("#policy_length_type option[value=1]").prop("selected", true);
+		} else {
+			$("#policy_length_type option[value="+len+"]").prop("selected", true);
+		}
+		//Create a Date object
+ 		var date = new Date();
+ 		//Concatenate the sections of your Date into a string ("dd/mm/yyyy")
+ 		var nowformatted = (date.getMonth() + 1)+'/'+date.getDate()+'/'+date.getFullYear();
+		$("#writtendate").val(nowformatted);
+		$("#issueddate").val('');
+		$("#effectivedate").val('');
+		$("#canceleddate").val('');
 	}
 	if (type == 'edit') {
 		$("#policy-edit").fadeIn();
@@ -77,15 +118,37 @@ function openWindow(type,message,id,text,fname,lname,desc,prem,zip,cat,busi,sold
 		$("#policy_premium").val(prem);
 		$("#policy_zip").val(zip);
 		$("#policy_notes").val(text);
-		$("#policy_sub_category option[value="+cat+"]").prop("selected", true);
+		if (cat != 0) {
+			$("#policy_sub_category option[value="+cat+"]").prop("selected", true);
+		}
 		$("#policy_business_type option[value="+busi+"]").prop("selected", true);
 		$("#policy_team_member option[value="+sold+"]").prop("selected", true);
 		$("#policy_source_type option[value="+src+"]").prop("selected", true);
 		$("#policy_length_type option[value="+len+"]").prop("selected", true);
+		$("#writtendate").val(sqlToJsDate(dw));
+		if (di == '') {
+			$("#issueddate").val('');
+		} else {
+			$("#issueddate").val(sqlToJsDate(di));
+		}
+		if (de == '') {
+			$("#effectivedate").val('');
+		} else {
+			$("#effectivedate").val(sqlToJsDate(de));
+		}
+		if (dc == '') {
+			$("#canceleddate").val('');
+		} else {
+			$("#canceleddate").val(sqlToJsDate(dc));
+		}
 	}
 	if (type == 'text') {
+		if (text == '') {
+			text = '&nbsp;';
+		}
 		$("#policy-text").fadeIn();
-		$(".policy-message").append('<p>'+formatText(text)+'</p>');
+		$("#policy-text").find("p").text('');
+		$("#policy-text").find("p").html(formatText(text));
 	}
 	if (type == 'delete') {
 		$("#policy-delete").fadeIn();
@@ -168,28 +231,28 @@ function resetSortLinks(searchSubmit) {
 }
 
 // ADD POLICY
-function openPolicyAddWindow(id) {
-	openWindow('add','Add New Policy',id,'','','','','','',0,0,0,0,0,'','','','');
+function openPolicyAddWindow(currcat,id) {
+	openWindow(currcat,'add','Add New',id,'','','','','','',0,0,0,0,0,'','','','');
 }
 
 // EDIT POLICY
-function openPolicyEditWindow(id,text,fname,lname,desc,prem,zip,cat,busi,sold,src,len,dw,di,de,zip) {
-	openWindow('edit','Edit Policy ',id,text,fname,lname,desc,prem,zip,cat,busi,sold,src,len,dw,di,de,zip);
+function openPolicyEditWindow(currcat,id,text,fname,lname,desc,prem,zip,cat,busi,sold,src,len,dw,di,de,dc,zip) {
+	openWindow(currcat,'edit','Edit',id,text,fname,lname,desc,prem,zip,cat,busi,sold,src,len,dw,di,de,dc,zip);
 }
 
 // SHOW DESC TEXT IN A WINDOW
 function openPolicyDescWindow(text) {
-	openWindow('text','Policy Description','-1',text);
+	openWindow('','text','Policy Description','-1',text);
 }
 
 // SHOW NOTE TEXT IN A WINDOW
 function openPolicyTextWindow(text) {
-	openWindow('text','Policy Notes','-1',text);
+	openWindow('','text','Policy Notes','-1',text);
 }
 
 // DELETE POLICY
 function doPolicyDelete(id) {
-	openWindow('delete','Erase Policy',id,'');
+	openWindow('','delete','Erase Policy',id,'');
 }
 
 // LOAD
@@ -273,6 +336,8 @@ $(document).ready(function() {
 	});
 			
 	$('#policy_entry_form').submit(function(event) {
+			// set current path for listing of policies
+			var path = "/"+$("#policy-edit #path").val();
 
 			if ($("#policy-edit #id").val() == 0) {
                 $.ajax({
@@ -288,7 +353,7 @@ $(document).ready(function() {
 							// show returned error msg here
 							openModal('error',data.msg);
 						} else {
-							$("#policy-content").load("/app/policies/"+currcat);
+							$("#policy-content").load(path);
 							// show success message...
 							openModal('info',data.msg);
 						}	
@@ -313,7 +378,7 @@ $(document).ready(function() {
 							// show returned error msg here
 							openModal('error',data.msg);
 						} else {
-							$("#policy-content").load("/app/policies/"+currcat);
+							$("#policy-content").load(path);
 							// show success message...
 							openModal('info',data.msg);
 						}	
@@ -366,7 +431,7 @@ $(document).ready(function() {
 	// ADD NEW
 	$("#add").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
-		openPolicyAddWindow(0);
+		openPolicyAddWindow(currcat,0);
 		$("#field").val('');
 	});
 
@@ -690,6 +755,16 @@ $(document).ready(function() {
 		$("#datepick2").val('');
 		$("#field").val('');
 		$("#policy-content").load("/app/policies/"+currcat+"/pendingrenewal");
+	});
+
+	// VIEW ALL CANCELED ONLY
+	$("#allcanceled").on("click", function(event) {
+		event.preventDefault();
+		resetSortLinks(0);
+		$("#datepick1").val('');
+		$("#datepick2").val('');
+		$("#field").val('');
+		$("#policy-content").load("/app/policies/"+currcat+"/allcanceled");
 	});
 
 // =============== END STATUS NAV =============== //
@@ -1557,6 +1632,7 @@ $(document).ready(function() {
 		new datepickr("datepick2", {
 			"dateFormat": "m/d/Y"
 		});
+		// edit winow date pickers
 	}
 
 	//bind orientation change to date picker event

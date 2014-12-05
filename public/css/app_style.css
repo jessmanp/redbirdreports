@@ -93,11 +93,15 @@ body	{
 	box-shadow:2px 2px 24px #000000;
 }
 .policy-message {
+	margin:0 20px 10px 20px;
+	font-size:20px;
 	font-weight:bold;
 	min-height:25px;
 	padding:25px 25px 10px 25px;
+	border-bottom:2px solid #cccccc;
 }
-.policy-message p {
+.policy-text-box {
+	padding:0 45px 0 45px;
 	text-align:left;
 	font-weight:normal;
 	font-size:14px;
@@ -884,6 +888,16 @@ a.policy-desc-action:hover {
 	color:#000000;
 	text-decoration:none;
 }
+a.policy-edit-action,  a.policy-edit-action:visited {
+	font-size:16px;
+	color:#000000;
+	text-decoration:none;
+	cursor:pointer;
+}
+a.policy-edit-action:hover {
+	color:#000000;
+	font-weight:bold;
+}
 .edit-table-container {
 	margin:0 auto 0 auto;
     display:table;
@@ -934,6 +948,98 @@ a.policy-desc-action:hover {
 #policy-save {
 	display:none;
 }
+.modal-icon {
+	margin:0 10px 0 0;
+	width:60px;
+	height:46px;
+	vertical-align:middle;
+	border:0;
+}
+#writtendate {
+	display:inline-block;
+	padding:0 8px 0 8px;
+	margin:3px 0 0 5px;
+	cursor:pointer; 
+	width:70px; 
+	height:30px;
+	font-size:12px;
+	background-color:#ffffff;
+	color:#000000;
+	border:2px solid #a20004;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+}
+#issueddate {
+	display:inline-block;
+	padding:0 8px 0 8px;
+	margin:3px 0 0 5px;
+	cursor:pointer; 
+	width:70px; 
+	height:30px;
+	font-size:12px;
+	background-color:#ffffff;
+	color:#000000;
+	border:2px solid #a20004;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+}
+#effectivedate {
+	display:inline-block;
+	padding:0 8px 0 8px;
+	margin:3px 0 0 5px;
+	cursor:pointer; 
+	width:70px; 
+	height:30px;
+	font-size:12px;
+	background-color:#ffffff;
+	color:#000000;
+	border:2px solid #a20004;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+}
+#canceleddate {
+	display:inline-block;
+	padding:0 8px 0 8px;
+	margin:3px 0 0 5px;
+	cursor:pointer; 
+	width:70px; 
+	height:30px;
+	font-size:12px;
+	background-color:#ffffff;
+	color:#000000;
+	border:2px solid #a20004;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+}
+.policy-date-fields {
+	margin:0 20px 0 20px;
+	padding:10px 10px 12px 10px;
+	font-size:14px;
+	clear:both;
+	background-color:#cccccc;
+}
+.policy-edit-bar {
+	margin:10px 20px 30px 20px;
+	border-top:2px solid #cccccc;
+}
+
+
 
 
 

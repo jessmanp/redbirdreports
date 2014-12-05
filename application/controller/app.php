@@ -176,6 +176,8 @@ class App extends Controller
 				$policy_data = $policy_listing_model->getAllPolicies('all','default','written',$date,$phrase);
 			} else if ($param == 'notissued') {
 				$policy_data = $policy_listing_model->getAllPolicies('all','default','notissued',$date,$phrase);
+			} else if ($param == 'allcanceled') {
+				$policy_data = $policy_listing_model->getAllPolicies('all','default','canceled',$date,$phrase);
 			} else if ($param == 'pendingrenewal') {
 				$policy_data = $policy_listing_model->getAllPolicies('all','default','renewal',$date,$phrase);
 			} else {
@@ -186,6 +188,8 @@ class App extends Controller
 				$policy_data = $policy_listing_model->getAllPolicies('auto','default','written',$date,$phrase);
 			} else if ($param == 'notissued') {
 				$policy_data = $policy_listing_model->getAllPolicies('auto','default','notissued',$date,$phrase);
+			} else if ($param == 'allcanceled') {
+				$policy_data = $policy_listing_model->getAllPolicies('auto','default','canceled',$date,$phrase);
 			} else if ($param == 'pendingrenewal') {
 				$policy_data = $policy_listing_model->getAllPolicies('auto','default','renewal',$date,$phrase);
 			} else {
@@ -196,6 +200,8 @@ class App extends Controller
 				$policy_data = $policy_listing_model->getAllPolicies('fire','default','written',$date,$phrase);
 			} else if ($param == 'notissued') {
 				$policy_data = $policy_listing_model->getAllPolicies('fire','default','notissued',$date,$phrase);
+			} else if ($param == 'allcanceled') {
+				$policy_data = $policy_listing_model->getAllPolicies('fire','default','canceled',$date,$phrase);
 			} else if ($param == 'pendingrenewal') {
 				$policy_data = $policy_listing_model->getAllPolicies('fire','default','renewal',$date,$phrase);
 			} else {
@@ -206,6 +212,8 @@ class App extends Controller
 				$policy_data = $policy_listing_model->getAllPolicies('life','default','written',$date,$phrase);
 			} else if ($param == 'notissued') {
 				$policy_data = $policy_listing_model->getAllPolicies('life','default','notissued',$date,$phrase);
+			} else if ($param == 'allcanceled') {
+				$policy_data = $policy_listing_model->getAllPolicies('life','default','canceled',$date,$phrase);
 			} else if ($param == 'pendingrenewal') {
 				$policy_data = $policy_listing_model->getAllPolicies('life','default','renewal',$date,$phrase);
 			} else {
@@ -216,6 +224,8 @@ class App extends Controller
 				$policy_data = $policy_listing_model->getAllPolicies('health','default','written',$date,$phrase);
 			} else if ($param == 'notissued') {
 				$policy_data = $policy_listing_model->getAllPolicies('health','default','notissued',$date,$phrase);
+			} else if ($param == 'allcanceled') {
+				$policy_data = $policy_listing_model->getAllPolicies('health','default','canceled',$date,$phrase);
 			} else if ($param == 'pendingrenewal') {
 				$policy_data = $policy_listing_model->getAllPolicies('health','default','renewal',$date,$phrase);
 			} else {
@@ -226,6 +236,8 @@ class App extends Controller
 				$policy_data = $policy_listing_model->getAllPolicies('deposit','default','written',$date,$phrase);
 			} else if ($param == 'notissued') {
 				$policy_data = $policy_listing_model->getAllPolicies('deposit','default','notissued',$date,$phrase);
+			} else if ($param == 'allcanceled') {
+				$policy_data = $policy_listing_model->getAllPolicies('deposit','default','canceled',$date,$phrase);
 			} else if ($param == 'pendingrenewal') {
 				$policy_data = $policy_listing_model->getAllPolicies('deposit','default','renewal',$date,$phrase);
 			} else {
@@ -236,6 +248,8 @@ class App extends Controller
 				$policy_data = $policy_listing_model->getAllPolicies('loan','default','written',$date,$phrase);
 			} else if ($param == 'notissued') {
 				$policy_data = $policy_listing_model->getAllPolicies('loan','default','notissued',$date,$phrase);
+			} else if ($param == 'allcanceled') {
+				$policy_data = $policy_listing_model->getAllPolicies('loan','default','canceled',$date,$phrase);
 			} else if ($param == 'pendingrenewal') {
 				$policy_data = $policy_listing_model->getAllPolicies('loan','default','renewal',$date,$phrase);
 			} else {
@@ -246,6 +260,8 @@ class App extends Controller
 				$policy_data = $policy_listing_model->getAllPolicies('fund','default','written',$date,$phrase);
 			} else if ($param == 'notissued') {
 				$policy_data = $policy_listing_model->getAllPolicies('fund','default','notissued',$date,$phrase);
+			} else if ($param == 'allcanceled') {
+				$policy_data = $policy_listing_model->getAllPolicies('fund','default','canceled',$date,$phrase);
 			} else if ($param == 'pendingrenewal') {
 				$policy_data = $policy_listing_model->getAllPolicies('fund','default','renewal',$date,$phrase);
 			} else {
@@ -272,7 +288,14 @@ class App extends Controller
 		$policy_entry_model = $this->loadModel('PolicyEntryModel');
 		$agency_id = $policy_entry_model->getAgencyID($_SESSION['user_id']);
 		$agency_employees = $policy_entry_model->getAllEmployees($agency_id);
-		$policy_categories = $policy_entry_model->getAllCategories(str_replace('list','',$sub));
+		$policy_categories_all = $policy_entry_model->getAllCategories('all');
+		$policy_categories_auto = $policy_entry_model->getAllCategories('auto');
+		$policy_categories_fire = $policy_entry_model->getAllCategories('fire');
+		$policy_categories_life = $policy_entry_model->getAllCategories('life');
+		$policy_categories_health = $policy_entry_model->getAllCategories('health');
+		$policy_categories_deposit = $policy_entry_model->getAllCategories('deposit');
+		$policy_categories_loan = $policy_entry_model->getAllCategories('loan');
+		$policy_categories_fund = $policy_entry_model->getAllCategories('fund');
 		$policy_business_types = $policy_entry_model->getAllBusinessTypes();
 		$policy_source_types = $policy_entry_model->getAllSourceTypes();
 		$policy_length_types = $policy_entry_model->getAllLengthTypes();

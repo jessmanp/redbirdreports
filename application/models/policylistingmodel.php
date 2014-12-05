@@ -60,6 +60,9 @@ class PolicyListingModel
     				case 'notissued':
         				$addedSQL .= ' AND policies.renewal = 0 AND policies.date_issued IS null';
         				break;
+    				case 'canceled':
+        				$addedSQL .= ' AND policies.renewal = 0 AND policies.date_canceled IS NOT null';
+        				break;
     				case 'renewal':
         				$addedSQL .= ' AND policies.renewal = 1';
         				break;
@@ -300,7 +303,7 @@ class PolicyListingModel
 
 //echo "add=[".$addedSQL."] sort=[".$orderbySQL."]";
 		
-		$sql = "SELECT policies.id, policies.renewal, policies.first, policies.last, policies.description, policies.category_id, policy_categories.name AS cat_name, policies.premium, policies.business_type_id, policy_business_types.name AS busi_name, policies.user_id, users.user_first_name, users.user_last_name, policies.source_type_id, policy_source_types.name AS src_name, policies.length_type_id, policy_length_types.name AS len_name, policies.notes, policies.date_written, policies.date_issued, policies.date_effective, policies.zip_code FROM policies, policy_categories, policy_business_types, policy_source_types, policy_length_types, users WHERE policies.active = 1 AND policy_categories.id = policies.category_id AND policy_business_types.id = policies.business_type_id AND users.user_id = policies.user_id AND policy_source_types.id = policies.source_type_id AND policy_length_types.id = policies.length_type_id".$addedSQL." ORDER BY".$orderbySQL;
+		$sql = "SELECT policies.id, policies.renewal, policies.first, policies.last, policies.description, policies.category_id, policy_categories.name AS cat_name, policies.premium, policies.business_type_id, policy_business_types.name AS busi_name, policies.user_id, users.user_first_name, users.user_last_name, policies.source_type_id, policy_source_types.name AS src_name, policies.length_type_id, policy_length_types.name AS len_name, policies.notes, policies.date_written, policies.date_issued, policies.date_effective, policies.date_canceled, policies.zip_code FROM policies, policy_categories, policy_business_types, policy_source_types, policy_length_types, users WHERE policies.active = 1 AND policy_categories.id = policies.category_id AND policy_business_types.id = policies.business_type_id AND users.user_id = policies.user_id AND policy_source_types.id = policies.source_type_id AND policy_length_types.id = policies.length_type_id".$addedSQL." ORDER BY".$orderbySQL;
 //echo $sql;
         $query = $this->db->prepare($sql);
         $query->execute();

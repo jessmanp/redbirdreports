@@ -87,15 +87,15 @@
 			</form>
 		</div>
 		<div id="status-area">
-			<div class="status-text">Policy Type: <span id="statuscat" class="status-item"></span></div>
-			<div class="status-text"><a id="allwritten" class="status-link">Written</a>: <span id="totwritten" class="status-item">0</span></div>
-			<div class="status-text"><a id="notissued" class="status-link">Not Issued</a>: <span id="totnotissued" class="status-item">0</span></div>
-			<div class="status-text-right"><a id="pendingrenewal" class="status-link">Pending Renewal</a>: <span id="totpending" class="status-item">0</span></div>
-			<div style="clear:both;height:5px;"></div>
+			<div class="status-text">Policy Type: <span id="statuscat" class="status-item"></span> (<span id="rowcnt" class="status-item">0</span>)</div>
 			<div class="status-text">Average DTI: <span id="avgdti" class="status-item">0</span></div>
 			<div class="status-text">Average Premium: <span id="avgprem" class="status-item">$0</span></div>
-			<div class="status-text">Total Premium: <span id="totprem" class="status-item">$0</span></div>
-			<div class="status-text-right">Total Policy Count: <span id="rowcnt" class="status-item">0</span></div>
+			<div class="status-text-right">Total Premium: <span id="totprem" class="status-item">$0</span></div>
+			<div style="clear:both;height:5px;"></div>
+			<div class="status-text"><a id="allwritten" class="status-link">Written</a>: <span id="totwritten" class="status-item">0</span></div>
+			<div class="status-text"><a id="notissued" class="status-link">Not Issued</a>: <span id="totnotissued" class="status-item">0</span></div>
+			<div class="status-text"><a id="allcanceled" class="status-link">Canceled</a>: <span id="totcanceled" class="status-item">0</span></div>
+			<div class="status-text-right"><a id="pendingrenewal" class="status-link">Pending Renewal</a>: <span id="totpending" class="status-item">0</span></div>
 		</div>
 	</div>
 
