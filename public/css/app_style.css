@@ -16,6 +16,12 @@ body	{
 	text-align:center;
 	min-width:1000px;
 }
+sup {
+	font-weight:normal;
+	font-size:20px;
+	color:#ff0000;
+	line-height:0;
+}
 #main-header {
 	width:100%;
 	height:110px;
@@ -205,11 +211,17 @@ input[type=password],
 textarea {
 	font-size:12px;
 	margin:6px 0 0 0;
-	padding:4px 2px;
-	border:solid 2px #ff0000;
+	padding:4px;
+	border:2px solid #a20004;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
 	width:120px;
+	height:25px;
 	-webkit-appearance:none;
-	border-radius:0;
 	resize:none; 
 }
 
@@ -654,6 +666,7 @@ input[type=radio]:not(old):checked + label > span > span{
     border-top:2px solid #a20004;
     border-bottom:2px solid #a20004;
     border-left:2px solid #a20004;
+	border-radius:0;
 	/* for Chrome 10+ and Safari 5+ */
 	-webkit-border-top-left-radius:10px;
 	-webkit-border-bottom-left-radius:10px;
@@ -920,7 +933,7 @@ a.policy-edit-action:hover {
 .edit-col {
 	text-align:right;
 	display:table-cell;
-	padding:5px;
+	padding:8px;
 	background-color:#cccccc;
 	font-size:14px;
 	line-height:32px;
@@ -1033,12 +1046,16 @@ a.policy-edit-action:hover {
 	font-size:14px;
 	clear:both;
 	background-color:#cccccc;
+	text-align:center;
 }
 .policy-edit-bar {
 	margin:10px 20px 30px 20px;
 	border-top:2px solid #cccccc;
 }
-
+.policy-zip {
+	float:right;
+	margin:0 15px 0 0;
+}
 
 
 

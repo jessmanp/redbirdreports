@@ -13,9 +13,10 @@
 <!-- css -->
 <link rel="stylesheet" href="<?php echo URL; ?>public/css/<?php echo $css; ?>">
 <link rel="stylesheet" href="<?php echo URL; ?>public/css/datepicker.css">
+<link rel="stylesheet" href="<?php echo URL; ?>public/css/jquery-ui.css">
 <!-- jQuery -->
-<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
 <!-- JavaScript -->
 <script src="<?php echo URL; ?>public/js/global.js"></script>
 <script src="<?php echo URL; ?>public/js/application.js"></script>

@@ -81,20 +81,54 @@ class App extends Controller
 			$srct = (int) trim(@$_POST['policy_source_type']);
 			$lent = (int) trim(@$_POST['policy_length_type']);
 			$zip = trim(@$_POST['policy_zip']);
+			$wdate = date('Y-m-d H:i:s', strtotime(trim(@$_POST['writtendate'])));
+			if (trim(@$_POST['effectivedate']) != '') {
+				$edate = date('Y-m-d H:i:s', strtotime(trim(@$_POST['effectivedate'])));
+			} else {
+				$edate = '';
+			}			
 
-			if (isset($first) && isset($last) && isset($desc) && isset($prem) && isset($notes) && isset($catr) && $catr != 0 && isset($busi) && $busi != 0 && isset($sold) && $sold != 0 && isset($srct) && $srct != 0 && isset($lent) && $lent != 0 && isset($zip)) {
+			if (isset($first) && $first != '' && isset($last) && $last != '' && isset($desc) && isset($prem) && $prem != '' && isset($notes) && isset($catr) && $catr != 0 && isset($busi) && $busi != 0 && isset($sold) && $sold != 0 && isset($srct) && $srct != 0 && isset($lent) && $lent != 0 && isset($zip) && isset($wdate) && isset($edate)) {
+
 				// load entry model
 				$policy_entry_model = $this->loadModel('PolicyEntryModel');
-				$policy_added = $policy_entry_model->addPolicy($first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip);
+				$policy_added = $policy_entry_model->addPolicy($first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip,$wdate,$edate);
 				if ($policy_added) {
-					$return['msg'] = 'Success, Policy Added.';
+					$return['msg'] = '<strong>Success</strong>, Policy Added.';
 				} else {
 					$return['error'] = true;
-					$return['msg'] .= 'Insert Failed. Policy Was Not Added.';
+					$return['msg'] .= '<strong>Insert Failed.</strong> Policy Was Not Added.';
 				}
 			} else {
 				$return['error'] = true;
-				$return['msg'] .= 'Add Policy Failed. One or More of the Required Fields Was Missing.';
+				$return['msg'] .= '<strong>Add Policy Failed.</strong> One or More of the Required Fields Was Missing:<br /><br />';
+				if ($first == '') {
+					$return['msg'] .= '<strong>First Name</strong> Field is Required.<br /><br />';
+				}
+				if ($last == '') {
+					$return['msg'] .= '<strong>Last Name</strong> Field is Required.<br /><br />';
+				}
+				if ($prem == 0) {
+					$return['msg'] .= '<strong>Premium</strong> Field is Required.<br /><br />';
+				}
+				if ($catr == 0) {
+					$return['msg'] .= '<strong>Category</strong> Field is Required.<br /><br />';
+				}
+				if ($busi == 0) {
+					$return['msg'] .= '<strong>Business</strong> Type Field is Required.<br /><br />';
+				}
+				if ($sold == 0) {
+					$return['msg'] .= '<strong>Sold By</strong> Field is Required.<br /><br />';
+				}
+				if ($srct == 0) {
+					$return['msg'] .= '<strong>Lead Source</strong> Field is Required.<br /><br />';
+				}
+				if ($lent == 0) {
+					$return['msg'] .= '<strong>Policy Length</strong> Field is Required.<br /><br />';
+				}
+				if ($wdate == '') {
+					$return['msg'] .= '<strong>Written Date</strong> Field is Required.<br /><br />';
+				}
 			}
  
 			//Return json encoded results
@@ -124,20 +158,36 @@ class App extends Controller
 			$srct = (int) trim(@$_POST['policy_source_type']);
 			$lent = (int) trim(@$_POST['policy_length_type']);
 			$zip = trim(@$_POST['policy_zip']);
+			$wdate = date('Y-m-d H:i:s', strtotime(trim(@$_POST['writtendate'])));
+			if (trim(@$_POST['issueddate']) != '') {
+				$idate = date('Y-m-d H:i:s', strtotime(trim(@$_POST['issueddate'])));
+			} else {
+				$idate = '';
+			}
+			if (trim(@$_POST['effectivedate']) != '') {
+				$edate = date('Y-m-d H:i:s', strtotime(trim(@$_POST['effectivedate'])));
+			} else {
+				$edate = '';
+			}
+			if (trim(@$_POST['canceleddate'])!= '') {
+				$cdate = date('Y-m-d H:i:s', strtotime(trim(@$_POST['canceleddate'])));
+			} else {
+				$cdate = '';
+			}
 
-			if (isset($id) && $id != 0 && isset($first) && isset($last) && isset($desc) && isset($prem) && isset($notes) && isset($catr) && $catr != 0 && isset($busi) && $busi != 0 && isset($sold) && $sold != 0 && isset($srct) && $srct != 0 && isset($lent) && $lent != 0 && isset($zip)) {
+			if (isset($id) && $id != 0 && isset($first) && $first != '' && isset($last) && $last != '' && isset($desc) && isset($prem) && $prem != '' && isset($notes) && isset($catr) && $catr != 0 && isset($busi) && $busi != 0 && isset($sold) && $sold != 0 && isset($srct) && $srct != 0 && isset($lent) && $lent != 0 && isset($zip) && isset($wdate) && isset($idate) && isset($edate) && isset($cdate)) {
 				// load entry model
 				$policy_entry_model = $this->loadModel('PolicyEntryModel');
-				$policy_updated = $policy_entry_model->updatePolicy($id,$first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip);
+				$policy_updated = $policy_entry_model->updatePolicy($id,$first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip,$wdate,$idate,$edate,$cdate);
 				if ($policy_updated) {
-					$return['msg'] = 'Success, Policy Updated.';
+					$return['msg'] = '<strong>Success</strong>, Policy Updated.';
 				} else {
 					$return['error'] = true;
-					$return['msg'] .= 'Update Failed. Policy Was Not Updated.';
+					$return['msg'] .= '<strong>Update Failed.</strong> Policy Was Not Updated.';
 				}
 			} else {
 				$return['error'] = true;
-				$return['msg'] .= 'Edit Policy Failed. One or More of the Required Fields Was Missing.';
+				$return['msg'] .= '<strong>Edit Policy Failed.</strong> One or More of the Required Fields Was Missing.';
 			}
  
 			//Return json encoded results

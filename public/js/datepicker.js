@@ -1,5 +1,5 @@
 /*
-    datepickr
+    datepickr for policy search
 */
 
 var datepickr = (function() {
@@ -386,6 +386,5 @@ var datepickr = (function() {
 		}
 	}
 })();
-
 
 

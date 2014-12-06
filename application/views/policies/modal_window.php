@@ -8,6 +8,7 @@
 		<button class="plain-btn-close">Close</button>
 	</div>
 	<div id="policy-edit">
+<div style="margin:60px 0 0 20px;position:absolute;font-size:11px;font-weight:bold;"><sup>*</sup> Denotes Required Field(s)</div>
 		<div class="policy-message"></div>
 			<form id="policy_entry_form" name="policy_entry_form">
 			<input type="hidden" id="path" name="path" value="" />
@@ -23,26 +24,27 @@
 <!-- begin edit left box -->
 		<div class="edit-left-box">
 			<div class="policy-entry-field">
-				First Name: 
+				First Name<sup>*</sup>: 
 				<input type="text" maxlength="40" id="policy_first_name" name="policy_first_name" placeholder="Customer First Name" value="" />
-				&nbsp;&nbsp;&nbsp;
-				Last Name: 
+				&nbsp;
+				Last Name<sup>*</sup>: 
 				<input type="text" maxlength="40" id="policy_last_name" name="policy_last_name" placeholder="Customer Last Name" value="" />
 			</div>
 			<div class="policy-entry-field">
 				Description: 
-				<input type="text" maxlength="100" style="width:340px;" id="policy_description" name="policy_description" placeholder="Enter a Brief Description" value="" />
+				<input type="text" maxlength="100" style="width:345px;" id="policy_description" name="policy_description" placeholder="Enter a Brief Description" value="" />
 			</div>
 			<div class="policy-entry-field">
-				Premium: 
-				<span style="font-size:12px;font-weight:bold;">$</span> <input style="width:50px;" type="text" maxlength="20" id="policy_premium" name="policy_premium" placeholder="0.00" value="" />
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				Zip Code <em>(Optional)</em>: 
-				<input style="width:50px;" type="text" maxlength="11" id="policy_zip" name="policy_zip" placeholder="90210" value="" />
+				Premium<sup>*</sup>: 
+				<span style="font-size:12px;font-weight:bold;">$</span> <input style="width:75px;" type="text" maxlength="20" id="policy_premium" name="policy_premium" placeholder="0.00" value="" />
+				<div class="policy-zip">
+				Zip Code: 
+				<input style="width:75px;" type="text" maxlength="11" id="policy_zip" name="policy_zip" placeholder="90210" value="" />
+				</div>
 			</div>
 			<div class="policy-entry-field">
 				Notes:<br />
-				<textarea style="width:420px;height:45px;" id="policy_notes" name="policy_notes" placeholder="Describe this policy or add keywords" value=""></textarea>
+				<textarea style="width:425px;height:45px;" id="policy_notes" name="policy_notes" placeholder="Describe this policy or add keywords" value=""></textarea>
 			</div>
 		</div>
 <!-- end edit left box -->
@@ -50,14 +52,14 @@
 	<div class="edit-right-box">
 		<div class="edit-table-container">
 			<div class="edit-heading">
-				<div class="edit-col">Category:</div>
+				<div class="edit-col">Category<sup>*</sup>:</div>
 				<div id="catselect" class="edit-col">
 					<select class="policy-entry-select" id="policy_sub_category" name="policy_sub_category">
 					</select>
 				</div>
 			</div>
 			<div class="edit-table-row">
-				<div class="edit-col">Business Type:</div>
+				<div class="edit-col">Business Type<sup>*</sup>:</div>
 				<div class="edit-col">
 					<select class="policy-entry-select" id="policy_business_type" name="policy_business_type">
 						<option value="0">- Select -</option>
@@ -68,7 +70,7 @@
 				</div>
 			</div>
 			<div class="edit-table-row">
-				<div class="edit-col">Sold By:</div>
+				<div class="edit-col">Sold By<sup>*</sup>:</div>
 				<div class="edit-col">
 					<select class="policy-entry-select" id="policy_team_member" name="policy_team_member">
 						<option value="0">- Select -</option>
@@ -79,7 +81,7 @@
 				</div>
 			</div>
 			<div class="edit-table-row">
-				<div class="edit-col">Lead Source:</div>
+				<div class="edit-col">Lead Source<sup>*</sup>:</div>
 				<div class="edit-col">
 					<select class="policy-entry-select" id="policy_source_type" name="policy_source_type">
 						<option value="0">- Select -</option>
@@ -90,7 +92,7 @@
 				</div>
 			</div>
 			<div class="edit-table-row">
-				<div class="edit-col">Policy Length:</div>
+				<div class="edit-col">Policy Length<sup>*</sup>:</div>
 				<div class="edit-col">
 					<select class="policy-entry-select" id="policy_length_type" name="policy_length_type">
 						<option value="0">- Select -</option>
@@ -104,9 +106,9 @@
 	</div>
 <!-- end edit right box -->
 	<div class="policy-date-fields">
-		Written:<input id="writtendate" name="writtendate" value="" placeholder="" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
-		Issued:<input id="issueddate" name="issueddate" value="" placeholder="" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
-		Effective:<input id="effectivedate" name="effectivedate" value="" placeholder="" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+		Written<sup>*</sup>:<input id="writtendate" name="writtendate" value="" placeholder="" readonly />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		Issued:<input id="issueddate" name="issueddate" value="" placeholder="" readonly />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		Effective:<input id="effectivedate" name="effectivedate" value="" placeholder="" readonly />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		Canceled:<input id="canceleddate" name="canceleddate" value="" placeholder="" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
 	</div>
 			</form>

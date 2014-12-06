@@ -10,15 +10,15 @@ function openModal(type,message) {
 	} else {
 		$("#modal").height(doch);
 	}
-	$("#modal").fadeIn();
+	$("#modal").delay(300).fadeIn();
 				
 	var winw = $(window).width();
 	var neww = (winw/2)-298;
 	var scrolled_val = $(document).scrollTop().valueOf();
 	var newh = (scrolled_val+25);
 	$("#popupmessage").css({ "margin-left": neww+"px", "margin-top": "-330px" });
-	$("#popupmessage").fadeIn();
-	$("#message").fadeIn();
+	$("#popupmessage").delay(300).fadeIn();
+	$("#message").delay(300).fadeIn();
 	$("#message").html(message);
 			
 }
@@ -103,8 +103,10 @@ function openWindow(currcat,type,message,id,text,fname,lname,desc,prem,zip,cat,b
  		var nowformatted = (date.getMonth() + 1)+'/'+date.getDate()+'/'+date.getFullYear();
 		$("#writtendate").val(nowformatted);
 		$("#issueddate").val('');
+		$("#issueddate").prop("disabled", true);
 		$("#effectivedate").val('');
 		$("#canceleddate").val('');
+		$("#canceleddate").prop("disabled", true);
 	}
 	if (type == 'edit') {
 		$("#policy-edit").fadeIn();
@@ -126,6 +128,8 @@ function openWindow(currcat,type,message,id,text,fname,lname,desc,prem,zip,cat,b
 		$("#policy_source_type option[value="+src+"]").prop("selected", true);
 		$("#policy_length_type option[value="+len+"]").prop("selected", true);
 		$("#writtendate").val(sqlToJsDate(dw));
+		$("#issueddate").prop("disabled", false);
+		$("#canceleddate").prop("disabled", false);
 		if (di == '') {
 			$("#issueddate").val('');
 		} else {
@@ -326,13 +330,11 @@ $(document).ready(function() {
 	$("#policy-add").on("click", function(event) {
 		event.preventDefault();
 		$('#policy_entry_form').submit();
-		closeWindow();
 	});
 
 	$("#policy-save").on("click", function(event) {
 		event.preventDefault();
 		$('#policy_entry_form').submit();
-		closeWindow();
 	});
 			
 	$('#policy_entry_form').submit(function(event) {
@@ -355,6 +357,7 @@ $(document).ready(function() {
 						} else {
 							$("#policy-content").load(path);
 							// show success message...
+							closeWindow();
 							openModal('info',data.msg);
 						}	
 				},
@@ -380,6 +383,7 @@ $(document).ready(function() {
 						} else {
 							$("#policy-content").load(path);
 							// show success message...
+							closeWindow();
 							openModal('info',data.msg);
 						}	
 				},
@@ -1632,7 +1636,6 @@ $(document).ready(function() {
 		new datepickr("datepick2", {
 			"dateFormat": "m/d/Y"
 		});
-		// edit winow date pickers
 	}
 
 	//bind orientation change to date picker event
@@ -1645,6 +1648,13 @@ $(document).ready(function() {
 	$("#datepick1").attr("placeholder", "Start Date");
 	$("#datepick2").attr("placeholder", "End Date");
 	loadDatePickers();
+
+	// load edit window date pickers
+	$("#writtendate").datepicker();
+	$("#issueddate").datepicker();
+	$("#effectivedate").datepicker();
+	$("#canceleddate").datepicker();
+
 
 	// SHOW/HIDE PREDEFINED DATES
 	$("#pre-dates").on("click", function(event) {
@@ -1678,5 +1688,7 @@ $(document).ready(function() {
 
 
 });
+
+
 
 /* ]]> */
