@@ -25,10 +25,10 @@
 		<div class="edit-left-box">
 			<div class="policy-entry-field">
 				First Name<sup>*</sup>: 
-				<input type="text" maxlength="40" id="policy_first_name" name="policy_first_name" placeholder="Customer First Name" value="" />
+				<input type="text" maxlength="40" style="width:115px;" id="policy_first_name" name="policy_first_name" placeholder="Customer First" value="" />
 				&nbsp;
 				Last Name<sup>*</sup>: 
-				<input type="text" maxlength="40" id="policy_last_name" name="policy_last_name" placeholder="Customer Last Name" value="" />
+				<input type="text" maxlength="40" style="width:115px;" id="policy_last_name" name="policy_last_name" placeholder="Customer Last" value="" />
 			</div>
 			<div class="policy-entry-field">
 				Description: 
@@ -44,7 +44,7 @@
 			</div>
 			<div class="policy-entry-field">
 				Notes:<br />
-				<textarea style="width:425px;height:45px;" id="policy_notes" name="policy_notes" placeholder="Describe this policy or add keywords" value=""></textarea>
+				<textarea style="width:425px;height:45px;" id="policy_notes" name="policy_notes" placeholder="Describe this policy or add keywords"></textarea>
 			</div>
 		</div>
 <!-- end edit left box -->
@@ -117,9 +117,9 @@
 	</div>
 	<div id="policy-delete">
 		<div class="policy-message"></div>
-			Are you sure you want to &quot;ERASE&quot; this Policy?<br /><br />Click &quot;Cancel&quot; if you want to keep this policy.<br />
+			Are you sure you want to &quot;<strong>ERASE</strong>&quot; this Policy?<br /><br />Click &quot;<strong>Cancel</strong>&quot; if you want to keep this policy.<br />
 			<form id="policy_delete_form" name="policy_delete_form">
-			<input type="hidden" id="id" name="id" value="-2" />
+			<input type="hidden" id="delid" name="delid" value="-2" />
 			</form>
 <div class="policy-edit-bar"></div>
 		<button class="plain-btn-close">Cancel</button>&nbsp;&nbsp;&nbsp;<button id="policy-disable" class="plain-btn">Erase</button>

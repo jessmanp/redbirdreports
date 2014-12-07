@@ -115,7 +115,7 @@ class App extends Controller
 					$return['msg'] .= '<strong>Category</strong> Field is Required.<br /><br />';
 				}
 				if ($busi == 0) {
-					$return['msg'] .= '<strong>Business</strong> Type Field is Required.<br /><br />';
+					$return['msg'] .= '<strong>Business Type</strong> Field is Required.<br /><br />';
 				}
 				if ($sold == 0) {
 					$return['msg'] .= '<strong>Sold By</strong> Field is Required.<br /><br />';
@@ -200,20 +200,20 @@ class App extends Controller
 			$return['msg'] = '';
 			$return['error'] = false;
 
-			$delID = @$_POST['id'];
+			$delID = @$_POST['delid'];
 			if (isset($delID) && is_numeric($delID)) {
 				// load entry model
 				$policy_entry_model = $this->loadModel('PolicyEntryModel');
 				$policy_deleted = $policy_entry_model->deletePolicy($delID);
 				if ($policy_deleted) {
-					$return['msg'] = 'Success, Policy Erased.';
+					$return['msg'] = '<strong>Success</strong>, Policy Erased.';
 				} else {
 					$return['error'] = true;
-					$return['msg'] .= 'Erase Failed. Policy Was Not Erased.';
+					$return['msg'] .= '<strong>Erase Failed.</strong> Policy Was Not Erased.';
 				}
 			} else {
 				$return['error'] = true;
-				$return['msg'] .= 'Erase Failed. Policy ID is empty.';
+				$return['msg'] .= '<strong>Erase Failed.</strong> Policy ID is empty.';
 			}
  
 			//Return json encoded results

@@ -156,7 +156,7 @@ function openWindow(currcat,type,message,id,text,fname,lname,desc,prem,zip,cat,b
 	}
 	if (type == 'delete') {
 		$("#policy-delete").fadeIn();
-		$("#policy-delete #id").val(id);
+		$("#policy-delete #delid").val(id);
 	}
 			
 }
