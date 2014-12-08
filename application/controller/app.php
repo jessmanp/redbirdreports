@@ -57,7 +57,7 @@ class App extends Controller
 		// load listing model
 		$policy_listing_model = $this->loadModel('PolicyListingModel');
 
-	// do delete
+	// do add
 	if ($sub == 'addrec') {
 			
 			// array values that will be returned via ajax
@@ -134,6 +134,7 @@ class App extends Controller
 			//Return json encoded results
 			echo json_encode($return);
 
+	// do edit
 	} else if ($sub == 'editrec') {
 
 			// array values that will be returned via ajax
@@ -193,6 +194,7 @@ class App extends Controller
 			//Return json encoded results
 			echo json_encode($return);
 
+	// do delete
 	} else if ($sub == 'deleterec') {
 			
 			// array values that will be returned via ajax
@@ -214,6 +216,60 @@ class App extends Controller
 			} else {
 				$return['error'] = true;
 				$return['msg'] .= '<strong>Erase Failed.</strong> Policy ID is empty.';
+			}
+ 
+			//Return json encoded results
+			echo json_encode($return);
+
+	// do renewal
+	} else if ($sub == 'renewrec') {
+			
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+
+			$rnewID = @$_POST['renid'];
+			if (isset($rnewID) && is_numeric($rnewID)) {
+				// load entry model
+				$policy_entry_model = $this->loadModel('PolicyEntryModel');
+				$policy_renewed = $policy_entry_model->renewPolicy($rnewID);
+				if ($policy_renewed) {
+					$return = $policy_renewed;
+				} else {
+					$return['error'] = true;
+					$return['msg'] .= '<strong>Renewal Failed.</strong> Policy Was Not Renewed.';
+				}
+			} else {
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Renewal Failed.</strong> Policy ID is empty.';
+			}
+ 
+			//Return json encoded results
+			echo json_encode($return);
+
+	// do uncancel
+	} else if ($sub == 'uncancelrec') {
+			
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+
+			$cnewID = @$_POST['uncid'];
+			if (isset($cnewID) && is_numeric($cnewID)) {
+				// load entry model
+				$policy_entry_model = $this->loadModel('PolicyEntryModel');
+				$policy_reinstated = $policy_entry_model->reinstatePolicy($cnewID);
+				if ($policy_reinstated) {
+					$return = $policy_reinstated;
+				} else {
+					$return['error'] = true;
+					$return['msg'] .= '<strong>Reinstatement Failed.</strong> Policy Was Not Reinstated.';
+				}
+			} else {
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Reinstatement Failed.</strong> Policy ID is empty.';
 			}
  
 			//Return json encoded results

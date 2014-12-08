@@ -121,6 +121,12 @@ sup {
 #policy-delete {
 	display:none;
 }
+#policy-renewal {
+	display:none;
+}
+#policy-reinstate {
+	display:none;
+}
 #policy-header {
 	width:100%;
 	margin:110px 0 0 0;

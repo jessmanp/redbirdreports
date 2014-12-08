@@ -204,5 +204,87 @@ class PolicyEntryModel
 		}
     }
 
+	 /**
+     * Do Rewnewal Process, Add new record and Erase old one
+     */
+    public function renewPolicy($oldid)
+    {
+		// query old info and make a new policy
+		$sql = "SELECT * FROM policies WHERE id = ".$oldid;
+		$getoldquery = $this->db->prepare($sql);
+		$getoldquery->execute();
+		$olddata = $getoldquery->fetchAll();
+
+	foreach ($olddata as $data) {
+		$sold = $data->user_id;
+		$first = $data->first;
+		$last = $data->last;
+		$desc = $data->description;
+		$catr = $data->category_id;
+		$prem = $data->premium;
+		$busi = $data->business_type_id;
+		$srct = $data->source_type_id;
+		$lent = $data->length_type_id;
+		$notes = $data->notes;
+		$zip = $data->zip_code;
+		$wdate = $data->date_written;
+	}
+
+		// write new policy data into database based on old info
+		$sql = "INSERT INTO policies (user_id, first, last, description, category_id, premium, business_type_id, source_type_id, length_type_id, notes, zip_code, date_written) VALUES (:user_id, :first, :last, :description, :category_id, :premium, :business_type_id, :source_type_id, :length_type_id, :notes, :zip_code, :written_date)";
+		$query_new_policy_insert = $this->db->prepare($sql);
+		$query_new_policy_insert->bindValue(':user_id', $sold, PDO::PARAM_INT);
+		$query_new_policy_insert->bindValue(':first', $first, PDO::PARAM_STR);
+		$query_new_policy_insert->bindValue(':last', $last, PDO::PARAM_STR);
+		$query_new_policy_insert->bindValue(':description', $desc, PDO::PARAM_STR);
+		$query_new_policy_insert->bindValue(':category_id', $catr, PDO::PARAM_INT);
+		$query_new_policy_insert->bindValue(':premium', $prem, PDO::PARAM_STR);
+		$query_new_policy_insert->bindValue(':business_type_id', $busi, PDO::PARAM_INT);
+		$query_new_policy_insert->bindValue(':source_type_id', $srct, PDO::PARAM_INT);
+		$query_new_policy_insert->bindValue(':length_type_id', $lent, PDO::PARAM_INT);
+		$query_new_policy_insert->bindValue(':notes', $notes, PDO::PARAM_STR);
+		$query_new_policy_insert->bindValue(':zip_code', $zip, PDO::PARAM_STR);
+		$query_new_policy_insert->bindValue(':written_date', $wdate, PDO::PARAM_STR);
+		$query_new_policy_insert->execute();
+		
+		if ($query_new_policy_insert) {
+
+			// id of new policy
+			$newpid = $this->db->lastInsertId();
+
+			// set old policy to normal
+			$sql = "UPDATE policies SET renewal = 0 WHERE id = ".$oldid;
+			$query = $this->db->prepare($sql);
+			$query->execute();
+
+			// put data into an array to pass back to ajax
+			// query to get new policy data
+			$query_get_renewal = $this->db->prepare("SELECT * FROM policies WHERE id = ".$newpid);
+			$query_get_renewal->execute();
+			return $query_get_renewal->fetchAll();
+		}
+
+
+    }
+
+	 /**
+     * Do Reinstatement Process, clear canceled date
+     */
+    public function reinstatePolicy($oldid)
+    {
+
+		// set old policy to normal
+		$sql = "UPDATE policies SET date_canceled = null WHERE id = ".$oldid;
+		$query = $this->db->prepare($sql);
+		$query->execute();
+
+		// query old info
+		$sql = "SELECT * FROM policies WHERE id = ".$oldid;
+		$getoldquery = $this->db->prepare($sql);
+		$getoldquery->execute();
+		return $getoldquery->fetchAll();
+
+    }
+
 
 }
