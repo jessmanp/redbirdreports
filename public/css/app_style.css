@@ -22,6 +22,10 @@ sup {
 	color:#ff0000;
 	line-height:0;
 }
+.chargeback {
+	font-weight:normal;
+	color:#ff0000;
+}
 #main-header {
 	width:100%;
 	height:110px;
@@ -99,6 +103,7 @@ sup {
 	box-shadow:2px 2px 24px #000000;
 }
 .policy-message {
+	display:none;
 	margin:0 20px 10px 20px;
 	font-size:20px;
 	font-weight:bold;
@@ -663,7 +668,7 @@ input[type=radio]:not(old):checked + label > span > span{
 #field {
     float:left; 
     margin:3px 8px 0 10px;
-    width:200px; 
+    width:228px; 
     height:28px;
     padding:1px;
     text-indent:10px;
@@ -716,7 +721,7 @@ input[type=radio]:not(old):checked + label > span > span{
 	margin:3px 2px 0 8px;
 	padding:0 0 0 8px;
     cursor:pointer; 
-    width:160px; 
+    width:132px; 
     height:34px; 
     background-color:#a20004;
     color:#ffffff;
@@ -916,6 +921,16 @@ a.policy-edit-action,  a.policy-edit-action:visited {
 a.policy-edit-action:hover {
 	color:#000000;
 	font-weight:bold;
+}
+#policy_dropdown_cover {
+	display:none;
+	position:absolute;
+	margin:0 0 0 130px;
+	width:180px;
+	height:240px;
+	opacity:0.5;
+	background-color:#cccccc;
+	z-index:81;
 }
 .edit-table-container {
 	margin:0 auto 0 auto;

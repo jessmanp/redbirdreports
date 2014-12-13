@@ -14,6 +14,92 @@
 	$rowcnt = 1;
   if ($policy_data) {
 	foreach ($policy_data as $policy) {
+	
+			$cancellationvalue = 0;
+			$chargebackvalue = 0;
+			
+///////////////////////////////////  END CALCS  ///////////////////////////////////
+
+		// calculate average DTI
+		if ($policy->date_written != null && $policy->date_issued != null) {
+			// track total items for avareage
+			$rowswithdays++;
+			// set dates
+			$first_date = new DateTime($policy->date_written);
+			$second_date = new DateTime($policy->date_issued);
+			// calc date diff
+			$difference = $first_date->diff($second_date);
+			// track total days
+			$days = $difference->d;
+			$totaldays = ($avgdti+$days);
+		}
+		if (isset($totaldays) && $totaldays != 0) {
+			// do average calc
+			$avgdti = round(($totaldays/$rowswithdays));
+		}
+		
+		// calculate cancellation value
+		if ($policy->date_effective != null && $policy->length_type_id != 0 && $policy->date_canceled != null && $policy->premium > 0) {
+			// do days in policy
+			if ($policy->length_type_id == 1) {
+				$pterm = strtotime('+6 months', strtotime($policy->date_effective)); // effective date + 6 months
+			} else if ($policy->length_type_id == 2) {
+				$pterm = strtotime('+12 months', strtotime($policy->date_effective)); // effective date + 12 months
+			}
+			$date1 = new DateTime($policy->date_effective);
+			$date2 = new DateTime(date('Y-m-d h:m:s',$pterm));
+			$interval1 = $date1->diff($date2);
+			// total amount of days
+			$daysinpolicy = $interval1->days;
+			
+			// do days in effect
+			$date3 = new DateTime($policy->date_effective);
+			$date4 = new DateTime($policy->date_canceled);
+			$interval2 = $date3->diff($date4);
+			// total amount of days
+			$daysineffect = $interval2->days;
+			
+			// do premium per day
+			$premiumperday = round($policy->premium / $daysinpolicy);
+			
+			// do cancellation value
+			$cancellationvalue = round($premiumperday * $daysineffect);
+			
+			// do chargeback value
+			$chargebackvalue = round($policy->premium - $cancellationvalue);
+		}
+		
+		// calculate total premium
+		if ($policy->premium != null) {
+			$rowswithpremium++;
+			if ($cancellationvalue > 0) {
+				$totalpremium = ($totalpremium+$cancellationvalue);
+			} else {
+				$totalpremium = ($totalpremium+$policy->premium);
+			}
+		}
+		// do average calc
+		$avgpremium = round(($totalpremium/$rowswithpremium));
+
+		// policy counts
+		if ($policy->renewal == 0) {
+			// do written count
+			$totalwritten++;
+			if ($policy->date_issued == null) {
+				// do NOT issued count
+				$notissued++;
+			}
+		} else {
+			// do pending renewal count
+			$totpending++;
+		}
+		if ($policy->date_canceled != null) {
+			// do canceled policy count
+			$totcanceled++;
+		}
+		
+///////////////////////////////////  END CALCS  ///////////////////////////////////
+	
 		if ($rowcnt & 1) {
 			$rowclass = "table-row";
 		} else {
@@ -37,9 +123,13 @@
 <?php } ?>
 				<div class="col" style="width:6%;<?php echo $addStyle; ?>"><?php echo $policy->first; ?></div>
 				<div class="col" style="width:10%;<?php echo $addStyle; ?>"><?php echo $policy->last; ?></div>
-				<div class="col" style="width:10%;"><?php if (strlen($policy->description) > 12) { echo '<a class="policy-desc-action" data-desc="'.$policy->description.'">'.substr($policy->description, 0, 12).'&hellip;</a>'; } else { echo $policy->description; } ?></div>
+				<div class="col" style="width:10%;"><?php if (strlen($policy->description) > 12) { echo '<a class="policy-desc-action" data-desc="'.$policy->description.'">'.substr($policy->description, 0, 12).'</a>&hellip;'; } else { echo $policy->description; } ?></div>
 				<div class="col" style="width:10%;<?php echo $addStyle; ?>"><?php echo $policy->cat_name; ?></div>
-				<div class="col" style="width:6%;<?php echo $addStyle; ?>"><?php echo '$'.number_format($policy->premium, 2); ?></div>
+<?php if ($cancellationvalue > 0) { ?>
+				<div class="col" style="width:6%;font-size:11px;font-style:italic;"><?php echo '$'.number_format($cancellationvalue, 2); if ($chargebackvalue > 0) { echo '&nbsp;<span class="chargeback">($'.number_format($chargebackvalue, 2).')</span>'; } ?></div>
+<?php } else { ?>
+				<div class="col" style="width:6%;"><?php echo '$'.number_format($policy->premium, 2); ?></div>
+<?php } ?>
 				<div class="col" style="width:6%;<?php echo $addStyle; ?>"><?php echo $policy->busi_name; ?></div>
 				<div class="col" style="width:8%;<?php echo $addStyle; ?>"><?php echo $policy->user_first_name." ".$policy->user_last_name; ?></div>
 				<div class="col" style="width:6%;<?php echo $addStyle; ?>"><?php echo $policy->src_name; ?></div>
@@ -53,48 +143,7 @@
 			</div>
 <?php
 		$rowcnt++;
-		// calculate average DTI
-		if ($policy->date_written != null && $policy->date_issued != null) {
-			// track total items for avareage
-			$rowswithdays++;
-			// set dates
-			$first_date = new DateTime($policy->date_written);
-			$second_date = new DateTime($policy->date_issued);
-			// calc date diff
-			$difference = $first_date->diff($second_date);
-			// track total days
-			$days = $difference->d;
-			$totaldays = ($avgdti+$days);
-		}
-		if (isset($totaldays) && $totaldays != 0) {
-			// do average calc
-			$avgdti = round(($totaldays/$rowswithdays));
-		}
-		if ($policy->premium != null) {
-			$rowswithpremium++;
-			// calc total premium
-			$totalpremium = ($totalpremium+$policy->premium);
-		}
-		// do average calc
-		$avgpremium = round(($totalpremium/$rowswithpremium));
-
-		if ($policy->renewal == 0) {
-			// do written count
-			$totalwritten++;
-			if ($policy->date_issued == null) {
-				// do NOT issued count
-				$notissued++;
-			}
-		} else {
-			// do pending renewal count
-			$totpending++;
-		}
-
-		if ($policy->date_canceled != null) {
-			// do canceled policy count
-			$totcanceled++;
-		}
-
+		
 	} // end row
 
   } else {
@@ -103,7 +152,7 @@
 No Policies Found.
 <br /><br />
 <?php
-}
+  }
 // do dollar formats
 $avgpremium = '$'.number_format($avgpremium, 2);
 $totalpremium = '$'.number_format($totalpremium, 2);

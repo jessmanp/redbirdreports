@@ -287,6 +287,9 @@ class App extends Controller
 			} else if ($param == 'pendingrenewal') {
 				$policy_data = $policy_listing_model->getAllPolicies('all','default','renewal',$date,$phrase);
 			} else {
+				if ($sub == 'index') {
+					$date = $main_model->getDate('this_month').".a"; // current month default
+				}
 				$policy_data = $policy_listing_model->getAllPolicies('all',$param,'',$date,$phrase);
 			}
 		} else if ($sub == 'listauto') {

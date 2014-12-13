@@ -1,8 +1,8 @@
 /* <![CDATA[ */
 
 // OPEN/CLOSE MESSAGE WINDOW
-function openModal(type,message) {
-			
+function openModal(type,message) {	
+
 	var winh = $(window).height();
 	var doch = $(document).height();
 	if (winh > doch) {
@@ -23,13 +23,15 @@ function openModal(type,message) {
 			
 }
 function closeModal() {
-	$("#modal").fadeOut();
-	$("#popupmessage").fadeOut();
-	$("#message").fadeOut();
+	$("#modal").fadeOut("fast");
+	$("#popupmessage").fadeOut("fast");
+	$("#message").fadeOut("fast");
 }
 
 // OPEN/CLOSE POPUP WINDOW
 function openWindow(currcat,type,message,id,text,fname,lname,desc,prem,zip,cat,busi,sold,src,len,dw,di,de,dc,renewal) {
+
+	$("#policy-window").hide();
 
 	var winh = $(window).height();
 	var doch = $(document).height();
@@ -52,8 +54,8 @@ function openWindow(currcat,type,message,id,text,fname,lname,desc,prem,zip,cat,b
 	}
 
 	$("#policy-window").css({ "margin-left": neww+"px", "margin-top": "-330px" });
-	$("#policy-window").fadeIn();
-	$(".policy-message").fadeIn();
+	$("#policy-window").fadeIn("fast");
+	$(".policy-message").fadeIn("fast");
 	$(".policy-message").text(message);
 	if (category != '') {
 		$(".policy-message").prepend('<img src="/public/img/icon_'+category+'.png" class="modal-icon" alt="'+categoryName+'" />');
@@ -89,25 +91,37 @@ function openWindow(currcat,type,message,id,text,fname,lname,desc,prem,zip,cat,b
 		$("#policy_premium").val(prem);
 		$("#policy_zip").val(zip);
 		$("#policy_notes").val(text);
+		$("#policy_dropdown_cover").hide();
 		$("#policy_business_type option[value="+busi+"]").prop("selected", true);
 		$("#policy_team_member option[value="+sold+"]").prop("selected", true);
 		$("#policy_source_type option[value="+src+"]").prop("selected", true);
 		if (category == 'auto') {
 			$("#policy_length_type option[value=1]").prop("selected", true);
+		} else if (category == 'fire') {
+			$("#policy_length_type option[value=2]").prop("selected", true);
+		} else if (category == 'life') {
+			$("#policy_length_type option[value=2]").prop("selected", true);
+		} else if (category == 'health') {
+			$("#policy_length_type option[value=2]").prop("selected", true);
+		} else if (category == 'deposit') {
+			$("#policy_length_type option[value=3]").prop("selected", true);
+		} else if (category == 'loan') {
+			$("#policy_length_type option[value=3]").prop("selected", true);
+		} else if (category == 'fund') {
+			$("#policy_length_type option[value=3]").prop("selected", true);
 		} else {
 			$("#policy_length_type option[value="+len+"]").prop("selected", true);
 		}
-		//Create a Date object
- 		var date = new Date();
- 		//Concatenate the sections of your Date into a string ("dd/mm/yyyy")
- 		var nowformatted = (date.getMonth() + 1)+'/'+date.getDate()+'/'+date.getFullYear();
-		$("#writtendate").val(nowformatted);
+		$("#writtendate").val(setClientDate());
 		$("#issueddate").val('');
 		$("#issueddate").prop("disabled", true);
+		$("#issueddate").css("opacity","0.5");
 		$("#effectivedate").prop("disabled", false);
+		$("#effectivedate").removeAttr("style");
 		$("#effectivedate").val('');
 		$("#canceleddate").val('');
 		$("#canceleddate").prop("disabled", true);
+		$("#canceleddate").css("opacity","0.5");
 	}
 	if (type == 'edit') {
 		$("#policy-edit").fadeIn();
@@ -152,14 +166,14 @@ function openWindow(currcat,type,message,id,text,fname,lname,desc,prem,zip,cat,b
 			$("#policy_premium").prop("readonly", false);
 			$("#policy_zip").prop("readonly", true);
 			$("#policy_notes").prop("readonly", false);
-			$("#policy_business_type").prop("readonly", true);
-			$("#policy_team_member").prop("readonly", true);
-			$("#policy_source_type").prop("readonly", true);
-			$("#policy_length_type").prop("readonly", true);
+			$("#policy_dropdown_cover").show();
 			//$("#writtendate").prop("disabled", true);
 			$("#issueddate").prop("disabled", true);
+			$("#issueddate").css("opacity","0.5");
 			$("#effectivedate").prop("disabled", true);
+			$("#effectivedate").css("opacity","0.5");
 			$("#canceleddate").prop("disabled", true);
+			$("#canceleddate").css("opacity","0.5");
 		} else {
 			// enable all edit fields
 			$("#policy_first_name").prop("readonly", false);
@@ -168,14 +182,19 @@ function openWindow(currcat,type,message,id,text,fname,lname,desc,prem,zip,cat,b
 			$("#policy_premium").prop("readonly", false);
 			$("#policy_zip").prop("readonly", false);
 			$("#policy_notes").prop("readonly", false);
-			$("#policy_business_type").prop("readonly", false);
-			$("#policy_team_member").prop("readonly", false);
-			$("#policy_source_type").prop("readonly", false);
-			$("#policy_length_type").prop("readonly", false);
+			$("#policy_dropdown_cover").hide();
 			//$("#writtendate").prop("disabled", false);
 			$("#issueddate").prop("disabled", false);
-			$("#effectivedate").prop("disabled", false);
-			$("#canceleddate").prop("disabled", false);
+			$("#issueddate").removeAttr("style");
+			$("#effectivedate").prop("disaled", false);
+			$("#effectivedate").removeAttr("style");
+			if (di == '' || de == '') {
+				$("#canceleddate").prop("disabled", true);
+				$("#canceleddate").css("opacity","0.5");
+			} else {
+				$("#canceleddate").prop("disabled", false);
+				$("#canceleddate").removeAttr("style");
+			}
 		}
 	}
 	if (type == 'text') {
@@ -201,14 +220,14 @@ function openWindow(currcat,type,message,id,text,fname,lname,desc,prem,zip,cat,b
 			
 }
 function closeWindow() {
-	$("#policy-popup").fadeOut();
-	$("#policy-window").fadeOut();
-	$(".policy-message").fadeOut();
-	$("#policy-edit").fadeOut();
-	$("#policy-text").fadeOut();
-	$("#policy-delete").fadeOut();
-	$("#policy-renewal").fadeOut();
-	$("#policy-reinstate").fadeOut();
+	$("#policy-popup").fadeOut("fast");
+	$("#policy-window").fadeOut("fast");
+	$(".policy-message").fadeOut("fast");
+	$("#policy-edit").fadeOut("fast");
+	$("#policy-text").fadeOut("fast");
+	$("#policy-delete").fadeOut("fast");
+	$("#policy-renewal").fadeOut("fast");
+	$("#policy-reinstate").fadeOut("fast");
 }
 
 function calendarPickerSubmit() {
@@ -311,6 +330,16 @@ function doPolicyReinstate(id) {
 	openWindow('','reinstate','Reinstate Policy',id,'');
 }
 
+// SET DATE PICKERS AND LOAD LISTING
+function loadListing(currcat){
+		$("#datepick1").val(setClientDate('first'));
+		$("#datepick2").val(setClientDate('last'));
+		$("#field").val('');
+		$(".date-pickers").html("This Month:");
+		$("#search_text_form").submit();
+}
+
+
 // LOAD
 $(document).ready(function() {
 
@@ -376,6 +405,11 @@ $(document).ready(function() {
 	$("#policies").closest(".main-button").css("background-color","#cccccc");
 	// HIGHLIGHT SUB SECTION
 	$("#all").closest(".sub-button").css("background-color","#000000");
+	// SET DEFAULT TO CURRENT MONTH
+	$("#datepick1").val(setClientDate('first'));
+	$("#datepick2").val(setClientDate('last'));
+	$("#field").val('');
+	$(".date-pickers").html("This Month:");
 
 // =============== BEGIN ADD/EDIT/DELETE POLICY =============== //
 
@@ -462,6 +496,7 @@ $(document).ready(function() {
 
 	$("#policy-uncancel").on("click", function(event) {
 		event.preventDefault();
+		$("#canceleddate").val('');
 		$('#policy_reinstate_form').submit();
 		closeWindow();
 	});
@@ -564,9 +599,6 @@ $(document).ready(function() {
 	// VIEW ALL
 	$("#all").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
-		$("#datepick1").val('');
-		$("#datepick2").val('');
-		$("#field").val('');
 		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#auto").closest(".sub-button").removeAttr("style");
@@ -577,7 +609,6 @@ $(document).ready(function() {
 		$("#loan").closest(".sub-button").removeAttr("style");
 		$("#fund").closest(".sub-button").removeAttr("style");
 		$("#statuscat").text('All');
-		loadDatePickers();
 		$(".date-pickers").html("Date Range:");
 		$("#all_time").removeAttr("style");
 		$("#today").removeAttr("style");
@@ -593,16 +624,15 @@ $(document).ready(function() {
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
 		$("#last_two_years").removeAttr("style");
-		$("#policy-content").load("/app/policies/listall");
+		// SET CATEGORY
 		currcat = 'listall';
+		// LOAD LISTING
+		loadListing(currcat);
 	});
 
 	// AUTO
 	$("#auto").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
-		$("#datepick1").val('');
-		$("#datepick2").val('');
-		$("#field").val('');
 		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").removeAttr("style");
@@ -613,7 +643,6 @@ $(document).ready(function() {
 		$("#loan").closest(".sub-button").removeAttr("style");
 		$("#fund").closest(".sub-button").removeAttr("style");
 		$("#statuscat").text('Auto');
-		loadDatePickers();
 		$(".date-pickers").html("Date Range:");
 		$("#all_time").removeAttr("style");
 		$("#today").removeAttr("style");
@@ -629,16 +658,15 @@ $(document).ready(function() {
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
 		$("#last_two_years").removeAttr("style");
-		$("#policy-content").load("/app/policies/listauto");
+		// SET CATEGORY
 		currcat = 'listauto';
+		// LOAD LISTING
+		loadListing(currcat);
 	});
 
 	// FIRE
 	$("#fire").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
-		$("#datepick1").val('');
-		$("#datepick2").val('');
-		$("#field").val('');
 		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").removeAttr("style");
@@ -649,7 +677,6 @@ $(document).ready(function() {
 		$("#loan").closest(".sub-button").removeAttr("style");
 		$("#fund").closest(".sub-button").removeAttr("style");
 		$("#statuscat").text('Fire');
-		loadDatePickers();
 		$(".date-pickers").html("Date Range:");
 		$("#all_time").removeAttr("style");
 		$("#today").removeAttr("style");
@@ -665,16 +692,15 @@ $(document).ready(function() {
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
 		$("#last_two_years").removeAttr("style");
-		$("#policy-content").load("/app/policies/listfire");
+		// SET CATEGORY
 		currcat = 'listfire';
+		// LOAD LISTING
+		loadListing(currcat);
 	});
 
 	// LIFE
 	$("#life").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
-		$("#datepick1").val('');
-		$("#datepick2").val('');
-		$("#field").val('');
 		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").removeAttr("style");
@@ -685,7 +711,6 @@ $(document).ready(function() {
 		$("#loan").closest(".sub-button").removeAttr("style");
 		$("#fund").closest(".sub-button").removeAttr("style");
 		$("#statuscat").text('Life');
-		loadDatePickers();
 		$(".date-pickers").html("Date Range:");
 		$("#all_time").removeAttr("style");
 		$("#today").removeAttr("style");
@@ -701,16 +726,15 @@ $(document).ready(function() {
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
 		$("#last_two_years").removeAttr("style");
-		$("#policy-content").load("/app/policies/listlife");
+		// SET CATEGORY
 		currcat = 'listlife';
+		// LOAD LISTING
+		loadListing(currcat);
 	});
 
 	// HEALTH
 	$("#health").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
-		$("#datepick1").val('');
-		$("#datepick2").val('');
-		$("#field").val('');
 		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").removeAttr("style");
@@ -721,7 +745,6 @@ $(document).ready(function() {
 		$("#loan").closest(".sub-button").removeAttr("style");
 		$("#fund").closest(".sub-button").removeAttr("style");
 		$("#statuscat").text('Health');
-		loadDatePickers();
 		$(".date-pickers").html("Date Range:");
 		$("#all_time").removeAttr("style");
 		$("#today").removeAttr("style");
@@ -737,16 +760,15 @@ $(document).ready(function() {
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
 		$("#last_two_years").removeAttr("style");
-		$("#policy-content").load("/app/policies/listhealth");
+		// SET CATEGORY
 		currcat = 'listhealth';
+		// LOAD LISTING
+		loadListing(currcat);
 	});
 
 	// DEPOSIT
 	$("#deposit").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
-		$("#datepick1").val('');
-		$("#datepick2").val('');
-		$("#field").val('');
 		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").removeAttr("style");
@@ -757,7 +779,6 @@ $(document).ready(function() {
 		$("#loan").closest(".sub-button").removeAttr("style");
 		$("#fund").closest(".sub-button").removeAttr("style");
 		$("#statuscat").text('Deposit');
-		loadDatePickers();
 		$(".date-pickers").html("Date Range:");
 		$("#all_time").removeAttr("style");
 		$("#today").removeAttr("style");
@@ -773,16 +794,15 @@ $(document).ready(function() {
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
 		$("#last_two_years").removeAttr("style");
-		$("#policy-content").load("/app/policies/listdeposit");
+		// SET CATEGORY
 		currcat = 'listdeposit';
+		// LOAD LISTING
+		loadListing(currcat);
 	});
 
 	// LOAN
 	$("#loan").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
-		$("#datepick1").val('');
-		$("#datepick2").val('');
-		$("#field").val('');
 		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").removeAttr("style");
@@ -793,7 +813,6 @@ $(document).ready(function() {
 		$("#deposit").closest(".sub-button").removeAttr("style");
 		$("#fund").closest(".sub-button").removeAttr("style");
 		$("#statuscat").text('Loan');
-		loadDatePickers();
 		$(".date-pickers").html("Date Range:");
 		$("#all_time").removeAttr("style");
 		$("#today").removeAttr("style");
@@ -809,16 +828,15 @@ $(document).ready(function() {
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
 		$("#last_two_years").removeAttr("style");
-		$("#policy-content").load("/app/policies/listloan");
+		// SET CATEGORY
 		currcat = 'listloan';
+		// LOAD LISTING
+		loadListing(currcat);
 	});
 
 	// FUND
 	$("#fund").closest(".sub-button").on("click", function(event) {
 		event.preventDefault();
-		$("#datepick1").val('');
-		$("#datepick2").val('');
-		$("#field").val('');
 		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
 		$("#all").closest(".sub-button").removeAttr("style");
@@ -829,7 +847,6 @@ $(document).ready(function() {
 		$("#deposit").closest(".sub-button").removeAttr("style");
 		$("#loan").closest(".sub-button").removeAttr("style");
 		$("#statuscat").text('Mutual Fund');
-		loadDatePickers();
 		$(".date-pickers").html("Date Range:");
 		$("#all_time").removeAttr("style");
 		$("#today").removeAttr("style");
@@ -845,8 +862,10 @@ $(document).ready(function() {
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
 		$("#last_two_years").removeAttr("style");
-		$("#policy-content").load("/app/policies/listfund");
+		// SET CATEGORY
 		currcat = 'listfund';
+		// LOAD LISTING
+		loadListing(currcat);
 	});
 
 // =============== END SUB NAV =============== //
@@ -857,40 +876,84 @@ $(document).ready(function() {
 	$("#allwritten").on("click", function(event) {
 		event.preventDefault();
 		resetSortLinks(0);
-		$("#datepick1").val('');
-		$("#datepick2").val('');
-		$("#field").val('');
-		$("#policy-content").load("/app/policies/"+currcat+"/allwritten");
+		var sdate = $("#datepick1").val().replace(/\//g, "-");
+		var edate = $("#datepick2").val().replace(/\//g, "-");
+		if (sdate != '' && edate != '') {
+			dateRange = sdate+"."+edate+".a";
+		} else {
+			dateRange = 'any';
+		}
+		if ($("#field").val() != '') {
+			var phrase = $("#field").val()+".a";
+		} else {
+			phrase = '';
+		}
+		var path = "/app/policies/"+currcat+"/allwritten/"+dateRange+"/"+phrase;
+		//alert(path);
+		$("#policy-content").load(path);
 	});
 
 	// VIEW NOT ISSUED ONLY
 	$("#notissued").on("click", function(event) {
 		event.preventDefault();
 		resetSortLinks(0);
-		$("#datepick1").val('');
-		$("#datepick2").val('');
-		$("#field").val('');
-		$("#policy-content").load("/app/policies/"+currcat+"/notissued");
+		var sdate = $("#datepick1").val().replace(/\//g, "-");
+		var edate = $("#datepick2").val().replace(/\//g, "-");
+		if (sdate != '' && edate != '') {
+			dateRange = sdate+"."+edate+".a";
+		} else {
+			dateRange = 'any';
+		}
+		if ($("#field").val() != '') {
+			var phrase = $("#field").val()+".a";
+		} else {
+			phrase = '';
+		}
+		var path = "/app/policies/"+currcat+"/notissued/"+dateRange+"/"+phrase;
+		//alert(path);
+		$("#policy-content").load(path);
 	});
 
 	// VIEW ALL PENDING RENEWAL ONLY
 	$("#pendingrenewal").on("click", function(event) {
 		event.preventDefault();
 		resetSortLinks(0);
-		$("#datepick1").val('');
-		$("#datepick2").val('');
-		$("#field").val('');
-		$("#policy-content").load("/app/policies/"+currcat+"/pendingrenewal");
+		var sdate = $("#datepick1").val().replace(/\//g, "-");
+		var edate = $("#datepick2").val().replace(/\//g, "-");
+		if (sdate != '' && edate != '') {
+			dateRange = sdate+"."+edate+".a";
+		} else {
+			dateRange = 'any';
+		}
+		if ($("#field").val() != '') {
+			var phrase = $("#field").val()+".a";
+		} else {
+			phrase = '';
+		}
+		var path = "/app/policies/"+currcat+"/pendingrenewal/"+dateRange+"/"+phrase;
+		//alert(path);
+		$("#policy-content").load(path);
 	});
 
 	// VIEW ALL CANCELED ONLY
 	$("#allcanceled").on("click", function(event) {
 		event.preventDefault();
 		resetSortLinks(0);
-		$("#datepick1").val('');
-		$("#datepick2").val('');
-		$("#field").val('');
-		$("#policy-content").load("/app/policies/"+currcat+"/allcanceled");
+		var sdate = $("#datepick1").val().replace(/\//g, "-");
+		var edate = $("#datepick2").val().replace(/\//g, "-");
+		if (sdate != '' && edate != '') {
+			dateRange = sdate+"."+edate+".a";
+		} else {
+			dateRange = 'any';
+		}
+		if ($("#field").val() != '') {
+			var phrase = $("#field").val()+".a";
+		} else {
+			phrase = '';
+		}
+		var path = "/app/policies/"+currcat+"/allcanceled/"+dateRange+"/"+phrase;
+		//alert(path);
+		$("#policy-content").load(path);
 	});
 
 // =============== END STATUS NAV =============== //
@@ -903,168 +966,312 @@ $(document).ready(function() {
 	$("#sortfirst").on("click", function(event) {
 		event.preventDefault();
 		resetSortLinks(0);
+		var sdate = $("#datepick1").val().replace(/\//g, "-");
+		var edate = $("#datepick2").val().replace(/\//g, "-");
+		if (sdate != '' && edate != '') {
+			dateRange = sdate+"."+edate+".a";
+		} else {
+			dateRange = 'any';
+		}
+		if ($("#field").val() != '') {
+			var phrase = $("#field").val()+".a";
+		} else {
+			phrase = '';
+		}
 		$(this).removeClass();
 		if (order == "desc") {
-    			$(this).addClass('sort-link-desc');
-			$("#policy-content").load("/app/policies/"+currcat+"/firstnamedesc");
+    		$(this).addClass('sort-link-desc');
+			$("#policy-content").load("/app/policies/"+currcat+"/firstnamedesc/"+dateRange+"/"+phrase);
 			order = "asc";
 		} else {
-    			$(this).addClass('sort-link-asc');
-			$("#policy-content").load("/app/policies/"+currcat+"/firstname");
+    		$(this).addClass('sort-link-asc');
+			$("#policy-content").load("/app/policies/"+currcat+"/firstname/"+dateRange+"/"+phrase);
 			order = "desc";
 		}
 	});
 	$("#sortlast").on("click", function(event) {
 		event.preventDefault();
 		resetSortLinks(0);
+		var sdate = $("#datepick1").val().replace(/\//g, "-");
+		var edate = $("#datepick2").val().replace(/\//g, "-");
+		if (sdate != '' && edate != '') {
+			dateRange = sdate+"."+edate+".a";
+		} else {
+			dateRange = 'any';
+		}
+		if ($("#field").val() != '') {
+			var phrase = $("#field").val()+".a";
+		} else {
+			phrase = '';
+		}
 		$(this).removeClass();
 		if (order == "desc") {
-    			$(this).addClass('sort-link-desc');
-			$("#policy-content").load("/app/policies/"+currcat+"/lastnamedesc");
+    		$(this).addClass('sort-link-desc');
+			$("#policy-content").load("/app/policies/"+currcat+"/lastnamedesc/"+dateRange+"/"+phrase);
 			order = "asc";
 		} else {
-    			$(this).addClass('sort-link-asc');
-			$("#policy-content").load("/app/policies/"+currcat+"/lastname");
+    		$(this).addClass('sort-link-asc');
+			$("#policy-content").load("/app/policies/"+currcat+"/lastname/"+dateRange+"/"+phrase);
 			order = "desc";
 		}
 	});
 	$("#sortdesc").on("click", function(event) {
 		event.preventDefault();
 		resetSortLinks(0);
+		var sdate = $("#datepick1").val().replace(/\//g, "-");
+		var edate = $("#datepick2").val().replace(/\//g, "-");
+		if (sdate != '' && edate != '') {
+			dateRange = sdate+"."+edate+".a";
+		} else {
+			dateRange = 'any';
+		}
+		if ($("#field").val() != '') {
+			var phrase = $("#field").val()+".a";
+		} else {
+			phrase = '';
+		}
 		$(this).removeClass();
 		if (order == "desc") {
     			$(this).addClass('sort-link-desc');
-			$("#policy-content").load("/app/policies/"+currcat+"/descriptiondesc");
+			$("#policy-content").load("/app/policies/"+currcat+"/descriptiondesc/"+dateRange+"/"+phrase);
 			order = "asc";
 		} else {
     			$(this).addClass('sort-link-asc');
-			$("#policy-content").load("/app/policies/"+currcat+"/description");
+			$("#policy-content").load("/app/policies/"+currcat+"/description/"+dateRange+"/"+phrase);
 			order = "desc";
 		}
 	});
 	$("#sortcat").on("click", function(event) {
 		event.preventDefault();
 		resetSortLinks(0);
+		var sdate = $("#datepick1").val().replace(/\//g, "-");
+		var edate = $("#datepick2").val().replace(/\//g, "-");
+		if (sdate != '' && edate != '') {
+			dateRange = sdate+"."+edate+".a";
+		} else {
+			dateRange = 'any';
+		}
+		if ($("#field").val() != '') {
+			var phrase = $("#field").val()+".a";
+		} else {
+			phrase = '';
+		}
 		$(this).removeClass();
 		if (order == "desc") {
     			$(this).addClass('sort-link-desc');
-			$("#policy-content").load("/app/policies/"+currcat+"/categorydesc");
+			$("#policy-content").load("/app/policies/"+currcat+"/categorydesc/"+dateRange+"/"+phrase);
 			order = "asc";
 		} else {
     			$(this).addClass('sort-link-asc');
-			$("#policy-content").load("/app/policies/"+currcat+"/category");
+			$("#policy-content").load("/app/policies/"+currcat+"/category/"+dateRange+"/"+phrase);
 			order = "desc";
 		}
 	});
 	$("#sortprem").on("click", function(event) {
 		event.preventDefault();
 		resetSortLinks(0);
+		var sdate = $("#datepick1").val().replace(/\//g, "-");
+		var edate = $("#datepick2").val().replace(/\//g, "-");
+		if (sdate != '' && edate != '') {
+			dateRange = sdate+"."+edate+".a";
+		} else {
+			dateRange = 'any';
+		}
+		if ($("#field").val() != '') {
+			var phrase = $("#field").val()+".a";
+		} else {
+			phrase = '';
+		}
 		$(this).removeClass();
 		if (order == "desc") {
     			$(this).addClass('sort-link-desc');
-			$("#policy-content").load("/app/policies/"+currcat+"/premiumdesc");
+			$("#policy-content").load("/app/policies/"+currcat+"/premiumdesc/"+dateRange+"/"+phrase);
 			order = "asc";
 		} else {
     			$(this).addClass('sort-link-asc');
-			$("#policy-content").load("/app/policies/"+currcat+"/premium");
+			$("#policy-content").load("/app/policies/"+currcat+"/premium/"+dateRange+"/"+phrase);
 			order = "desc";
 		}
 	});
 	$("#sorttype").on("click", function(event) {
 		event.preventDefault();
 		resetSortLinks(0);
+		var sdate = $("#datepick1").val().replace(/\//g, "-");
+		var edate = $("#datepick2").val().replace(/\//g, "-");
+		if (sdate != '' && edate != '') {
+			dateRange = sdate+"."+edate+".a";
+		} else {
+			dateRange = 'any';
+		}
+		if ($("#field").val() != '') {
+			var phrase = $("#field").val()+".a";
+		} else {
+			phrase = '';
+		}
 		$(this).removeClass();
 		if (order == "desc") {
     			$(this).addClass('sort-link-desc');
-			$("#policy-content").load("/app/policies/"+currcat+"/typedesc");
+			$("#policy-content").load("/app/policies/"+currcat+"/typedesc/"+dateRange+"/"+phrase);
 			order = "asc";
 		} else {
     			$(this).addClass('sort-link-asc');
-			$("#policy-content").load("/app/policies/"+currcat+"/type");
+			$("#policy-content").load("/app/policies/"+currcat+"/type/"+dateRange+"/"+phrase);
 			order = "desc";
 		}
 	});
 	$("#sortsold").on("click", function(event) {
 		event.preventDefault();
 		resetSortLinks(0);
+		var sdate = $("#datepick1").val().replace(/\//g, "-");
+		var edate = $("#datepick2").val().replace(/\//g, "-");
+		if (sdate != '' && edate != '') {
+			dateRange = sdate+"."+edate+".a";
+		} else {
+			dateRange = 'any';
+		}
+		if ($("#field").val() != '') {
+			var phrase = $("#field").val()+".a";
+		} else {
+			phrase = '';
+		}
 		$(this).removeClass();
 		if (order == "desc") {
     			$(this).addClass('sort-link-desc');
-			$("#policy-content").load("/app/policies/"+currcat+"/soldbydesc");
+			$("#policy-content").load("/app/policies/"+currcat+"/soldbydesc/"+dateRange+"/"+phrase);
 			order = "asc";
 		} else {
     			$(this).addClass('sort-link-asc');
-			$("#policy-content").load("/app/policies/"+currcat+"/soldby");
+			$("#policy-content").load("/app/policies/"+currcat+"/soldby/"+dateRange+"/"+phrase);
 			order = "desc";
 		}
 	});
 	$("#sortsrc").on("click", function(event) {
 		event.preventDefault();
 		resetSortLinks(0);
+		var sdate = $("#datepick1").val().replace(/\//g, "-");
+		var edate = $("#datepick2").val().replace(/\//g, "-");
+		if (sdate != '' && edate != '') {
+			dateRange = sdate+"."+edate+".a";
+		} else {
+			dateRange = 'any';
+		}
+		if ($("#field").val() != '') {
+			var phrase = $("#field").val()+".a";
+		} else {
+			phrase = '';
+		}
 		$(this).removeClass();
 		if (order == "desc") {
     			$(this).addClass('sort-link-desc');
-			$("#policy-content").load("/app/policies/"+currcat+"/sourcedesc");
+			$("#policy-content").load("/app/policies/"+currcat+"/sourcedesc/"+dateRange+"/"+phrase);
 			order = "asc";
 		} else {
     			$(this).addClass('sort-link-asc');
-			$("#policy-content").load("/app/policies/"+currcat+"/source");
+			$("#policy-content").load("/app/policies/"+currcat+"/source/"+dateRange+"/"+phrase);
 			order = "desc";
 		}
 	});
 	$("#sortlen").on("click", function(event) {
 		event.preventDefault();
 		resetSortLinks(0);
+		var sdate = $("#datepick1").val().replace(/\//g, "-");
+		var edate = $("#datepick2").val().replace(/\//g, "-");
+		if (sdate != '' && edate != '') {
+			dateRange = sdate+"."+edate+".a";
+		} else {
+			dateRange = 'any';
+		}
+		if ($("#field").val() != '') {
+			var phrase = $("#field").val()+".a";
+		} else {
+			phrase = '';
+		}
 		$(this).removeClass();
 		if (order == "desc") {
     			$(this).addClass('sort-link-desc');
-			$("#policy-content").load("/app/policies/"+currcat+"/lengthdesc");
+			$("#policy-content").load("/app/policies/"+currcat+"/lengthdesc/"+dateRange+"/"+phrase);
 			order = "asc";
 		} else {
     			$(this).addClass('sort-link-asc');
-			$("#policy-content").load("/app/policies/"+currcat+"/length");
+			$("#policy-content").load("/app/policies/"+currcat+"/length/"+dateRange+"/"+phrase);
 			order = "desc";
 		}
 	});
 	$("#sortwdate").on("click", function(event) {
 		event.preventDefault();
 		resetSortLinks(0);
+		var sdate = $("#datepick1").val().replace(/\//g, "-");
+		var edate = $("#datepick2").val().replace(/\//g, "-");
+		if (sdate != '' && edate != '') {
+			dateRange = sdate+"."+edate+".a";
+		} else {
+			dateRange = 'any';
+		}
+		if ($("#field").val() != '') {
+			var phrase = $("#field").val()+".a";
+		} else {
+			phrase = '';
+		}
 		$(this).removeClass();
 		if (order == "desc") {
     			$(this).addClass('sort-link-desc');
-			$("#policy-content").load("/app/policies/"+currcat+"/writtendesc");
+			$("#policy-content").load("/app/policies/"+currcat+"/writtendesc/"+dateRange+"/"+phrase);
 			order = "asc";
 		} else {
     			$(this).addClass('sort-link-asc');
-			$("#policy-content").load("/app/policies/"+currcat+"/written");
+			$("#policy-content").load("/app/policies/"+currcat+"/written/"+dateRange+"/"+phrase);
 			order = "desc";
 		}
 	});
 	$("#sortidate").on("click", function(event) {
 		event.preventDefault();
 		resetSortLinks(0);
+		var sdate = $("#datepick1").val().replace(/\//g, "-");
+		var edate = $("#datepick2").val().replace(/\//g, "-");
+		if (sdate != '' && edate != '') {
+			dateRange = sdate+"."+edate+".a";
+		} else {
+			dateRange = 'any';
+		}
+		if ($("#field").val() != '') {
+			var phrase = $("#field").val()+".a";
+		} else {
+			phrase = '';
+		}
 		$(this).removeClass();
 		if (order == "desc") {
     			$(this).addClass('sort-link-desc');
-			$("#policy-content").load("/app/policies/"+currcat+"/issueddesc");
+			$("#policy-content").load("/app/policies/"+currcat+"/issueddesc/"+dateRange+"/"+phrase);
 			order = "asc";
 		} else {
     			$(this).addClass('sort-link-asc');
-			$("#policy-content").load("/app/policies/"+currcat+"/issued");
+			$("#policy-content").load("/app/policies/"+currcat+"/issued/"+dateRange+"/"+phrase);
 			order = "desc";
 		}
 	});
 	$("#sortedate").on("click", function(event) {
 		event.preventDefault();
 		resetSortLinks(0);
+		var sdate = $("#datepick1").val().replace(/\//g, "-");
+		var edate = $("#datepick2").val().replace(/\//g, "-");
+		if (sdate != '' && edate != '') {
+			dateRange = sdate+"."+edate+".a";
+		} else {
+			dateRange = 'any';
+		}
+		if ($("#field").val() != '') {
+			var phrase = $("#field").val()+".a";
+		} else {
+			phrase = '';
+		}
 		$(this).removeClass();
 		if (order == "desc") {
     			$(this).addClass('sort-link-desc');
-			$("#policy-content").load("/app/policies/"+currcat+"/effectivedesc");
+			$("#policy-content").load("/app/policies/"+currcat+"/effectivedesc/"+dateRange+"/"+phrase);
 			order = "asc";
 		} else {
     			$(this).addClass('sort-link-asc');
-			$("#policy-content").load("/app/policies/"+currcat+"/effective");
+			$("#policy-content").load("/app/policies/"+currcat+"/effective/"+dateRange+"/"+phrase);
 			order = "desc";
 		}
 	});
@@ -1094,7 +1301,6 @@ $(document).ready(function() {
 		$("#datepick2").val('');
 		$("#field").val('');
 		$(".date-pickers").html("All Time:");
-		loadDatePickers();
 		$("#policy-content").load("/app/policies/"+currcat);
    		$("#pre-dates-container").toggle();
 	});
@@ -1124,7 +1330,6 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("Today:");
-		loadDatePickers();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -1155,7 +1360,6 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("This Week:");
-		loadDatePickers();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -1186,7 +1390,6 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("Last Week:");
-		loadDatePickers();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -1217,7 +1420,6 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("This Month:");
-		loadDatePickers();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -1248,7 +1450,6 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("Last Month:");
-		loadDatePickers();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -1279,7 +1480,6 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("This Quarter:");
-		loadDatePickers();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -1310,7 +1510,6 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("1st Quarter:");
-		loadDatePickers();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -1341,7 +1540,6 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("2nd Quarter:");
-		loadDatePickers();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -1372,7 +1570,6 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("3rd Quarter:");
-		loadDatePickers();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -1403,7 +1600,6 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("4th Quarter:");
-		loadDatePickers();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -1434,7 +1630,6 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("Last 6 Mos.:");
-		loadDatePickers();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -1465,7 +1660,6 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("This Year:");
-		loadDatePickers();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -1496,7 +1690,6 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("Last 2 Years:");
-		loadDatePickers();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -1571,6 +1764,9 @@ $(document).ready(function() {
 			if ($("#written").prop('checked') === true && $("#issued").prop('checked') === true && $("#effective").prop('checked') === true && $("#canceled").prop('checked') === true) {
 				datetype = ".a";
 			}
+			if ($("#written").prop('checked') === false && $("#issued").prop('checked') === false && $("#effective").prop('checked') === false && $("#canceled").prop('checked') === false) {
+				datetype = ".none";
+			}
 			var dateRange = sdate+"."+edate+datetype;
 			if (datetype == 'any') {
 				var path = "/app/policies/"+currcat+"/default/any/";
@@ -1579,7 +1775,7 @@ $(document).ready(function() {
 			}
 		}
 		// do keyword searches
-		var type = null;
+		var type = '.none';
 		var phrase = '';
 		if ($("#field").val() != '') {
 			var text = $("#field").val().replace(/ /g, "-");
@@ -1597,9 +1793,9 @@ $(document).ready(function() {
 			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#notes").prop('checked') === false) {
 				type = ".d";
 			}
-			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#notes").prop('checked') === false) {
-				type = ".p";
-			}
+			//if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#notes").prop('checked') === false) {
+			//	type = ".p";
+			//}
 			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#notes").prop('checked') === true) {
 				type = ".n";
 			}
@@ -1609,75 +1805,72 @@ $(document).ready(function() {
 			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#notes").prop('checked') === false) {
 				type = ".fd";
 			}
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#notes").prop('checked') === false) {
-				type = ".fp";
-			}
+			//if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#notes").prop('checked') === false) {
+			//	type = ".fp";
+			//}
 			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#notes").prop('checked') === true) {
 				type = ".fn";
 			}
 			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#notes").prop('checked') === false) {
 				type = ".ld";
 			}
-			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#notes").prop('checked') === false) {
-				type = ".lp";
-			}
+			//if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#notes").prop('checked') === false) {
+			//	type = ".lp";
+			//}
 			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#notes").prop('checked') === true) {
 				type = ".ln";
 			}
-			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#notes").prop('checked') === false) {
-				type = ".dp";
-			}
+			//if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#notes").prop('checked') === false) {
+			//	type = ".dp";
+			//}
 			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#notes").prop('checked') === true) {
 				type = ".dn";
 			}
-			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#notes").prop('checked') === true) {
-				type = ".pn";
-			}
+			//if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#notes").prop('checked') === true) {
+			//	type = ".pn";
+			//}
 			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#notes").prop('checked') === false) {
 				type = ".fld";
 			}
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#notes").prop('checked') === false) {
-				type = ".flp";
-			}
+			//if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#notes").prop('checked') === false) {
+			//	type = ".flp";
+			//}
 			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#notes").prop('checked') === true) {
 				type = ".fln";
 			}
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#notes").prop('checked') === false) {
-				type = ".fdp";
-			}
+			//if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#notes").prop('checked') === false) {
+			//	type = ".fdp";
+			//}
 			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#notes").prop('checked') === true) {
 				type = ".fdn";
 			}
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#notes").prop('checked') === true) {
-				type = ".fpn";
-			}
-			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#notes").prop('checked') === false) {
-				type = ".ldp";
-			}
-			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#notes").prop('checked') === true) {
-				type = ".lpn";
-			}
-			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#notes").prop('checked') === true) {
-				type = ".dpn";
-			}
+			//if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#notes").prop('checked') === true) {
+			//	type = ".fpn";
+			//}
+			//if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#notes").prop('checked') === false) {
+			//	type = ".ldp";
+			//}
+			//if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === false && $("#notes").prop('checked') === true) {
+			//	type = ".lpn";
+			//}
+			//if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#notes").prop('checked') === true) {
+			//	type = ".dpn";
+			//}
 			if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#notes").prop('checked') === true) {
 				type = ".dln";
 			}
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#notes").prop('checked') === false) {
-				type = ".fldp";
-			}
+			//if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#notes").prop('checked') === false) {
+			//	type = ".fldp";
+			//}
 			if ($("#first").prop('checked') === true && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#notes").prop('checked') === true) {
 				type = ".fldn";
 			}
-			if ($("#first").prop('checked') === false && $("#last").prop('checked') === false && $("#description").prop('checked') === false && $("#notes").prop('checked') === false) {
-				type = ".ldpn";
-			}
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#notes").prop('checked') === true) {
-				type = ".fdpn";
-			}
-			if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#notes").prop('checked') === true) {
-				type = ".dfpn";
-			}
+			//if ($("#first").prop('checked') === false && $("#last").prop('checked') === true && $("#description").prop('checked') === true && $("#notes").prop('checked') === true) {
+			//	type = ".ldpn";
+			//}
+			//if ($("#first").prop('checked') === true && $("#last").prop('checked') === false && $("#description").prop('checked') === true && $("#notes").prop('checked') === true) {
+			//	type = ".fdpn";
+			//}
 			if (type) {
 				phrase = phrase+type;
 			}
@@ -1750,6 +1943,7 @@ $(document).ready(function() {
 
 // =============== END SEARCH DATES =============== //
 
+/*
 	// LOAD DATE PICKERS
 	function loadDatePickers(){
 		new datepickr("datepick1", {
@@ -1763,13 +1957,32 @@ $(document).ready(function() {
 	//bind orientation change to date picker event
 	$(window).bind("orientationchange", loadDatePickers);
 	$(window).resize(function() {
-		loadDatePickers();
+		
 	});
 
-	// SET DATE PICKERS
-	$("#datepick1").attr("placeholder", "Start Date");
-	$("#datepick2").attr("placeholder", "End Date");
-	loadDatePickers();
+*/
+
+	// load search date pickers
+	$("#datepick1").datepicker();
+	$("#datepick2").datepicker();
+	
+	$("#datepick1").datepicker("option", {
+  		onClose: function(dateText, inst){
+  			if ($("#datepick1").val() != '' && $("#datepick2").val() != '') {
+  				$(".date-pickers").html("Date Range:");
+    			$("#search_text_form").submit();
+    		}
+  		}
+	});
+	
+	$("#datepick2").datepicker("option", {
+  		onClose: function(dateText, inst){
+  			if ($("#datepick1").val() != '' && $("#datepick2").val() != '') {
+  				$(".date-pickers").html("Date Range:");
+    			$("#search_text_form").submit();
+    		}
+  		}
+	});
 
 	// load edit window date pickers
 	$("#writtendate").datepicker();

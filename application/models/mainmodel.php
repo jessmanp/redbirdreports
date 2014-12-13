@@ -16,7 +16,7 @@ class MainModel
 
 		function last_week($date) {
 		  $ts = strtotime($date);
-		  $start = strtotime('monday 1 week ago', $ts);
+		  $start = strtotime('first day of last week', $ts);
 		  return array(date('m-d-Y', $start), date('m-d-Y', strtotime('+6 days', $start)));
 		}
 

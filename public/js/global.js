@@ -4,6 +4,22 @@ function echeck(str) {
 	return re.test(str);
 }
 
+function setClientDate(whichday){
+	var now = new Date();
+	var curr_month = now.getMonth()+1;
+	if (whichday == 'first') {
+		var first_day = new Date(now.getFullYear(), now.getMonth(), 1);
+		var curr_day = first_day.getDate();
+	} else if (whichday == 'last') {
+		var last_day = new Date(now.getFullYear(), now.getMonth()+1, 0);
+		var curr_day = last_day.getDate();
+	} else {
+		var curr_day = now.getDate();
+	}
+	var curr_year = now.getFullYear();
+	return curr_month + "/" + curr_day + "/" + curr_year;
+}
+
 function sqlToJsDate(sqlDate){
     //sqlDate in SQL DATETIME format ("yyyy-mm-dd hh:mm:ss.ms")
     var sqlDateArr1 = sqlDate.split("-");

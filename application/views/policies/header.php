@@ -70,7 +70,7 @@
 				<input id="datepick2" name="datepick2" placeholder="" readonly />
 				<input id="field" name="field" type="text" placeholder="Search" />
 				<button id="dosubmit"><img src="/public/img/btn_search.png" class="search-btn-icon" alt="Search" /></button>
-			<button id="advanced-search">Advanced Search<img src="/public/img/btn_advanced_search.png" class="search-btn-icon" alt="Advanced Search" /></button>
+			<button id="advanced-search">Search Filters<img src="/public/img/btn_filter.png" class="search-btn-icon" alt="Advanced Search" /></button>
 			<div id="filter-container">
 			  <div class="filter-checkboxes">
 				<strong>Search Selected Field(s)</strong><br />
@@ -107,7 +107,7 @@
 				<div class="col" style="width:10%;"><a id="sortdesc" class="sort-link">Description</a></div>
 				<div class="col" style="width:10%;"><a id="sortcat" class="sort-link">Category</a></div>
 				<div class="col" style="width:6%;"><a id="sortprem" class="sort-link">Premium</a></div>
-				<div class="col" style="width:6%;"><a id="sorttype" class="sort-link" href="#">Type</a></div>
+				<div class="col" style="width:6%;">&nbsp;<a id="sorttype" class="sort-link" href="#">Type</a></div>
 				<div class="col" style="width:8%;"><a id="sortsold" class="sort-link" href="#">Sold By</a></div>
 				<div class="col" style="width:6%;"><a id="sortsrc" class="sort-link" href="#">Source</a></div>
 				<div class="col" style="width:9%;"><a id="sortlen" class="sort-link" href="#">Length</a></div>

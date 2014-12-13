@@ -1,12 +1,49 @@
 <!-- begin modal window area -->
 <div id="policy-popup"></div>
 <div id="policy-window">
+
+
 	<div id="policy-text">
 		<div class="policy-message"></div>
 		<p class="policy-text-box"></p>
 <div class="policy-edit-bar"></div>
 		<button class="plain-btn-close">Close</button>
 	</div>
+
+
+	<div id="policy-delete">
+		<div class="policy-message"></div>
+			Are you sure you want to &quot;<strong>ERASE</strong>&quot; this Policy?<br /><br />Click &quot;<strong>Close</strong>&quot; if you want to keep this policy.<br />
+			<form id="policy_delete_form" name="policy_delete_form">
+			<input type="hidden" id="delid" name="delid" value="-2" />
+			</form>
+<div class="policy-edit-bar"></div>
+		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="policy-disable" class="plain-btn">Yes</button>
+	</div>
+
+
+	<div id="policy-renewal">
+		<div class="policy-message"></div>
+			This policy is up for &quot;<strong>RENEWAL</strong>&quot;. Do you want to &quot;<strong>RENEW</strong>&quot; this Policy?<br /><br />Click &quot;<strong>Close</strong>&quot; if you DO NOT want to renew or cancel this policy.<br />
+			<form id="policy_renewal_form" name="policy_renewal_form">
+			<input type="hidden" id="renid" name="renid" value="-2" />
+			</form>
+<div class="policy-edit-bar"></div>
+		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="policy-cancel" class="plain-btn">No</button>&nbsp;&nbsp;&nbsp;<button id="policy-renew" class="plain-btn">Yes</button>
+	</div>
+
+
+	<div id="policy-reinstate">
+		<div class="policy-message"></div>
+			This policy is &quot;<strong>CANCELED</strong>&quot;. Do you want to &quot;<strong>REINSTATE</strong>&quot; this Policy?<br /><br />Click &quot;<strong>Close</strong>&quot; if you DO NOT want to reinstate this policy.<br />
+			<form id="policy_reinstate_form" name="policy_reinstate_form">
+			<input type="hidden" id="uncid" name="uncid" value="-2" />
+			</form>
+<div class="policy-edit-bar"></div>
+		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="policy-uncancel" class="plain-btn">Yes</button>
+	</div>
+
+
 	<div id="policy-edit">
 <div style="margin:60px 0 0 20px;position:absolute;font-size:11px;font-weight:bold;"><sup>*</sup> Denotes Required Field(s)</div>
 		<div class="policy-message"></div>
@@ -50,6 +87,7 @@
 <!-- end edit left box -->
 <!-- begin edit right box -->
 	<div class="edit-right-box">
+	<div id="policy_dropdown_cover"></div>
 		<div class="edit-table-container">
 			<div class="edit-heading">
 				<div class="edit-col">Category<sup>*</sup>:</div>
@@ -113,35 +151,10 @@
 	</div>
 			</form>
 <div class="policy-edit-bar"></div>
-		<button class="plain-btn-close">Cancel</button>&nbsp;&nbsp;&nbsp;<button id="policy-add" data-type="add" class="plain-btn">Add</button><button id="policy-save" data-type="edit" class="plain-btn">Save</button>
+		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="policy-add" data-type="add" class="plain-btn">Add</button><button id="policy-save" data-type="edit" class="plain-btn">Save</button>
 	</div>
-	<div id="policy-delete">
-		<div class="policy-message"></div>
-			Are you sure you want to &quot;<strong>ERASE</strong>&quot; this Policy?<br /><br />Click &quot;<strong>Cancel</strong>&quot; if you want to keep this policy.<br />
-			<form id="policy_delete_form" name="policy_delete_form">
-			<input type="hidden" id="delid" name="delid" value="-2" />
-			</form>
-<div class="policy-edit-bar"></div>
-		<button class="plain-btn-close">Cancel</button>&nbsp;&nbsp;&nbsp;<button id="policy-disable" class="plain-btn">Erase</button>
-	</div>
-	<div id="policy-renewal">
-		<div class="policy-message"></div>
-			This policy is up for &quot;<strong>RENEWAL</strong>&quot;. Do you want to &quot;<strong>RENEW</strong>&quot; this Policy?<br /><br />Click &quot;<strong>Cancel</strong>&quot; if you DO NOT want to renew this policy.<br />
-			<form id="policy_renewal_form" name="policy_renewal_form">
-			<input type="hidden" id="renid" name="renid" value="-2" />
-			</form>
-<div class="policy-edit-bar"></div>
-		<button class="plain-btn-close">Cancel</button>&nbsp;&nbsp;&nbsp;<button id="policy-renew" class="plain-btn">Renew</button>
-	</div>
-	<div id="policy-reinstate">
-		<div class="policy-message"></div>
-			This policy is &quot;<strong>CANCELED</strong>&quot;. Do you want to &quot;<strong>REINSTATE</strong>&quot; this Policy?<br /><br />Click &quot;<strong>Cancel</strong>&quot; if you DO NOT want to reinstate this policy.<br />
-			<form id="policy_reinstate_form" name="policy_reinstate_form">
-			<input type="hidden" id="uncid" name="uncid" value="-2" />
-			</form>
-<div class="policy-edit-bar"></div>
-		<button class="plain-btn-close">Cancel</button>&nbsp;&nbsp;&nbsp;<button id="policy-uncancel" class="plain-btn">Reinstate</button>
-	</div>
+
+
 	<br /><br />
 </div>
 <!-- end modal window area -->

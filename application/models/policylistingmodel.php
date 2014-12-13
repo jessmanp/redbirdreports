@@ -111,6 +111,8 @@ class PolicyListingModel
 					$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."' OR policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."' OR policies.date_canceled >= '".$startDate."' AND policies.date_canceled <= '".$endDate."')";
 				} else if ($single == 'eic') {
 					$addedSQL .= " AND (policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."' OR policies.date_issued >= '".$startDate."' AND policies.date_issued <= '".$endDate."' OR policies.date_canceled >= '".$startDate."' AND policies.date_canceled <= '".$endDate."')";
+				} else if ($single == 'none') {
+					$addedSQL .= " AND policies.date_written IS null AND policies.date_effective IS null AND policies.date_issued IS null AND policies.date_canceled IS null";
 				} else {
 					// covers all $single = a
 					$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."' OR policies.date_issued >= '".$startDate."' AND policies.date_issued <= '".$endDate."' OR policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."' OR policies.date_canceled >= '".$startDate."' AND policies.date_canceled <= '".$endDate."')";
@@ -217,6 +219,9 @@ class PolicyListingModel
         				break;
         			case 'dfpn':
         				$addedSQL .= " AND (policies.description LIKE '%".$searchtext."%' OR policies.first LIKE '%".$searchtext."%' OR policies.premium LIKE '%".$searchtext."%' OR policies.notes LIKE '%".$searchtext."%')";
+        				break;
+        			case 'none':
+        				$addedSQL .= " AND policies.description IS null AND policies.first IS null AND policies.premium IS null AND policies.notes IS null";
         				break;
 				}
 			}
