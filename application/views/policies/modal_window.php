@@ -14,7 +14,9 @@
 	<div id="policy-delete">
 		<div class="policy-message"></div>
 			Are you sure you want to &quot;<strong>ERASE</strong>&quot; this Policy?<br /><br />Click &quot;<strong>Close</strong>&quot; if you want to keep this policy.<br />
+			<p class="policy-delete-box"></p>
 			<form id="policy_delete_form" name="policy_delete_form">
+			<input type="hidden" id="delete_path" name="delete_path" value="" />
 			<input type="hidden" id="delid" name="delid" value="-2" />
 			</form>
 <div class="policy-edit-bar"></div>
@@ -27,16 +29,50 @@
 			This policy is up for &quot;<strong>RENEWAL</strong>&quot;. Do you want to &quot;<strong>RENEW</strong>&quot; this Policy?<br /><br />Click &quot;<strong>Close</strong>&quot; if you DO NOT want to renew or cancel this policy.<br />
 			<form id="policy_renewal_form" name="policy_renewal_form">
 			<input type="hidden" id="renid" name="renid" value="-2" />
+			<input type="hidden" id="renew_cancel_info" name="renew_cancel_info" value="" />
 			</form>
 <div class="policy-edit-bar"></div>
 		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="policy-cancel" class="plain-btn">No</button>&nbsp;&nbsp;&nbsp;<button id="policy-renew" class="plain-btn">Yes</button>
 	</div>
+	
+	
+	<div id="policy-do-renew">
+	<div style="margin:60px 0 0 20px;position:absolute;font-size:11px;font-weight:bold;"><sup>*</sup> Denotes Required Field(s)</div>
+		<div class="policy-message"></div>
+			This Policy has been &quot;<strong>RENEWED</strong>&quot; successfully. Enter the new &quot;<strong>PREMIUM</strong>&quot; for this Policy.<br />
+			<p class="policy-delete-box"></p>
+			<form id="policy_renew_premium_form" name="policy_renew_premium_form">
+			<input type="hidden" id="renew_path" name="renew_path" value="" />
+			<input type="hidden" id="renpid" name="renpid" value="-2" />
+			Premium<sup>*</sup>:
+			<span style="font-size:12px;font-weight:bold;">$</span> <input style="width:75px;" type="text" maxlength="20" id="renew_premium" name="renew_premium" placeholder="0.00" value="" />
+			</form>
+<div class="policy-edit-bar"></div>
+		<button id="policy-renew-save" class="plain-btn">Save</button>
+	</div>
+
+	
+	<div id="policy-renew-cancel">
+	<div style="margin:40px 0 0 20px;position:absolute;font-size:11px;font-weight:bold;"><sup>*</sup> Denotes Required Field(s)</div>
+		<div class="policy-message"></div>
+			This Policy needs to be &quot;<strong>CANCELED</strong>&quot;. Enter the &quot;<strong>CANCEL DATE</strong>&quot; for this Policy.<br />
+			<p class="policy-delete-box"></p>
+			<form id="policy_renew_cancel_form" name="policy_renew_cancel_form">
+			<input type="hidden" id="renew_cancel_path" name="renew_cancel_path" value="" />
+			<input type="hidden" id="rencid" name="rencid" value="-2" />
+			Canceled<sup>*</sup>:<input id="renew_canceleddate" name="renew_canceleddate" value="" placeholder="" readonly />
+			</form>
+<div class="policy-edit-bar"></div>
+		<button id="policy-renew-cancel-save" class="plain-btn">Save</button>
+	</div>
+
 
 
 	<div id="policy-reinstate">
 		<div class="policy-message"></div>
 			This policy is &quot;<strong>CANCELED</strong>&quot;. Do you want to &quot;<strong>REINSTATE</strong>&quot; this Policy?<br /><br />Click &quot;<strong>Close</strong>&quot; if you DO NOT want to reinstate this policy.<br />
 			<form id="policy_reinstate_form" name="policy_reinstate_form">
+			<input type="hidden" id="reinstate_path" name="reinstate_path" value="" />
 			<input type="hidden" id="uncid" name="uncid" value="-2" />
 			</form>
 <div class="policy-edit-bar"></div>
@@ -48,7 +84,7 @@
 <div style="margin:60px 0 0 20px;position:absolute;font-size:11px;font-weight:bold;"><sup>*</sup> Denotes Required Field(s)</div>
 		<div class="policy-message"></div>
 			<form id="policy_entry_form" name="policy_entry_form">
-			<input type="hidden" id="path" name="path" value="" />
+			<input type="hidden" id="edit_path" name="edit_path" value="" />
 			<input type="hidden" id="id" name="id" value="-2" />
 			<input type="hidden" id="captionsall" name="captionsall" value='<option value="0">- Select -</option><?php foreach ($policy_categories_all as $category) { ?><option value="<?php echo $category->id; ?>"><?php if ($category->parent_id == 0) { echo $category->name; } else { echo "&nbsp;&nbsp;-".$category->name; } ?></option><?php } ?>' />
 			<input type="hidden" id="captionsauto" name="captionsauto" value='<?php foreach ($policy_categories_auto as $category) { ?><option value="<?php echo $category->id; ?>"<?php if ($category->parent_id == 0) { echo " selected"; } ?>><?php if ($category->parent_id == 0) { echo $category->name; } else { echo "&nbsp;&nbsp;-".$category->name; } ?></option><?php } ?>' />

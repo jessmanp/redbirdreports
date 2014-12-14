@@ -115,7 +115,7 @@
 			<div class="<?php echo $rowclass; ?>">
 				<div class="col" style="width:2%;">&nbsp;<em><?php echo $rowcnt; ?></em></div>
 <?php if ($policy->renewal == 1) { ?>
-				<div class="col" style="width:3%;<?php echo $addStyle; ?>"><a class="policy-renewal-action" data-id="<?php echo $policy->id; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt="Renew" /></a></div>
+				<div class="col" style="width:3%;<?php echo $addStyle; ?>"><a class="policy-renewal-action" data-renewal="<?php echo $policy->id."','".$policy->first."','".$policy->last."','".$policy->description; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt="Renew" /></a></div>
 <?php } elseif ($policy->date_canceled != null) { ?>
 				<div class="col" style="width:3%;<?php echo $addStyle; ?>"><a class="policy-reinstate-action" data-id="<?php echo $policy->id; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt="Reinstate" /></a></div>
 <?php } else { ?>
@@ -138,7 +138,7 @@
 				<div class="col" style="width:6%;"><?php if ($policy->date_written) { echo date('m/d/y',strtotime($policy->date_written)); } else { echo "&nbsp;";} ?></div>
 				<div class="col" style="width:6%;"><?php if ($policy->date_issued) { echo date('m/d/y',strtotime($policy->date_issued)); } else { echo "<a class=\"policy-edit-action\" data-info=\"".$policy->id."','".$policy->renewal."','".$policy->first."','".$policy->last."','".$policy->description."','".$policy->category_id."','".$policy->premium."','".$policy->business_type_id."','".$policy->user_id."','".$policy->source_type_id."','".$policy->length_type_id."','".$policy->notes."','".$policy->date_written."','".$policy->date_issued."','".$policy->date_effective."','".$policy->date_canceled."','".$policy->zip_code."\">+&nbsp;</a>";} ?></div>
 				<div class="col" style="width:6%;"><?php if ($policy->date_effective) { echo date('m/d/y',strtotime($policy->date_effective)); } else { echo "<a class=\"policy-edit-action\" data-info=\"".$policy->id."','".$policy->renewal."','".$policy->first."','".$policy->last."','".$policy->description."','".$policy->category_id."','".$policy->premium."','".$policy->business_type_id."','".$policy->user_id."','".$policy->source_type_id."','".$policy->length_type_id."','".$policy->notes."','".$policy->date_written."','".$policy->date_issued."','".$policy->date_effective."','".$policy->date_canceled."','".$policy->zip_code."\">+&nbsp;&nbsp;</a>";} ?></div>
-				<div class="col" style="width:1%;<?php echo $addStyle; ?>"><a class="policy-delete-action" data-id="<?php echo $policy->id; ?>"><img src="/public/img/policy_delete_btn.png" class="policy-listing-button" alt="Delete" /></a></div>
+				<div class="col" style="width:1%;<?php echo $addStyle; ?>"><a class="policy-delete-action" data-delete="<?php echo $policy->id."','".$policy->first."','".$policy->last."','".$policy->description; ?>"><img src="/public/img/policy_delete_btn.png" class="policy-listing-button" alt="Delete" /></a></div>
 				<div class="col" style="width:1%;<?php echo $addStyle; ?>"></div>
 			</div>
 <?php
@@ -165,7 +165,11 @@ $totalpremium = '$'.number_format($totalpremium, 2);
 $(document).ready(function() {
 
 	var url =  "<?php echo $url; ?>";
-	$("#policy-edit #path").val(url);
+	$("#policy-edit #edit_path").val(url);
+	$("#policy-delete #delete_path").val(url);
+	$("#policy-do-renew #renew_path").val(url);
+	$("#policy-reinstate #reinstate_path").val(url);
+	$("#policy-renew-cancel #renew_cancel_path").val(url);
 
 	var currcat = url.split('/');
 	currcat = currcat[2];
@@ -184,7 +188,7 @@ $(document).ready(function() {
 	// OPEN EDIT POLICY WINDOW
 	$('.policy-edit-action').click(function(){
 		var info = $(this).data('info');
-		var info = info.split("','");
+		info = info.split("','");
 		// assign values to pass to edit window
 		var id = info[0];
 		var renewal = info[1];
@@ -221,14 +225,24 @@ $(document).ready(function() {
 
 	// DELETE POLICY
 	$('.policy-delete-action').click(function(){
-		var id = $(this).data('id');
-    		doPolicyDelete(id);
+		var fields = $(this).data('delete');
+		fields = fields.split("','");
+		var id = fields[0];
+		var first = fields[1];
+		var last = fields[2];
+		var desc = fields[3];
+    		doPolicyDelete(id,first,last,desc);
 	});
 
 	// RENEW POLICY
 	$('.policy-renewal-action').click(function(){
-		var id = $(this).data('id');
-    		doPolicyRenewal(id);
+		var fields = $(this).data('renewal');
+		fields = fields.split("','");
+		var id = fields[0];
+		var first = fields[1];
+		var last = fields[2];
+		var desc = fields[3];
+    		doPolicyRenewal(id,first,last,desc);
 	});
 
 	// REINSTATE POLICY

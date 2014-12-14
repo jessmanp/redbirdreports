@@ -32,8 +32,8 @@
 				<div class="main-btn-text">Support</div>
 			</div>
 			<div class="main-button">
-				<img id="settings" src="/public/img/btn_settings.png" class="main-btn-icon" alt="Settings" />
-				<div class="main-btn-text">Settings</div>
+				<img id="settings" src="/public/img/btn_profile.png" class="main-btn-icon" alt="My Profile" />
+				<div class="main-btn-text">My Profile</div>
 			</div>
 			<div id="logout" class="main-button">
 				<img src="/public/img/btn_logout.png" class="main-btn-icon" alt="Logout" />

@@ -248,6 +248,73 @@ class App extends Controller
 			//Return json encoded results
 			echo json_encode($return);
 
+	// do save renewal
+	} else if ($sub == 'renewsave') {
+			
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+
+			$rnewpID = @$_POST['renpid'];
+			$rnewPrem = @$_POST['renew_premium'];
+			if (isset($rnewpID) && is_numeric($rnewpID) && isset($rnewPrem) && is_numeric($rnewPrem)) {
+				// load entry model
+				$policy_entry_model = $this->loadModel('PolicyEntryModel');
+				$policy_renewsaved = $policy_entry_model->renewSavePolicy($rnewpID,$rnewPrem);
+				if ($policy_renewsaved) {
+					$return['msg'] = '<strong>Success</strong>, Policy Renewal Updated.';
+				} else {
+					$return['error'] = true;
+					$return['msg'] .= '<strong>Renewal Save Failed.</strong> Policy Was Not Updated.';
+				}
+			} else {
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Renew Save Failed.</strong> One or More of the Required Fields Was Missing:<br /><br />';
+				if ($rnewPrem == '') {
+					$return['msg'] .= '<strong>Premium</strong> Field is Required.<br /><br />';
+				}
+				$return['error'] = true;
+			}
+ 
+			//Return json encoded results
+			echo json_encode($return);
+
+	// do renew cancel update
+	} else if ($sub == 'renewcancelsave') {
+			
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+
+			$rnewcID = @$_POST['rencid'];
+			$rnewCancel = @$_POST['renew_canceleddate'];
+
+			if (isset($rnewcID) && is_numeric($rnewcID) && isset($rnewCancel) && $rnewCancel != '') {
+				// convert date to SQL format
+				$rnewCancel = date('Y-m-d h:m:s',strtotime($rnewCancel));
+				// load entry model
+				$policy_entry_model = $this->loadModel('PolicyEntryModel');
+				$policy_renewcanceled = $policy_entry_model->renewCancelPolicy($rnewcID,$rnewCancel);
+				if ($policy_renewcanceled) {
+					$return['msg'] = '<strong>Success</strong>, Policy Canceled.';
+				} else {
+					$return['error'] = true;
+					$return['msg'] .= '<strong>Renewal Cancel Failed.</strong> Policy Was Not Updated.';
+				}
+			} else {
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Renew Cancel Failed.</strong> One or More of the Required Fields Was Missing:<br /><br />';
+				if ($rnewCancel == '') {
+					$return['msg'] .= '<strong>Canceled Date</strong> Field is Required.<br /><br />';
+				}
+				$return['error'] = true;
+			}
+ 
+			//Return json encoded results
+			echo json_encode($return);
+
 	// do uncancel
 	} else if ($sub == 'uncancelrec') {
 			

@@ -285,6 +285,43 @@ class PolicyEntryModel
 		return $getoldquery->fetchAll();
 
     }
+    
+    /**
+     * Update new premium on renewal policy
+     */
+    public function renewSavePolicy($id,$prem)
+    {
+    	// update business_type_id = 2 (Renewal), then update the premium
+    	// *NEED* to update anniversary date = issued date + policy length, then update the canceled date
+        $sql = "UPDATE policies SET premium = :premium, business_type_id = :business_type_id WHERE id = :id";
+        $query = $this->db->prepare($sql);
+        $query->bindValue(':id', $id, PDO::PARAM_INT);
+        $query->bindValue(':business_type_id', 2, PDO::PARAM_INT);
+		$query->bindValue(':premium', $prem, PDO::PARAM_STR);
+        $query->execute();
+        
+		if ($query) {
+			return true;
+		}
+    }
+    
+    /**
+     * Update new cancel date on renewal policy
+     */
+    public function renewCancelPolicy($id,$canceldate)
+    {
+    	// update canceled date to cancel policy and set renewal = 0
+        $sql = "UPDATE policies SET renewal = :renewal, date_canceled = :date_canceled WHERE id = :id";
+        $query = $this->db->prepare($sql);
+        $query->bindValue(':id', $id, PDO::PARAM_INT);
+        $query->bindValue(':renewal', 0, PDO::PARAM_INT);
+		$query->bindValue(':date_canceled', $canceldate, PDO::PARAM_STR);
+        $query->execute();
+        
+		if ($query) {
+			return true;
+		}
+    }
 
 
 }

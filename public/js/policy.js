@@ -158,6 +158,7 @@ function openWindow(currcat,type,message,id,text,fname,lname,desc,prem,zip,cat,b
 		} else {
 			$("#canceleddate").val(sqlToJsDate(dc));
 		}
+		/*
 		if (renewal == 'dorenew') {
 			// disable all edit fields EXCEPT premium and notes
 			$("#policy_first_name").prop("readonly", true);
@@ -174,27 +175,27 @@ function openWindow(currcat,type,message,id,text,fname,lname,desc,prem,zip,cat,b
 			$("#effectivedate").css("opacity","0.5");
 			$("#canceleddate").prop("disabled", true);
 			$("#canceleddate").css("opacity","0.5");
+		}
+		*/
+		// enable all edit fields
+		$("#policy_first_name").prop("readonly", false);
+		$("#policy_last_name").prop("readonly", false);
+		$("#policy_description").prop("readonly", false);
+		$("#policy_premium").prop("readonly", false);
+		$("#policy_zip").prop("readonly", false);
+		$("#policy_notes").prop("readonly", false);
+		$("#policy_dropdown_cover").hide();
+		//$("#writtendate").prop("disabled", false);
+		$("#issueddate").prop("disabled", false);
+		$("#issueddate").removeAttr("style");
+		$("#effectivedate").prop("disaled", false);
+		$("#effectivedate").removeAttr("style");
+		if (di == '' || de == '') {
+			$("#canceleddate").prop("disabled", true);
+			$("#canceleddate").css("opacity","0.5");
 		} else {
-			// enable all edit fields
-			$("#policy_first_name").prop("readonly", false);
-			$("#policy_last_name").prop("readonly", false);
-			$("#policy_description").prop("readonly", false);
-			$("#policy_premium").prop("readonly", false);
-			$("#policy_zip").prop("readonly", false);
-			$("#policy_notes").prop("readonly", false);
-			$("#policy_dropdown_cover").hide();
-			//$("#writtendate").prop("disabled", false);
-			$("#issueddate").prop("disabled", false);
-			$("#issueddate").removeAttr("style");
-			$("#effectivedate").prop("disaled", false);
-			$("#effectivedate").removeAttr("style");
-			if (di == '' || de == '') {
-				$("#canceleddate").prop("disabled", true);
-				$("#canceleddate").css("opacity","0.5");
-			} else {
-				$("#canceleddate").prop("disabled", false);
-				$("#canceleddate").removeAttr("style");
-			}
+			$("#canceleddate").prop("disabled", false);
+			$("#canceleddate").removeAttr("style");
 		}
 	}
 	if (type == 'text') {
@@ -208,10 +209,26 @@ function openWindow(currcat,type,message,id,text,fname,lname,desc,prem,zip,cat,b
 	if (type == 'delete') {
 		$("#policy-delete").fadeIn();
 		$("#policy-delete #delid").val(id);
+		$("#policy-delete").find("p").text('');
+		$("#policy-delete").find("p").html('<em>Policy Preview</em><br /><br /><div class="delete-table-container"><div class="delete-table-row"><div class="edit-col"><strong>Customer Name:</strong></div><div class="delete-col">'+fname+'&nbsp;'+lname+'</div></div><div class="delete-table-row"><div class="edit-col"><strong>Description:</strong></div><div class="delete-col">'+desc+'</div></div></div>');
 	}
 	if (type == 'renewal') {
 		$("#policy-renewal").fadeIn();
 		$("#policy-renewal #renid").val(id);
+		$("#policy-renewal #renew_cancel_info").val(fname+"','"+lname+"','"+desc);
+	}
+	if (type == 'renew') {
+		$("#policy-do-renew").fadeIn();
+		$("#policy-do-renew #renpid").val(id);
+		$("#policy-do-renew #renew_premium").val(prem);
+		$("#policy-do-renew").find("p").text('');
+		$("#policy-do-renew").find("p").html('<em>Policy Preview</em><br /><br /><div class="delete-table-container"><div class="delete-table-row"><div class="edit-col"><strong>Customer Name:</strong></div><div class="delete-col">'+fname+'&nbsp;'+lname+'</div></div><div class="delete-table-row"><div class="edit-col"><strong>Description:</strong></div><div class="delete-col">'+desc+'</div></div></div>');
+	}
+	if (type == 'renewcancel') {
+		$("#policy-renew-cancel").fadeIn();
+		$("#policy-renew-cancel #rencid").val(id);
+		$("#policy-renew-cancel").find("p").text('');
+		$("#policy-renew-cancel").find("p").html('<em>Policy Preview</em><br /><br /><div class="delete-table-container"><div class="delete-table-row"><div class="edit-col"><strong>Customer Name:</strong></div><div class="delete-col">'+fname+'&nbsp;'+lname+'</div></div><div class="delete-table-row"><div class="edit-col"><strong>Description:</strong></div><div class="delete-col">'+desc+'</div></div></div>');
 	}
 	if (type == 'reinstate') {
 		$("#policy-reinstate").fadeIn();
@@ -227,6 +244,8 @@ function closeWindow() {
 	$("#policy-text").fadeOut("fast");
 	$("#policy-delete").fadeOut("fast");
 	$("#policy-renewal").fadeOut("fast");
+	$("#policy-do-renew").fadeOut("fast");
+	$("#policy-renew-cancel").fadeOut("fast");
 	$("#policy-reinstate").fadeOut("fast");
 }
 
@@ -316,13 +335,18 @@ function openPolicyTextWindow(text) {
 }
 
 // DELETE POLICY
-function doPolicyDelete(id) {
-	openWindow('','delete','Erase Policy',id,'');
+function doPolicyDelete(id,first,last,desc) {
+	openWindow('','delete','Erase Policy',id,'',first,last,desc);
 }
 
 // RENEW POLICY
-function doPolicyRenewal(id) {
-	openWindow('','renewal','Renew Policy',id,'');
+function doPolicyRenewal(id,first,last,desc) {
+	openWindow('','renewal','Renew Policy',id,'',first,last,desc);
+}
+
+// RENEW CANCEL POLICY
+function doPolicyCancel(id,first,last,desc) {
+	openWindow('','renewcancel','Cancel Policy',id,'',first,last,desc);
 }
 
 // REINSTATE POLICY
@@ -358,6 +382,20 @@ $(document).ready(function() {
 	});
 
 	$("#policy_premium").focusout(function() {
+
+		if($(this).val().indexOf('.')!=-1){         
+            if($(this).val().split(".")[1].length > 2){                
+                if( isNaN( parseFloat( this.value ) ) ) return;
+                this.value = parseFloat(this.value).toFixed(2);
+            }  
+         } 
+
+    		if (isNaN(Number($(this).val()))) {
+        		$(this).val('');
+    		}
+	});
+	
+	$("#renew_premium").focusout(function() {
 
 		if($(this).val().indexOf('.')!=-1){         
             if($(this).val().split(".")[1].length > 2){                
@@ -425,7 +463,7 @@ $(document).ready(function() {
 			
 	$('#policy_entry_form').submit(function(event) {
 			// set current path for listing of policies
-			var path = "/"+$("#policy-edit #path").val();
+			var path = "/"+$("#policy-edit #edit_path").val();
 
 			if ($("#policy-edit #id").val() == 0) {
                 $.ajax({
@@ -493,6 +531,28 @@ $(document).ready(function() {
 		$('#policy_renewal_form').submit();
 		closeWindow();
 	});
+	
+	$("#policy-renew-save").on("click", function(event) {
+		event.preventDefault();
+		$('#policy_renew_premium_form').submit();
+	});
+	
+	$("#policy-cancel").on("click", function(event) {
+		event.preventDefault();
+		var id = $("#policy-renewal #renid").val();
+		var info = $("#policy-renewal #renew_cancel_info").val();
+		fields = info.split("','");
+		var first = fields[0];
+		var last = fields[1];
+		var desc = fields[2];
+		closeWindow();
+		doPolicyCancel(id,first,last,desc);
+	});
+	
+	$("#policy-renew-cancel-save").on("click", function(event) {
+		event.preventDefault();
+		$('#policy_renew_cancel_form').submit();
+	});
 
 	$("#policy-uncancel").on("click", function(event) {
 		event.preventDefault();
@@ -502,6 +562,9 @@ $(document).ready(function() {
 	});
 			
 	$('#policy_delete_form').submit(function(event) {
+			// set current path for listing of policies
+			var path = "/"+$("#policy-delete #delete_path").val();
+			
                 $.ajax({
 					type: 'POST',
 					url: '/app/policies/deleterec',
@@ -515,7 +578,7 @@ $(document).ready(function() {
 							// show returned error msg here
 							openModal('error',data.msg);
 						} else {
-							$("#policy-content").load("/app/policies/"+currcat);
+							$("#policy-content").load(path);
 							// show success message...
 							openModal('info',data.msg);
 						}	
@@ -541,12 +604,71 @@ $(document).ready(function() {
 							// show returned error msg here
 							openModal('error',data.msg);
 						} else {
-							// reload current list
-							$("#policy-content").load("/app/policies/"+currcat);
 							// show edit window...
 							$.each(data, function(key, value) {
-								openWindow(currcat,'edit','Edit',value.id,value.notes,value.first,value.last,value.description,value.premium,value.zip_code,value.category_id,value.business_type_id,value.user_id,value.source_type_id,value.length_type_id,value.date_written,'','','','dorenew');
+								//openWindow(currcat,'edit','Edit',value.id,value.notes,value.first,value.last,value.description,value.premium,value.zip_code,value.category_id,value.business_type_id,value.user_id,value.source_type_id,value.length_type_id,value.date_written,'','','','dorenew');
+								openWindow(currcat,'renew','Renew',value.id,'',value.first,value.last,value.description,value.premium);
 							});
+						}	
+				},
+					error: function (request, status, error) {
+        					console.log(error);
+				}
+                });
+		event.preventDefault();
+	});
+	
+	$('#policy_renew_premium_form').submit(function(event) {
+			// set current path for listing of policies
+			var path = "/"+$("#policy-do-renew #renew_path").val();
+			
+                 $.ajax({
+					type: 'POST',
+					url: '/app/policies/renewsave',
+					data: $(this).serialize(),
+					dataType: 'json',
+					cache: false,
+        			async: true,
+				success: function (data) {
+						console.log(data);
+						if (data.error == true) {
+							// show returned error msg here
+							openModal('error',data.msg);
+						} else {
+							$("#policy-content").load(path);
+							// show success message...
+							closeWindow();
+							openModal('info',data.msg);
+						}	
+				},
+					error: function (request, status, error) {
+        					console.log(error);
+				}
+                });
+		event.preventDefault();
+	});
+	
+	$('#policy_renew_cancel_form').submit(function(event) {
+			// set current path for listing of policies
+			var path = "/"+$("#policy-renew-cancel #renew_cancel_path").val();
+			
+                 $.ajax({
+					type: 'POST',
+					url: '/app/policies/renewcancelsave',
+					data: $(this).serialize(),
+					dataType: 'json',
+					cache: false,
+        			async: true,
+				success: function (data) {
+						console.log(data);
+						if (data.error == true) {
+							// show returned error msg here
+							openModal('error',data.msg);
+						} else {
+							$("#policy-content").load(path);
+							// show success message...
+							closeWindow();
+							openModal('info',data.msg);
 						}	
 				},
 					error: function (request, status, error) {
@@ -557,6 +679,9 @@ $(document).ready(function() {
 	});
 
 	$('#policy_reinstate_form').submit(function(event) {
+			// set current path for listing of policies
+			var path = "/"+$("#policy-reinstate #reinstate_path").val();
+			
                 $.ajax({
 					type: 'POST',
 					url: '/app/policies/uncancelrec',
@@ -571,7 +696,7 @@ $(document).ready(function() {
 							openModal('error',data.msg);
 						} else {
 							// reload current list
-							$("#policy-content").load("/app/policies/"+currcat);
+							$("#policy-content").load(path);
 							// show edit window...
 							$.each(data, function(key, value) {
 								openWindow(currcat,'edit','Edit',value.id,value.notes,value.first,value.last,value.description,value.premium,value.zip_code,value.category_id,value.business_type_id,value.user_id,value.source_type_id,value.length_type_id,value.date_written,value.date_issued,value.date_effective,value.date_canceled,value.renewal);
@@ -1989,7 +2114,7 @@ $(document).ready(function() {
 	$("#issueddate").datepicker();
 	$("#effectivedate").datepicker();
 	$("#canceleddate").datepicker();
-
+	$("#renew_canceleddate").datepicker();
 
 	// SHOW/HIDE PREDEFINED DATES
 	$("#pre-dates").on("click", function(event) {

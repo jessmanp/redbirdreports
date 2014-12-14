@@ -138,7 +138,7 @@
 				<div class="col" style="width:6%;"><?php if ($policy->date_written) { echo date('m/d/y',strtotime($policy->date_written)); } else { echo "&nbsp;";} ?></div>
 				<div class="col" style="width:6%;"><?php if ($policy->date_issued) { echo date('m/d/y',strtotime($policy->date_issued)); } else { echo "<a class=\"policy-edit-action\" data-info=\"".$policy->id."','".$policy->renewal."','".$policy->first."','".$policy->last."','".$policy->description."','".$policy->category_id."','".$policy->premium."','".$policy->business_type_id."','".$policy->user_id."','".$policy->source_type_id."','".$policy->length_type_id."','".$policy->notes."','".$policy->date_written."','".$policy->date_issued."','".$policy->date_effective."','".$policy->date_canceled."','".$policy->zip_code."\">+&nbsp;</a>";} ?></div>
 				<div class="col" style="width:6%;"><?php if ($policy->date_effective) { echo date('m/d/y',strtotime($policy->date_effective)); } else { echo "<a class=\"policy-edit-action\" data-info=\"".$policy->id."','".$policy->renewal."','".$policy->first."','".$policy->last."','".$policy->description."','".$policy->category_id."','".$policy->premium."','".$policy->business_type_id."','".$policy->user_id."','".$policy->source_type_id."','".$policy->length_type_id."','".$policy->notes."','".$policy->date_written."','".$policy->date_issued."','".$policy->date_effective."','".$policy->date_canceled."','".$policy->zip_code."\">+&nbsp;&nbsp;</a>";} ?></div>
-				<div class="col" style="width:1%;<?php echo $addStyle; ?>"><a class="policy-delete-action" data-id="<?php echo $policy->id; ?>"><img src="/public/img/policy_delete_btn.png" class="policy-listing-button" alt="Delete" /></a></div>
+				<div class="col" style="width:1%;<?php echo $addStyle; ?>"><a class="policy-delete-action" data-delete="<?php echo $policy->id."','".$policy->first."','".$policy->last."','".$policy->description; ?>"><img src="/public/img/policy_delete_btn.png" class="policy-listing-button" alt="Delete" /></a></div>
 				<div class="col" style="width:1%;<?php echo $addStyle; ?>"></div>
 			</div>
 <?php
@@ -166,7 +166,11 @@ $totalpremium = '$'.number_format($totalpremium, 2);
 // LOAD
 $(document).ready(function() {
 
-	$("#policy-edit #path").val("app/policies/listall");
+	$("#policy-edit #edit_path").val("app/policies/listall");
+	$("#policy-delete #delete_path").val("app/policies/listall");
+	$("#policy-do-renew #renew_path").val("app/policies/listall");
+	$("#policy-reinstate #reinstate_path").val("app/policies/listall");
+	$("#policy-renew-cancel #renew_cancel_path").val("app/policies/listall");
 
 	$("#rowcnt").text('<?php echo ($rowcnt-1); ?>');
 	$("#totwritten").text('<?php echo $totalwritten; ?>');
@@ -182,7 +186,7 @@ $(document).ready(function() {
 	// OPEN EDIT POLICY WINDOW
 	$('.policy-edit-action').click(function(){
 		var info = $(this).data('info');
-		var info = info.split("','");
+		info = info.split("','");
 		// assign values to pass to edit window
 		var id = info[0];
 		var renewal = info[1];
@@ -219,8 +223,13 @@ $(document).ready(function() {
 
 	// DELETE POLICY
 	$('.policy-delete-action').click(function(){
-		var id = $(this).data('id');
-    		doPolicyDelete(id);
+		var fields = $(this).data('delete');
+		fields = fields.split("','");
+		var id = fields[0];
+		var first = fields[1];
+		var last = fields[2];
+		var desc = fields[3];
+    		doPolicyDelete(id,first,last,desc);
 	});
 
 	// RENEW POLICY

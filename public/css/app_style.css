@@ -126,7 +126,20 @@ sup {
 #policy-delete {
 	display:none;
 }
+.policy-delete-box {
+	margin:20px 45px 0 45px;
+	padding:10px;
+	text-align:center;
+	font-weight:normal;
+	font-size:14px;
+}
 #policy-renewal {
+	display:none;
+}
+#policy-do-renew {
+	display:none;
+}
+#policy-renew-cancel {
 	display:none;
 }
 #policy-reinstate {
@@ -1061,6 +1074,24 @@ a.policy-edit-action:hover {
 	/* for IE 5.5 - 9 & firefox 13+ */
 	border-radius:10px;
 }
+#renew_canceleddate {
+	display:inline-block;
+	padding:0 8px 0 8px;
+	margin:3px 0 0 5px;
+	cursor:pointer; 
+	width:70px; 
+	height:30px;
+	font-size:12px;
+	background-color:#ffffff;
+	color:#000000;
+	border:2px solid #a20004;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+}
 .policy-date-fields {
 	margin:0 20px 0 20px;
 	padding:10px 10px 12px 10px;
@@ -1077,7 +1108,25 @@ a.policy-edit-action:hover {
 	float:right;
 	margin:0 15px 0 0;
 }
-
+.delete-table-container {
+	margin:0 auto 0 auto;
+    display:table;
+    width:100%;
+    border-collapse:collapse;
+}
+.delete-table-row {
+     display:table-row;
+     text-align:center;
+}
+.delete-col {
+	width:75%;
+	text-align:left;
+	display:table-cell;
+	padding:8px;
+	background-color:#cccccc;
+	font-size:14px;
+	line-height:32px;
+}
 
 
 
