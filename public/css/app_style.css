@@ -511,7 +511,7 @@ input[type=radio]:not(old):checked + label > span > span{
 	margin:3px 2px 0 8px;
 	padding:0 0 0 8px;
     cursor:pointer; 
-    width:158px; 
+    width:160px; 
     height:34px; 
     background-color:#a20004;
     color:#ffffff;
@@ -681,7 +681,7 @@ input[type=radio]:not(old):checked + label > span > span{
 #field {
     float:left; 
     margin:3px 8px 0 10px;
-    width:228px; 
+    width:224px; 
     height:28px;
     padding:1px;
     text-indent:10px;
@@ -734,7 +734,7 @@ input[type=radio]:not(old):checked + label > span > span{
 	margin:3px 2px 0 8px;
 	padding:0 0 0 8px;
     cursor:pointer; 
-    width:132px; 
+    width:134px; 
     height:34px; 
     background-color:#a20004;
     color:#ffffff;

@@ -228,10 +228,11 @@ class PolicyEntryModel
 		$notes = $data->notes;
 		$zip = $data->zip_code;
 		$wdate = $data->date_written;
+		$idate = $data->date_issued;
 	}
 
 		// write new policy data into database based on old info
-		$sql = "INSERT INTO policies (user_id, first, last, description, category_id, premium, business_type_id, source_type_id, length_type_id, notes, zip_code, date_written) VALUES (:user_id, :first, :last, :description, :category_id, :premium, :business_type_id, :source_type_id, :length_type_id, :notes, :zip_code, :written_date)";
+		$sql = "INSERT INTO policies (user_id, first, last, description, category_id, premium, business_type_id, source_type_id, length_type_id, notes, zip_code, date_written, date_issued) VALUES (:user_id, :first, :last, :description, :category_id, :premium, :business_type_id, :source_type_id, :length_type_id, :notes, :zip_code, :written_date, :issued_date)";
 		$query_new_policy_insert = $this->db->prepare($sql);
 		$query_new_policy_insert->bindValue(':user_id', $sold, PDO::PARAM_INT);
 		$query_new_policy_insert->bindValue(':first', $first, PDO::PARAM_STR);
@@ -245,6 +246,7 @@ class PolicyEntryModel
 		$query_new_policy_insert->bindValue(':notes', $notes, PDO::PARAM_STR);
 		$query_new_policy_insert->bindValue(':zip_code', $zip, PDO::PARAM_STR);
 		$query_new_policy_insert->bindValue(':written_date', $wdate, PDO::PARAM_STR);
+		$query_new_policy_insert->bindValue(':issued_date', $idate, PDO::PARAM_STR);
 		$query_new_policy_insert->execute();
 		
 		if ($query_new_policy_insert) {
@@ -291,14 +293,47 @@ class PolicyEntryModel
      */
     public function renewSavePolicy($id,$prem)
     {
-    	// update business_type_id = 2 (Renewal), then update the premium
-    	// *NEED* to update anniversary date = issued date + policy length, then update the canceled date
-        $sql = "UPDATE policies SET premium = :premium, business_type_id = :business_type_id WHERE id = :id";
-        $query = $this->db->prepare($sql);
-        $query->bindValue(':id', $id, PDO::PARAM_INT);
-        $query->bindValue(':business_type_id', 2, PDO::PARAM_INT);
-		$query->bindValue(':premium', $prem, PDO::PARAM_STR);
-        $query->execute();
+    	// get issued date
+    	$presql = 'SELECT length_type_id,date_issued FROM policies WHERE id = '.$id;
+        $prequery = $this->db->prepare($presql);
+       	$prequery->execute();
+       	$getli = $prequery->fetchAll();
+       	
+       	$policyLength = $getli[0]->length_type_id;
+       	$issuedDate = $getli[0]->date_issued;
+       	
+    	// update effective date = issued date + policy length (anniversary date), then update the canceled date
+    	if ($issuedDate) {
+    		// calculate end date
+    		if ($policyLength == 1) {
+    			$effectiveDate = date('Y-m-d h:m:s', strtotime('+6 months', strtotime($issuedDate)));
+    		} else if ($policyLength == 2) {
+    			$effectiveDate = date('Y-m-d h:m:s', strtotime('+12 months', strtotime($issuedDate)));
+    		}
+    	}
+    	
+    	if ($effectiveDate) {
+    	
+    		// update business_type_id = 2 (Renewal), then update the premium
+			$sql = "UPDATE policies SET premium = :premium, business_type_id = :business_type_id, date_effective = :date_effective WHERE id = :id";
+			$query = $this->db->prepare($sql);
+			$query->bindValue(':id', $id, PDO::PARAM_INT);
+			$query->bindValue(':business_type_id', 2, PDO::PARAM_INT);
+			$query->bindValue(':premium', $prem, PDO::PARAM_STR);
+			$query->bindValue(':date_effective', $effectiveDate, PDO::PARAM_STR);
+			$query->execute();
+			
+    	} else {
+    	
+			// update business_type_id = 2 (Renewal), then update the premium
+			$sql = "UPDATE policies SET premium = :premium, business_type_id = :business_type_id WHERE id = :id";
+			$query = $this->db->prepare($sql);
+			$query->bindValue(':id', $id, PDO::PARAM_INT);
+			$query->bindValue(':business_type_id', 2, PDO::PARAM_INT);
+			$query->bindValue(':premium', $prem, PDO::PARAM_STR);
+			$query->execute();
+        
+        }
         
 		if ($query) {
 			return true;

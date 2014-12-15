@@ -18,7 +18,7 @@ $(document).ready(function() {
 	// MAIN LOGO
 	$("#logo").on("click", function(event) {
 		event.preventDefault();
-		window.open("http://www.redbirdreports.com");
+		window.location.href = "/";
 	});	
 	
 	// DASHBOARD
