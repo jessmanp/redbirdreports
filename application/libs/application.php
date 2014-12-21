@@ -32,7 +32,10 @@ class Application
 		// check if login session exists
 		if (!isset($_SESSION['user_logged_in']) && $this->url_controller != '') {
 			// go to login page
-			header("location: /");
+			//header("location: /"); // *USED JS since running load() puts login in div HTML instead of going to login page*
+			echo '<script>window.location.href="/";</script>';
+			exit();
+			
 		}
 
         // check for controller: does such a controller exist ?
