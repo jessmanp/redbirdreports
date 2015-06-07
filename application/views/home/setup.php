@@ -18,7 +18,7 @@
 	</div>
 </div>
 <header>
-	<img id="settings-logo" src="<?php echo URL; ?>public/img/agency_nerd_app_logo.png" class="home-logo" alt="" />
+	<img id="settings-logo" src="<?php echo URL; ?>public/img/redbird_logo_sm.png" class="home-logo" alt="" />
  	<!-- <div class="button-right"><div class="icon-user"></div></div> -->
 </header>
 <div style="background-color:#eeeeee;">
@@ -35,7 +35,7 @@
 
 <h1>Account Configuration</h1>
 
-<p>Welcome to Agency Nerd! Thank you for comfirming your registration. In order to complete your account setup we need a bit more information from you. Please take a moment to configure your account in three easy steps. If you need help you can email us at <a href="mailto:support@agencynerd.com">support@agencynerd.com</a> or <a href="#">watch our video</a> to get more details on how to complete this configuration.</p><p><strong>Open each section below to enter your information.</strong></p>
+<p>Welcome to Redbird Reports! Thank you for comfirming your registration. In order to complete your account setup we need a bit more information from you. Please take a moment to configure your account in three easy steps. If you need help you can email us at <a href="mailto:support@redbirdreports.com">support@redbirdreports.com</a> or <a href="#">watch our video</a> to get more details on how to complete this configuration.</p><p><strong>Open each section below to enter your information.</strong></p>
 
 	<div class="signup">
 

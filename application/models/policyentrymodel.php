@@ -14,18 +14,6 @@ class PolicyEntryModel
         }
     }
 
-	 /**
-     * Get Agency ID from database based on Logged in User
-     */
-    public function getAgencyID($user_id)
-    {
-		// query agency ID for new owner
-        $sql = 'SELECT agency_id FROM agencies_users WHERE agencies_users.user_id = '.$user_id;
-        $query = $this->db->prepare($sql);
-        $query->execute();
-		return $query->fetch()->agency_id;
-    }
-
 	/**
      * Get all team members from database
      */
@@ -116,12 +104,13 @@ class PolicyEntryModel
 	/**
      * Add NEW policy in the database
      */
-    public function addPolicy($first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip,$wdate,$edate)
+    public function addPolicy($agency_id,$first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip,$wdate,$edate)
     {
 		// write new policy data into database
-		$sql = "INSERT INTO policies (user_id, first, last, description, category_id, premium, business_type_id, source_type_id, length_type_id, notes, zip_code, date_written, date_effective) VALUES (:user_id, :first, :last, :description, :category_id, :premium, :business_type_id, :source_type_id, :length_type_id, :notes, :zip_code, :written_date, :effective_date)";
+		$sql = "INSERT INTO policies (user_id, agency_id, first, last, description, category_id, premium, business_type_id, source_type_id, length_type_id, notes, zip_code, date_written, date_effective) VALUES (:user_id, :agency_id, :first, :last, :description, :category_id, :premium, :business_type_id, :source_type_id, :length_type_id, :notes, :zip_code, :written_date, :effective_date)";
 		$query_policy_insert = $this->db->prepare($sql);
 		$query_policy_insert->bindValue(':user_id', $sold, PDO::PARAM_INT);
+		$query_policy_insert->bindValue(':agency_id', $agency_id, PDO::PARAM_INT);
 		$query_policy_insert->bindValue(':first', $first, PDO::PARAM_STR);
 		$query_policy_insert->bindValue(':last', $last, PDO::PARAM_STR);
 		$query_policy_insert->bindValue(':description', $desc, PDO::PARAM_STR);

@@ -72,7 +72,7 @@ $(document).ready(function() {
 	// SETTINGS LOGO
 	$("#settings-logo").on("click", function(event) {
 		event.preventDefault();
-		window.open("http://www.redbirdreports.com");
+		window.location.href = "/";
 	});	
 	
 	// SCROLL TO TOP

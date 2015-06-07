@@ -16,7 +16,7 @@ class MainModel
 
 		function last_week($date) {
 		  $ts = strtotime($date);
-		  $start = strtotime('first day of last week', $ts);
+		  $start = strtotime('last week', $ts);
 		  return array(date('m-d-Y', $start), date('m-d-Y', strtotime('+6 days', $start)));
 		}
 
@@ -103,6 +103,18 @@ class MainModel
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
+    }
+    
+	 /**
+     * Get Agency ID from database based on Logged in User
+     */
+    public function getAgencyID($user_id)
+    {
+		// query agency ID for new owner
+        $sql = 'SELECT agency_id FROM agencies_users WHERE agencies_users.user_id = '.$user_id;
+        $query = $this->db->prepare($sql);
+        $query->execute();
+		return $query->fetch()->agency_id;
     }
 
     /**

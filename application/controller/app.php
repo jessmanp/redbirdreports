@@ -47,6 +47,7 @@ class App extends Controller
 		// load main model
 		$main_model = $this->loadModel('MainModel');
 		$header_data = $main_model->getHeaderInfo($_SESSION['user_id']);
+		$agency_id = $main_model->getAgencyID($_SESSION['user_id']);
 
 		// load CSS based on method
 		$css = 'app_style.css';
@@ -92,7 +93,7 @@ class App extends Controller
 
 				// load entry model
 				$policy_entry_model = $this->loadModel('PolicyEntryModel');
-				$policy_added = $policy_entry_model->addPolicy($first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip,$wdate,$edate);
+				$policy_added = $policy_entry_model->addPolicy($agency_id,$first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip,$wdate,$edate);
 				if ($policy_added) {
 					$return['msg'] = '<strong>Success</strong>, Policy Added.';
 				} else {
@@ -346,102 +347,102 @@ class App extends Controller
 
 		if ($sub == 'listall' || $sub == 'index') {
 			if ($param == 'allwritten') {
-				$policy_data = $policy_listing_model->getAllPolicies('all','default','written',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('all','default','written',$date,$phrase,$agency_id);
 			} else if ($param == 'notissued') {
-				$policy_data = $policy_listing_model->getAllPolicies('all','default','notissued',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('all','default','notissued',$date,$phrase,$agency_id);
 			} else if ($param == 'allcanceled') {
-				$policy_data = $policy_listing_model->getAllPolicies('all','default','canceled',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('all','default','canceled',$date,$phrase,$agency_id);
 			} else if ($param == 'pendingrenewal') {
-				$policy_data = $policy_listing_model->getAllPolicies('all','default','renewal',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('all','default','renewal',$date,$phrase,$agency_id);
 			} else {
 				if ($sub == 'index') {
 					$date = $main_model->getDate('this_month').".a"; // current month default
 				}
-				$policy_data = $policy_listing_model->getAllPolicies('all',$param,'',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('all',$param,'',$date,$phrase,$agency_id);
 			}
 		} else if ($sub == 'listauto') {
 			if ($param == 'allwritten') {
-				$policy_data = $policy_listing_model->getAllPolicies('auto','default','written',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('auto','default','written',$date,$phrase,$agency_id);
 			} else if ($param == 'notissued') {
-				$policy_data = $policy_listing_model->getAllPolicies('auto','default','notissued',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('auto','default','notissued',$date,$phrase,$agency_id);
 			} else if ($param == 'allcanceled') {
-				$policy_data = $policy_listing_model->getAllPolicies('auto','default','canceled',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('auto','default','canceled',$date,$phrase,$agency_id);
 			} else if ($param == 'pendingrenewal') {
-				$policy_data = $policy_listing_model->getAllPolicies('auto','default','renewal',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('auto','default','renewal',$date,$phrase,$agency_id);
 			} else {
-				$policy_data = $policy_listing_model->getAllPolicies('auto',$param,'',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('auto',$param,'',$date,$phrase,$agency_id);
 			}
 		} else if ($sub == 'listfire') {
 			if ($param == 'allwritten') {
-				$policy_data = $policy_listing_model->getAllPolicies('fire','default','written',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('fire','default','written',$date,$phrase,$agency_id);
 			} else if ($param == 'notissued') {
-				$policy_data = $policy_listing_model->getAllPolicies('fire','default','notissued',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('fire','default','notissued',$date,$phrase,$agency_id);
 			} else if ($param == 'allcanceled') {
-				$policy_data = $policy_listing_model->getAllPolicies('fire','default','canceled',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('fire','default','canceled',$date,$phrase,$agency_id);
 			} else if ($param == 'pendingrenewal') {
-				$policy_data = $policy_listing_model->getAllPolicies('fire','default','renewal',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('fire','default','renewal',$date,$phrase,$agency_id);
 			} else {
-				$policy_data = $policy_listing_model->getAllPolicies('fire',$param,'',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('fire',$param,'',$date,$phrase,$agency_id);
 			}
 		} else if ($sub == 'listlife') {
 			if ($param == 'allwritten') {
-				$policy_data = $policy_listing_model->getAllPolicies('life','default','written',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('life','default','written',$date,$phrase,$agency_id);
 			} else if ($param == 'notissued') {
-				$policy_data = $policy_listing_model->getAllPolicies('life','default','notissued',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('life','default','notissued',$date,$phrase,$agency_id);
 			} else if ($param == 'allcanceled') {
-				$policy_data = $policy_listing_model->getAllPolicies('life','default','canceled',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('life','default','canceled',$date,$phrase,$agency_id);
 			} else if ($param == 'pendingrenewal') {
-				$policy_data = $policy_listing_model->getAllPolicies('life','default','renewal',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('life','default','renewal',$date,$phrase,$agency_id);
 			} else {
-				$policy_data = $policy_listing_model->getAllPolicies('life',$param,'',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('life',$param,'',$date,$phrase,$agency_id);
 			}
 		} else if ($sub == 'listhealth') {
 			if ($param == 'allwritten') {
-				$policy_data = $policy_listing_model->getAllPolicies('health','default','written',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('health','default','written',$date,$phrase,$agency_id);
 			} else if ($param == 'notissued') {
-				$policy_data = $policy_listing_model->getAllPolicies('health','default','notissued',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('health','default','notissued',$date,$phrase,$agency_id);
 			} else if ($param == 'allcanceled') {
-				$policy_data = $policy_listing_model->getAllPolicies('health','default','canceled',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('health','default','canceled',$date,$phrase,$agency_id);
 			} else if ($param == 'pendingrenewal') {
-				$policy_data = $policy_listing_model->getAllPolicies('health','default','renewal',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('health','default','renewal',$date,$phrase,$agency_id);
 			} else {
-				$policy_data = $policy_listing_model->getAllPolicies('health',$param,'',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('health',$param,'',$date,$phrase,$agency_id);
 			}
 		} else if ($sub == 'listdeposit') {
 			if ($param == 'allwritten') {
-				$policy_data = $policy_listing_model->getAllPolicies('deposit','default','written',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('deposit','default','written',$date,$phrase,$agency_id);
 			} else if ($param == 'notissued') {
-				$policy_data = $policy_listing_model->getAllPolicies('deposit','default','notissued',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('deposit','default','notissued',$date,$phrase,$agency_id);
 			} else if ($param == 'allcanceled') {
-				$policy_data = $policy_listing_model->getAllPolicies('deposit','default','canceled',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('deposit','default','canceled',$date,$phrase,$agency_id);
 			} else if ($param == 'pendingrenewal') {
-				$policy_data = $policy_listing_model->getAllPolicies('deposit','default','renewal',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('deposit','default','renewal',$date,$phrase,$agency_id);
 			} else {
-				$policy_data = $policy_listing_model->getAllPolicies('deposit',$param,'',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('deposit',$param,'',$date,$phrase,$agency_id);
 			}
 		} else if ($sub == 'listloan') {
 			if ($param == 'allwritten') {
-				$policy_data = $policy_listing_model->getAllPolicies('loan','default','written',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('loan','default','written',$date,$phrase,$agency_id);
 			} else if ($param == 'notissued') {
-				$policy_data = $policy_listing_model->getAllPolicies('loan','default','notissued',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('loan','default','notissued',$date,$phrase,$agency_id);
 			} else if ($param == 'allcanceled') {
-				$policy_data = $policy_listing_model->getAllPolicies('loan','default','canceled',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('loan','default','canceled',$date,$phrase,$agency_id);
 			} else if ($param == 'pendingrenewal') {
-				$policy_data = $policy_listing_model->getAllPolicies('loan','default','renewal',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('loan','default','renewal',$date,$phrase,$agency_id);
 			} else {
-				$policy_data = $policy_listing_model->getAllPolicies('loan',$param,'',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('loan',$param,'',$date,$phrase,$agency_id);
 			}
 		} else if ($sub == 'listfund') {
 			if ($param == 'allwritten') {
-				$policy_data = $policy_listing_model->getAllPolicies('fund','default','written',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('fund','default','written',$date,$phrase,$agency_id);
 			} else if ($param == 'notissued') {
-				$policy_data = $policy_listing_model->getAllPolicies('fund','default','notissued',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('fund','default','notissued',$date,$phrase,$agency_id);
 			} else if ($param == 'allcanceled') {
-				$policy_data = $policy_listing_model->getAllPolicies('fund','default','canceled',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('fund','default','canceled',$date,$phrase,$agency_id);
 			} else if ($param == 'pendingrenewal') {
-				$policy_data = $policy_listing_model->getAllPolicies('fund','default','renewal',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('fund','default','renewal',$date,$phrase,$agency_id);
 			} else {
-				$policy_data = $policy_listing_model->getAllPolicies('fund',$param,'',$date,$phrase);
+				$policy_data = $policy_listing_model->getAllPolicies('fund',$param,'',$date,$phrase,$agency_id);
 			}
 		}
 
@@ -462,7 +463,6 @@ class App extends Controller
 
 		// load entry (add/edit) models
 		$policy_entry_model = $this->loadModel('PolicyEntryModel');
-		$agency_id = $policy_entry_model->getAgencyID($_SESSION['user_id']);
 		$agency_employees = $policy_entry_model->getAllEmployees($agency_id);
 		$policy_categories_all = $policy_entry_model->getAllCategories('all');
 		$policy_categories_auto = $policy_entry_model->getAllCategories('auto');

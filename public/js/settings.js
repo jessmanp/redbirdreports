@@ -53,13 +53,6 @@ $(document).ready(function() {
 		closeModal();
 	});
 
-	// ABOUT
-	$("header").find("img").on("click", function(event) {
-		event.preventDefault();
-		//window.location.href = "/about";
-		window.location.href = "http://www.agencynerd.com";
-	});
-
 	// NAVIGATION
 	$("#menu-link").on("click", function(event) {
 		event.preventDefault();

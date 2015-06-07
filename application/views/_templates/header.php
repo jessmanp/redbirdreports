@@ -23,6 +23,9 @@
 <?php if (isset($dateScript)) { ?>
 <script src="<?php echo URL; ?>public/js/<?php echo $dateScript; ?>"></script>
 <?php } ?>
+<?php if (isset($navScript)) { ?>
+<script src="<?php echo URL; ?>public/js/<?php echo $navScript; ?>"></script>
+<?php } ?>
 <?php if (isset($uploadScript)) { ?>
 <script src="<?php echo URL; ?>public/js/<?php echo $uploadScript; ?>"></script>
 <?php } ?>

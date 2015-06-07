@@ -20,8 +20,8 @@
 				<div class="main-btn-text">&nbsp;Policies</div>
 			</div>
 			<div class="main-button">
-				<img id="payroll" src="/public/img/btn_payroll.png" class="main-btn-icon" alt="Payroll" />
-				<div class="main-btn-text">Payroll</div>
+				<img id="payroll" src="/public/img/btn_payroll.png" class="main-btn-icon" alt="Wages" />
+				<div class="main-btn-text">Wages</div>
 			</div>
 			<div class="main-button">
 				<img id="myagency" src="/public/img/btn_agency.png" class="main-btn-icon" alt="My Agency" />

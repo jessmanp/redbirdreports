@@ -18,7 +18,7 @@ class PolicyListingModel
     /**
      * Get ALL policies from database
      */
-    public function getAllPolicies($category = 'all', $orderby = 'default', $status = '', $date = '', $phrase = '')
+    public function getAllPolicies($category = 'all', $orderby = 'default', $status = '', $date = '', $phrase = '', $agencyid = 0)
     {
 
 //echo "category=[".$category."] orderby=[".$orderby."] status=[".$status."] date=[".$date."] phrase=[".$phrase."]\n<hr />";
@@ -305,6 +305,9 @@ class PolicyListingModel
         			$orderbySQL = ' policies.date_effective DESC';
         			break;
 		}
+		
+		// only query active agency
+		$addedSQL .= " AND agency_id = ".$agencyid;
 
 //echo "add=[".$addedSQL."] sort=[".$orderbySQL."]";
 		

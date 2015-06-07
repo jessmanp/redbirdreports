@@ -204,8 +204,11 @@ class Login
                 // cookie looks good, try to select corresponding user
                 if ($this->databaseConnection()) {
                     // get real token from database (and all other data)
+                    /*
                     $sth = $this->db_connection->prepare("SELECT user_id, user_name, user_email FROM users WHERE user_id = :user_id
                                                       AND user_rememberme_token = :user_rememberme_token AND user_rememberme_token IS NOT NULL");
+                    */
+                    $sth = $this->db_connection->prepare("SELECT users.user_id, users.user_name, users.user_email, agencies_users.agency_id FROM users, agencies_users WHERE agencies_users.user_id = :user_id AND users.user_id = :user_id AND users.user_rememberme_token = :user_rememberme_token AND users.user_rememberme_token IS NOT NULL;");
                     $sth->bindValue(':user_id', $user_id, PDO::PARAM_INT);
                     $sth->bindValue(':user_rememberme_token', $token, PDO::PARAM_STR);
                     $sth->execute();
@@ -215,6 +218,7 @@ class Login
                     if (isset($result_row->user_id)) {
                         // write user data into PHP SESSION [a file on your server]
                         $_SESSION['user_id'] = $result_row->user_id;
+                        $_SESSION['agency_id'] = $result_row->agency_id;
                         $_SESSION['user_name'] = $result_row->user_name;
                         $_SESSION['user_email'] = $result_row->user_email;
                         $_SESSION['user_logged_in'] = 1;
@@ -223,6 +227,7 @@ class Login
 
                         // declare user id, set the login status to true
                         $this->user_id = $result_row->user_id;
+                        $this->agency_id = $result_row->agency_id;
                         $this->user_name = $result_row->user_name;
                         $this->user_email = $result_row->user_email;
                         $this->user_is_logged_in = true;
@@ -264,7 +269,8 @@ class Login
             // if user has typed a valid email address, we try to identify him with his user_email
             } else if ($this->databaseConnection()) {
                 // database query, getting all the info of the selected user
-                $query_user = $this->db_connection->prepare('SELECT * FROM users WHERE user_email = :user_email');
+                //$query_user = $this->db_connection->prepare('SELECT * FROM users WHERE user_email = :user_email');
+                $query_user = $this->db_connection->prepare('SELECT users.*, agencies_users.agency_id FROM users, agencies_users WHERE users.user_id = agencies_users.user_id AND users.user_email = :user_email;');
                 $query_user->bindValue(':user_email', trim($user_name), PDO::PARAM_STR);
                 $query_user->execute();
                 // get result row (as an object)
@@ -291,8 +297,9 @@ class Login
             } else if ($result_row->user_active != 1) {
                 $this->errors[] = MESSAGE_ACCOUNT_NOT_ACTIVATED;
             } else {
-                // write user data into PHP SESSION [new session on your server]
+                // write user data into PHP SESSION [new session on the server]
                 $_SESSION['user_id'] = $result_row->user_id;
+                $_SESSION['agency_id'] = $result_row->agency_id;
                 $_SESSION['user_name'] = $result_row->user_name;
                 $_SESSION['user_email'] = $result_row->user_email;
                 $_SESSION['user_logged_in'] = 1;
@@ -301,6 +308,7 @@ class Login
 
                 // declare user id, set the login status to true
                 $this->user_id = $result_row->user_id;
+                $this->agency_id = $result_row->agency_id;
                 $this->user_name = $result_row->user_name;
                 $this->user_email = $result_row->user_email;
                 $this->user_is_logged_in = true;
