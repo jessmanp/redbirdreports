@@ -149,6 +149,8 @@ class App extends Controller
 				$prem = number_format(trim(@$_POST['policy_premium']), 2, '.', '');
 			}
 
+			$premorg = @$_POST['policy_premium_org'];
+			
 			$id = (int) trim(@$_POST['id']);
 			$first = trim(@$_POST['policy_first_name']);
 			$last = trim(@$_POST['policy_last_name']);
@@ -160,6 +162,7 @@ class App extends Controller
 			$srct = (int) trim(@$_POST['policy_source_type']);
 			$lent = (int) trim(@$_POST['policy_length_type']);
 			$zip = trim(@$_POST['policy_zip']);
+			$stat = (int) @$_POST['policy_status'];
 			$wdate = date('Y-m-d H:i:s', strtotime(trim(@$_POST['writtendate'])));
 			if (trim(@$_POST['issueddate']) != '') {
 				$idate = date('Y-m-d H:i:s', strtotime(trim(@$_POST['issueddate'])));
@@ -176,20 +179,38 @@ class App extends Controller
 			} else {
 				$cdate = '';
 			}
-
-			if (isset($id) && $id != 0 && isset($first) && $first != '' && isset($last) && $last != '' && isset($desc) && isset($prem) && $prem != '' && isset($notes) && isset($catr) && $catr != 0 && isset($busi) && $busi != 0 && isset($sold) && $sold != 0 && isset($srct) && $srct != 0 && isset($lent) && $lent != 0 && isset($zip) && isset($wdate) && isset($idate) && isset($edate) && isset($cdate)) {
-				// load entry model
-				$policy_entry_model = $this->loadModel('PolicyEntryModel');
-				$policy_updated = $policy_entry_model->updatePolicy($id,$first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip,$wdate,$idate,$edate,$cdate);
-				if ($policy_updated) {
-					$return['msg'] = '<strong>Success</strong>, Policy Updated.';
-				} else {
-					$return['error'] = true;
-					$return['msg'] .= '<strong>Update Failed.</strong> Policy Was Not Updated.';
-				}
+			if (trim(@$_POST['premiumdate']) != '') {
+				$newpremdate = date('Y-m-d H:i:s', strtotime(trim(@$_POST['premiumdate'])));
 			} else {
+				$newpremdate = '';
+			}
+			
+			if ($cdate == '' && $stat == 4) {
 				$return['error'] = true;
-				$return['msg'] .= '<strong>Edit Policy Failed.</strong> One or More of the Required Fields Was Missing.';
+				$return['msg'] .= '<strong>Edit Policy Failed.</strong> One or More of the Required Fields Was Missing.<br /><br />';
+				$return['msg'] .= '<strong>Canceled Date</strong> Field is Required.<br /><br />';
+			} else if ($prem != $premorg && $newpremdate == '') {
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Edit Policy Failed.</strong> One or More of the Required Fields Was Missing.<br /><br />';
+				$return['msg'] .= '<strong>New Premium Date</strong> Field is Required.<br /><br />';
+			} else {
+
+				if (isset($id) && $id != 0 && isset($first) && $first != '' && isset($last) && $last != '' && isset($desc) && isset($prem) && $prem != '' && isset($notes) && isset($catr) && $catr != 0 && isset($busi) && $busi != 0 && isset($sold) && $sold != 0 && isset($srct) && $srct != 0 && isset($lent) && $lent != 0 && isset($zip) && isset($wdate) && isset($idate) && isset($edate) && isset($cdate) && isset($stat)) {
+					// load entry model
+					$policy_entry_model = $this->loadModel('PolicyEntryModel');
+					$policy_updated = $policy_entry_model->updatePolicy($id,$stat,$first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip,$wdate,$idate,$edate,$cdate);
+					if ($prem != $premorg && $newpremdate != '') {
+						// insert premium history
+						$policy_entry_model->updatePremiumHistory($id,$premorg,$newpremdate);
+					}
+					if ($policy_updated) {
+						$return['msg'] = '<strong>Success</strong>, Policy Updated.';
+					} else {
+						$return['error'] = true;
+						$return['msg'] .= '<strong>Update Failed.</strong> Policy Was Not Updated.';
+					}
+				}
+			
 			}
  
 			//Return json encoded results
@@ -464,6 +485,7 @@ class App extends Controller
 		// load entry (add/edit) models
 		$policy_entry_model = $this->loadModel('PolicyEntryModel');
 		$agency_employees = $policy_entry_model->getAllEmployees($agency_id);
+		$policy_categories_main = $policy_entry_model->getAllCategories('main');
 		$policy_categories_all = $policy_entry_model->getAllCategories('all');
 		$policy_categories_auto = $policy_entry_model->getAllCategories('auto');
 		$policy_categories_fire = $policy_entry_model->getAllCategories('fire');

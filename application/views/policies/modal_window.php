@@ -81,11 +81,12 @@
 
 
 	<div id="policy-edit">
-<div style="margin:60px 0 0 20px;position:absolute;font-size:11px;font-weight:bold;"><sup>*</sup> Denotes Required Field(s)</div>
+<div style="margin:60px 0 0 675px;position:absolute;font-size:11px;font-weight:bold;"><sup>*</sup>Required Field(s)</div>
 		<div class="policy-message"></div>
 			<form id="policy_entry_form" name="policy_entry_form">
 			<input type="hidden" id="edit_path" name="edit_path" value="" />
 			<input type="hidden" id="id" name="id" value="-2" />
+			<input type="hidden" id="captionsmain" name="captionsmain" value='<option value="0">- Select -</option><?php foreach ($policy_categories_main as $category) { ?><option value="<?php echo $category->id; ?>"><?php if ($category->parent_id == 0) { echo $category->name; } else { echo "&nbsp;&nbsp;-".$category->name; } ?></option><?php } ?>' />
 			<input type="hidden" id="captionsall" name="captionsall" value='<option value="0">- Select -</option><?php foreach ($policy_categories_all as $category) { ?><option value="<?php echo $category->id; ?>"><?php if ($category->parent_id == 0) { echo $category->name; } else { echo "&nbsp;&nbsp;-".$category->name; } ?></option><?php } ?>' />
 			<input type="hidden" id="captionsauto" name="captionsauto" value='<?php foreach ($policy_categories_auto as $category) { ?><option value="<?php echo $category->id; ?>"<?php if ($category->parent_id == 0) { echo " selected"; } ?>><?php if ($category->parent_id == 0) { echo $category->name; } else { echo "&nbsp;&nbsp;-".$category->name; } ?></option><?php } ?>' />
 			<input type="hidden" id="captionsfire" name="captionsfire" value='<?php foreach ($policy_categories_fire as $category) { ?><option value="<?php echo $category->id; ?>"<?php if ($category->parent_id == 0) { echo " selected"; } ?>><?php if ($category->parent_id == 0) { echo $category->name; } else { echo "&nbsp;&nbsp;-".$category->name; } ?></option><?php } ?>' />
@@ -110,6 +111,15 @@
 			<div class="policy-entry-field">
 				Premium<sup>*</sup>: 
 				<span style="font-size:12px;font-weight:bold;">$</span> <input style="width:75px;" type="text" maxlength="20" id="policy_premium" name="policy_premium" placeholder="0.00" value="" />
+				<div class="policy-new-premium">
+				New Premium Date:
+				<input id="premiumdate" name="premiumdate" value="" placeholder="" readonly />
+				<input type="hidden" id="policy_premium_org" name="policy_premium_org" value="0" />
+				</div>
+			</div>	
+			<div class="policy-entry-field">
+				Policy Number: 
+				<input type="text" maxlength="40" style="width:155px;" id="policy_number" name="policy_number" placeholder="Enter Policy Number" value="" />
 				<div class="policy-zip">
 				Zip Code: 
 				<input style="width:75px;" type="text" maxlength="11" id="policy_zip" name="policy_zip" placeholder="90210" value="" />
@@ -117,7 +127,7 @@
 			</div>
 			<div class="policy-entry-field">
 				Notes:<br />
-				<textarea style="width:425px;height:45px;" id="policy_notes" name="policy_notes" placeholder="Describe this policy or add keywords"></textarea>
+				<textarea style="width:425px;height:145px;" id="policy_notes" name="policy_notes" placeholder="Describe this policy or add keywords"></textarea>
 			</div>
 		</div>
 <!-- end edit left box -->
@@ -126,10 +136,15 @@
 	<div id="policy_dropdown_cover"></div>
 		<div class="edit-table-container">
 			<div class="edit-heading">
+				<div class="edit-col">Policy Type<sup>*</sup>:</div>
+				<div id="typeselect" class="edit-col">
+					<select class="policy-type-select" id="policy_type" name="policy_type"></select>
+				</div>
+			</div>
+			<div class="edit-heading">
 				<div class="edit-col">Category<sup>*</sup>:</div>
 				<div id="catselect" class="edit-col">
-					<select class="policy-entry-select" id="policy_sub_category" name="policy_sub_category">
-					</select>
+					<select class="policy-entry-select" id="policy_sub_category" name="policy_sub_category"></select>
 				</div>
 			</div>
 			<div class="edit-table-row">
@@ -177,20 +192,28 @@
 				</div>
 			</div>
 		</div>
+		<div class="policy-status">
+			<div class="status-col">Policy Status</div>
+			<div class="policy-date-fields">
+			<div class="policy-state">
+			<input type="radio" id="status_pending" name="policy_status" value="1" checked />Pending<br /><br />
+			<input type="radio" id="status_issued" name="policy_status" value="2" />Issued<br /><br />
+			<input type="radio" id="status_declined" name="policy_status" value="3" />Declined<br /><br />
+			<input type="radio" id="status_canceled" name="policy_status" value="4" />Canceled<br />
+			</div>
+			Written<sup>*</sup>:<input id="writtendate" name="writtendate" value="" placeholder="" readonly /><br />
+			<input type="hidden" id="issueddate" name="issueddate" value="" />
+			Effective:<input id="effectivedate" name="effectivedate" value="" placeholder="" readonly /><br />
+			Canceled:<input id="canceleddate" name="canceleddate" value="" placeholder="" readonly /><br />
+			</div>
+		</div>
 	</div>
 <!-- end edit right box -->
-	<div class="policy-date-fields">
-		Written<sup>*</sup>:<input id="writtendate" name="writtendate" value="" placeholder="" readonly />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		Issued:<input id="issueddate" name="issueddate" value="" placeholder="" readonly />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		Effective:<input id="effectivedate" name="effectivedate" value="" placeholder="" readonly />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		Canceled:<input id="canceleddate" name="canceleddate" value="" placeholder="" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
-	</div>
 			</form>
 <div class="policy-edit-bar"></div>
 		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="policy-add" data-type="add" class="plain-btn">Add</button><button id="policy-save" data-type="edit" class="plain-btn">Save</button>
 	</div>
 
-
-	<br /><br />
+<br />
 </div>
 <!-- end modal window area -->

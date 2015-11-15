@@ -39,6 +39,9 @@ class PolicyEntryModel
     			case 'all':
         			$addedSQL = '';
         			break;
+    			case 'main':
+        			$addedSQL = ' WHERE policy_categories.parent_id = 0';
+        			break;
     			case 'auto':
         			$addedSQL = ' WHERE (policy_categories.id = 1 OR policy_categories.parent_id = 1)';
         			break;
@@ -138,12 +141,13 @@ class PolicyEntryModel
 	/**
      * Edit EXISTING policy in the database
      */
-    public function updatePolicy($id,$first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip,$wdate,$idate,$edate,$cdate)
+    public function updatePolicy($id,$stat,$first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip,$wdate,$idate,$edate,$cdate)
     {
 		// write new policy data into database
-		$sql = "UPDATE policies SET user_id = :user_id, first = :first, last = :last, description = :description, category_id = :category_id, premium = :premium, business_type_id = :business_type_id, source_type_id = :source_type_id, length_type_id = :length_type_id, notes = :notes, zip_code = :zip_code, date_written = :written_date, date_issued = :issued_date, date_effective = :effective_date, date_canceled = :canceled_date WHERE id = :id";
+		$sql = "UPDATE policies SET status = :status, user_id = :user_id, first = :first, last = :last, description = :description, category_id = :category_id, premium = :premium, business_type_id = :business_type_id, source_type_id = :source_type_id, length_type_id = :length_type_id, notes = :notes, zip_code = :zip_code, date_written = :written_date, date_issued = :issued_date, date_effective = :effective_date, date_canceled = :canceled_date WHERE id = :id";
 		$query_policy_update = $this->db->prepare($sql);
 		$query_policy_update->bindValue(':id', $id, PDO::PARAM_INT);
+		$query_policy_update->bindValue(':status', $stat, PDO::PARAM_INT);
 		$query_policy_update->bindValue(':user_id', $sold, PDO::PARAM_INT);
 		$query_policy_update->bindValue(':first', $first, PDO::PARAM_STR);
 		$query_policy_update->bindValue(':last', $last, PDO::PARAM_STR);
@@ -177,6 +181,23 @@ class PolicyEntryModel
 			return true;
 		}
 	}
+	
+	/**
+     * Insert history of premium change in the database
+     */
+    public function updatePremiumHistory($id,$premorg,$newpremdate)
+    {
+        $sql = "INSERT INTO policies_history (policy_id,oldpremium,newpremdate) VALUES (:id,:oldprem,:npremdate)";
+        $query_insert_policy_history = $this->db->prepare($sql);
+		$query_insert_policy_history->bindValue(':id', $id, PDO::PARAM_INT);
+		$query_insert_policy_history->bindValue(':oldprem', $premorg, PDO::PARAM_STR);
+		$query_insert_policy_history->bindValue(':npremdate', $newpremdate, PDO::PARAM_STR);
+        $query_insert_policy_history->execute();
+
+		if ($query_insert_policy_history) {
+			return true;
+		}
+    }
 
 
     /**

@@ -967,10 +967,13 @@ a.policy-edit-action:hover {
 .edit-col {
 	text-align:right;
 	display:table-cell;
-	padding:8px;
+	padding:3px;
 	background-color:#cccccc;
-	font-size:14px;
-	line-height:32px;
+	font-size:13px;
+	line-height:30px;
+}
+.edit-col sup {
+	font-size:13px;
 }
 .edit-col select {
 	float:left;
@@ -981,6 +984,7 @@ a.policy-edit-action:hover {
 	margin:0 0 0 20px;
 }
 .edit-right-box {
+	margin:0 0 10px 0;
 	float:left;
 	width:310px;
 }
@@ -1002,10 +1006,28 @@ a.policy-edit-action:hover {
 	vertical-align:middle;
 	border:0;
 }
+#premiumdate {
+	display:inline-block;
+	padding:4px 8px 4px 8px;
+	margin:6px 0 0 0;
+	cursor:pointer; 
+	width:100px; 
+	height:25px;
+	font-size:12px;
+	background-color:#ffffff;
+	color:#000000;
+	border:2px solid #a20004;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+}
 #writtendate {
 	display:inline-block;
 	padding:0 8px 0 8px;
-	margin:3px 0 0 5px;
+	margin:3px 0 5px 5px;
 	cursor:pointer; 
 	width:70px; 
 	height:30px;
@@ -1023,7 +1045,7 @@ a.policy-edit-action:hover {
 #issueddate {
 	display:inline-block;
 	padding:0 8px 0 8px;
-	margin:3px 0 0 5px;
+	margin:3px 0 5px 5px;
 	cursor:pointer; 
 	width:70px; 
 	height:30px;
@@ -1041,7 +1063,7 @@ a.policy-edit-action:hover {
 #effectivedate {
 	display:inline-block;
 	padding:0 8px 0 8px;
-	margin:3px 0 0 5px;
+	margin:3px 0 5px 5px;
 	cursor:pointer; 
 	width:70px; 
 	height:30px;
@@ -1059,7 +1081,7 @@ a.policy-edit-action:hover {
 #canceleddate {
 	display:inline-block;
 	padding:0 8px 0 8px;
-	margin:3px 0 0 5px;
+	margin:3px 0 5px 5px;
 	cursor:pointer; 
 	width:70px; 
 	height:30px;
@@ -1092,17 +1114,39 @@ a.policy-edit-action:hover {
 	/* for IE 5.5 - 9 & firefox 13+ */
 	border-radius:10px;
 }
+.policy-status {
+	float:left;
+	width:310px;
+    text-align:right;
+}
+.status-col {
+	padding:2px;
+	background-color:#a20004;
+	color:#ffffff;
+	font-size:14px;
+	line-height:32px;
+	text-align:center;
+}
+.policy-state {
+	float:left;
+	text-align:left;
+}
 .policy-date-fields {
-	margin:0 20px 0 20px;
+	margin:0 auto 0 auto;
 	padding:10px 10px 12px 10px;
 	font-size:14px;
 	clear:both;
 	background-color:#cccccc;
-	text-align:center;
+	text-align:right;
 }
 .policy-edit-bar {
 	margin:10px 20px 30px 20px;
 	border-top:2px solid #cccccc;
+	clear:both;
+}
+.policy-new-premium {
+	float:right;
+	margin:0 15px 0 0;
 }
 .policy-zip {
 	float:right;
