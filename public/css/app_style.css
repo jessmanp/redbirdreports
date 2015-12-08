@@ -22,6 +22,12 @@ sup {
 	color:#ff0000;
 	line-height:0;
 }
+h1 {
+	margin:5px 0 -12px 0;
+	line-height:36px;
+	font-size:16px;
+	font-weight:normal;
+}
 .chargeback {
 	font-weight:normal;
 	color:#ff0000;
@@ -148,7 +154,16 @@ sup {
 #policy-header {
 	width:100%;
 	margin:110px 0 0 0;
-	height:190px;
+	position:fixed; 
+	top:0;
+	left:0;
+	right:0;
+	background-color:#ffffff;
+	z-index:10;
+}
+#commissions-header {
+	width:100%;
+	margin:100px 0 0 0;
 	position:fixed; 
 	top:0;
 	left:0;
@@ -224,6 +239,28 @@ footer {
 .plain-btn-close:hover {
 	background-color:#000000;
 	border:2px solid #000000;
+}
+.plain-btn-erase {
+    cursor:pointer; 
+    width:158px; 
+    height:34px; 
+    background-color:#cccccc;
+    color:#000000;
+    border:2px solid #cccccc;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+	font-size:12px;
+	text-align:center;
+	line-height:28px;
+}
+.plain-btn-erase:hover {
+	background-color:#000000;
+	border:2px solid #000000;
+	color:#ffffff;
 }
 button {
 	font-family: Helvetica, Arial, Verdana, sans-serif;
@@ -729,6 +766,30 @@ input[type=radio]:not(old):checked + label > span > span{
     border:2px solid #000000;
 }
 
+#dosubmit2 {
+	float:right;
+	margin:3px 2px 0 2px;
+    cursor:pointer; 
+    padding:0;
+    width:50px; 
+    height:34px; 
+    background-color:#a20004;
+    color:#ffffff;
+    border:2px solid #a20004;
+    /* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+	line-height:24px;
+}
+
+#dosubmit2:hover {
+    background-color:#000000;
+    border:2px solid #000000;
+}
+
 #advanced-search {
 	float:left;
 	margin:3px 2px 0 8px;
@@ -769,6 +830,13 @@ input[type=radio]:not(old):checked + label > span > span{
 	color:#ffffff;
 }
 
+.sub-title {
+	padding:10px 0 0 0;
+	font-size:16px;
+	color:#ffffff;
+	font-weight:bold;
+}
+
 #status-area {
 	margin:12px auto 5px auto;
 	width:880px;
@@ -783,6 +851,13 @@ input[type=radio]:not(old):checked + label > span > span{
 	font-size:13px;
 	color:#ffffff;
 	line-height:18px;
+}
+
+.status-text-left {
+	float:left;
+	width:200px;
+	color:#cccccc;
+	line-height:25px;
 }
 
 .status-text {
@@ -803,9 +878,32 @@ input[type=radio]:not(old):checked + label > span > span{
 	color:#ffffff;
 }
 
+.status-table-left {
+	float:left;
+	width:235px;
+	text-align:left;
+}
+
+.status-table-right {
+	margin:4px 0 0 235px;
+	width:630px;
+}
+
+.status-cell {
+	float:left;
+	margin:15px 25px 0 0;
+	width:100px;
+	color:#cccccc;
+}
+
 #policy-content {
 	clear:both;
 	margin:360px 0 32px 0;
+}
+#commissions-content {
+	clear:both;
+	margin:328px 0 32px 0;
+	text-align:center;
 }
 
 .policy-listing-button {
@@ -836,7 +934,7 @@ a.status-link:hover {
 }
 
 .heading {
-     display:table-row;
+     display:table;
      text-align:center;
      line-height:30px;
 	position:fixed;
@@ -1152,6 +1250,9 @@ a.policy-edit-action:hover {
 	float:right;
 	margin:0 15px 0 0;
 }
+.policy-entry-select {
+	width:130px;
+}
 .delete-table-container {
 	margin:0 auto 0 auto;
     display:table;
@@ -1171,9 +1272,254 @@ a.policy-edit-action:hover {
 	font-size:14px;
 	line-height:32px;
 }
-
-
-
+#commission-container {
+	margin:10px auto 5px auto;
+	width:890px;
+	clear:both;
+}
+#commission-employee-box {
+	float:left;
+	margin:8px 0 5px 0;
+	width:175px;
+	height:90px;
+	background-color:#cccccc;
+	padding:5px;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	text-align:center;
+	font-size:14px;
+}
+#commission-period-box {
+	float:right;
+	margin:8px 0 5px 0;
+	width:175px;
+	height:90px;
+	background-color:#cccccc;
+	padding:5px;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	text-align:center;
+	font-size:14px;
+}
+.commission-search-area {
+	margin:10px auto 5px auto;
+	width:480px;
+	height:60px;
+	padding:5px 10px 5px 10px;
+	background-color:#cccccc;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	text-align:left;
+	font-size:14px;
+	color:#333333;
+	line-height:40px;
+}
+.commission-search-title {
+	width:100%;
+	height:15px;
+	margin:0 0 5px 0;
+	text-align:center;
+	font-weight:bold;
+	font-size:12px;
+	color:#333333;
+	line-height:24px;
+}
+.commission-status-area {
+	margin:12px auto 5px auto;
+	width:870px;
+	min-height:75px;
+	padding:5px 5px 5px 10px;
+	background-color:#a20004;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	border:2px solid #ffffff;
+	font-size:13px;
+	color:#ffffff;
+	line-height:18px;
+}
+.commission-employee-name {
+	font-weight:bold;
+	font-size:14px;
+	padding:8px 0 8px 0;
+}
+.period-open {
+	float:left;
+	width:45px;
+	height:35px;
+	margin:0 -30px 0 20px;
+	border:0;
+	display:block;
+}
+.period-closed {
+	float:left;
+	width:45px;
+	height:35px;
+	margin:0 -15px 0 10px;
+	border:0;
+	display:block;
+}
+#close-period {
+	float:left;
+	margin:0 2px 0 8px;
+	padding:0 0 0 10px;
+    cursor:pointer; 
+    width:160px; 
+    height:34px; 
+    background-color:#a20004;
+    color:#ffffff;
+    border:2px solid #a20004;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+	font-size:12px;
+	text-align:left;
+	line-height:30px;
+}
+#close-period:hover {
+    background-color:#000000;
+    border:2px solid #000000;
+}
+.search-text {
+	color:#a20004;
+}	
+.short-select {
+	width:85px;
+}
+.commission-table {
+	margin:0 auto 0 auto;
+	padding:10px;
+	min-width:950px;
+	text-align:center;
+}
+.commission-left-cell {
+	float:left;
+	min-width:400px;
+}
+.commission-right-cell {
+	margin:0 0 0 400px;
+}
+.commission-new-policies {
+	min-height:75px;
+	background-color:#a20004;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	border:2px solid #a20004;
+	font-size:13px;
+	color:#000000;
+	line-height:18px;
+}
+.commission-renewals {
+	margin:10px 0 0 0;
+	min-height:75px;
+	background-color:#a20004;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	border:2px solid #a20004;
+	font-size:13px;
+	color:#000000;
+	line-height:18px;
+}
+.commission-special {
+	margin:0 0 0 10px;
+	float:left;
+	width:280px;
+	min-height:75px;
+	background-color:#a20004;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	border:2px solid #a20004;
+	font-size:13px;
+	color:#000000;
+	line-height:18px;
+}
+.commission-earned {
+	margin:0 0 0 310px;
+	min-width:280px;
+	min-height:75px;
+	background-color:#a20004;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	border:2px solid #a20004;
+	font-size:13px;
+	color:#000000;
+	line-height:18px;
+}
+.commission-trends {
+	margin:10px 0 0 15px;
+	min-height:75px;
+	background-color:#a20004;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	border:2px solid #a20004;
+	font-size:13px;
+	color:#000000;
+	line-height:18px;
+}
+.commission-text-footer {
+	color:#ffffff;
+	line-height:26px;
+	font-weight:bold;
+}
+.com-title {
+	color:#ffffff;
+	line-height:26px;
+	font-weight:bold;
+}
+.com-special {
+	text-align:left;
+	padding:10px;
+	font-weight:bold;
+	font-size:14px;
+}
+.com-earned {
+	text-align:left;
+	padding:8px 5px 8px 5px;
+	font-size:14px;
+	font-style:italic;
+}
+.com-earned-bold {
+	text-align:left;
+	padding:8px 5px 8px 5px;
+	font-weight:bold;
+	font-size:14px;
+}
+.com-earned-amount {
+	text-align:right;
+	padding:8px 5px 8px 5px;
+	font-size:14px;
+}
+.com-earned-amount-bold {
+	text-align:right;
+	padding:8px 5px 8px 5px;
+	font-weight:bold;
+	font-size:14px;
+}
+.com-caption {
+	font-weight:bold;
+	font-style:italic;
+	line-height:14px;
+	padding:0 0 5px 0;
+}
+.com-holder {
+	padding:5px;
+	background-color:#ffffff;
+	min-height:175px;
+}
+.com-type {
+	font-weight:bold;
+}
 
 
 
@@ -1183,12 +1529,6 @@ a.policy-edit-action:hover {
 
 
 #dashboard-content {
-	clear:both;
-	margin:160px 0 32px 0;
-	min-height:600px;
-}
-
-#payroll-content {
 	clear:both;
 	margin:160px 0 32px 0;
 	min-height:600px;

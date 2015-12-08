@@ -33,10 +33,10 @@ $(document).ready(function() {
 		window.location.href = "/app/policies";
 	});
 
-	// PAYROLL
-	$("#payroll").closest(".main-button").on("click", function(event) {
+	// COMMISSIONS
+	$("#commissions").closest(".main-button").on("click", function(event) {
 		event.preventDefault();
-		window.location.href = "/app/payroll";
+		window.location.href = "/app/commissions";
 	});
 
 	// AGENCY

@@ -76,6 +76,7 @@ class App extends Controller
 			$last = trim(@$_POST['policy_last_name']);
 			$desc = trim(@$_POST['policy_description']);
 			$notes = trim(@$_POST['policy_notes']);	
+			$pnum = trim(@$_POST['policy_number']);
 			$catr = (int) trim(@$_POST['policy_sub_category']);
 			$busi = (int) trim(@$_POST['policy_business_type']);
 			$sold = (int) trim(@$_POST['policy_team_member']);
@@ -89,11 +90,11 @@ class App extends Controller
 				$edate = '';
 			}			
 
-			if (isset($first) && $first != '' && isset($last) && $last != '' && isset($desc) && isset($prem) && $prem != '' && isset($notes) && isset($catr) && $catr != 0 && isset($busi) && $busi != 0 && isset($sold) && $sold != 0 && isset($srct) && $srct != 0 && isset($lent) && $lent != 0 && isset($zip) && isset($wdate) && isset($edate)) {
+			if (isset($first) && $first != '' && isset($last) && $last != '' && isset($desc) && isset($prem) && $prem != '' && isset($notes) && isset($pnum) && isset($catr) && $catr != 0 && isset($busi) && $busi != 0 && isset($sold) && $sold != 0 && isset($srct) && $srct != 0 && isset($lent) && $lent != 0 && isset($zip) && isset($wdate) && isset($edate)) {
 
 				// load entry model
 				$policy_entry_model = $this->loadModel('PolicyEntryModel');
-				$policy_added = $policy_entry_model->addPolicy($agency_id,$first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip,$wdate,$edate);
+				$policy_added = $policy_entry_model->addPolicy($agency_id,$first,$last,$desc,$prem,$notes,$pnum,$catr,$busi,$sold,$srct,$lent,$zip,$wdate,$edate);
 				if ($policy_added) {
 					$return['msg'] = '<strong>Success</strong>, Policy Added.';
 				} else {
@@ -156,6 +157,7 @@ class App extends Controller
 			$last = trim(@$_POST['policy_last_name']);
 			$desc = trim(@$_POST['policy_description']);
 			$notes = trim(@$_POST['policy_notes']);	
+			$pnum = trim(@$_POST['policy_number']);
 			$catr = (int) trim(@$_POST['policy_sub_category']);
 			$busi = (int) trim(@$_POST['policy_business_type']);
 			$sold = (int) trim(@$_POST['policy_team_member']);
@@ -198,7 +200,7 @@ class App extends Controller
 				if (isset($id) && $id != 0 && isset($first) && $first != '' && isset($last) && $last != '' && isset($desc) && isset($prem) && $prem != '' && isset($notes) && isset($catr) && $catr != 0 && isset($busi) && $busi != 0 && isset($sold) && $sold != 0 && isset($srct) && $srct != 0 && isset($lent) && $lent != 0 && isset($zip) && isset($wdate) && isset($idate) && isset($edate) && isset($cdate) && isset($stat)) {
 					// load entry model
 					$policy_entry_model = $this->loadModel('PolicyEntryModel');
-					$policy_updated = $policy_entry_model->updatePolicy($id,$stat,$first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip,$wdate,$idate,$edate,$cdate);
+					$policy_updated = $policy_entry_model->updatePolicy($id,$stat,$first,$last,$desc,$prem,$notes,$pnum,$catr,$busi,$sold,$srct,$lent,$zip,$wdate,$idate,$edate,$cdate);
 					if ($prem != $premorg && $newpremdate != '') {
 						// insert premium history
 						$policy_entry_model->updatePremiumHistory($id,$premorg,$newpremdate);
@@ -208,6 +210,36 @@ class App extends Controller
 					} else {
 						$return['error'] = true;
 						$return['msg'] .= '<strong>Update Failed.</strong> Policy Was Not Updated.';
+					}
+				} else {
+					$return['error'] = true;
+					$return['msg'] .= '<strong>Edit Policy Failed.</strong> One or More of the Required Fields Was Missing.<br /><br />';
+					if ($first == '') {
+						$return['msg'] .= '<strong>First Name</strong> Field is Required.<br /><br />';
+					}
+					if ($last == '') {
+						$return['msg'] .= '<strong>Last Name</strong> Field is Required.<br /><br />';
+					}
+					if ($prem == 0) {
+						$return['msg'] .= '<strong>Premium</strong> Field is Required.<br /><br />';
+					}
+					if ($catr == 0) {
+						$return['msg'] .= '<strong>Category</strong> Field is Required.<br /><br />';
+					}
+					if ($busi == 0) {
+						$return['msg'] .= '<strong>Business Type</strong> Field is Required.<br /><br />';
+					}
+					if ($sold == 0) {
+						$return['msg'] .= '<strong>Sold By</strong> Field is Required.<br /><br />';
+					}
+					if ($srct == 0) {
+						$return['msg'] .= '<strong>Lead Source</strong> Field is Required.<br /><br />';
+					}
+					if ($lent == 0) {
+						$return['msg'] .= '<strong>Policy Length</strong> Field is Required.<br /><br />';
+					}
+					if ($wdate == '') {
+						$return['msg'] .= '<strong>Written Date</strong> Field is Required.<br /><br />';
 					}
 				}
 			
@@ -502,7 +534,7 @@ class App extends Controller
         		// load views.
         		require 'application/views/_templates/header.php';
         		require 'application/views/_templates/main_header.php';
-			require 'application/views/policies/modal_window.php';
+				require 'application/views/policies/modal_window.php';
         		require 'application/views/policies/header.php';
         		require 'application/views/policies/index.php';
         		require 'application/views/_templates/footer.php';
@@ -515,7 +547,7 @@ class App extends Controller
 
     }
 
-	public function payroll($sub = 'index')
+	public function commissions($sub = 'index')
     {
 		// load main model
 		$main_model = $this->loadModel('MainModel');
@@ -524,12 +556,13 @@ class App extends Controller
 		// load CSS based on method
 		$css = 'app_style.css';
 		// load jQuery script based on method
-		$sectionScript = 'payroll.js';
+		$sectionScript = 'commissions.js';
 
         // load views.
         require 'application/views/_templates/header.php';
         require 'application/views/_templates/main_header.php';
-        require 'application/views/payroll/'.$sub.'.php';
+        require 'application/views/commissions/header.php';
+        require 'application/views/commissions/'.$sub.'.php';
         require 'application/views/_templates/footer.php';
     }
 

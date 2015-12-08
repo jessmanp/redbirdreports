@@ -107,10 +107,10 @@ class PolicyEntryModel
 	/**
      * Add NEW policy in the database
      */
-    public function addPolicy($agency_id,$first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip,$wdate,$edate)
+    public function addPolicy($agency_id,$first,$last,$desc,$prem,$notes,$pnum,$catr,$busi,$sold,$srct,$lent,$zip,$wdate,$edate)
     {
 		// write new policy data into database
-		$sql = "INSERT INTO policies (user_id, agency_id, first, last, description, category_id, premium, business_type_id, source_type_id, length_type_id, notes, zip_code, date_written, date_effective) VALUES (:user_id, :agency_id, :first, :last, :description, :category_id, :premium, :business_type_id, :source_type_id, :length_type_id, :notes, :zip_code, :written_date, :effective_date)";
+		$sql = "INSERT INTO policies (user_id, agency_id, first, last, description, category_id, premium, business_type_id, source_type_id, length_type_id, notes, policy_number, zip_code, date_written, date_effective) VALUES (:user_id, :agency_id, :first, :last, :description, :category_id, :premium, :business_type_id, :source_type_id, :length_type_id, :notes, :policy_number, :zip_code, :written_date, :effective_date)";
 		$query_policy_insert = $this->db->prepare($sql);
 		$query_policy_insert->bindValue(':user_id', $sold, PDO::PARAM_INT);
 		$query_policy_insert->bindValue(':agency_id', $agency_id, PDO::PARAM_INT);
@@ -123,6 +123,7 @@ class PolicyEntryModel
 		$query_policy_insert->bindValue(':source_type_id', $srct, PDO::PARAM_INT);
 		$query_policy_insert->bindValue(':length_type_id', $lent, PDO::PARAM_INT);
 		$query_policy_insert->bindValue(':notes', $notes, PDO::PARAM_STR);
+		$query_policy_insert->bindValue(':policy_number', $pnum, PDO::PARAM_STR);
 		$query_policy_insert->bindValue(':zip_code', $zip, PDO::PARAM_STR);
 		$query_policy_insert->bindValue(':written_date', $wdate, PDO::PARAM_STR);
 		if ($edate == '') {
@@ -141,10 +142,10 @@ class PolicyEntryModel
 	/**
      * Edit EXISTING policy in the database
      */
-    public function updatePolicy($id,$stat,$first,$last,$desc,$prem,$notes,$catr,$busi,$sold,$srct,$lent,$zip,$wdate,$idate,$edate,$cdate)
+    public function updatePolicy($id,$stat,$first,$last,$desc,$prem,$notes,$pnum,$catr,$busi,$sold,$srct,$lent,$zip,$wdate,$idate,$edate,$cdate)
     {
 		// write new policy data into database
-		$sql = "UPDATE policies SET status = :status, user_id = :user_id, first = :first, last = :last, description = :description, category_id = :category_id, premium = :premium, business_type_id = :business_type_id, source_type_id = :source_type_id, length_type_id = :length_type_id, notes = :notes, zip_code = :zip_code, date_written = :written_date, date_issued = :issued_date, date_effective = :effective_date, date_canceled = :canceled_date WHERE id = :id";
+		$sql = "UPDATE policies SET status = :status, user_id = :user_id, first = :first, last = :last, description = :description, category_id = :category_id, premium = :premium, business_type_id = :business_type_id, source_type_id = :source_type_id, length_type_id = :length_type_id, notes = :notes, policy_number = :policy_number, zip_code = :zip_code, date_written = :written_date, date_issued = :issued_date, date_effective = :effective_date, date_canceled = :canceled_date WHERE id = :id";
 		$query_policy_update = $this->db->prepare($sql);
 		$query_policy_update->bindValue(':id', $id, PDO::PARAM_INT);
 		$query_policy_update->bindValue(':status', $stat, PDO::PARAM_INT);
@@ -158,6 +159,7 @@ class PolicyEntryModel
 		$query_policy_update->bindValue(':source_type_id', $srct, PDO::PARAM_INT);
 		$query_policy_update->bindValue(':length_type_id', $lent, PDO::PARAM_INT);
 		$query_policy_update->bindValue(':notes', $notes, PDO::PARAM_STR);
+		$query_policy_update->bindValue(':policy_number', $pnum, PDO::PARAM_STR);
 		$query_policy_update->bindValue(':zip_code', $zip, PDO::PARAM_STR);
 		$query_policy_update->bindValue(':written_date', $wdate, PDO::PARAM_STR);
 		if ($idate == '') {

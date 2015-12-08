@@ -113,22 +113,22 @@
 		}
 ?>
 			<div class="<?php echo $rowclass; ?>">
-				<div class="col" style="width:2%;">&nbsp;<em><?php echo $rowcnt; ?></em></div>
+				<div class="col" style="width:1%;">&nbsp;<em><?php echo $rowcnt; ?></em></div>
 <?php if ($policy->renewal == 1) { ?>
-				<div class="col" style="width:3%;<?php echo $addStyle; ?>"><a class="policy-renewal-action" data-renewal="<?php echo $policy->id."','".$policy->first."','".$policy->last."','".$policy->description; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt="Renew" /></a></div>
+				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-renewal-action" data-renewal="<?php echo $policy->id."','".$policy->first."','".$policy->last."','".$policy->description; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt="Renew" /></a></div>
 <?php } elseif ($policy->date_canceled != null) { ?>
-				<div class="col" style="width:3%;<?php echo $addStyle; ?>"><a class="policy-reinstate-action" data-id="<?php echo $policy->id; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt="Reinstate" /></a></div>
+				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-reinstate-action" data-id="<?php echo $policy->id; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt="Reinstate" /></a></div>
 <?php } else { ?>
-				<div class="col" style="width:3%;<?php echo $addStyle; ?>"><a class="policy-edit-action" data-info="<?php echo $policy->id."','".$policy->renewal."','".$policy->first."','".$policy->last."','".$policy->description."','".$policy->category_id."-".$policy->cat_pid."','".$policy->premium."','".$policy->business_type_id."','".$policy->user_id."','".$policy->source_type_id."','".$policy->length_type_id."','".$policy->notes."','".$policy->date_written."','".$policy->date_issued."','".$policy->date_effective."','".$policy->date_canceled."','".$policy->zip_code."','".$policy->status; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt="Edit" /></a></div>
+				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-edit-action" data-info="<?php echo $policy->id."','".$policy->renewal."','".$policy->first."','".$policy->last."','".$policy->description."','".$policy->category_id."-".$policy->cat_pid."','".$policy->premium."','".$policy->business_type_id."','".$policy->user_id."','".$policy->source_type_id."','".$policy->length_type_id."','".$policy->notes."','".$policy->policy_number."','".$policy->date_written."','".$policy->date_issued."','".$policy->date_effective."','".$policy->date_canceled."','".$policy->zip_code."','".$policy->status; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt="Edit" /></a></div>
 <?php } ?>
-				<div class="col" style="width:6%;<?php echo $addStyle; ?>"><?php echo $policy->first; ?></div>
-				<div class="col" style="width:10%;<?php echo $addStyle; ?>"><?php echo $policy->last; ?></div>
+				<div class="col" style="width:11%;<?php echo $addStyle; ?>"><?php echo $policy->first; ?></div>
+				<div class="col" style="width:13%;<?php echo $addStyle; ?>"><?php echo $policy->last; ?></div>
 				<div class="col" style="width:10%;"><?php if (strlen($policy->description) > 12) { echo '<a class="policy-desc-action" data-desc="'.$policy->description.'">'.substr($policy->description, 0, 12).'</a>&hellip;'; } else { echo $policy->description; } ?></div>
 				<div class="col" style="width:10%;<?php echo $addStyle; ?>"><?php echo $policy->cat_name; ?></div>
 <?php if ($cancellationvalue > 0) { ?>
-				<div class="col" style="width:6%;font-size:11px;font-style:italic;"><?php echo '$'.number_format($cancellationvalue, 2); if ($chargebackvalue > 0) { echo '&nbsp;<span class="chargeback">($'.number_format($chargebackvalue, 2).')</span>'; } ?></div>
+				<div class="col" style="width:9%;font-size:11px;font-style:italic;"><?php echo '$'.number_format($cancellationvalue, 2); if ($chargebackvalue > 0) { echo '&nbsp;<span class="chargeback">($'.number_format($chargebackvalue, 2).')</span>'; } ?></div>
 <?php } else { ?>
-				<div class="col" style="width:6%;"><?php echo '$'.number_format($policy->premium, 2); ?></div>
+				<div class="col" style="width:9%;"><?php echo '$'.number_format($policy->premium, 2); ?></div>
 <?php } ?>
 				<div class="col" style="width:6%;<?php echo $addStyle; ?>"><?php echo $policy->busi_name; ?></div>
 				<div class="col" style="width:8%;<?php echo $addStyle; ?>"><?php echo $policy->user_first_name." ".$policy->user_last_name; ?></div>
@@ -136,10 +136,7 @@
 				<div class="col" style="width:9%;<?php echo $addStyle; ?>"><?php echo $policy->len_name; ?></div>
 				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-note-action" data-notes="<?php echo $policy->notes; ?>"><img src="/public/img/policy_note_btn.png" class="policy-listing-button" alt="Notes" /></a></div>
 				<div class="col" style="width:6%;"><?php if ($policy->date_written) { echo date('m/d/y',strtotime($policy->date_written)); } else { echo "&nbsp;";} ?></div>
-				<div class="col" style="width:6%;"><?php if ($policy->date_issued) { echo date('m/d/y',strtotime($policy->date_issued)); } else { echo "<a class=\"policy-edit-action\" data-info=\"".$policy->id."','".$policy->renewal."','".$policy->first."','".$policy->last."','".$policy->description."','".$policy->category_id."','".$policy->premium."','".$policy->business_type_id."','".$policy->user_id."','".$policy->source_type_id."','".$policy->length_type_id."','".$policy->notes."','".$policy->date_written."','".$policy->date_issued."','".$policy->date_effective."','".$policy->date_canceled."','".$policy->zip_code."','".$policy->status."\">+&nbsp;</a>";} ?></div>
-				<div class="col" style="width:6%;"><?php if ($policy->date_effective) { echo date('m/d/y',strtotime($policy->date_effective)); } else { echo "<a class=\"policy-edit-action\" data-info=\"".$policy->id."','".$policy->renewal."','".$policy->first."','".$policy->last."','".$policy->description."','".$policy->category_id."','".$policy->premium."','".$policy->business_type_id."','".$policy->user_id."','".$policy->source_type_id."','".$policy->length_type_id."','".$policy->notes."','".$policy->date_written."','".$policy->date_issued."','".$policy->date_effective."','".$policy->date_canceled."','".$policy->zip_code."','".$policy->status."\">+&nbsp;&nbsp;</a>";} ?></div>
-				<div class="col" style="width:1%;<?php echo $addStyle; ?>"><a class="policy-delete-action" data-delete="<?php echo $policy->id."','".$policy->first."','".$policy->last."','".$policy->description; ?>"><img src="/public/img/policy_delete_btn.png" class="policy-listing-button" alt="Delete" /></a></div>
-				<div class="col" style="width:1%;<?php echo $addStyle; ?>"></div>
+				<div class="col" style="width:2%;<?php echo $addStyle; ?>"></div>
 			</div>
 <?php
 		$rowcnt++;
@@ -202,14 +199,15 @@ $(document).ready(function() {
 		var src = info[9];
 		var len = info[10];
 		var text = info[11];
-		var dw = info[12];
-		var di = info[13];
-		var de = info[14];
-		var dc = info[15];
-		var zip = info[16];
-		var stat = info[17];
+		var pnum = info[12];
+		var dw = info[13];
+		var di = info[14];
+		var de = info[15];
+		var dc = info[16];
+		var zip = info[17];
+		var stat = info[18];
 		// do edit
-		openPolicyEditWindow(currcat,id,text,fname,lname,desc,prem,zip,cat,busi,sold,src,len,dw,di,de,dc,renewal,stat);
+		openPolicyEditWindow(currcat,id,text,pnum,fname,lname,desc,prem,zip,cat,busi,sold,src,len,dw,di,de,dc,renewal,stat);
 	});
 
 	// OPEN DESCRIPTION TEXT WINDOW

@@ -211,7 +211,7 @@
 <!-- end edit right box -->
 			</form>
 <div class="policy-edit-bar"></div>
-		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="policy-add" data-type="add" class="plain-btn">Add</button><button id="policy-save" data-type="edit" class="plain-btn">Save</button>
+		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="policy-add" data-type="add" class="plain-btn">Add</button><button id="policy-save" data-type="edit" class="plain-btn">Save</button>&nbsp;&nbsp;&nbsp;<button id="policy-erase" data-type="delete" class="plain-btn-erase">Erase</button>
 	</div>
 
 <br />

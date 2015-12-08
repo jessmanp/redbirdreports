@@ -29,7 +29,7 @@ function closeModal() {
 }
 
 // OPEN/CLOSE POPUP WINDOW
-function openWindow(currcat,type,message,id,text,fname,lname,desc,prem,zip,cat,busi,sold,src,len,dw,di,de,dc,renewal,stat) {
+function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,cat,busi,sold,src,len,dw,di,de,dc,renewal,stat) {
 
 	$("#policy-window").hide();
 
@@ -83,6 +83,8 @@ function openWindow(currcat,type,message,id,text,fname,lname,desc,prem,zip,cat,b
 			$("#policy_sub_category").append($("#captionsloan").val());
 		} else if ($("#policy_type").val() == 70) {
 			$("#policy_sub_category").append($("#captionsfund").val());
+		} else {
+			$("#policy_sub_category").append('<option value="0"></option>');
 		}
 	});
 	// populate based on category
@@ -120,12 +122,15 @@ function openWindow(currcat,type,message,id,text,fname,lname,desc,prem,zip,cat,b
 		$("#policy-edit #id").val(id);
 		$("#policy-save").hide();
 		$("#policy-add").fadeIn();
+		$("#policy-erase").hide();
 		$("#policy_first_name").val(fname);
 		$("#policy_last_name").val(lname);
 		$("#policy_description").val(desc);
+		$("#policy_premium").prop("readonly", false);
 		$("#policy_premium").val(prem);
 		$("#policy_zip").val(zip);
 		$("#policy_notes").val(text);
+		$("#policy_number").val(pnum);
 		$("#policy_dropdown_cover").hide();
 		$(".policy-new-premium").hide();
 		$("#policy_business_type option[value="+busi+"]").prop("selected", true);
@@ -169,6 +174,7 @@ function openWindow(currcat,type,message,id,text,fname,lname,desc,prem,zip,cat,b
 		//$("#policy-edit #icon").html('<img src="/public/img/icon_'+cat+'.png class="policy-entry-icon" />');
 		$("#policy-edit #id").val(id);
 		$("#policy-add").hide();
+		$("#policy-erase").fadeIn();
 		$("#policy-save").fadeIn();
 		$("#policy_first_name").val(fname);
 		$("#policy_last_name").val(lname);
@@ -177,12 +183,14 @@ function openWindow(currcat,type,message,id,text,fname,lname,desc,prem,zip,cat,b
 		$("#policy_premium").val(prem);
 		$("#policy_zip").val(zip);
 		$("#policy_notes").val(text);
+		$("#policy_number").val(pnum);
 		var catparts = cat.split("-");
 		cat = catparts[0];
 		var catp = null;
 		catp = catparts[1];
 		if (catp == 0) {
 			$("#policy_type option[value="+cat+"]").prop("selected", true);
+			$("#policy_sub_category").empty();
 			if (cat == 1) {
 				$("#policy_sub_category").append($("#captionsauto").val());
 			} else if (cat == 9) {
@@ -200,6 +208,7 @@ function openWindow(currcat,type,message,id,text,fname,lname,desc,prem,zip,cat,b
 			}
 		} else {
 			$("#policy_type option[value="+catp+"]").prop("selected", true);
+			$("#policy_sub_category").empty();
 			if (catp == 1) {
 				$("#policy_sub_category").append($("#captionsauto").val());
 			} else if (catp == 9) {
@@ -431,8 +440,8 @@ function openPolicyAddWindow(currcat,id) {
 }
 
 // EDIT POLICY
-function openPolicyEditWindow(currcat,id,text,fname,lname,desc,prem,zip,cat,busi,sold,src,len,dw,di,de,dc,renewal,stat) {
-	openWindow(currcat,'edit','Edit',id,text,fname,lname,desc,prem,zip,cat,busi,sold,src,len,dw,di,de,dc,renewal,stat);
+function openPolicyEditWindow(currcat,id,text,pnum,fname,lname,desc,prem,zip,cat,busi,sold,src,len,dw,di,de,dc,renewal,stat) {
+	openWindow(currcat,'edit','Edit',id,text,pnum,fname,lname,desc,prem,zip,cat,busi,sold,src,len,dw,di,de,dc,renewal,stat);
 }
 
 // SHOW DESC TEXT IN A WINDOW
@@ -447,17 +456,18 @@ function openPolicyTextWindow(text) {
 
 // DELETE POLICY
 function doPolicyDelete(id,first,last,desc) {
-	openWindow('','delete','Erase Policy',id,'',first,last,desc);
+	$("#policy-edit").hide();
+	openWindow('','delete','Erase Policy',id,'','',first,last,desc);
 }
 
 // RENEW POLICY
 function doPolicyRenewal(id,first,last,desc) {
-	openWindow('','renewal','Renew Policy',id,'',first,last,desc);
+	openWindow('','renewal','Renew Policy',id,'','',first,last,desc);
 }
 
 // RENEW CANCEL POLICY
 function doPolicyCancel(id,first,last,desc) {
-	openWindow('','renewcancel','Cancel Policy',id,'',first,last,desc);
+	openWindow('','renewcancel','Cancel Policy',id,'','',first,last,desc);
 }
 
 // REINSTATE POLICY
@@ -570,6 +580,15 @@ $(document).ready(function() {
 	$("#policy-save").on("click", function(event) {
 		event.preventDefault();
 		$('#policy_entry_form').submit();
+	});
+			
+	$("#policy-erase").on("click", function(event) {
+		event.preventDefault();
+		var id = $("#policy-edit #id").val();
+		var first = $("#policy_first_name").val();
+		var last = $("#policy_last_name").val();
+		var desc = $("#policy_description").val();
+		doPolicyDelete(id,first,last,desc);
 	});
 			
 	$('#policy_entry_form').submit(function(event) {
