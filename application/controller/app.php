@@ -580,6 +580,7 @@ class App extends Controller
         // load views.
         require 'application/views/_templates/header.php';
         require 'application/views/_templates/main_header.php';
+        require 'application/views/myagency/header.php';
         require 'application/views/myagency/'.$sub.'.php';
         require 'application/views/_templates/footer.php';
     }

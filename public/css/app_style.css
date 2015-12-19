@@ -171,6 +171,16 @@ h1 {
 	background-color:#ffffff;
 	z-index:10;
 }
+#myagency-header {
+	width:100%;
+	margin:110px 0 0 0;
+	position:fixed; 
+	top:0;
+	left:0;
+	right:0;
+	background-color:#ffffff;
+	z-index:10;
+}
 #sub-header {
 	width:100%;
 	margin:110px 0 0 0;
@@ -372,6 +382,13 @@ input[type=radio]:not(old):checked + label > span > span{
 	height:220px;
 }
 
+#sub-menu-short {
+	clear:both;
+	background-color:#a20004;
+	min-width:900px;
+	height:90px;
+}
+
 #logo {
 	float:left;
 	width:196px;
@@ -463,6 +480,23 @@ input[type=radio]:not(old):checked + label > span > span{
 }
 
 .sub-button:hover {
+	background-color:#000000;
+}
+
+.sub-button-wide {
+	float:left;
+	margin:8px 0 0 20px;
+	width:199px;
+	height:70px;
+	background-color:#a20004;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	cursor:pointer;
+	border:2px solid #ffffff;
+}
+
+.sub-button-wide:hover {
 	background-color:#000000;
 }
 
@@ -906,7 +940,15 @@ input[type=radio]:not(old):checked + label > span > span{
 	text-align:center;
 }
 
-.policy-listing-button {
+.policy-listing-button-edit {
+	margin:5px 0 5px 0;
+	vertical-align:middle;
+	width:28px;
+	height:28px;
+	border:0;
+	cursor:pointer;
+}
+.policy-listing-button-note {
 	margin:5px 0 5px 0;
 	vertical-align:middle;
 	width:28px;
@@ -1386,6 +1428,54 @@ a.policy-edit-action:hover {
     background-color:#000000;
     border:2px solid #000000;
 }
+#update-com-bonus {
+	position:absolute;
+	margin:50px 2px 0 50px;
+	padding:0 0 0 10px;
+    cursor:pointer; 
+    width:140px; 
+    height:37px; 
+    background-color:#a20004;
+    color:#ffffff;
+    border:2px solid #a20004;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+	font-size:12px;
+	text-align:left;
+	line-height:30px;
+}
+#update-com-bonus:hover {
+    background-color:#000000;
+    border:2px solid #000000;
+}
+#update-com-other {
+	position:absolute;
+	margin:135px 2px 0 50px;
+	padding:0 0 0 10px;
+    cursor:pointer; 
+    width:140px; 
+    height:37px; 
+    background-color:#a20004;
+    color:#ffffff;
+    border:2px solid #a20004;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+	font-size:12px;
+	text-align:left;
+	line-height:30px;
+}
+#update-com-other:hover {
+    background-color:#000000;
+    border:2px solid #000000;
+}
 .search-text {
 	color:#a20004;
 }	
@@ -1400,12 +1490,14 @@ a.policy-edit-action:hover {
 }
 .commission-left-cell {
 	float:left;
-	min-width:400px;
+	min-width:700px;
 }
 .commission-right-cell {
-	margin:0 0 0 400px;
+	margin:0 0 0 700px;
 }
 .commission-new-policies {
+	margin:0 0 0 10px;
+	min-width:340px;
 	min-height:75px;
 	background-color:#a20004;
 	-moz-border-radius:8px;
@@ -1417,7 +1509,8 @@ a.policy-edit-action:hover {
 	line-height:18px;
 }
 .commission-renewals {
-	margin:10px 0 0 0;
+	margin:10px 0 0 10px;
+	min-width:340px;
 	min-height:75px;
 	background-color:#a20004;
 	-moz-border-radius:8px;
@@ -1429,9 +1522,8 @@ a.policy-edit-action:hover {
 	line-height:18px;
 }
 .commission-special {
-	margin:0 0 0 10px;
 	float:left;
-	width:280px;
+	width:400px;
 	min-height:75px;
 	background-color:#a20004;
 	-moz-border-radius:8px;
@@ -1443,7 +1535,7 @@ a.policy-edit-action:hover {
 	line-height:18px;
 }
 .commission-earned {
-	margin:0 0 0 310px;
+	margin:0 0 0 415px;
 	min-width:280px;
 	min-height:75px;
 	background-color:#a20004;
@@ -1456,7 +1548,7 @@ a.policy-edit-action:hover {
 	line-height:18px;
 }
 .commission-trends {
-	margin:10px 0 0 15px;
+	margin:10px 0 0 0;
 	min-height:75px;
 	background-color:#a20004;
 	-moz-border-radius:8px;
@@ -1517,11 +1609,12 @@ a.policy-edit-action:hover {
 	background-color:#ffffff;
 	min-height:175px;
 }
+.com-special-all {
+	width:250px;
+}
 .com-type {
 	font-weight:bold;
 }
-
-
 
 
 
@@ -1536,8 +1629,13 @@ a.policy-edit-action:hover {
 
 #myagency-content {
 	clear:both;
-	margin:160px 0 32px 0;
-	min-height:600px;
+	margin:190px 0 32px 0;
+	text-align:center;
+}
+#myagency-container {
+	margin:100px auto 5px auto;
+	width:890px;
+	clear:both;
 }
 
 #support-content {

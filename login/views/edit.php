@@ -1,9 +1,11 @@
-<?php $css = 'setup_style.css'; ?>
-<?php include('../application/views/_templates/header.php'); ?>
-
+<?php
+$css = 'setup_style.css';
+$rpath = filter_var($_GET['r'], FILTER_SANITIZE_URL);
+include('../application/views/_templates/header.php');
+?>
 <header>
 	<img id="settings-logo" src="/public/img/redbird_logo_sm.png" class="home-logo" alt="" />
- 	<div class="button-right"><img id="settings-dashboard" src="/public/img/btn_dashboard_white.png" class="menu-btn-icon" alt="Dashboard" /></div>
+ 	<div class="button-right" data-rpath="<?php echo urlencode($rpath); ?>"><img id="settings-back" src="/public/img/btn_menu.png" class="menu-btn-icon" alt="Back To Application" /></div>
 </header>
 <div style="background-color:#eeeeee;">
 <br />
@@ -17,8 +19,18 @@
 
 <div id="register">
 
-<h1>Edit User Settings</h1>
+<h1>User Profile</h1>
 <br />
+<div class="user-profile">
+<em>Username:</em> <strong style="font-size:18px;"><?php echo $_SESSION['user_name']; ?></strong><br />
+<em>Email:</em> <strong style="font-size:18px;"><?php echo $_SESSION['user_email']; ?></strong><br />
+<em>First Name:</em> <strong style="font-size:18px;"><?php if (isset($user->user_first_name)) echo $user->user_first_name; ?></strong><br />
+<em>Last Name:</em> <strong style="font-size:18px;"><?php if (isset($user->user_last_name)) echo $user->user_last_name; ?></strong><br />
+<em>Job Title:</em> <strong style="font-size:18px;"><?php if (isset($user->user_job_title)) echo $user->user_job_title; ?></strong><br />
+<em>Phone:</em> <strong style="font-size:18px;"><?php if (isset($user->user_phone)) echo $user->user_phone; ?></strong><br />
+<em>Mobile:</em> <strong style="font-size:18px;"><?php if (isset($user->user_mobile)) echo $user->user_mobile; ?></strong><br />
+<em>Zip Code:</em> <strong style="font-size:18px;"><?php if (isset($user->user_zip_code)) echo $user->user_zip_code; ?></strong><br />
+</div>
 
 <?php echo WORDING_EDIT_YOUR_CREDENTIALS; ?>
 
@@ -28,9 +40,9 @@
 
 <div style="clear:both;">
 <!-- clean separation of HTML and PHP -->
-<div class="settings-title"><em>Update Username:</em> <strong><?php echo $_SESSION['user_name']; ?></strong></div>
+<div class="settings-title"><em>Current Username:</em> <strong><?php echo $_SESSION['user_name']; ?></strong></div>
 <!-- edit form for username / this form uses HTML5 attributes, like "required" and type="email" -->
-<form method="post" action="/login/?edit=username" name="user_edit_form_name">
+<form method="post" action="/login/?edit=username&r=<?php echo urlencode($rpath); ?>" name="user_edit_form_name">
 	<input type="hidden" id="user_edit_submit_name" name="user_edit_submit_name" value="1" />
     <label for="user_name"><?php echo WORDING_NEW_USERNAME; ?><span class="small">*Required</span></label>
     <input id="user_name" type="text" name="user_name" pattern="[a-zA-Z0-9]{2,64}" required />
@@ -43,9 +55,9 @@
     <!-- <input type="submit" name="user_edit_submit_name" value="<?php echo WORDING_CHANGE_USERNAME; ?>" /> -->
 </form>
 
-<div class="settings-title"><em>Update Email:</em> <strong><?php echo $_SESSION['user_email']; ?></strong></div>
+<div class="settings-title"><em>Current Email:</em> <strong><?php echo $_SESSION['user_email']; ?></strong></div>
 <!-- edit form for user email / this form uses HTML5 attributes, like "required" and type="email" -->
-<form method="post" action="/login/?edit=email" name="user_edit_form_email">
+<form method="post" action="/login/?edit=email&r=<?php echo urlencode($rpath); ?>" name="user_edit_form_email">
 	<input type="hidden" id="user_edit_submit_email" name="user_edit_submit_email" value="1" />
     <label for="user_email"><?php echo WORDING_NEW_EMAIL; ?><span class="small">*Valid e-mail only</span></label>
     <input id="user_email" type="email" name="user_email" required />
@@ -58,7 +70,7 @@
 
 <div class="settings-title"><em>Update Password</em></div>
 <!-- edit form for user's password / this form uses the HTML5 attribute "required" -->
-<form method="post" action="/login/?edit=password" name="user_edit_form_password">
+<form method="post" action="/login/?edit=password&r=<?php echo urlencode($rpath); ?>" name="user_edit_form_password">
 	<input type="hidden" id="user_edit_submit_password" name="user_edit_submit_password" value="1" />
     <label for="user_password_old"><?php echo WORDING_OLD_PASSWORD; ?><span class="small">*Required</span></label>
     <input id="user_password_old" type="password" name="user_password_old" required autocomplete="off" />
@@ -77,9 +89,9 @@
     <!-- <input type="submit" name="user_edit_submit_password" value="<?php echo WORDING_CHANGE_PASSWORD; ?>" /> -->
 </form>
 
-<div class="settings-title"><em>Update Personal Info</em></div>
+<div class="settings-title"><em>Current Personal Info</em></div>
 <!-- edit form for user's info / this form uses the HTML5 attribute "required" -->
-<form method="post" action="/login/?edit=info" name="user_edit_form_info">
+<form method="post" action="/login/?edit=info&r=<?php echo urlencode($rpath); ?>" name="user_edit_form_info">
 	<input type="hidden" id="user_edit_submit_info" name="user_edit_submit_info" value="1" />
     <label for="user_first_name"><?php echo WORDING_FIRST_NAME; ?><span class="small">*Optional</span></label>
     <input id="user_first_name" type="text" name="user_first_name" maxlength="64" value="<?php if (isset($user->user_first_name)) echo $user->user_first_name; ?>" />

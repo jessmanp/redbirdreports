@@ -115,11 +115,11 @@
 			<div class="<?php echo $rowclass; ?>">
 				<div class="col" style="width:1%;">&nbsp;<em><?php echo $rowcnt; ?></em></div>
 <?php if ($policy->renewal == 1) { ?>
-				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-renewal-action" data-renewal="<?php echo $policy->id."','".$policy->first."','".$policy->last."','".$policy->description; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt="Renew" /></a></div>
+				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-renewal-action" data-renewal="<?php echo $policy->id."','".$policy->first."','".$policy->last."','".$policy->description; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button-edit" alt="Renew" /></a></div>
 <?php } elseif ($policy->date_canceled != null) { ?>
-				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-reinstate-action" data-id="<?php echo $policy->id; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt="Reinstate" /></a></div>
+				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-reinstate-action" data-id="<?php echo $policy->id; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button-edit" alt="Reinstate" /></a></div>
 <?php } else { ?>
-				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-edit-action" data-info="<?php echo $policy->id."','".$policy->renewal."','".$policy->first."','".$policy->last."','".$policy->description."','".$policy->category_id."-".$policy->cat_pid."','".$policy->premium."','".$policy->business_type_id."','".$policy->user_id."','".$policy->source_type_id."','".$policy->length_type_id."','".$policy->notes."','".$policy->policy_number."','".$policy->date_written."','".$policy->date_issued."','".$policy->date_effective."','".$policy->date_canceled."','".$policy->zip_code."','".$policy->status; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button" alt="Edit" /></a></div>
+				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-edit-action" data-info="<?php echo $policy->id."','".$policy->renewal."','".$policy->first."','".$policy->last."','".$policy->description."','".$policy->category_id."-".$policy->cat_pid."','".$policy->premium."','".$policy->business_type_id."','".$policy->user_id."','".$policy->source_type_id."','".$policy->length_type_id."','".$policy->notes."','".$policy->policy_number."','".$policy->date_written."','".$policy->date_issued."','".$policy->date_effective."','".$policy->date_canceled."','".$policy->zip_code."','".$policy->status; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button-edit" alt="Edit" /></a></div>
 <?php } ?>
 				<div class="col" style="width:11%;<?php echo $addStyle; ?>"><?php echo $policy->first; ?></div>
 				<div class="col" style="width:13%;<?php echo $addStyle; ?>"><?php echo $policy->last; ?></div>
@@ -134,7 +134,7 @@
 				<div class="col" style="width:8%;<?php echo $addStyle; ?>"><?php echo $policy->user_first_name." ".$policy->user_last_name; ?></div>
 				<div class="col" style="width:6%;<?php echo $addStyle; ?>"><?php echo $policy->src_name; ?></div>
 				<div class="col" style="width:9%;<?php echo $addStyle; ?>"><?php echo $policy->len_name; ?></div>
-				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-note-action" data-notes="<?php echo $policy->notes; ?>"><img src="/public/img/policy_note_btn.png" class="policy-listing-button" alt="Notes" /></a></div>
+				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-note-action" data-notes="<?php echo $policy->notes; ?>"><img src="/public/img/policy_note_btn.png" class="policy-listing-button-note" alt="Notes" /></a></div>
 				<div class="col" style="width:6%;"><?php if ($policy->date_written) { echo date('m/d/y',strtotime($policy->date_written)); } else { echo "&nbsp;";} ?></div>
 				<div class="col" style="width:2%;<?php echo $addStyle; ?>"></div>
 			</div>
@@ -251,6 +251,14 @@ $(document).ready(function() {
 	});
 
 // =============== END LISTING ACTIONS =============== //
+
+	// check/load retina image
+	if (Retina.isRetina()) {
+		editimg = "/public/img/policy_edit_btn@2x.png";
+		noteimg = "/public/img/policy_note_btn@2x.png";
+		$('.policy-listing-button-edit').attr('src',editimg);
+		$('.policy-listing-button-note').attr('src',noteimg);
+	}
 
 });
 

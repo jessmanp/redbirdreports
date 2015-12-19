@@ -58,6 +58,9 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 	$(".policy-message").fadeIn("fast");
 	$(".policy-message").text(message);
 	if (category != '') {
+		if (Retina.isRetina()) {
+			category = category+"@2x";
+		}
 		$(".policy-message").prepend('<img src="/public/img/icon_'+category+'.png" class="modal-icon" alt="'+categoryName+'" />');
 		$(".policy-message").append(' '+categoryName+' Policy');
 	}

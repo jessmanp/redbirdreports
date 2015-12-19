@@ -54,7 +54,8 @@ $(document).ready(function() {
 	// SETTINGS
 	$("#settings").closest(".main-button").on("click", function(event) {
 		event.preventDefault();
-		window.location.href = "/login/?edit";
+		var rpth = $(this).data("rpath");
+		window.location.href = "/login/?edit=1&r="+rpth;
 	});
 
 	// LOGOUT
@@ -63,10 +64,12 @@ $(document).ready(function() {
 		window.location.href = "/login?logout";
 	});
 
-	// SETTINGS DASHBOARD
-	$("#settings-dashboard").closest(".button-right").on("click", function(event) {
+	// SETTINGS BACK BUTTON
+	$("#settings-back").closest(".button-right").on("click", function(event) {
 		event.preventDefault();
-		window.location.href = "/app/dashboard";
+		var rpth = $(this).data("rpath");
+		rpth = decodeURIComponent(rpth);
+		window.location.href = decodeURI(rpth);
 	});	
 
 	// SETTINGS LOGO

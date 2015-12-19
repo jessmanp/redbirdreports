@@ -1,3 +1,6 @@
+<?php
+	$url = filter_var($_GET['url'], FILTER_SANITIZE_URL);
+?>
 <div id="modal"></div>
 <div id="popupmessage">
 	<div id="message"></div>
@@ -31,7 +34,7 @@
 				<img id="support" src="/public/img/btn_support.png" class="main-btn-icon" alt="Support" />
 				<div class="main-btn-text">Support</div>
 			</div>
-			<div class="main-button">
+			<div class="main-button" data-rpath="<?php echo urlencode('/'.$url); ?>">
 				<img id="settings" src="/public/img/btn_profile.png" class="main-btn-icon" alt="My Profile" />
 				<div class="main-btn-text">My Profile</div>
 			</div>

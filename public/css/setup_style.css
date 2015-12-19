@@ -42,6 +42,22 @@ body	{
 	box-shadow: 1px 3px 8px #666666;
 }
 
+.user-profile {
+	margin:0 auto 20px auto;
+	padding:20px;
+	width:80%;
+	text-align:center;
+	line-height:28px;
+	background-color:#cccccc;
+	border:2px solid #ff0000;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+}
+
 /* PROGRESS BAR STYLE */
 .meter { 
 	height: 20px;  /* Can be anything */
