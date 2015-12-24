@@ -103,10 +103,10 @@ class Home extends Controller
 		// validate agency info form to make sure the agency name was entered
 		if (!isset($agency_name) || empty($agency_name)){
 			$return['error'] = true;
-			$return['msg'] .= 'Agency name is empty. Please enter your agency&rsquo;s name.';
+			$return['msg'] .= '<strong>Agency name is empty.</strong> Please enter your agency&rsquo;s name.';
 		} else if (!preg_match('/[0-9]/', $agency_zip_code)) {
 			$return['error'] = true;
-			$return['msg'] .= 'Agency zip code invalid. Please enter your agency&rsquo;s zip code.';
+			$return['msg'] .= '<strong>Agency zip code invalid.</strong> Please enter your agency&rsquo;s zip code.';
 		//} else if (!preg_match('/[0-9]/', $agency_phone)) {
 		//	$return['error'] = true;
 		//	$return['msg'] .= 'Agency phone is invalid. Please enter your agency&rsquo;s phone.';
@@ -118,7 +118,7 @@ class Home extends Controller
  
 		// submit success functionality
 		if ($return['error'] === false){
-			$return['msg'] = 'Success, All Required Fields Entered. Agency Info Saved.';
+			$return['msg'] = '<strong>Success</strong>, Agency Information Updated.';
 		}
  
 		//Return json encoded results

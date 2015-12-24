@@ -84,6 +84,14 @@ $(document).ready(function() {
 		window.scrollTo(0, 0);
 	});
 
+	// LISTEN FOR KEYUP (enter or return) TO CLOSE MESSAGE MODAL WINDOW
+	$(document).keypress(function(e) {
+		if(e.which == 13 && $("#popupmessage").is(":visible")) {
+			event.preventDefault();
+			closeModal();
+		}
+	});
+
 	
 });
 /* ]]> */

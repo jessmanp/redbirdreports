@@ -1627,16 +1627,25 @@ a.policy-edit-action:hover {
 	min-height:600px;
 }
 
+
+
 #myagency-content {
 	clear:both;
-	margin:190px 0 32px 0;
+	margin:200px 0 32px 0;
 	text-align:center;
 }
 #myagency-container {
-	margin:100px auto 5px auto;
+	margin:0 auto 0 auto;
+	padding:25px;
 	width:890px;
 	clear:both;
 }
+.myagency-area {
+	margin:0 225px 15px 0;
+	text-align:right;
+}
+
+
 
 #support-content {
 	clear:both;

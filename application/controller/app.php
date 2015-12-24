@@ -38,7 +38,7 @@ class App extends Controller
         // load views.
         require 'application/views/_templates/header.php';
         require 'application/views/_templates/main_header.php';
-        	require 'application/views/dashboard/'.$sub.'.php';
+        require 'application/views/dashboard/'.$sub.'.php';
         require 'application/views/_templates/footer.php';
     }
 
@@ -566,11 +566,29 @@ class App extends Controller
         require 'application/views/_templates/footer.php';
     }
 
-	public function myagency($sub = 'index')
+	public function myagency($sub = 'index', $param = 'default')
     {
 		// load main model
 		$main_model = $this->loadModel('MainModel');
 		$header_data = $main_model->getHeaderInfo($_SESSION['user_id']);
+		
+		if ($param == 'saveAgencySettings') {
+			// update agency settings
+			
+		}
+		
+		if ($sub == 'index') {
+			// load setup model
+			$setup_model = $this->loadModel('SetupModel');
+			// check if logged in and set agency ID
+			if (!empty($_SESSION['user_name']) && ($_SESSION['user_logged_in'] == 1)) {
+				// get and set agency ID based on the owner
+					$agency_id = $setup_model->getOwnerAgencyID($_SESSION['user_id']);
+			}
+
+			// get agency info
+			$agency_data = $setup_model->getAgencyInfo($agency_id);
+		}
 
 		// load CSS based on method
 		$css = 'app_style.css';
