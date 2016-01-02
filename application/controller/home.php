@@ -150,19 +150,19 @@ class Home extends Controller
 		// validate invite employee form to make sure the email was entered
 		if (!isset($employee_email) || empty($employee_email) || !filter_var($employee_email, FILTER_VALIDATE_EMAIL)){
 			$return['error'] = true;
-			$return['msg'] .= 'Employee email is empty or invalid. Please enter the employee&rsquo;s email address.';
+			$return['msg'] .= '<strong>Email</strong> is empty or invalid. Please enter the employee&rsquo;s email address.';
 		} elseif ($employee_email != $employee_email_verify){
 			$return['error'] = true;
-			$return['msg'] .= 'Employee email does not match. Please enter the employee&rsquo;s email address again.';
+			$return['msg'] .= '<strong>Email</strong> does not match. Please enter the employee&rsquo;s email address again.';
 		} elseif (!isset($employee_first_name) || empty($employee_first_name)) {
 			$return['error'] = true;
-			$return['msg'] .= 'Employee first name is not valid. Please enter the employee&rsquo;s first name.';
+			$return['msg'] .= '<strong>First Name</strong> is not valid. Please enter the employee&rsquo;s first name.';
 		} elseif (!isset($employee_last_name) || empty($employee_last_name)) {
 			$return['error'] = true;
-			$return['msg'] .= 'Employee last name is not valid. Please enter the employee&rsquo;s last name.';
+			$return['msg'] .= '<strong>Last Name</strong> is not valid. Please enter the employee&rsquo;s last name.';
 		} elseif (!isset($employee_type) || $employee_type == '') {
 			$return['error'] = true;
-			$return['msg'] .= 'Employee type is not valid. Please select the employee&rsquo;s type.';
+			$return['msg'] .= '<strong>Type</strong> is not valid. Please select the employee&rsquo;s type.';
 		} else {
 			// execute add employee/user functions
 			$agency_id = $setup_model->getOwnerAgencyID($_SESSION['user_id']);
@@ -170,7 +170,7 @@ class Home extends Controller
 
 			if (!isset($invited_user_id) || empty($invited_user_id)) {
 				$return['error'] = true;
-				$return['msg'] .= 'Employee email is not valid or already in use. Please enter the employee&rsquo;s email address.';
+				$return['msg'] .= '<strong>Email</strong> is not valid or already in use.<br />Please enter the employee&rsquo;s email address.';
 			}
 		}
  
@@ -186,8 +186,8 @@ class Home extends Controller
 	
 		// submit success functionality
 		if ($return['error'] === false){
-			$return['msg'] = 'Success, the new employee has been added to the system and the invitation email has been sent.';
-			$return['type'] = $employee_type;
+			$return['msg'] = '<strong>Success</strong>, the new employee has been added to the system and an invitation email has been sent.';
+			$return['id'] = $invited_user_id;
 		}
  
 		//Return json encoded results

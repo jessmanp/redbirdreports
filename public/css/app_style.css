@@ -114,7 +114,7 @@ h1 {
 	font-size:20px;
 	font-weight:bold;
 	min-height:25px;
-	padding:25px 25px 10px 25px;
+	padding:10px 25px 10px 25px;
 	border-bottom:2px solid #cccccc;
 }
 .policy-text-box {
@@ -122,6 +122,12 @@ h1 {
 	text-align:left;
 	font-weight:normal;
 	font-size:14px;
+}
+.policy-required-key {
+	margin:50px 0 0 680px;
+	position:absolute;
+	font-size:11px;
+	font-weight:bold;
 }
 #policy-edit {
 	display:none;
@@ -386,7 +392,7 @@ input[type=radio]:not(old):checked + label > span > span{
 	clear:both;
 	background-color:#a20004;
 	min-width:900px;
-	height:90px;
+	height:95px;
 }
 
 #logo {
@@ -1001,6 +1007,11 @@ a.status-link:hover {
 	color:#ffffff;
 }
 
+.table-title {
+	font-weight:bold;
+	font-size:16px;
+}
+
 .sort-text {
 	font-size:12px;
 	color:#cccccc;
@@ -1280,7 +1291,7 @@ a.policy-edit-action:hover {
 	text-align:right;
 }
 .policy-edit-bar {
-	margin:10px 20px 30px 20px;
+	margin:10px 20px 10px 20px;
 	border-top:2px solid #cccccc;
 	clear:both;
 }
@@ -1476,6 +1487,30 @@ a.policy-edit-action:hover {
     background-color:#000000;
     border:2px solid #000000;
 }
+#invite-employee {
+	position:absolute;
+	margin:128px 2px 0 -538px;
+	padding:0 0 0 10px;
+    cursor:pointer; 
+    width:200px; 
+    height:37px; 
+    background-color:#a20004;
+    color:#ffffff;
+    border:2px solid #a20004;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+	font-size:12px;
+	text-align:left;
+	line-height:30px;
+}
+#invite-employee:hover {
+    background-color:#000000;
+    border:2px solid #000000;
+}
 .search-text {
 	color:#a20004;
 }	
@@ -1631,19 +1666,151 @@ a.policy-edit-action:hover {
 
 #myagency-content {
 	clear:both;
-	margin:200px 0 32px 0;
+	margin:205px 0 32px 0;
 	text-align:center;
 }
 #myagency-container {
 	margin:0 auto 0 auto;
-	padding:25px;
-	width:890px;
+	width:868px;
 	clear:both;
 }
 .myagency-area {
-	margin:0 225px 15px 0;
+	margin:-5px auto 15px auto;
+	width:100%;
+	text-align:center;
+	background-color:#a20004;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	border:2px solid #a20004;
+	font-size:14px;
+	color:#000000;
+	line-height:18px;
+}
+#agency-employee-box {
+	float:left;
+	margin:15px 10px 0 0;
+	width:190px;
+	height:90px;
+	background-color:#cccccc;
+	padding:5px;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	text-align:center;
+	font-size:14px;
+}
+.agency-employee-name {
+	font-weight:bold;
+	font-size:14px;
+	padding:8px 0 8px 0;
+}
+#agency-employee-current {
+	float:left;
+	margin:15px 0 0 0;
+	width:638px;
+	min-height:100px;
+	background-color:#ffffff;
+	border:2px solid #a20004;
+	padding:15px 15px 15px 5px;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	text-align:right;
+	font-size:14px;
+}
+#employeehiredate {
+	display:inline-block;
+	padding:0 8px 0 8px;
+	margin:3px 0 5px 5px;
+	cursor:pointer; 
+	width:70px; 
+	height:30px;
+	font-size:12px;
+	background-color:#ffffff;
+	color:#000000;
+	border:2px solid #a20004;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+}
+.employee-title {
+	float:left;
+	margin:5px 0 15px 0;
+	text-align:center;
+	font-size:20px;
+	font-weight:bold;
+}
+.employee-icon {
+	float:left;
+	margin:-5px 0 0 220px;
+	width:60px;
+	height:46px;
+	vertical-align:middle;
+	display:block;
+	border:0;
+}
+.table-row input[type=text] {
+	width:60px;
+	background-color:#ffffff;
+	border:2px solid #a20004;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+}
+.table-row-alt input[type=text] {
+	width:60px;
+	background-color:#cccccc;
+	border:2px solid #a20004;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+}
+.myagency-text-footer {
+	color:#ffffff;
+	line-height:26px;
+	font-weight:bold;
+}
+.myagency-title {
+	color:#ffffff;
+	line-height:26px;
+	font-weight:bold;
+	text-align:center;
+}
+.myagency-info-holder {
+	padding:15px 215px 15px 5px;
+	background-color:#ffffff;
 	text-align:right;
 }
+.myagency-settings-holder {
+	padding:15px;
+	background-color:#ffffff;
+	text-align:center;
+}
+#emp_default_label {
+	height:10px;
+	margin:12px 0 -25px 0;
+	font-size:12px;
+	font-style:italic;
+	font-weight:normal;
+}
+#emp_first_label {
+	line-height:22px;
+	font-style:italic;
+}
+#emp_last_label {
+	font-style:italic;
+}
+
 
 
 

@@ -78,7 +78,6 @@ class SetupModel
             $result = $query_check_user_name->fetchAll();
 
             // if username or/and email find in the database
-            // TODO: this is pretty awful too!
             if (count($result) > 0) {
 
 				// AUTO GEN ERROR THE USER EXISTS
@@ -114,15 +113,15 @@ class SetupModel
                 $invite_user_id = $this->db->lastInsertId();
 
 				// link this user to the agency
-                	$query_agency_user_insert = $this->db->prepare('INSERT INTO agencies_users (agency_id,user_id) VALUES (:agency_id,:user_id)');
+                $query_agency_user_insert = $this->db->prepare('INSERT INTO agencies_users (agency_id,user_id) VALUES (:agency_id,:user_id)');
 				$query_agency_user_insert->bindValue(':agency_id', $agency_id, PDO::PARAM_INT);
-                	$query_agency_user_insert->bindValue(':user_id', $invite_user_id, PDO::PARAM_INT);
-                	$query_agency_user_insert->execute();
+                $query_agency_user_insert->bindValue(':user_id', $invite_user_id, PDO::PARAM_INT);
+                $query_agency_user_insert->execute();
 
 				// create compensation data for this user
-                	$query_user_compensation_insert = $this->db->prepare('INSERT INTO compensation_plans (user_id) VALUES (:user_id)');
-                	$query_user_compensation_insert->bindValue(':user_id', $invite_user_id, PDO::PARAM_INT);
-                	$query_user_compensation_insert->execute();
+                $query_user_compensation_insert = $this->db->prepare('INSERT INTO compensation_plans (user_id) VALUES (:user_id)');
+                $query_user_compensation_insert->bindValue(':user_id', $invite_user_id, PDO::PARAM_INT);
+                $query_user_compensation_insert->execute();
 
                 if ($query_invite_user_insert) {
                     // send a verification email
@@ -180,7 +179,7 @@ class SetupModel
         $body = '
 <html>
 <head>
-<title>AGENCY nerd - Invite New Member Email</title>
+<title>Red Bird Reports - Invite New Member Email</title>
 <!-- css -->
 <style>
 	html {
@@ -193,12 +192,12 @@ class SetupModel
 <body style="margin:0;padding:0;border:0;background-color:#ffffff;font-family: Calibri, Helvetica, Arial, Verdana, sans-serif;font-size:16px;color:#000000;">
 <div style="width:100%;min-height:100%;overflow-x:hidden;position:absolute;">
 <div style="padding:10px 0 0 10px;height:55px;background-color:#ffffff;border-bottom:2px solid #ff0000;color:#333333;">
-	<img src="http://dev.agencynerd.com/public/img/agency_nerd_app_logo.png" class="home-logo" alt="" />
+	<img src="http://dev.redbirdreports.com/public/img/redbird_logo_sm.png" class="home-logo" alt="" />
 </div>
 <div style="background-color:#eeeeee;">
 <br /><br />
 <div style="margin:0 10px 0 10px;background-color:#ffffff;border:2px solid #ff0000;-webkit-border-radius:10px;-moz-border-radius:10px;border-radius:10px;font-size:16px;text-align:left;line-height:22px;padding:15px;">
-<h1 style="margin:5px 0 0 0;font-size:22px;font-weight:normal;">You have been invited to Agency Nerd!</h1>
+<h1 style="margin:5px 0 0 0;font-size:22px;font-weight:normal;">You have been invited to Red Bird Reports!</h1>
 <br />
 Please confirm your email by clicking the link below. Once you have clicked the link below your account will be confirmed and you can complete the setup process.
 <br /><br />
@@ -214,13 +213,13 @@ Thanks! We look forward to making your agency smarter!
 <br /><br />
 </div>
 <div style="clear:both;text-align:center;padding:5px;font-size:12px;height:45px;background-color:#ffffff;border-top:2px solid #ff0000;color:#333333;">
-	&copy; 2014 Sea Cloud Media. All Rights Reserved.
+	&copy; 2016 Red Bird Reports. All Rights Reserved.
 </div>
 <div style="clear:both;font-size:14px;padding:10px;">
-<span style="font-weight:bold; color:#000000;">AGENCY</span> <span style="font-family:Courier, \'Courier New Bold\', monospace; color:#ff0000; font-style:normal; font-weight:normal;">nerd</span>&trade; is Your Agency&rsquo;s Solution.<br />
+<span style="font-weight:bold; color:#000000;">Red Bird Reports</span>&trade; is Your Agency&rsquo;s Solution.<br />
 <span style="color:#ff0000; text-shadow:none; font-weight:bold;">We make your agency smarter</span><br /><br />
-<span style="font-weight:bold; color:#000000;">AGENCY</span> <span style="font-family:Courier, \'Courier New Bold\', monospace; color:#ff0000; font-style:normal; font-weight:normal;">nerd</span>&trade; is easy to use and can be set up in minutes. There is no annual contract or set up fee. Cancel at any time.<br /><br />
-If you do not wish to receive email from <span style="font-weight:bold; color:#000000;">AGENCY</span> <span style="font-family:Courier, \'Courier New Bold\', monospace; color:#ff0000; font-style:normal; font-weight:normal;">nerd</span>&trade; in the future, please <a href="http://www.agencynerd.com/unsubscribe">UNSUBSCRIBE</a>.
+<span style="font-weight:bold; color:#000000;">Red Bird Repots</span>&trade; is easy to use and can be set up in minutes. There is no annual contract or set up fee. Cancel at any time.<br /><br />
+If you do not wish to receive email from <span style="font-weight:bold; color:#000000;">Red Bird Reports</span>&trade; in the future, please <a href="http://www.redbirdreports.com/unsubscribe">UNSUBSCRIBE</a>.
 <br /><br />
 </div>
 </div>
@@ -230,7 +229,7 @@ If you do not wish to receive email from <span style="font-weight:bold; color:#0
 
         // the link to your register.php, please set this value in config/email_verification.php
         $mail->Body = $body;
-	    $mail->AltBody = "Welcome to Agency Nerd! ".EMAIL_VERIFICATION_CONTENT." ".$link; // optional, text alternative content
+	    $mail->AltBody = "Welcome to Red Bird Reports! ".EMAIL_VERIFICATION_CONTENT." ".$link; // optional, text alternative content
 	    //$mail->MsgHTML($body);
 
         if(!$mail->Send()) {

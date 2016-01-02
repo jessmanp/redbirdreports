@@ -37,7 +37,7 @@
 	
 	
 	<div id="policy-do-renew">
-	<div style="margin:60px 0 0 20px;position:absolute;font-size:11px;font-weight:bold;"><sup>*</sup> Denotes Required Field(s)</div>
+	<div class="policy-required-key"><sup>*</sup> Denotes Required Field(s)</div>
 		<div class="policy-message"></div>
 			This Policy has been &quot;<strong>RENEWED</strong>&quot; successfully. Enter the new &quot;<strong>PREMIUM</strong>&quot; for this Policy.<br />
 			<p class="policy-delete-box"></p>
@@ -53,7 +53,7 @@
 
 	
 	<div id="policy-renew-cancel">
-	<div style="margin:40px 0 0 20px;position:absolute;font-size:11px;font-weight:bold;"><sup>*</sup> Denotes Required Field(s)</div>
+	<div class="policy-required-key"><sup>*</sup> Denotes Required Field(s)</div>
 		<div class="policy-message"></div>
 			This Policy needs to be &quot;<strong>CANCELED</strong>&quot;. Enter the &quot;<strong>CANCEL DATE</strong>&quot; for this Policy.<br />
 			<p class="policy-delete-box"></p>
@@ -81,7 +81,7 @@
 
 
 	<div id="policy-edit">
-<div style="margin:60px 0 0 675px;position:absolute;font-size:11px;font-weight:bold;"><sup>*</sup>Required Field(s)</div>
+<div class="policy-required-key"><sup>*</sup>Required Field(s)</div>
 		<div class="policy-message"></div>
 			<form id="policy_entry_form" name="policy_entry_form">
 			<input type="hidden" id="edit_path" name="edit_path" value="" />

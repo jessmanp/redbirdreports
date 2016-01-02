@@ -3,7 +3,7 @@
 	<div id="sub-menu">
 		<div id="commission-container">
 			<div id="commission-employee-box">
-				Employee<br />
+				View Employee<br />
 				<div class="commission-employee-name">
 					#firstname_variable#<br />
 					#lastname_variable#

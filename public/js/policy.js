@@ -30,7 +30,7 @@ function closeModal() {
 
 // OPEN/CLOSE POPUP WINDOW
 function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,cat,busi,sold,src,len,dw,di,de,dc,renewal,stat) {
-
+		
 	$("#policy-window").hide();
 
 	var winh = $(window).height();
@@ -439,7 +439,7 @@ function resetSortLinks(searchSubmit) {
 
 // ADD POLICY
 function openPolicyAddWindow(currcat,id) {
-	openWindow(currcat,'add','Add New',id,'','','','','','',0,0,0,0,0,'','','','',0);
+	openWindow(currcat,'add','Add New',id,'','','','','','','',0,0,0,0,0,'','','','',0,1);
 }
 
 // EDIT POLICY

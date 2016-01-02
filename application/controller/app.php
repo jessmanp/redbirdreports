@@ -572,33 +572,236 @@ class App extends Controller
 		$main_model = $this->loadModel('MainModel');
 		$header_data = $main_model->getHeaderInfo($_SESSION['user_id']);
 		
-		if ($param == 'saveAgencySettings') {
-			// update agency settings
-			
+		// load models
+		$setup_model = $this->loadModel('SetupModel');
+		$myagency_model = $this->loadModel('MyAgencyModel');
+		
+		// check if logged in and set agency ID
+		if (!empty($_SESSION['user_name']) && ($_SESSION['user_logged_in'] == 1)) {
+			// get and set agency ID based on the owner
+				$agency_id = $setup_model->getOwnerAgencyID($_SESSION['user_id']);
 		}
 		
-		if ($sub == 'index') {
-			// load setup model
-			$setup_model = $this->loadModel('SetupModel');
-			// check if logged in and set agency ID
-			if (!empty($_SESSION['user_name']) && ($_SESSION['user_logged_in'] == 1)) {
-				// get and set agency ID based on the owner
-					$agency_id = $setup_model->getOwnerAgencyID($_SESSION['user_id']);
+		
+		if ($sub == 'getEmployeeData') {
+			// get employee data
+			
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+
+			// *POPULATE EMPLOYEE COMPENSATION DATA*
+			$employee_id = trim(@$_GET['eid']); // must be an existing ID
+
+			if (!isset($employee_id) || $employee_id == '' || !is_numeric($employee_id)) {
+				$return['error'] = true;
+				$return['msg'] .= '<strong>ERROR</strong>, Invalid employee or no employee was selected.';
+			}
+			
+			// get employees data
+			$employee_data = $myagency_model->getEmployeeData($employee_id);
+
+			if (empty($employee_data)) {
+				$return['error'] = true;
+				$return['msg'] .= '<strong>ERROR</strong>, No employee data found.';
+			} else {
+				$return = $employee_data;
 			}
 
+			//Return json encoded results
+			echo json_encode($return);			
+			exit();
+
+		}
+		
+		
+		if ($sub == 'putEmployeeData') {
+			// update employee data
+ 
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+
+			// *UPDATE EMPLOYEE COMPENSATION*
+			$employee_id = trim(@$_POST['employee_id']); // must be an existing ID
+			$employee_first_name = trim(@$_POST['employee_first_name']); // must be a string
+			$employee_last_name = trim(@$_POST['employee_last_name']); // must be a string
+			$employee_job_title = trim(@$_POST['employee_job_title']); // must be a string
+			$employee_email = trim(@$_POST['employee_email']); // must be an email
+			$employee_email_verify = trim(@$_POST['employee_email_verify']); // must be an email
+			$employee_phone = trim(@$_POST['employee_phone']); // must be a string
+			$employee_mobile = trim(@$_POST['employee_mobile']); // must be a string
+			$employee_zip_code = trim(@$_POST['employee_zip_code']); // must be a string
+			$employee_type = trim(@$_POST['employee_type']); // must be numeric
+			$employee_hire_date = date('Y-m-d H:i:s', strtotime(trim(@$_POST['employee_hire_date']))); // must be a date
+			
+			$employee_auto_new = @$_POST['employee_auto_new']; // must be decimal percent
+			$employee_auto_added = @$_POST['employee_auto_added']; // must be decimal percent
+			$employee_auto_reinstated = @$_POST['employee_auto_reinstated']; // must be decimal percent
+			$employee_auto_transferred = @$_POST['employee_auto_transferred']; // must be decimal percent
+			$employee_auto_renewal = @$_POST['employee_auto_renewal']; // must be decimal percent
+			
+			$employee_fire_new = @$_POST['employee_fire_new']; // must be decimal percent
+			$employee_fire_added = @$_POST['employee_fire_added']; // must be decimal percent
+			$employee_fire_reinstated = @$_POST['employee_fire_reinstated']; // must be decimal percent
+			$employee_fire_transferred = @$_POST['employee_fire_transferred']; // must be decimal percent
+			$employee_fire_renewal = @$_POST['employee_fire_renewal']; // must be decimal percent
+			
+			$employee_life_new = @$_POST['employee_life_new']; // must be decimal percent
+			$employee_life_increase = @$_POST['employee_life_increase']; // must be decimal percent
+			$employee_life_policy = @$_POST['employee_life_policy']; // must be decimal percent
+			
+			$employee_health_new = @$_POST['employee_health_new']; // must be decimal percent
+			$employee_health_policy = @$_POST['employee_health_policy']; // must be decimal percent
+			
+			$employee_bank_deposit_product = @$_POST['employee_bank_deposit_product']; // must be decimal percent
+			$employee_bank_loan_product = @$_POST['employee_bank_loan_product']; // must be decimal percent
+
+			// validate update employee compensation form to make sure the data was entered correctly
+
+			if (!isset($employee_id) || $employee_id == '' || !is_numeric($employee_id)) {
+				$return['error'] = true;
+				$return['msg'] .= 'No employee was selected. Please select an employee.';
+			}
+			if (!isset($employee_first_name) || empty($employee_first_name) || !filter_var($employee_first_name, FILTER_SANITIZE_STRING)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>First Name</strong> Field is Required.<br />';
+			}
+			if (!isset($employee_last_name) || empty($employee_first_name) || !filter_var($employee_first_name, FILTER_SANITIZE_STRING)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Last Name</strong> Field is Required.<br />';
+			}
+			if (!isset($employee_email) || empty($employee_email) || !filter_var($employee_email, FILTER_VALIDATE_EMAIL)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Invalid Email</strong> Field is Required.<br />';
+			}
+			if ($employee_email != $employee_email_verify){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Email Does Not Match</strong> Field is Required.<br />';
+			}
+			if (!isset($employee_type) || !is_numeric($employee_type)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>User Type</strong> Field is Required.<br /><br />';
+			}
+			
+			if (!isset($employee_auto_new) || !is_numeric($employee_auto_new)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Auto New Commission</strong> Field is Required.<br />';
+			}
+			if (!isset($employee_auto_added) || !is_numeric($employee_auto_added)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Auto Added Commission</strong> Field is Required.<br />';
+			}
+			if (!isset($employee_auto_reinstated) || !is_numeric($employee_auto_reinstated)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Auto Reinstated Commission</strong> Field is Required.<br />';
+			}
+			if (!isset($employee_auto_transferred) || !is_numeric($employee_auto_transferred)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Auto Transferred Commission</strong> Field is Required.<br />';
+			}
+			if (!isset($employee_auto_renewal) || !is_numeric($employee_auto_renewal)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Auto Renewal Commission</strong> Field is Required.<br /><br />';
+			}
+			
+			if (!isset($employee_fire_new) || !is_numeric($employee_fire_new)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Fire New Commission</strong> Field is Required.<br />';
+			}
+			if (!isset($employee_fire_added) || !is_numeric($employee_fire_added)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Fire Added Commission</strong> Field is Required.<br />';
+			}
+			if (!isset($employee_fire_reinstated) || !is_numeric($employee_fire_reinstated)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Fire Reinstated Commission</strong> Field is Required.<br />';
+			}
+			if (!isset($employee_fire_transferred) || !is_numeric($employee_fire_transferred)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Fire Transferred Commission</strong> Field is Required.<br />';
+			}
+			if (!isset($employee_fire_renewal) || !is_numeric($employee_fire_renewal)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Fire Renewal Commission</strong> Field is Required.<br /><br />';
+			}
+			
+			if (!isset($employee_life_new) || !is_numeric($employee_life_new)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Life New Commission</strong> Field is Required.<br />';
+			}
+			if (!isset($employee_life_increase) || !is_numeric($employee_life_increase)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Life Increase Commission</strong> Field is Required.<br />';
+			}
+			if (!isset($employee_life_policy) || !is_numeric($employee_life_policy)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Life $ / Policy Commission</strong> Field is Required.<br /><br />';
+			}
+			
+			if (!isset($employee_health_new) || !is_numeric($employee_health_new)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Health New Commission</strong> Field is Required.<br />';
+			}
+			if (!isset($employee_health_policy) || !is_numeric($employee_health_policy)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Health $ / Policy Commission</strong> Field is Required.<br /><br />';
+			}
+			
+			if (!isset($employee_bank_deposit_product) || !is_numeric($employee_bank_deposit_product)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Bank Deposit $ / Product Commission</strong> Field is Required.<br />';
+			}
+			if (!isset($employee_bank_loan_product) || !is_numeric($employee_bank_loan_product)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Bank Loan $ / Product Commission</strong> Field is Required.<br />';
+			}
+
+			// submit success functionality
+			if ($return['error'] === false) {
+			
+				// execute update employee compensation functions
+				$updated_employee_id = $myagency_model->saveEmployeeData($employee_id, $employee_first_name, $employee_last_name, $employee_job_title, $employee_email, $employee_phone, $employee_mobile, $employee_zip_code, $employee_type, $employee_hire_date, $employee_auto_new, $employee_auto_added, $employee_auto_reinstated, $employee_auto_transferred, $employee_auto_renewal, $employee_fire_new, $employee_fire_added, $employee_fire_reinstated, $employee_fire_transferred, $employee_fire_renewal, $employee_life_new, $employee_life_increase, $employee_life_policy, $employee_health_new, $employee_health_policy, $employee_bank_deposit_product, $employee_bank_loan_product);
+				$return['msg'] = '<strong>Success</strong>, the employee&rsquo;s information has been updated.';
+				
+				if (!isset($updated_employee_id) || empty($updated_employee_id)) {
+					$return['error'] = true;
+					$return['msg'] = '<strong>ERROR</strong>, Employee information was NOT updated.';
+				}
+				
+			} else {
+			
+				$return['msg'] = '<strong>Update Employee Failed.</strong> One or More of the Required Fields Was Missing:<br /><br />'.$return['msg'];
+			
+			}
+ 
+			//Return json encoded results
+			echo json_encode($return);
+			exit();
+
+		}
+
+		
+		if ($sub == 'index') {
 			// get agency info
 			$agency_data = $setup_model->getAgencyInfo($agency_id);
 		}
 
 		// load CSS based on method
 		$css = 'app_style.css';
-		// load jQuery script based on method
+		// load scripts based on method
+		$dateScript = 'datepicker.js';
 		$sectionScript = 'myagency.js';
 
         // load views.
         require 'application/views/_templates/header.php';
         require 'application/views/_templates/main_header.php';
         require 'application/views/myagency/header.php';
+        if ($sub == 'employees') {
+        	require 'application/views/myagency/modal_window.php';
+        }
         require 'application/views/myagency/'.$sub.'.php';
         require 'application/views/_templates/footer.php';
     }

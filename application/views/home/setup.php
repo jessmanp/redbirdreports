@@ -179,7 +179,7 @@
 
 	<div style="clear:both;"></div>
 
-	<span class="footnote"><sup>*</sup>Percentage of agency revenue (not premium)</span>
+	<span class="footnote"><sup>*</sup>Percentage of Premium</span>
 
 	<br /><br />
 	<button id="update_employee" class="plain-btn">Update Compensation</button>
