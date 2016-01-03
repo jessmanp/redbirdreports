@@ -1796,6 +1796,73 @@ a.policy-edit-action:hover {
 	background-color:#ffffff;
 	text-align:center;
 }
+#myagency-popup {
+	display:none;
+	background-color:#000000;
+	opacity:0.35;
+	position:absolute;
+	z-index:80;
+	top:0px;
+	left:0px;
+	width:100%;
+}
+#myagency-window {
+	display:none;
+	position:fixed;
+	z-index:81;
+	width:800px;
+	text-align:center;
+	background-color:#ffffff;
+	border:2px solid #ff0000;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-box-shadow:2px 2px 24px #000000;
+	/* for FireFox 3.6+ */
+	-moz-box-shadow:2px 2px 24px #000000;
+	/* for IE 5.5 - 9 */
+	box-shadow:2px 2px 24px #000000;
+}
+.myagency-message {
+	display:none;
+	margin:0 20px 10px 20px;
+	font-size:20px;
+	font-weight:bold;
+	min-height:25px;
+	padding:10px 25px 10px 25px;
+	border-bottom:2px solid #cccccc;
+}
+.myagency-text-box {
+	padding:0 45px 0 45px;
+	text-align:left;
+	font-weight:normal;
+	font-size:14px;
+}
+.myagency-edit-bar {
+	margin:10px 20px 10px 20px;
+	border-top:2px solid #cccccc;
+	clear:both;
+}
+#myagency-edit {
+	display:none;
+}
+#myagency-text {
+	display:none;
+}
+#myagency-delete {
+	display:none;
+}
+.myagency-delete-box {
+	margin:20px 45px 0 45px;
+	padding:10px;
+	text-align:center;
+	font-weight:normal;
+	font-size:14px;
+}
 #emp_default_label {
 	height:10px;
 	margin:12px 0 -25px 0;

@@ -1,30 +1,30 @@
 <!-- begin modal window area -->
-<div id="policy-popup"></div>
-<div id="policy-window">
+<div id="myagency-popup"></div>
+<div id="myagency-window">
 
 
-	<div id="policy-text">
-		<div class="policy-message"></div>
-		<p class="policy-text-box"></p>
-<div class="policy-edit-bar"></div>
+	<div id="myagency-text">
+		<div class="myagency-message"></div>
+		<p class="myagency-text-box"></p>
+<div class="myagency-edit-bar"></div>
 		<button class="plain-btn-close">Close</button>
 	</div>
 
 
-	<div id="policy-delete">
-		<div class="policy-message"></div>
-			Are you sure you want to &quot;<strong>ERASE</strong>&quot; this Policy?<br /><br />Click &quot;<strong>Close</strong>&quot; if you want to keep this policy.<br />
-			<p class="policy-delete-box"></p>
-			<form id="policy_delete_form" name="policy_delete_form">
+	<div id="myagency-delete">
+		<div class="myagency-message"></div>
+			Are you sure you want to &quot;<strong>REMOVE</strong>&quot; this Employee?<br /><br />Click &quot;<strong>Close</strong>&quot; if you want to keep this employee.<br />
+			<p class="myagency-delete-box"></p>
+			<form id="employee_delete_form" name="employee_delete_form">
 			<input type="hidden" id="delete_path" name="delete_path" value="" />
 			<input type="hidden" id="delid" name="delid" value="-2" />
 			</form>
-<div class="policy-edit-bar"></div>
-		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="policy-disable" class="plain-btn">Yes</button>
+<div class="myagency-edit-bar"></div>
+		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="employee_delete" class="plain-btn">Yes</button>
 	</div>
 	
 	
-	<div id="policy-edit">
+	<div id="employee-invite">
 		<div style="clear:both;"><br /></div>
 		<img src="/public/img/employee_edit_icon.png" class="employee-icon" style="margin:-5px 0 0 230px;" alt=""><div class="employee-title">Add / Invite New Employee</div>
 		<div style="clear:both;"><br /></div>

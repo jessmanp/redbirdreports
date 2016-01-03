@@ -3,10 +3,11 @@
 	<div id="sub-menu">
 		<div id="commission-container">
 			<div id="commission-employee-box">
-				View Employee<br />
-				<div class="commission-employee-name">
-					#firstname_variable#<br />
-					#lastname_variable#
+				<strong>View Employee</strong><br />
+				<div class="agency-employee-name">
+					<div id="emp_default_label">No Employee Selected</div>
+					<span id="emp_first_label"></span><br />
+					<span id="emp_last_label"></span><br />
 				</div>
 				<select id="commission_employees" name="commission_employees" class="policy-entry-select">
 					<option value="0">- Select -</option>

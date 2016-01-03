@@ -78,6 +78,33 @@ class MyAgencyModel
 		}
 
 	}
+	
+	/**
+     * Remove all user info in all tables in the database and erase policies
+     */
+    public function deleteEmployee($id)
+    {
+        $sql = "DELETE FROM agencies_users WHERE user_id = :id";
+        $query1 = $this->db->prepare($sql);
+        $query1->execute(array(':id' => $id));
+        
+        $sql = "DELETE FROM compensation_plans WHERE user_id = :id";
+        $query2 = $this->db->prepare($sql);
+        $query2->execute(array(':id' => $id));
+        
+        $sql = "DELETE FROM users WHERE user_id = :id";
+        $query3 = $this->db->prepare($sql);
+        $query3->execute(array(':id' => $id));
+        
+        // ERASE POLICIES WITH THIS USER_ID
+        $sql = "UPDATE policies SET active = 0 WHERE user_id = :id";
+        $query4 = $this->db->prepare($sql);
+        $query4->execute(array(':id' => $id));
+
+		if ($query1 && $query2 && $query3 && $query4) {
+			return true;
+		}
+    }
 
 // EOF
 }

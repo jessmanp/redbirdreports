@@ -63,7 +63,7 @@
 				<button id="last_six_months" data-dates="<?php echo $last_six_months.".a"; ?>" class="pre-dates-btn">Last 6 Months</button>
 				<button id="this_year" data-dates="<?php echo $this_year.".a"; ?>" class="pre-dates-btn">This Year</button>
 				<button id="last_two_years" data-dates="<?php echo $last_two_years.".a"; ?>" class="pre-dates-btn">Last 2 Years</button>
-				<button id="all_time" class="pre-dates-btn">All Time</button>
+				<button id="all_time" class="pre-dates-btn">All Records</button>
 			</div>
 				<div class="date-pickers">&nbsp;Date Range:</div>
 				<input id="datepick1" name="datepick1" placeholder="" readonly />

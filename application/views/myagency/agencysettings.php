@@ -10,8 +10,8 @@
 					<div class="myagency-settings-holder">
 					Commission Frequency<sup>*</sup>: 
 					<select id="agency_frequency">
-						<option value="0">Monthly</option>
-						<option value="0">Bi-Weekly</option>
+						<option value="1">Monthly</option>
+						<option value="2">Bi-Monthly</option>
 					</select>
 					<br /><br />
 					<button id="agency_settings_save" data-type="save" class="plain-btn">Update Settings</button>

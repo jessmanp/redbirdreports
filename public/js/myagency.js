@@ -34,60 +34,60 @@ function closeModal() {
 }
 
 // OPEN/CLOSE POPUP WINDOW
-function openWindow(type,message,id,fname,lname) {
+function openWindow(type,message,id,fname,lname,jobtitle) {
 
-	$("#policy-window").hide();
+	$("#myagency-window").hide();
 
 	var winh = $(window).height();
 	var doch = $(document).height();
 	if (winh > doch) {
-		$("#policy-popup").height(winh);
+		$("#myagency-popup").height(winh);
 	} else {
-		$("#policy-popup").height(doch);
+		$("#myagency-popup").height(doch);
 	}
-	$("#policy-popup").fadeIn();
+	$("#myagency-popup").fadeIn();
 				
 	var winw = $(window).width();
 	var neww = (winw/2)-398;
 	var scrolled_val = $(document).scrollTop().valueOf();
 	var newh = (scrolled_val+25);
 	
-	$("#policy-window").css({ "margin-left": neww+"px", "margin-top": "-175px" });
-	$("#policy-window").fadeIn("fast");
-	$(".policy-message").fadeIn("fast");
-	$(".policy-message").text(message);
+	$("#myagency-window").css({ "margin-left": neww+"px", "margin-top": "-175px" });
+	$("#myagency-window").fadeIn("fast");
+	$(".myagency-message").fadeIn("fast");
+	$(".myagency-message").text(message);
 	
 	if (type == 'edit') {
-		$("#policy-edit").fadeIn();
-		
+		$("#myagency-delete").hide();
+		$("#employee-invite").fadeIn();
 	}
 	
 	if (type == 'delete') {
-		$("#policy-delete").fadeIn();
-		$("#policy-delete #delid").val(id);
-		$("#policy-delete").find("p").text('');
-		$("#policy-delete").find("p").html('<em>Policy Preview</em><br /><br /><div class="delete-table-container"><div class="delete-table-row"><div class="edit-col"><strong>Employee Name:</strong></div><div class="delete-col">'+fname+'&nbsp;'+lname+'</div></div></div>');
+		$("#employee-invite").hide();
+		$("#myagency-delete").fadeIn();
+		$("#myagency-delete #delid").val(id);
+		$("#myagency-delete").find("p").text('');
+		$("#myagency-delete").find("p").html('<em>Employee Preview</em><br /><br /><div class="delete-table-container"><div class="delete-table-row"><div class="edit-col"><strong>Employee Name:</strong></div><div class="delete-col">'+fname+'&nbsp;'+lname+'</div></div><div class="delete-table-row"><div class="edit-col"><strong>Job Title:</strong></div><div class="delete-col">'+jobtitle+'</div></div></div>');
 	}
 
 }
 
 function closeWindow() {
-	$("#policy-popup").fadeOut("fast");
-	$("#policy-window").fadeOut("fast");
-	$(".policy-message").fadeOut("fast");
-	$("#policy-edit").fadeOut("fast");
-	$("#policy-text").fadeOut("fast");
-	$("#policy-delete").fadeOut("fast");
+	$("#myagency-popup").fadeOut("fast");
+	$("#myagency-window").fadeOut("fast");
+	$(".myagency-message").fadeOut("fast");
+	$("#employee-invite").fadeOut("fast");
+	$("#myagency-text").fadeOut("fast");
+	$("#myagency-delete").fadeOut("fast");
 }
 
 // INVITE EMPLOYEE
 function openInviteWindow() {
-	openWindow('edit','Invite Employee','','','');
+	openWindow('edit','Invite Employee','','','','');
 }
 
 // DELETE EMPLOYEE
 function doEmployeeDelete(id,first,last) {
-	$("#policy-edit").hide();
 	openWindow('delete','Remove Employee',id,first,last);
 }
 
@@ -396,21 +396,58 @@ $(document).ready(function() {
 	
 	$("#agency_employee_erase").on("click", function(event) {
 		event.preventDefault();
-		deleteEmployee($("#employee_id").val());
+		deleteEmployee($("#employee_id").val(),$("#employee_first_name_field").val(),$("#employee_last_name_field").val(),$("#employee_job_title_field").val());
 	});
 	
 	// REMOVE EMPLOYEE
-	function deleteEmployee(user_id) {
+	function deleteEmployee(user_id,fname,lname,jobtitle) {
 		if (user_id > 0) {
-		
-			alert("delete"+user_id);
-			
+			openWindow('delete','Remove Employee',user_id,fname,lname,jobtitle);
 		} else {
 			var msg = "<strong>ERROR</strong>, Invalid employee or no employee was selected.";
 			// show error message...
 			openModal('info',msg);
 		}
 	}
+	
+	$(".plain-btn-close").on("click", function(event) {
+		event.preventDefault();
+		closeWindow();
+	});
+	
+	$("#employee_delete").on("click", function(event) {
+		event.preventDefault();
+		$('#employee_delete_form').submit();
+	});
+	
+	$('#employee_delete_form').submit(function(event) {
+        		$.ajax({
+					type: 'POST',
+					url: '/app/myagency/deleteEmployee',
+					data: $(this).serialize(),
+					dataType: 'json',
+					cache: false,
+        			//async: true,
+				success: function (data) {
+						console.log(data);
+						if (data.error == true) {
+							// show returned error msg here
+							openModal('error',data.msg);
+						} else {
+							updateEmployeeList();
+							loadUserData('');
+							closeWindow();
+							// show success message...
+							openModal('info',data.msg);
+						}	
+				},
+					error: function (request, status, error) {
+        					console.log(error);
+				}
+                });
+		event.preventDefault();
+	});
+
 	
 	// LOAD EMPLOYEES
 	updateEmployeeList();

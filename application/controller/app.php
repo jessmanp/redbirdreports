@@ -635,7 +635,11 @@ class App extends Controller
 			$employee_mobile = trim(@$_POST['employee_mobile']); // must be a string
 			$employee_zip_code = trim(@$_POST['employee_zip_code']); // must be a string
 			$employee_type = trim(@$_POST['employee_type']); // must be numeric
-			$employee_hire_date = date('Y-m-d H:i:s', strtotime(trim(@$_POST['employee_hire_date']))); // must be a date
+			if (trim(@$_POST['employee_hire_date']) != '') {
+				$employee_hire_date = date('Y-m-d H:i:s', strtotime(trim(@$_POST['employee_hire_date']))); // must be a date
+			} else {
+				$employee_hire_date = null;
+			}
 			
 			$employee_auto_new = @$_POST['employee_auto_new']; // must be decimal percent
 			$employee_auto_added = @$_POST['employee_auto_added']; // must be decimal percent
@@ -783,6 +787,32 @@ class App extends Controller
 
 		}
 
+		if ($sub == 'deleteEmployee') {
+			
+				// array values that will be returned via ajax
+				$return = array();
+				$return['msg'] = '';
+				$return['error'] = false;
+
+				$delID = @$_POST['delid'];
+				if (isset($delID) && is_numeric($delID)) {
+					$employee_deleted = $myagency_model->deleteEmployee($delID);
+					if ($employee_deleted) {
+						$return['msg'] = '<strong>Success</strong>, Employee Removed.';
+					} else {
+						$return['error'] = true;
+						$return['msg'] .= '<strong>Erase Failed.</strong> Employee Was Not Removed.';
+					}
+				} else {
+					$return['error'] = true;
+					$return['msg'] .= '<strong>Employee Remove Failed.</strong> Employee ID is empty.';
+				}
+ 
+				//Return json encoded results
+				echo json_encode($return);
+				exit();
+
+		}
 		
 		if ($sub == 'index') {
 			// get agency info
