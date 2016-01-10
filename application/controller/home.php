@@ -170,7 +170,7 @@ class Home extends Controller
 
 			if (!isset($invited_user_id) || empty($invited_user_id)) {
 				$return['error'] = true;
-				$return['msg'] .= '<strong>Email</strong> is not valid or already in use.<br />Please enter the employee&rsquo;s email address.';
+				$return['msg'] .= '<strong>Email</strong> is <strong>not valid</strong> or <strong>already in use</strong>.<br />Please enter the employee&rsquo;s email address.';
 			}
 		}
  
@@ -186,7 +186,7 @@ class Home extends Controller
 	
 		// submit success functionality
 		if ($return['error'] === false){
-			$return['msg'] = '<strong>Success</strong>, the new employee has been added to the system and an invitation email has been sent.';
+			$return['msg'] = '<strong>Success</strong>, the new employee has been added to the system and an invitation email has been sent. Edit the employee to add more information.';
 			$return['id'] = $invited_user_id;
 		}
  

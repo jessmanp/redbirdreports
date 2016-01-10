@@ -159,8 +159,8 @@
 				
 				<br /><br />
 				<button id="agency_employee_save" data-type="save" class="plain-btn">Update Employee</button>&nbsp;&nbsp;&nbsp;
-				<button id="agency_employee_erase" data-type="delete" class="plain-btn-erase" style="margin-right:135px;">Remove Employee</button>
-				
+				<button id="agency_employee_erase" data-type="delete" class="plain-btn-erase" style="margin-right:135px;">Deactivate Employee</button>
+				<button id="agency_employee_restore" data-type="restore" class="plain-btn-erase" style="margin-right:135px;">Reactivate Employee</button>
 			</form>
 			
 	</div>

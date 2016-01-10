@@ -59,15 +59,26 @@ function openWindow(type,message,id,fname,lname,jobtitle) {
 	
 	if (type == 'edit') {
 		$("#myagency-delete").hide();
+		$("#myagency-undelete").hide();
 		$("#employee-invite").fadeIn();
 	}
 	
 	if (type == 'delete') {
 		$("#employee-invite").hide();
+		$("#myagency-undelete").hide();
 		$("#myagency-delete").fadeIn();
 		$("#myagency-delete #delid").val(id);
 		$("#myagency-delete").find("p").text('');
 		$("#myagency-delete").find("p").html('<em>Employee Preview</em><br /><br /><div class="delete-table-container"><div class="delete-table-row"><div class="edit-col"><strong>Employee Name:</strong></div><div class="delete-col">'+fname+'&nbsp;'+lname+'</div></div><div class="delete-table-row"><div class="edit-col"><strong>Job Title:</strong></div><div class="delete-col">'+jobtitle+'</div></div></div>');
+	}
+	
+	if (type == 'undelete') {
+		$("#employee-invite").hide();
+		$("#myagency-delete").hide();
+		$("#myagency-undelete").fadeIn();
+		$("#myagency-undelete #udelid").val(id);
+		$("#myagency-undelete").find("p").text('');
+		$("#myagency-undelete").find("p").html('<em>Employee Preview</em><br /><br /><div class="delete-table-container"><div class="delete-table-row"><div class="edit-col"><strong>Employee Name:</strong></div><div class="delete-col">'+fname+'&nbsp;'+lname+'</div></div><div class="delete-table-row"><div class="edit-col"><strong>Job Title:</strong></div><div class="delete-col">'+jobtitle+'</div></div></div>');
 	}
 
 }
@@ -218,7 +229,7 @@ $(document).ready(function() {
 	function updateEmployeeList() {
 		$.ajax({
 				type: "POST",
-				url: "/home/updateEmployeeList",
+				url: "/app/myagency/getEmployeeList",
 				data: $(this).serialize(),
 				dataType: "json",
 				cache: false,
@@ -236,9 +247,15 @@ $(document).ready(function() {
 						);
 						// loop over employees and add each to dropdown
 						$.each(data, function(key, value) {
-							$("#agency_employees").append(
-								$("<option></option>").val(value.user_id).html(value.user_first_name+" "+value.user_last_name)
-							);
+							if (value.user_active == 1) {
+								$("#agency_employees").append(
+									$("<option></option>").val(value.user_id).html(value.user_first_name+" "+value.user_last_name)
+								);
+							} else {
+								$("#agency_employees").append(
+									$("<option></option>").val(value.user_id).html("* Inactive User * ("+value.user_first_name+" "+value.user_last_name+")")
+								);
+							}
 						});
 					}	
 				},
@@ -275,6 +292,8 @@ $(document).ready(function() {
 							// show returned error msg here
 							openModal('error',data.msg);
 						} else {
+							$("#agency_employee_erase").hide();
+							$("#agency_employee_restore").hide();
 							// populate form fields with json data
 							$.each(data, function(key, value) {
 								// fill out fields with data
@@ -313,6 +332,11 @@ $(document).ready(function() {
 								$("#employee_health_policy").val(value.commission_health_dollar);
 								$("#employee_bank_deposit_product").val(value.commission_deposit_product);
 								$("#employee_bank_loan_product").val(value.commission_loan_product);
+								if (value.user_active == 1) {
+									$("#agency_employee_erase").fadeIn();
+								} else {
+									$("#agency_employee_restore").fadeIn();
+								}
 							});
 						}	
 					},
@@ -399,10 +423,27 @@ $(document).ready(function() {
 		deleteEmployee($("#employee_id").val(),$("#employee_first_name_field").val(),$("#employee_last_name_field").val(),$("#employee_job_title_field").val());
 	});
 	
-	// REMOVE EMPLOYEE
+	// DEACTIVATE EMPLOYEE
 	function deleteEmployee(user_id,fname,lname,jobtitle) {
+		$("#myagency_undelete").hide();
 		if (user_id > 0) {
-			openWindow('delete','Remove Employee',user_id,fname,lname,jobtitle);
+			openWindow('delete','Deactivate Employee',user_id,fname,lname,jobtitle);
+		} else {
+			var msg = "<strong>ERROR</strong>, Invalid employee or no employee was selected.";
+			// show error message...
+			openModal('info',msg);
+		}
+	}
+	
+	$("#agency_employee_restore").on("click", function(event) {
+		event.preventDefault();
+		undeleteEmployee($("#employee_id").val(),$("#employee_first_name_field").val(),$("#employee_last_name_field").val(),$("#employee_job_title_field").val());
+	});
+	
+	// REACTIVATE EMPLOYEE
+	function undeleteEmployee(user_id,fname,lname,jobtitle) {
+		if (user_id > 0) {
+			openWindow('undelete','Reactivate Employee',user_id,fname,lname,jobtitle);
 		} else {
 			var msg = "<strong>ERROR</strong>, Invalid employee or no employee was selected.";
 			// show error message...
@@ -448,6 +489,38 @@ $(document).ready(function() {
 		event.preventDefault();
 	});
 
+	$("#employee_undelete").on("click", function(event) {
+		event.preventDefault();
+		$('#employee_undelete_form').submit();
+	});
+	
+	$('#employee_undelete_form').submit(function(event) {
+        		$.ajax({
+					type: 'POST',
+					url: '/app/myagency/undeleteEmployee',
+					data: $(this).serialize(),
+					dataType: 'json',
+					cache: false,
+        			//async: true,
+				success: function (data) {
+						console.log(data);
+						if (data.error == true) {
+							// show returned error msg here
+							openModal('error',data.msg);
+						} else {
+							updateEmployeeList();
+							loadUserData('');
+							closeWindow();
+							// show success message...
+							openModal('info',data.msg);
+						}	
+				},
+					error: function (request, status, error) {
+        					console.log(error);
+				}
+                });
+		event.preventDefault();
+	});
 	
 	// LOAD EMPLOYEES
 	updateEmployeeList();

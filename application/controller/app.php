@@ -549,9 +549,106 @@ class App extends Controller
 
 	public function commissions($sub = 'index')
     {
-		// load main model
+		// load models
 		$main_model = $this->loadModel('MainModel');
 		$header_data = $main_model->getHeaderInfo($_SESSION['user_id']);
+		$myagency_model = $this->loadModel('MyAgencyModel');
+		$setup_model = $this->loadModel('SetupModel');
+		
+		// check if logged in and set agency ID
+		if (!empty($_SESSION['user_name']) && ($_SESSION['user_logged_in'] == 1)) {
+			// get and set agency ID based on the owner
+				$agency_id = $setup_model->getOwnerAgencyID($_SESSION['user_id']);
+		}
+		
+		
+		if ($sub == 'getCommissionFrequency') {
+			// get commission frequency
+			
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+			
+			// get data
+			$commission_freq = $myagency_model->getAgencySettings($agency_id);
+
+			if (empty($commission_freq)) {
+				$return['error'] = true;
+				$return['msg'] .= '<strong>ERROR</strong>, No agency settings found.';
+			} else {
+				$return = $commission_freq;
+			}
+
+			//Return json encoded results
+			echo json_encode($return);			
+			exit();
+			
+		}
+		
+		if ($sub == 'getEmployeeCommissionHistory') {
+			// get employee commissions
+			
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+
+			// *POPULATE EMPLOYEE COMPENSATION DATA*
+			$employee_id = trim(@$_GET['eid']); // must be an existing ID
+			
+			if (!isset($employee_id) || $employee_id == '' || !is_numeric($employee_id)) {
+				$return['error'] = true;
+				$return['msg'] .= '<strong>ERROR</strong>, Invalid employee or no employee was selected.';
+			}
+			
+			// get employees data
+			$employee_data = $myagency_model->getEmployeeCommissionHistory($employee_id);
+
+			if (empty($employee_data)) {
+				$return['error'] = true;
+				$return['msg'] .= '<strong>ERROR</strong>, No employee data found.';
+			} else {
+				$return = $employee_data;
+			}
+
+			//Return json encoded results
+			echo json_encode($return);			
+			exit();
+
+		}
+		
+		if ($sub == 'putCommissionSpecial') {
+			// put commission special
+			
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+			
+			// *UPDATE EMPLOYEE COMPENSATION DATA*
+			$employee_id = trim(@$_GET['eid']); // must be an existing ID
+			
+			if (!isset($employee_id) || $employee_id == '' || !is_numeric($employee_id)) {
+				$return['error'] = true;
+				$return['msg'] .= '<strong>ERROR</strong>, Invalid employee or no employee was selected.';
+			}
+			
+			// put data
+			$commission_special = $myagency_model->saveCommissionSpecial($employee_id);
+
+			if (empty($commission_special)) {
+				$return['error'] = true;
+				$return['msg'] .= '<strong>ERROR</strong>, Special Commission was not updated.';
+			} else {
+				$return = $commission_special;
+			}
+
+			//Return json encoded results
+			echo json_encode($return);			
+			exit();
+			
+		}
 
 		// load CSS based on method
 		$css = 'app_style.css';
@@ -582,6 +679,31 @@ class App extends Controller
 				$agency_id = $setup_model->getOwnerAgencyID($_SESSION['user_id']);
 		}
 		
+		if ($sub == 'getEmployeeList') {
+
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+		
+			// get agency id based on owner
+			$agency_id = $setup_model->getOwnerAgencyID($_SESSION['user_id']);
+
+			// get list of employees
+			$employees = $myagency_model->getAllEmployees($agency_id);
+
+			if (empty($employees)) {
+				$return['error'] = true;
+				$return['msg'] .= 'ERROR. No employee(s) found.';
+			} else {
+				$return = $employees;
+			}
+
+			//Return json encoded results
+			echo json_encode($return);
+			exit();
+
+		}
 		
 		if ($sub == 'getEmployeeData') {
 			// get employee data
@@ -798,14 +920,41 @@ class App extends Controller
 				if (isset($delID) && is_numeric($delID)) {
 					$employee_deleted = $myagency_model->deleteEmployee($delID);
 					if ($employee_deleted) {
-						$return['msg'] = '<strong>Success</strong>, Employee Removed.';
+						$return['msg'] = '<strong>Success</strong>, Employee Deactivated.';
 					} else {
 						$return['error'] = true;
-						$return['msg'] .= '<strong>Erase Failed.</strong> Employee Was Not Removed.';
+						$return['msg'] .= '<strong>Deactivate Failed.</strong> Employee Was Not Deactivated.';
 					}
 				} else {
 					$return['error'] = true;
-					$return['msg'] .= '<strong>Employee Remove Failed.</strong> Employee ID is empty.';
+					$return['msg'] .= '<strong>Employee Deactivate Failed.</strong> Employee ID is empty.';
+				}
+ 
+				//Return json encoded results
+				echo json_encode($return);
+				exit();
+
+		}
+		
+		if ($sub == 'undeleteEmployee') {
+			
+				// array values that will be returned via ajax
+				$return = array();
+				$return['msg'] = '';
+				$return['error'] = false;
+
+				$delID = @$_POST['udelid'];
+				if (isset($delID) && is_numeric($delID)) {
+					$employee_undeleted = $myagency_model->undeleteEmployee($delID);
+					if ($employee_undeleted) {
+						$return['msg'] = '<strong>Success</strong>, Employee Reactivated.';
+					} else {
+						$return['error'] = true;
+						$return['msg'] .= '<strong>Reactivate Failed.</strong> Employee Was Not Reactivated.';
+					}
+				} else {
+					$return['error'] = true;
+					$return['msg'] .= '<strong>Employee Reactivate Failed.</strong> Employee ID is empty.';
 				}
  
 				//Return json encoded results

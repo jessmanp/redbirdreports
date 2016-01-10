@@ -13,6 +13,8 @@
 <form >
 <!-- begin form -->
 		<div class="table-container">
+		  <!-- form for editing employees -->
+		  <form method="post" action="/app/commissions/putCommissionSpecial" id="com_update_commission_special" name="com_update_commission_special">
 			<div class="table-row">
 				<div class="col" style="width:40%;"><div class="com-special">Bonus</div></div>
 				<div class="col" style="width:60%;">
@@ -20,6 +22,7 @@
 					<input type="text" maxlength="40" style="width:100px;" id="commissions_bonus" name="commissions_bonus" placeholder="0.00" value="">
 				</div>
 			</div>
+		  </form>
 		</div>
 		<input type="text" maxlength="100" style="width:210px;" id="com_bonus_description" name="com_bonus_description" placeholder="Enter a Brief Description" value="">
 <!-- end form -->
@@ -85,7 +88,7 @@
 		</div>
 	</div>
 	<div class="commission-trends">
-		<div class="com-title">Commissions Trends</div>
+		<div class="com-title">Commissions Trends - Trailing 12 Months</div>
 		<div class="com-holder">
 		  <div class="table-container">
 <!-- begin row -->
@@ -103,47 +106,41 @@ chart here
 		<div class="com-holder">
 		  <div class="table-container">
 			<div class="table-row">
-				<div class="col" style="width:12%;">&nbsp;</div>
-				<div class="col" style="width:22%;"><div class="com-caption">Policies<br />Issued</div></div>
-				<div class="col" style="width:22%;"><div class="com-caption">Issued<br />Premiums</div></div>
-				<div class="col" style="width:22%;"><div class="com-caption">Commission<br />Rate</div></div>
-				<div class="col" style="width:22%;"><div class="com-caption">Compensation<br />Earned</div></div>
+				<div class="col" style="width:16%;">&nbsp;</div>
+				<div class="col" style="width:28%;"><div class="com-caption">Policies<br />Issued</div></div>
+				<div class="col" style="width:28%;"><div class="com-caption">Issued<br />Premiums</div></div>
+				<div class="col" style="width:28%;"><div class="com-caption">Compensation<br />Earned</div></div>
 			</div>
 <!-- begin rows -->
 			<div class="table-row">
-				<div class="col" style="width:12%;padding:5px;"><span class="com-type">Auto</span></div>
-				<div class="col" style="width:22%;padding:5px;">25,000</div>
-				<div class="col" style="width:22%;padding:5px;">$100,000.00</div>
-				<div class="col" style="width:22%;padding:5px;">100%</div>
-				<div class="col" style="width:22%;padding:5px;">$100,000.00</div>
+				<div class="col" style="width:16%;padding:5px;"><span class="com-type">Auto</span></div>
+				<div class="col" style="width:28%;padding:5px;">25,000</div>
+				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
+				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
 			</div>
 			<div class="table-row">
-				<div class="col" style="width:12%;padding:5px;"><span class="com-type">Fire</span></div>
-				<div class="col" style="width:22%;padding:5px;">25,000</div>
-				<div class="col" style="width:22%;padding:5px;">$100,000.00</div>
-				<div class="col" style="width:22%;padding:5px;">100%</div>
-				<div class="col" style="width:22%;padding:5px;">$100,000.00</div>
+				<div class="col" style="width:16%;padding:5px;"><span class="com-type">Fire</span></div>
+				<div class="col" style="width:28%;padding:5px;">25,000</div>
+				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
+				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
 			</div>
 			<div class="table-row">
-				<div class="col" style="width:12%;padding:5px;"><span class="com-type">Life</span></div>
-				<div class="col" style="width:22%;padding:5px;">25,000</div>
-				<div class="col" style="width:22%;padding:5px;">$100,000.00</div>
-				<div class="col" style="width:22%;padding:5px;">100%</div>
-				<div class="col" style="width:22%;padding:5px;">$100,000.00</div>
+				<div class="col" style="width:16%;padding:5px;"><span class="com-type">Life</span></div>
+				<div class="col" style="width:28%;padding:5px;">25,000</div>
+				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
+				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
 			</div>
 			<div class="table-row">
-				<div class="col" style="width:12%;padding:5px;"><span class="com-type">Health</span></div>
-				<div class="col" style="width:22%;padding:5px;">25,000</div>
-				<div class="col" style="width:22%;padding:5px;">$100,000.00</div>
-				<div class="col" style="width:22%;padding:5px;">100%</div>
-				<div class="col" style="width:22%;padding:5px;">$100,000.00</div>
+				<div class="col" style="width:16%;padding:5px;"><span class="com-type">Health</span></div>
+				<div class="col" style="width:28%;padding:5px;">25,000</div>
+				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
+				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
 			</div>
 			<div class="table-row">
-				<div class="col" style="width:12%;padding:5px;"><span class="com-type">Bank</span></div>
-				<div class="col" style="width:22%;padding:5px;">25,000</div>
-				<div class="col" style="width:22%;padding:5px;">$100,000.00</div>
-				<div class="col" style="width:22%;padding:5px;">100%</div>
-				<div class="col" style="width:22%;padding:5px;">$100,000.00</div>
+				<div class="col" style="width:16%;padding:5px;"><span class="com-type">Bank</span></div>
+				<div class="col" style="width:28%;padding:5px;">25,000</div>
+				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
+				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
 			</div>
 <!-- end rows -->
 		  </div>
@@ -151,11 +148,10 @@ chart here
 		<div class="commission-text-footer">
 		  <div class="table-container">
 			<div class="table-row">
-				<div class="col" style="width:12%;">Total</div>
-				<div class="col" style="width:22%;">100,000</div>
-				<div class="col" style="width:22%;">$100,000.00</div>
-				<div class="col" style="width:22%;">100%</div>
-				<div class="col" style="width:22%;">$100,000.00</div>
+				<div class="col" style="width:16%;">Total</div>
+				<div class="col" style="width:28%;">100,000</div>
+				<div class="col" style="width:28%;">$100,000.00</div>
+				<div class="col" style="width:28%;">$100,000.00</div>
 			</div>
 		  </div>
 		</div>
@@ -165,47 +161,23 @@ chart here
 		<div class="com-holder">
 		  <div class="table-container">
 			<div class="table-row">
-				<div class="col" style="width:12%;">&nbsp;</div>
-				<div class="col" style="width:22%;"><div class="com-caption">Policies<br />Issued</div></div>
-				<div class="col" style="width:22%;"><div class="com-caption">Issued<br />Premiums</div></div>
-				<div class="col" style="width:22%;"><div class="com-caption">Commission<br />Rate</div></div>
-				<div class="col" style="width:22%;"><div class="com-caption">Compensation<br />Earned</div></div>
+				<div class="col" style="width:16%;">&nbsp;</div>
+				<div class="col" style="width:28%;"><div class="com-caption">Policies<br />Renewed</div></div>
+				<div class="col" style="width:28%;"><div class="com-caption">Renewal<br />Premiums</div></div>
+				<div class="col" style="width:28%;"><div class="com-caption">Compensation<br />Earned</div></div>
 			</div>
 <!-- begin rows -->
 			<div class="table-row">
-				<div class="col" style="width:12%;padding:5px;"><span class="com-type">Auto</span></div>
-				<div class="col" style="width:22%;padding:5px;">25,000</div>
-				<div class="col" style="width:22%;padding:5px;">$100,000.00</div>
-				<div class="col" style="width:22%;padding:5px;">100%</div>
-				<div class="col" style="width:22%;padding:5px;">$100,000.00</div>
+				<div class="col" style="width:16%;padding:5px;"><span class="com-type">Auto</span></div>
+				<div class="col" style="width:28%;padding:5px;">25,000</div>
+				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
+				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
 			</div>
 			<div class="table-row">
-				<div class="col" style="width:12%;padding:5px;"><span class="com-type">Fire</span></div>
-				<div class="col" style="width:22%;padding:5px;">25,000</div>
-				<div class="col" style="width:22%;padding:5px;">$100,000.00</div>
-				<div class="col" style="width:22%;padding:5px;">100%</div>
-				<div class="col" style="width:22%;padding:5px;">$100,000.00</div>
-			</div>
-			<div class="table-row">
-				<div class="col" style="width:12%;padding:5px;"><span class="com-type">Life</span></div>
-				<div class="col" style="width:22%;padding:5px;">25,000</div>
-				<div class="col" style="width:22%;padding:5px;">$100,000.00</div>
-				<div class="col" style="width:22%;padding:5px;">100%</div>
-				<div class="col" style="width:22%;padding:5px;">$100,000.00</div>
-			</div>
-			<div class="table-row">
-				<div class="col" style="width:12%;padding:5px;"><span class="com-type">Health</span></div>
-				<div class="col" style="width:22%;padding:5px;">25,000</div>
-				<div class="col" style="width:22%;padding:5px;">$100,000.00</div>
-				<div class="col" style="width:22%;padding:5px;">100%</div>
-				<div class="col" style="width:22%;padding:5px;">$100,000.00</div>
-			</div>
-			<div class="table-row">
-				<div class="col" style="width:12%;padding:5px;"><span class="com-type">Bank</span></div>
-				<div class="col" style="width:22%;padding:5px;">25,000</div>
-				<div class="col" style="width:22%;padding:5px;">$100,000.00</div>
-				<div class="col" style="width:22%;padding:5px;">100%</div>
-				<div class="col" style="width:22%;padding:5px;">$100,000.00</div>
+				<div class="col" style="width:16%;padding:5px;"><span class="com-type">Fire</span></div>
+				<div class="col" style="width:28%;padding:5px;">25,000</div>
+				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
+				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
 			</div>
 <!-- end rows -->
 		  </div>
@@ -213,11 +185,10 @@ chart here
 		<div class="commission-text-footer">
 		  <div class="table-container">
 			<div class="table-row">
-				<div class="col" style="width:12%;">Total</div>
-				<div class="col" style="width:22%;">100,000</div>
-				<div class="col" style="width:22%;">$100,000.00</div>
-				<div class="col" style="width:22%;">100%</div>
-				<div class="col" style="width:22%;">$100,000.00</div>
+				<div class="col" style="width:16%;">Total</div>
+				<div class="col" style="width:28%;">100,000</div>
+				<div class="col" style="width:28%;">$100,000.00</div>
+				<div class="col" style="width:28%;">$100,000.00</div>
 			</div>
 		  </div>
 		</div>

@@ -111,6 +111,7 @@
 		} else {
 			$addStyle = "";
 		}
+		$fullname = $policy->user_first_name." ".$policy->user_last_name;
 ?>
 			<div class="<?php echo $rowclass; ?>">
 				<div class="col" style="width:1%;">&nbsp;<em><?php echo $rowcnt; ?></em></div>
@@ -121,8 +122,8 @@
 <?php } else { ?>
 				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-edit-action" data-info="<?php echo $policy->id."','".$policy->renewal."','".$policy->first."','".$policy->last."','".$policy->description."','".$policy->category_id."-".$policy->cat_pid."','".$policy->premium."','".$policy->business_type_id."','".$policy->user_id."','".$policy->source_type_id."','".$policy->length_type_id."','".$policy->notes."','".$policy->policy_number."','".$policy->date_written."','".$policy->date_issued."','".$policy->date_effective."','".$policy->date_canceled."','".$policy->zip_code."','".$policy->status; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button-edit" alt="Edit" /></a></div>
 <?php } ?>
-				<div class="col" style="width:11%;<?php echo $addStyle; ?>"><?php echo $policy->first; ?></div>
-				<div class="col" style="width:13%;<?php echo $addStyle; ?>"><?php echo $policy->last; ?></div>
+				<div class="col" style="width:10%;<?php echo $addStyle; ?>"><?php echo $policy->first; ?></div>
+				<div class="col" style="width:10%;<?php echo $addStyle; ?>"><?php echo $policy->last; ?></div>
 				<div class="col" style="width:10%;"><?php if (strlen($policy->description) > 12) { echo '<a class="policy-desc-action" data-desc="'.$policy->description.'">'.substr($policy->description, 0, 12).'</a>&hellip;'; } else { echo $policy->description; } ?></div>
 				<div class="col" style="width:10%;<?php echo $addStyle; ?>"><?php echo $policy->cat_name; ?></div>
 <?php if ($cancellationvalue > 0) { ?>
@@ -131,11 +132,12 @@
 				<div class="col" style="width:9%;"><?php echo '$'.number_format($policy->premium, 2); ?></div>
 <?php } ?>
 				<div class="col" style="width:6%;<?php echo $addStyle; ?>"><?php echo $policy->busi_name; ?></div>
-				<div class="col" style="width:8%;<?php echo $addStyle; ?>"><?php echo $policy->user_first_name." ".$policy->user_last_name; ?></div>
+				<div class="col" style="width:8%;<?php echo $addStyle; ?>"><?php if (strlen($fullname) > 14) { echo substr($fullname, 0, 14)."&hellip;"; } else { echo $fullname; } ?></div>
 				<div class="col" style="width:6%;<?php echo $addStyle; ?>"><?php echo $policy->src_name; ?></div>
-				<div class="col" style="width:9%;<?php echo $addStyle; ?>"><?php echo $policy->len_name; ?></div>
+				<div class="col" style="width:7%;<?php echo $addStyle; ?>"><?php echo $policy->len_name; ?></div>
 				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-note-action" data-notes="<?php echo $policy->notes; ?>"><img src="/public/img/policy_note_btn.png" class="policy-listing-button-note" alt="Notes" /></a></div>
 				<div class="col" style="width:6%;"><?php if ($policy->date_written) { echo date('m/d/y',strtotime($policy->date_written)); } else { echo "&nbsp;";} ?></div>
+				<div class="col" style="width:6%;"><?php if ($policy->date_effective) { echo date('m/d/y',strtotime($policy->date_effective)); } else { echo "&nbsp;";} ?></div>
 				<div class="col" style="width:2%;<?php echo $addStyle; ?>"></div>
 			</div>
 <?php

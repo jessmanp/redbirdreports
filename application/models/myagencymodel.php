@@ -13,6 +13,83 @@ class MyAgencyModel
             exit('Database connection could not be established.');
         }
     }
+    
+    /**
+     * Get Employees from database based on Agency ID
+     */
+    public function getAllEmployees($agency_id)
+    {
+		// query agency ID for new owner
+        $sql = 'SELECT users.user_id,users.user_level,users.user_first_name,users.user_last_name,users.user_active FROM users, agencies, agencies_users WHERE agencies_users.user_id = users.user_id AND agencies_users.agency_id = agencies.id AND agencies.id = '.$agency_id.' AND users.user_level < 3 ORDER BY users.user_active DESC, users.user_last_name';
+        $query = $this->db->prepare($sql);
+        $query->execute();
+		return $query->fetchAll();
+    }
+    
+    /**
+     * Update Special Compensation
+     */
+    public function saveCommissionSpecial($employee_id)
+    {
+
+		/*
+		// query to get employee data
+		$query_get_agency_settings = $this->db->prepare('SELECT * FROM agencies_settings WHERE agency_id = :agency_id');
+		$query_get_agency_settings->bindValue(':agency_id', $agency_id, PDO::PARAM_INT);
+		$query_get_agency_settings->execute();
+		return $query_get_agency_settings->fetchAll();
+		*/
+		
+		return false;
+
+	}
+    
+    /**
+     * Query agency settings
+     */
+    public function getAgencySettings($agency_id)
+    {
+
+		// query to get employee data
+		$query_get_agency_settings = $this->db->prepare('SELECT * FROM agencies_settings WHERE agency_id = :agency_id');
+		$query_get_agency_settings->bindValue(':agency_id', $agency_id, PDO::PARAM_INT);
+		$query_get_agency_settings->execute();
+		return $query_get_agency_settings->fetchAll();
+
+	}
+    
+    /**
+     * Query employee commission data to populate table
+     */
+    public function getEmployeeCommissionHistory($employee_id)
+    {
+
+		// query to get employee data
+		$query_get_employee_compensation = $this->db->prepare('SELECT users.user_level, users.user_first_name, users.user_last_name, users.user_job_title, users.user_hire_date FROM users WHERE users.user_id = :employee_id');
+		$query_get_employee_compensation->bindValue(':employee_id', $employee_id, PDO::PARAM_INT);
+		$query_get_employee_compensation->execute();
+		$emp_query = $query_get_employee_compensation->fetchAll();
+		
+		$commission_summary = array();
+		
+		foreach ($emp_query as $emp_info) {
+			$commission_summary[0]['user_first_name'] = $emp_info->user_first_name;
+			$commission_summary[0]['user_last_name'] = $emp_info->user_last_name;
+			$commission_summary[0]['user_job_title'] = $emp_info->user_job_title;
+			$commission_summary[0]['user_hire_date'] = $emp_info->user_hire_date;
+		}
+		
+		// calcualte commission summary
+		
+		
+		
+		if (!empty($commission_summary)) {
+			return $commission_summary;
+		}
+		
+		return false;
+
+	}
 
 	/**
      * Query employee compensation data to populate form
@@ -21,7 +98,7 @@ class MyAgencyModel
     {
 
 		// query to get employee data
-		$query_get_employee_compensation = $this->db->prepare('SELECT users.user_level, users.user_first_name, users.user_last_name, users.user_email, users.user_phone, users.user_mobile, users.user_zip_code, users.user_job_title, users.user_hire_date, compensation_plans.* FROM users, compensation_plans WHERE users.user_id = compensation_plans.user_id AND compensation_plans.user_id = :employee_id');
+		$query_get_employee_compensation = $this->db->prepare('SELECT users.user_level, users.user_first_name, users.user_last_name, users.user_email, users.user_phone, users.user_mobile, users.user_zip_code, users.user_job_title, users.user_hire_date, users.user_active, compensation_plans.* FROM users, compensation_plans WHERE users.user_id = compensation_plans.user_id AND compensation_plans.user_id = :employee_id');
 		$query_get_employee_compensation->bindValue(':employee_id', $employee_id, PDO::PARAM_INT);
 		$query_get_employee_compensation->execute();
 		return $query_get_employee_compensation->fetchAll();
@@ -31,7 +108,7 @@ class MyAgencyModel
 	/**
      * Update employee compensation data
      */
-    public function  saveEmployeeData($employee_id, $employee_first_name, $employee_last_name, $employee_job_title, $employee_email, $employee_phone, $employee_mobile, $employee_zip_code, $employee_type, $employee_hire_date, $employee_auto_new, $employee_auto_added, $employee_auto_reinstated, $employee_auto_transferred, $employee_auto_renewal, $employee_fire_new, $employee_fire_added, $employee_fire_reinstated, $employee_fire_transferred, $employee_fire_renewal, $employee_life_new, $employee_life_increase, $employee_life_policy, $employee_health_new, $employee_health_policy, $employee_bank_deposit_product, $employee_bank_loan_product)
+    public function saveEmployeeData($employee_id, $employee_first_name, $employee_last_name, $employee_job_title, $employee_email, $employee_phone, $employee_mobile, $employee_zip_code, $employee_type, $employee_hire_date, $employee_auto_new, $employee_auto_added, $employee_auto_reinstated, $employee_auto_transferred, $employee_auto_renewal, $employee_fire_new, $employee_fire_added, $employee_fire_reinstated, $employee_fire_transferred, $employee_fire_renewal, $employee_life_new, $employee_life_increase, $employee_life_policy, $employee_health_new, $employee_health_policy, $employee_bank_deposit_product, $employee_bank_loan_product)
     {
 		// query to update user data
 		$query_update_employee_data = $this->db->prepare('UPDATE users SET user_first_name = :employee_first_name, user_last_name = :employee_last_name, user_job_title = :employee_job_title, user_email = :employee_email, user_phone = :employee_phone, user_mobile = :employee_mobile, user_zip_code = :employee_zip_code, user_level = :employee_type, user_hire_date = :employee_hire_date WHERE user_id = :employee_id');
@@ -80,10 +157,12 @@ class MyAgencyModel
 	}
 	
 	/**
-     * Remove all user info in all tables in the database and erase policies
+     * deactivate user
      */
     public function deleteEmployee($id)
     {
+    
+    	/*
         $sql = "DELETE FROM agencies_users WHERE user_id = :id";
         $query1 = $this->db->prepare($sql);
         $query1->execute(array(':id' => $id));
@@ -95,13 +174,40 @@ class MyAgencyModel
         $sql = "DELETE FROM users WHERE user_id = :id";
         $query3 = $this->db->prepare($sql);
         $query3->execute(array(':id' => $id));
+        */
+        
+        // DEACTIVATE THIS USER_ID
+        $sql = "UPDATE users SET user_active = 0 WHERE user_id = :id";
+        $query5 = $this->db->prepare($sql);
+        $query5->execute(array(':id' => $id));
         
         // ERASE POLICIES WITH THIS USER_ID
         $sql = "UPDATE policies SET active = 0 WHERE user_id = :id";
         $query4 = $this->db->prepare($sql);
         $query4->execute(array(':id' => $id));
 
-		if ($query1 && $query2 && $query3 && $query4) {
+		if ($query4 && $query5) {
+			return true;
+		}
+    }
+    
+	/**
+     * Activate employee
+     */
+    public function undeleteEmployee($id)
+    {
+        
+        // REACTIVATE THIS USER_ID
+        $sql = "UPDATE users SET user_active = 1 WHERE user_id = :id";
+        $query5 = $this->db->prepare($sql);
+        $query5->execute(array(':id' => $id));
+        
+        // PUT BACK POLICIES WITH THIS USER_ID
+        $sql = "UPDATE policies SET active = 1 WHERE user_id = :id";
+        $query4 = $this->db->prepare($sql);
+        $query4->execute(array(':id' => $id));
+
+		if ($query4 && $query5) {
 			return true;
 		}
     }

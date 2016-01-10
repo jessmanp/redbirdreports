@@ -13,14 +13,24 @@
 
 	<div id="myagency-delete">
 		<div class="myagency-message"></div>
-			Are you sure you want to &quot;<strong>REMOVE</strong>&quot; this Employee?<br /><br />Click &quot;<strong>Close</strong>&quot; if you want to keep this employee.<br />
+			Are you sure you want to &quot;<strong>DEACTIVATE</strong>&quot; this Employee?<br /><br />Click &quot;<strong>Close</strong>&quot; if you want to keep this employee active.<br />
 			<p class="myagency-delete-box"></p>
 			<form id="employee_delete_form" name="employee_delete_form">
-			<input type="hidden" id="delete_path" name="delete_path" value="" />
 			<input type="hidden" id="delid" name="delid" value="-2" />
 			</form>
 <div class="myagency-edit-bar"></div>
 		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="employee_delete" class="plain-btn">Yes</button>
+	</div>
+	
+	<div id="myagency-undelete">
+		<div class="myagency-message"></div>
+			Are you sure you want to &quot;<strong>REACTIVATE</strong>&quot; this Employee?<br /><br />Click &quot;<strong>Close</strong>&quot; if you want to keep this employee deactive.<br />
+			<p class="myagency-delete-box"></p>
+			<form id="employee_undelete_form" name="employee_undelete_form">
+			<input type="hidden" id="udelid" name="udelid" value="-2" />
+			</form>
+<div class="myagency-edit-bar"></div>
+		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="employee_undelete" class="plain-btn">Yes</button>
 	</div>
 	
 	

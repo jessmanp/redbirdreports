@@ -1064,6 +1064,7 @@ a.sort-link-desc:hover {
 }
 .col {
 	display:table-cell;
+	white-space:nowrap;
 }
 
 a.policy-desc-action,  a.policy-desc-action:visited {
@@ -1854,6 +1855,12 @@ a.policy-edit-action:hover {
 	display:none;
 }
 #myagency-delete {
+	display:none;
+}
+#myagency-undelete {
+	display:none;
+}
+#agency_employee_restore {
 	display:none;
 }
 .myagency-delete-box {

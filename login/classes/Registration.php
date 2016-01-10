@@ -43,7 +43,7 @@ class Registration
 
         // if we have such a POST request, call the registerNewUser() method
         if (isset($_POST["register"])) {
-            $this->registerNewUser($_POST['user_name'], $_POST['user_email'], $_POST['user_password_new'], $_POST['user_password_repeat'], $_POST["captcha"]);
+            $this->registerNewUser($_POST['user_name'], $_POST['user_email'], $_POST['user_email_verfiy'], $_POST['user_password_new'], $_POST['user_password_repeat'], $_POST["captcha"]);
         // if we have such a GET request, call the verifyNewUser() method
         } else if (isset($_GET["id"]) && isset($_GET["verification_code"])) {
             $this->verifyNewUser($_GET["id"], $_GET["verification_code"]);
@@ -85,7 +85,7 @@ class Registration
      * handles the entire registration process. checks all error possibilities, and creates a new user in the database if
      * everything is fine
      */
-    private function registerNewUser($user_name, $user_email, $user_password, $user_password_repeat, $captcha)
+    private function registerNewUser($user_name, $user_email, $user_email_verify, $user_password, $user_password_repeat, $captcha)
     {
         // we just remove extra space on username and email
         $user_name  = trim($user_name);
@@ -112,6 +112,8 @@ class Registration
             $this->errors[] = MESSAGE_USERNAME_INVALID;
         } elseif (empty($user_email)) {
             $this->errors[] = MESSAGE_EMAIL_EMPTY;
+        } elseif ($user_email != $user_email_verify) {
+            $this->errors[] = MESSAGE_EMAIL_NO_MATCH;
         } elseif (strlen($user_email) > 64) {
             $this->errors[] = MESSAGE_EMAIL_TOO_LONG;
         } elseif (!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
@@ -257,13 +259,13 @@ Thanks! We look forward to making your agency smarter!
 <br /><br />
 </div>
 <div style="clear:both;text-align:center;padding:5px;font-size:12px;height:45px;background-color:#ffffff;border-top:2px solid #ff0000;color:#333333;">
-	&copy; 2014 Sea Cloud Media. All Rights Reserved.
+	&copy; 2016 Red Bird Reports. All Rights Reserved.
 </div>
 <div style="clear:both;font-size:14px;padding:10px;">
-<span style="font-weight:bold; color:#000000;">Red Bird</span> <span style="font-family:Courier, \'Courier New Bold\', monospace; color:#ff0000; font-style:normal; font-weight:normal;">Reports</span>&trade; is Your Agency&rsquo;s Solution.<br />
+<span style="font-weight:bold; color:#000000;">Red Bird Reports</span>&trade; is Your Agency&rsquo;s Solution.<br />
 <span style="color:#ff0000; text-shadow:none; font-weight:bold;">We make your agency smarter</span><br /><br />
-<span style="font-weight:bold; color:#000000;">Red Bird</span> <span style="font-family:Courier, \'Courier New Bold\', monospace; color:#ff0000; font-style:normal; font-weight:normal;">Reports</span>&trade; is easy to set up in minutes. There is no annual contract or set up fee. Cancel at any time.<br /><br />
-If you do not wish to receive email from <span style="font-weight:bold; color:#000000;">Red Bird</span> <span style="font-family:Courier, \'Courier New Bold\', monospace; color:#ff0000; font-style:normal; font-weight:normal;">Reports</span>&trade; in the future, please <a href="http://www.redbirdreports.com/unsubscribe">UNSUBSCRIBE</a>.
+<span style="font-weight:bold; color:#000000;">Red Bird Reports</span>&trade; is easy to set up in minutes. There is no annual contract or set up fee. Cancel at any time.<br /><br />
+If you do not wish to receive email from <span style="font-weight:bold; color:#000000;">Red Bird Reports</span>&trade; in the future, please <a href="http://www.redbirdreports.com/unsubscribe">UNSUBSCRIBE</a>.
 <br /><br />
 </div>
 </div>
@@ -315,8 +317,13 @@ If you do not wish to receive email from <span style="font-weight:bold; color:#0
                 			$query_agency_owner_insert->bindValue(':user_id', $user_id, PDO::PARAM_STR);
                 			$query_agency_owner_insert->execute();
 
-						// id of new agency
+						// set id of new agency
                 			$agency_id = $this->db_connection->lastInsertId();
+                			
+                		// add default settings
+                			$query_agency_settings_insert = $this->db_connection->prepare('INSERT INTO agencies_settings (agency_id) VALUES (:agency_id)');
+                			$query_agency_settings_insert->bindValue(':agency_id', $agency_id, PDO::PARAM_STR);
+                			$query_agency_settings_insert->execute();
 					} else {
 						// find what agency this user belongs to since they are not an owner (less than level 3)
 						$query_get_user_agency = $this->db_connection->prepare('SELECT agency_id FROM agencies_users WHERE user_id = :user_id');

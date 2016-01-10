@@ -15,6 +15,7 @@ define("MESSAGE_EMAIL_ALREADY_EXISTS", "Sorry, that email address is already reg
 define("MESSAGE_EMAIL_CHANGE_FAILED", "Sorry, the attempt to update your email failed.");
 define("MESSAGE_EMAIL_CHANGED_SUCCESSFULLY", "Success, Your email address has been changed successfully. The new email address is: ");
 define("MESSAGE_EMAIL_EMPTY", "Sorry, the email field cannot be empty.");
+define("MESSAGE_EMAIL_NO_MATCH", "Sorry, the email address does not match. Please verify the email address and enter it again.");
 define("MESSAGE_EMAIL_INVALID", "Your email address is not in a valid email format.");
 define("MESSAGE_EMAIL_SAME_LIKE_OLD_ONE", "Sorry, that email address is the same as your current one. Please choose another one.");
 define("MESSAGE_EMAIL_TOO_LONG", "Sorry, the email address cannot be longer than 64 characters");

@@ -27,6 +27,9 @@
 	
     <label for="user_email">Email<span class="small">*Valid e-mail only</span></label>
     <input id="user_email" type="email" name="user_email" placeholder="Enter Email" value="<?php if (isset($registration->temp_user_email)) { echo $registration->temp_user_email; } ?>" required />
+	
+	<label for="user_email">Verify Email<span class="small">*Valid e-mail only</span></label>
+    <input id="user_email_verfiy" type="email" name="user_email_verfiy" placeholder="Enter Email Again" value="<?php if (isset($registration->temp_user_email)) { echo $registration->temp_user_email; } ?>" required />
 
     <label for="user_password_new">Password<span class="small">*Minimum 6 chars</span></label>
     <input id="user_password_new" type="password" name="user_password_new" pattern=".{6,}" placeholder="Enter Password" required autocomplete="off" />

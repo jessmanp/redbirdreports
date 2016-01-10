@@ -32,7 +32,7 @@ if ($open == 1) {
 }
 ?>
 			</div>
-			<div class="sub-title">Commissions Frequency is #frequency_variable#</div>
+			<div class="sub-title">Commissions Frequency is <span id="commission_frequency"></span></div>
 			<div class="commission-search-area">
 			<div class="commission-search-title">Search Commission Period</div>
 				<form id="search_text_form" name="search_text_form">
@@ -66,17 +66,17 @@ for ($i=0; $i<10; ++$i) {
 			</div>
 			<div class="commission-status-area">
 				<div class="status-table-left">
-					<div class="status-text-left">Name: <span id="cname" class="status-item">John Doe</span></div>
-					<div class="status-text-left">Title: <span id="ctitle" class="status-item">Account Representative</span></div>
-					<div class="status-text-left">Hire Date: <span id="chired" class="status-item">2/4/2014</span></div>
+					<div class="status-text-left">Name: <span id="cname" class="status-item"></span></div>
+					<div class="status-text-left">Title: <span id="ctitle" class="status-item"></span></div>
+					<div class="status-text-left">Hire Date: <span id="chired" class="status-item"></span></div>
 				</div>
 				<div class="status-table-right">
 					<span class="status-item">Commission History</span><br />
-					<div class="status-cell">Lifetime<br /><span id="clifetime" class="status-item">$1,000,000.00</span></div>
-					<div class="status-cell">Last Year<br /><span id="clastyear" class="status-item">$1,000,000.00</span></div>
-					<div class="status-cell">Last YTD<br /><span id="clastytd" class="status-item">$1,000,000.00</span></div>
-					<div class="status-cell">Current YTD<br /><span id="ccurrentytd" class="status-item">$1,000,000.00</span></div>
-					<div class="status-cell">Last Month<br /><span id="clastmonth" class="status-item">$1,000,000.00</span></div>
+					<div class="status-cell">Lifetime<br /><span id="clifetime" class="status-item"></span></div>
+					<div class="status-cell">Last Year<br /><span id="clastyear" class="status-item"></span></div>
+					<div class="status-cell">Last YTD<br /><span id="clastytd" class="status-item"></span></div>
+					<div class="status-cell">Current YTD<br /><span id="ccurrentytd" class="status-item"></span></div>
+					<div class="status-cell">Last Month<br /><span id="clastmonth" class="status-item"></span></div>
 				</div>
 			</div>
 		</div>
