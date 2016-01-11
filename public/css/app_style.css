@@ -278,6 +278,40 @@ footer {
 	border:2px solid #000000;
 	color:#ffffff;
 }
+.plain-btn-erase-disabled {
+    width:158px; 
+    height:34px; 
+    background-color:#cccccc;
+    color:#000000;
+    border:2px solid #cccccc;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+	font-size:12px;
+	text-align:center;
+	line-height:28px;
+	opacity:0.5;
+}
+.plain-btn-disabled {
+    width:158px; 
+    height:34px; 
+    background-color:#cccccc;
+    color:#000000;
+    border:2px solid #cccccc;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+	font-size:12px;
+	text-align:center;
+	line-height:28px;
+	opacity:0.5;
+}
 button {
 	font-family: Helvetica, Arial, Verdana, sans-serif;
 }
@@ -895,7 +929,7 @@ input[type=radio]:not(old):checked + label > span > span{
 
 .status-text-left {
 	float:left;
-	width:200px;
+	width:230px;
 	color:#cccccc;
 	line-height:25px;
 }

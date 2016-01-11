@@ -22,7 +22,7 @@
 			<div style="clear:both;"><br /></div>
 			
 			<!-- form for editing employees -->
-			<form method="post" action="/app/myagency/putEmployeeData" id="agency_update_employee" name="agency_update_employee">
+			<form id="agency_update_employee" name="agency_update_employee">
 
 				<input type="hidden" id="agency_id" name="agency_id" value="<?php echo $agency_id; ?>" />
 				<input type="hidden" id="employee_id" name="employee_id" value="-2" />

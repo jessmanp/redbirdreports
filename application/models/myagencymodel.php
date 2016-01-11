@@ -27,6 +27,18 @@ class MyAgencyModel
     }
     
     /**
+     * Get Employees to Transfer to from database based on Agency ID
+     */
+    public function getTransferEmployees($agency_id)
+    {
+		// query agency ID for new owner
+        $sql = 'SELECT users.user_id,users.user_level,users.user_first_name,users.user_last_name,users.user_active FROM users, agencies, agencies_users WHERE agencies_users.user_id = users.user_id AND agencies_users.agency_id = agencies.id AND agencies.id = '.$agency_id.' AND users.user_active = 1 ORDER BY users.user_last_name';
+        $query = $this->db->prepare($sql);
+        $query->execute();
+		return $query->fetchAll();
+    }
+    
+    /**
      * Update Special Compensation
      */
     public function saveCommissionSpecial($employee_id)
@@ -56,6 +68,24 @@ class MyAgencyModel
 		$query_get_agency_settings->execute();
 		return $query_get_agency_settings->fetchAll();
 
+	}
+	
+	/**
+     * Update employee compensation data
+     */
+    public function saveAgencySettings($agency_id,$period_frequency)
+    {
+		// query to update user data
+		$query_update_agency_settings = $this->db->prepare('UPDATE agencies_settings SET period_frequency = :period_frequency WHERE agency_id = :agency_id');
+		$query_update_agency_settings->bindValue(':period_frequency', $period_frequency, PDO::PARAM_INT);
+		$query_update_agency_settings->bindValue(':agency_id', $agency_id, PDO::PARAM_INT);
+		$query_update_agency_settings->execute();
+		
+		if ($query_update_agency_settings) {
+			return true;
+		}
+		
+		return false;
 	}
     
     /**
@@ -159,7 +189,7 @@ class MyAgencyModel
 	/**
      * deactivate user
      */
-    public function deleteEmployee($id)
+    public function deleteEmployee($id,$newid)
     {
     
     	/*
@@ -176,19 +206,36 @@ class MyAgencyModel
         $query3->execute(array(':id' => $id));
         */
         
-        // DEACTIVATE THIS USER_ID
-        $sql = "UPDATE users SET user_active = 0 WHERE user_id = :id";
-        $query5 = $this->db->prepare($sql);
-        $query5->execute(array(':id' => $id));
+        // SWITCH USER ID ON POLICIES
         
-        // ERASE POLICIES WITH THIS USER_ID
-        $sql = "UPDATE policies SET active = 0 WHERE user_id = :id";
-        $query4 = $this->db->prepare($sql);
-        $query4->execute(array(':id' => $id));
+        
+        // GET ACTIVE TYPE (0=invited,1=activve,2=deactive)
+        $sql = "SELECT user_active FROM users WHERE user_id = :id LIMIT 1";
+        $query = $this->db->prepare($sql);
+		$query->execute(array(':id' => $id));
+		$active_type = $query->fetch()->user_active;
+        
+        
+        if ($active_type == 1) {
+                 
+			// DEACTIVATE THIS USER_ID
+			$sql = "UPDATE users SET user_active = 2 WHERE user_id = :id";
+			$query5 = $this->db->prepare($sql);
+			$query5->execute(array(':id' => $id));
+		
+			// SWITCH USER ID ON POLICIES AND BACKUP OLD ID
+			$sql = "UPDATE policies SET user_id = :new_id, old_user_id = :old_id WHERE user_id = :old_id";
+			$query4 = $this->db->prepare($sql);
+			$query4->execute(array(':old_id' => $id,':new_id' => $newid));
 
-		if ($query4 && $query5) {
-			return true;
+			if ($query4 && $query5) {
+				return true;
+			}
+		
 		}
+		
+		return false;
+		
     }
     
 	/**

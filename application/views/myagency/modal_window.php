@@ -16,6 +16,13 @@
 			Are you sure you want to &quot;<strong>DEACTIVATE</strong>&quot; this Employee?<br /><br />Click &quot;<strong>Close</strong>&quot; if you want to keep this employee active.<br />
 			<p class="myagency-delete-box"></p>
 			<form id="employee_delete_form" name="employee_delete_form">
+			<div style="margin:20px 0 25px 0;">
+				You <strong>MUST</strong> transfer all policies when you deactivate an Employee.<br /><br />
+				Select the <strong>EMPLOYEE</strong> you want to <strong>TRANSFER</strong> all policies to:<br /><br />
+				<select id="swapid" name="swapid">
+					<option value="0">- Select -</option>
+				</select>
+			</div>
 			<input type="hidden" id="delid" name="delid" value="-2" />
 			</form>
 <div class="myagency-edit-bar"></div>
@@ -24,7 +31,7 @@
 	
 	<div id="myagency-undelete">
 		<div class="myagency-message"></div>
-			Are you sure you want to &quot;<strong>REACTIVATE</strong>&quot; this Employee?<br /><br />Click &quot;<strong>Close</strong>&quot; if you want to keep this employee deactive.<br />
+			Are you sure you want to &quot;<strong>REACTIVATE</strong>&quot; this Employee?<br /><br />Click &quot;<strong>Close</strong>&quot; if you want to keep this employee deactivated.<br />
 			<p class="myagency-delete-box"></p>
 			<form id="employee_undelete_form" name="employee_undelete_form">
 			<input type="hidden" id="udelid" name="udelid" value="-2" />

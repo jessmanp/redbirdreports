@@ -679,6 +679,60 @@ class App extends Controller
 				$agency_id = $setup_model->getOwnerAgencyID($_SESSION['user_id']);
 		}
 		
+		if ($sub == 'getSettings') {
+			// get commission frequency
+			
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+			
+			// get data
+			$commission_freq = $myagency_model->getAgencySettings($agency_id);
+
+			if (empty($commission_freq)) {
+				$return['error'] = true;
+				$return['msg'] .= '<strong>ERROR</strong>, No agency settings found.';
+			} else {
+				$return = $commission_freq;
+			}
+
+			//Return json encoded results
+			echo json_encode($return);			
+			exit();
+			
+		}
+		
+		if ($sub == 'saveSettings') {
+
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+			
+			$agency_frequency = @$_POST['agency_frequency'];
+		
+			// get agency id based on owner
+			$agency_id = $setup_model->getOwnerAgencyID($_SESSION['user_id']);
+
+			if (isset($agency_frequency) && is_numeric($agency_frequency)) {
+				// put settings
+				$savesettings = $myagency_model->saveAgencySettings($agency_id,$agency_frequency);
+			}
+
+			if (empty($savesettings)) {
+				$return['error'] = true;
+				$return['msg'] .= 'ERROR. Settings Not Saved.';
+			} else {
+				$return['msg'] = '<strong>Success</strong>, your settings have been updated.';
+			}
+
+			//Return json encoded results
+			echo json_encode($return);
+			exit();
+
+		}
+		
 		if ($sub == 'getEmployeeList') {
 
 			// array values that will be returned via ajax
@@ -691,6 +745,32 @@ class App extends Controller
 
 			// get list of employees
 			$employees = $myagency_model->getAllEmployees($agency_id);
+
+			if (empty($employees)) {
+				$return['error'] = true;
+				$return['msg'] .= 'ERROR. No employee(s) found.';
+			} else {
+				$return = $employees;
+			}
+
+			//Return json encoded results
+			echo json_encode($return);
+			exit();
+
+		}
+		
+		if ($sub == 'getEmployeeTransferList') {
+
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+		
+			// get agency id based on owner
+			$agency_id = $setup_model->getOwnerAgencyID($_SESSION['user_id']);
+
+			// get list of employees
+			$employees = $myagency_model->getTransferEmployees($agency_id);
 
 			if (empty($employees)) {
 				$return['error'] = true;
@@ -916,9 +996,11 @@ class App extends Controller
 				$return['msg'] = '';
 				$return['error'] = false;
 
+				$newID = @$_POST['swapid'];
 				$delID = @$_POST['delid'];
-				if (isset($delID) && is_numeric($delID)) {
-					$employee_deleted = $myagency_model->deleteEmployee($delID);
+				
+				if (isset($delID) && is_numeric($delID) && isset($newID) && is_numeric($newID)) {
+					$employee_deleted = $myagency_model->deleteEmployee($delID,$newID);
 					if ($employee_deleted) {
 						$return['msg'] = '<strong>Success</strong>, Employee Deactivated.';
 					} else {
@@ -927,7 +1009,7 @@ class App extends Controller
 					}
 				} else {
 					$return['error'] = true;
-					$return['msg'] .= '<strong>Employee Deactivate Failed.</strong> Employee ID is empty.';
+					$return['msg'] .= '<strong>Employee Deactivation Failed.</strong> Transfer Employee is Missing.';
 				}
  
 				//Return json encoded results

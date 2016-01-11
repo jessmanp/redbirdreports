@@ -64,6 +64,8 @@ function openWindow(type,message,id,fname,lname,jobtitle) {
 	}
 	
 	if (type == 'delete') {
+		// LOAD TRANSFER EMPLOYEES
+		updateEmployeeTransferList(id);
 		$("#employee-invite").hide();
 		$("#myagency-undelete").hide();
 		$("#myagency-delete").fadeIn();
@@ -90,6 +92,42 @@ function closeWindow() {
 	$("#employee-invite").fadeOut("fast");
 	$("#myagency-text").fadeOut("fast");
 	$("#myagency-delete").fadeOut("fast");
+}
+
+// LOAD TRANSFER EMPLOYEES AND UPDATE DROPDOWN
+function updateEmployeeTransferList(removeid) {
+	$.ajax({
+			type: "POST",
+			url: "/app/myagency/getEmployeeTransferList",
+			data: $(this).serialize(),
+			dataType: "json",
+			cache: false,
+				async: true,
+			success: function (data) {
+				console.log(data);
+				if (data.error == true) {
+					// show returned error msg here
+					//openModal('error',data.msg);
+				} else {
+					// update was successful refresh/populate employee drop down
+					$("#swapid").empty();
+					$("#swapid").append(
+						$("<option></option>").val("").html("- Select -")
+					);
+					// loop over employees and add each to dropdown
+					$.each(data, function(key, value) {
+						if (value.user_id != removeid) {
+							$("#swapid").append(
+								$("<option></option>").val(value.user_id).html(value.user_first_name+" "+value.user_last_name)
+							);
+						}
+					});
+				}	
+			},
+			error: function (request, status, error) {
+					console.log(error);
+			}
+	});
 }
 
 // INVITE EMPLOYEE
@@ -166,14 +204,72 @@ $(document).ready(function() {
 						} else {
 							// show success message...
 							openModal('info',data.msg);
-							// setup was successful, send to menu screen
-							//window.location = "/app/myagency";
 						}	
 					},
 					error: function (request, status, error) {
         					console.log(error);
 					}
 		});
+		event.preventDefault();
+	});
+	
+	// LOAD FREQUENCY DATA
+	function loadFrequency() {
+			// get agency frequency
+			$.ajax({
+					type: "GET",
+					url: "/app/myagency/getSettings",
+					data: $(this).serialize(),
+					dataType: "json",
+					cache: false,
+						async: true,
+					success: function (data) {
+						console.log(data);
+						if (data.error == true) {
+							// show returned error msg here
+							openModal('error',data.msg);
+						} else {
+							// populate form fields with json data
+							$.each(data, function(key, value) {
+								// fill out fields with data
+								$("#agency_frequency option[value="+value.period_frequency+"]").prop("selected", true);
+							});
+						}	
+					},
+					error: function (request, status, error) {
+							console.log(error);
+					}
+			});
+	}
+	
+	$("#agency_settings_save").on("click", function(event) {
+		event.preventDefault();
+		$('#agency_settings_form').submit();
+	});
+	
+	// SETTINGS SUBMIT ACTION
+	$('#agency_settings_form').submit(function(event) {
+        		$.ajax({
+					type: 'POST',
+					url: '/app/myagency/saveSettings',
+					data: $(this).serialize(),
+					dataType: 'json',
+					cache: false,
+        			//async: true,
+				success: function (data) {
+						console.log(data);
+						if (data.error == true) {
+							// show returned error msg here
+							openModal('error',data.msg);
+						} else {
+							// show success message...
+							openModal('info',data.msg);
+						}	
+				},
+					error: function (request, status, error) {
+        					console.log(error);
+				}
+                });
 		event.preventDefault();
 	});
 	
@@ -226,7 +322,7 @@ $(document).ready(function() {
 	});
 	
 	// LOAD EMPLOYEES AND UPDATE DROPDOWN
-	function updateEmployeeList() {
+	function updateEmployeeList(action) {
 		$.ajax({
 				type: "POST",
 				url: "/app/myagency/getEmployeeList",
@@ -240,6 +336,15 @@ $(document).ready(function() {
 						// show returned error msg here
 						//openModal('error',data.msg);
 					} else {
+						if (!action) {
+							// DISABLE BUTTONS
+							$("#agency_employee_save").switchClass("plain-btn","plain-btn-disabled");
+							$("#agency_employee_save").prop("disabled", true);
+							$("#agency_employee_erase").switchClass("plain-btn-erase","plain-btn-erase-disabled");
+							$("#agency_employee_erase").prop("disabled", true);
+							$("#agency_employee_restore").switchClass("plain-btn-erase","plain-btn-erase-disabled");
+							$("#agency_employee_restore").prop("disabled", true);
+						}
 						// update was successful refresh/populate employee drop down
 						$("#agency_employees").empty();
 						$("#agency_employees").append(
@@ -251,9 +356,13 @@ $(document).ready(function() {
 								$("#agency_employees").append(
 									$("<option></option>").val(value.user_id).html(value.user_first_name+" "+value.user_last_name)
 								);
-							} else {
+							} else if (value.user_active == 2) {
 								$("#agency_employees").append(
 									$("<option></option>").val(value.user_id).html("* Inactive User * ("+value.user_first_name+" "+value.user_last_name+")")
+								);
+							} else {
+								$("#agency_employees").append(
+									$("<option></option>").val(value.user_id).html("* Invited User * ("+value.user_first_name+" "+value.user_last_name+")")
 								);
 							}
 						});
@@ -334,9 +443,22 @@ $(document).ready(function() {
 								$("#employee_bank_loan_product").val(value.commission_loan_product);
 								if (value.user_active == 1) {
 									$("#agency_employee_erase").fadeIn();
-								} else {
+									$("#agency_employee_erase").removeClass();
+									$("#agency_employee_erase").addClass("plain-btn-erase");
+									$("#agency_employee_erase").prop("disabled", false);
+								} else if (value.user_active == 2) {
 									$("#agency_employee_restore").fadeIn();
+									$("#agency_employee_restore").removeClass();
+									$("#agency_employee_restore").addClass("plain-btn-erase");
+									$("#agency_employee_restore").prop("disabled", false);
+								} else {
+									$("#agency_employee_erase").fadeIn();
+									$("#agency_employee_erase").switchClass("plain-btn-erase","plain-btn-erase-disabled");
+									$("#agency_employee_erase").prop("disabled", true);
 								}
+								$("#agency_employee_save").removeClass();
+								$("#agency_employee_save").addClass("plain-btn");
+								$("#agency_employee_save").prop("disabled", false);
 							});
 						}	
 					},
@@ -377,6 +499,14 @@ $(document).ready(function() {
 			$("#employee_health_policy").val('');
 			$("#employee_bank_deposit_product").val('');
 			$("#employee_bank_loan_product").val('');
+			// DISABLE BUTTONS
+			$("#agency_employee_save").switchClass("plain-btn","plain-btn-disabled");
+			$("#agency_employee_save").prop("disabled", true);
+			$("#agency_employee_erase").switchClass("plain-btn-erase","plain-btn-erase-disabled");
+			$("#agency_employee_erase").prop("disabled", true);
+			$("#agency_employee_restore").switchClass("plain-btn-erase","plain-btn-erase-disabled");
+			$("#agency_employee_restore").prop("disabled", true);
+			
 		}
 	}
 	
@@ -402,6 +532,8 @@ $(document).ready(function() {
 							openModal('error',data.msg);
 							//$("#employee_email").focus();
 						} else {
+							updateEmployeeList(1);
+							//loadUserData('');
 							// show success message...
 							openModal('info',data.msg);
 						}	
@@ -521,6 +653,9 @@ $(document).ready(function() {
                 });
 		event.preventDefault();
 	});
+	
+	// LOAD FREQUENCY
+	loadFrequency();
 	
 	// LOAD EMPLOYEES
 	updateEmployeeList();

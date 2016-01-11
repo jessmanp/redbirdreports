@@ -141,7 +141,13 @@ $(document).ready(function() {
 								$("#emp_default_label").text('');
 								$("#emp_first_label").text(value.user_first_name);
 								$("#emp_last_label").text(value.user_last_name);
-								$("#cname").text(value.user_first_name+" "+value.user_last_name);
+								var fullname = value.user_first_name+" "+value.user_last_name;
+								$("#cname").text(fullname);
+								if (fullname.length > 24) {
+									$("#cname").css('font-size','12px');
+								} else {
+									$("#cname").removeAttr('style');
+								}
 								$("#ctitle").text(value.user_job_title);
 								if (value.user_hire_date) {
 									$("#chired").text(sqlToJsDate(value.user_hire_date));
