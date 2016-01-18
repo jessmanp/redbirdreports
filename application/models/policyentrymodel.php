@@ -19,7 +19,7 @@ class PolicyEntryModel
      */
     public function getAllEmployees($agency_id)
     {
-        $sql = "SELECT users.user_id, users.user_first_name, users.user_last_name FROM users, agencies_users WHERE users.user_id = agencies_users.user_id AND agencies_users.agency_id = ".$agency_id." ORDER BY users.user_last_name";
+        $sql = "SELECT users.user_id, users.user_first_name, users.user_last_name FROM users, agencies_users WHERE users.user_active = 1 AND users.user_id = agencies_users.user_id AND agencies_users.agency_id = ".$agency_id." ORDER BY users.user_last_name";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();

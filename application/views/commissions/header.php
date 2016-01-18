@@ -1,3 +1,10 @@
+<?php
+if ($frequency == 1) {
+	$cf = "Monthly";
+} else {
+	$cf = "Bi-Monthly";
+}
+?>
 <!-- begin sub header area -->
 <div id="commissions-header">
 	<div id="sub-menu">
@@ -16,7 +23,6 @@
 			<div id="commission-period-box">
 				This Period is<br />
 <?php
-$open=1;
 if ($open == 1) {
 ?>
 				<img src="/public/img/period_open.png" class="period-open" />
@@ -32,27 +38,16 @@ if ($open == 1) {
 }
 ?>
 			</div>
-			<div class="sub-title">Commissions Frequency is <span id="commission_frequency"></span></div>
+			<div class="sub-title">Commissions Frequency is <span id="commission_frequency"><?php echo $cf; ?></span></div>
 			<div class="commission-search-area">
 			<div class="commission-search-title">Search Commission Period</div>
-				<form id="search_text_form" name="search_text_form">
-					<input type="radio" id="period" name="period" value="1" checked /><span class="search-text">Current</span> 
-					<input type="radio" id="period" name="period" value="2" /><span class="search-text">Previous</span>
+				<form id="search_period_form" name="search_period_form">
+					<input id="the_frequency" name="the_frequency" type="hidden" value="<?php echo $frequency; ?>" />
+					<input type="radio" id="period1" name="period" value="1" checked /><span class="search-text">Current</span> 
+					<input type="radio" id="period2" name="period" value="2" /><span class="search-text">Previous</span>
 					&nbsp;&nbsp;
-					<span class="search-text">Month:</span>
-					<select id="commission_months" name="commission_months" class="short-select">
-<?php
-for ($i = 0; $i <= 11; ++$i) {
-	$time = strtotime(sprintf('first day of -%d month', $i));
-	$value = date('m', $time);
-	$label = date('F', $time);
-	printf('						<option value="%s">%s</option>', $value, $label);
-}
-?>
-					</select>
-					&nbsp;
 					<span class="search-text">Year:</span>
-					<select id="commission_years" name="commission_years" class="short-select">
+					<select id="commission_year" name="commission_year" class="short-select">
 <?php
 $currYear = date('Y');
 for ($i=0; $i<10; ++$i) {
@@ -61,6 +56,9 @@ for ($i=0; $i<10; ++$i) {
 }
 ?>
 					</select>
+					&nbsp;
+					<span id="period_type" class="search-text">Month:</span>
+					<select id="commission_period" name="commission_period" class="short-select"></select>
 					<button id="dosubmit2"><img src="/public/img/btn_search.png" class="search-btn-icon" alt="Search" /></button>
 				</form>
 			</div>

@@ -560,31 +560,13 @@ class App extends Controller
 			// get and set agency ID based on the owner
 				$agency_id = $setup_model->getOwnerAgencyID($_SESSION['user_id']);
 		}
-		
-		
-		if ($sub == 'getCommissionFrequency') {
-			// get commission frequency
-			
-			// array values that will be returned via ajax
-			$return = array();
-			$return['msg'] = '';
-			$return['error'] = false;
-			
-			// get data
-			$commission_freq = $myagency_model->getAgencySettings($agency_id);
 
-			if (empty($commission_freq)) {
-				$return['error'] = true;
-				$return['msg'] .= '<strong>ERROR</strong>, No agency settings found.';
-			} else {
-				$return = $commission_freq;
-			}
-
-			//Return json encoded results
-			echo json_encode($return);			
-			exit();
-			
-		}
+		// get commission freq
+		$cfreq = $myagency_model->getAgencySettings($agency_id);
+		$frequency = $cfreq[0]->period_frequency;
+		
+		// get period info
+		$open = 1;
 		
 		if ($sub == 'getEmployeeCommissionHistory') {
 			// get employee commissions
@@ -649,7 +631,7 @@ class App extends Controller
 			exit();
 			
 		}
-
+		
 		// load CSS based on method
 		$css = 'app_style.css';
 		// load jQuery script based on method
@@ -856,7 +838,8 @@ class App extends Controller
 			$employee_fire_renewal = @$_POST['employee_fire_renewal']; // must be decimal percent
 			
 			$employee_life_new = @$_POST['employee_life_new']; // must be decimal percent
-			$employee_life_increase = @$_POST['employee_life_increase']; // must be decimal percent
+			//$employee_life_increase = @$_POST['employee_life_increase']; // must be decimal percent
+			$employee_life_increase = 0; // REMOVED
 			$employee_life_policy = @$_POST['employee_life_policy']; // must be decimal percent
 			
 			$employee_health_new = @$_POST['employee_health_new']; // must be decimal percent
@@ -938,10 +921,12 @@ class App extends Controller
 				$return['error'] = true;
 				$return['msg'] .= '<strong>Life New Commission</strong> Field is Required.<br />';
 			}
+			/*
 			if (!isset($employee_life_increase) || !is_numeric($employee_life_increase)){
 				$return['error'] = true;
 				$return['msg'] .= '<strong>Life Increase Commission</strong> Field is Required.<br />';
 			}
+			*/
 			if (!isset($employee_life_policy) || !is_numeric($employee_life_policy)){
 				$return['error'] = true;
 				$return['msg'] .= '<strong>Life $ / Policy Commission</strong> Field is Required.<br /><br />';

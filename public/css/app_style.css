@@ -1192,6 +1192,12 @@ a.policy-edit-action:hover {
 	vertical-align:middle;
 	border:0;
 }
+.modal-required-key {
+	margin:25px 0 0 680px;
+	position:absolute;
+	font-size:11px;
+	font-weight:bold;
+}
 #premiumdate {
 	display:inline-block;
 	padding:4px 8px 4px 8px;
@@ -1546,6 +1552,31 @@ a.policy-edit-action:hover {
     background-color:#000000;
     border:2px solid #000000;
 }
+#resend-invite-employee {
+	display:none;
+	position:absolute;
+	margin:178px 2px 0 -538px;
+	padding:0 0 0 10px;
+    cursor:pointer; 
+    width:200px; 
+    height:37px; 
+    background-color:#a20004;
+    color:#ffffff;
+    border:2px solid #a20004;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+	font-size:12px;
+	text-align:left;
+	line-height:30px;
+}
+#resend-invite-employee:hover {
+    background-color:#000000;
+    border:2px solid #000000;
+}
 .search-text {
 	color:#a20004;
 }	
@@ -1887,6 +1918,11 @@ a.policy-edit-action:hover {
 }
 #myagency-text {
 	display:none;
+}
+.myagency-required-key {
+	float:right;
+	font-size:11px;
+	font-weight:bold;
 }
 #myagency-delete {
 	display:none;

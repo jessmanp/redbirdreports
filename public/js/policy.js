@@ -59,7 +59,9 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 	$(".policy-message").text(message);
 	if (category != '') {
 		if (Retina.isRetina()) {
-			categoryimg = category+"@2x";
+			var categoryimg = category+"@2x";
+		} else {
+			var categoryimg = category;
 		}
 		$(".policy-message").prepend('<img src="/public/img/icon_'+categoryimg+'.png" class="modal-icon" alt="'+categoryName+'" />');
 		$(".policy-message").append(' '+categoryName+' Policy');
@@ -177,7 +179,12 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 		//$("#policy-edit #icon").html('<img src="/public/img/icon_'+cat+'.png class="policy-entry-icon" />');
 		$("#policy-edit #id").val(id);
 		$("#policy-add").hide();
-		$("#policy-erase").fadeIn();
+		// only show erase button if policy is written
+		if (stat == 1) {
+			$("#policy-erase").fadeIn();
+		} else {
+			$("#policy-erase").hide();
+		}
 		$("#policy-save").fadeIn();
 		$("#policy_first_name").val(fname);
 		$("#policy_last_name").val(lname);

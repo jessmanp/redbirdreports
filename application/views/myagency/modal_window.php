@@ -2,6 +2,7 @@
 <div id="myagency-popup"></div>
 <div id="myagency-window">
 
+<div class="modal-required-key"><sup>*</sup>Required Field(s)</div>
 
 	<div id="myagency-text">
 		<div class="myagency-message"></div>
@@ -31,7 +32,7 @@
 	
 	<div id="myagency-undelete">
 		<div class="myagency-message"></div>
-			Are you sure you want to &quot;<strong>REACTIVATE</strong>&quot; this Employee?<br /><br />Click &quot;<strong>Close</strong>&quot; if you want to keep this employee deactivated.<br />
+			Are you sure you want to &quot;<strong>REACTIVATE</strong>&quot; this Employee?<br /><br />Click &quot;<strong>Close</strong>&quot; if you want to keep this employee inactive.<br />
 			<p class="myagency-delete-box"></p>
 			<form id="employee_undelete_form" name="employee_undelete_form">
 			<input type="hidden" id="udelid" name="udelid" value="-2" />

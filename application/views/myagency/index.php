@@ -29,6 +29,10 @@
 					<br /><br />
 					<button id="agency_info_save" data-type="save" class="plain-btn" style="margin-right:140px;">Update Information</button>
 					</div>
+					<div style="padding:10px;background-color:#ffffff;clear:both;">
+					<div class="myagency-required-key"><sup>*</sup>Required Field(s)</div>
+					<br />
+					</div>
 					<div class="myagency-text-footer">&nbsp;</div>
 				</div>
 			  </form>

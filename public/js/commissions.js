@@ -33,44 +33,100 @@ function closeModal() {
 	$("#message").fadeOut();
 }
 
+// get number of days in a given month/year
+function numberOfDays(year,month) {
+    var d = new Date(year, month, 0);
+    return d.getDate();
+}
+
+// setup month array
+var months = new Array("January","February","March","April","May","June","July","August","September","October","November","December");
+
+function populateDates(period,year) {
+	var now = new Date();
+	var currmonth = now.getMonth()+1;
+	var currday = now.getDate();
+	$("#commission_period").empty();
+	if (period == 1) {
+		// fill dropdown with months based on year
+		for (var i=0; i < months.length;++i) {
+			$("#commission_period").append(
+				$("<option></option>").val(i+1).html(months[i])
+			);
+		}
+		$("#commission_period option[value="+currmonth+"]").prop("selected", true);
+	} else if (period == 2) {
+		// fill dropdown with bi-months based on year
+		for (var i=0; i < months.length;++i) {
+			// calculate days and split in 2
+			var month = (i+1);
+			var nod = numberOfDays(year,month);
+			var halfRoundedUp = (nod % 2) ? nod/2 + .5 : nod/2;
+			var halfRoundedDown = (nod % 2) ? nod/2 - .5 : nod/2;
+			if (halfRoundedUp == halfRoundedDown) {
+				halfRoundedUp = (halfRoundedUp+1);
+			}
+			var days = new Array(halfRoundedDown,halfRoundedUp);
+			for (var j=0; j < days.length;++j) {
+				if (j == 0) {
+					$("#commission_period").append(
+						$("<option></option>").val((i+1)+":1-"+days[j]).html(months[i].substring(0,3)+" 1-"+days[j])
+					);
+				} else {
+					$("#commission_period").append(
+						$("<option></option>").val((i+1)+":"+days[j]+"-"+nod).html(months[i].substring(0,3)+" "+days[j]+"-"+nod)
+					);	
+				}
+				if (currday <= days[j]) {
+					var selday = "1-"+days[j];
+				} else if (currday >= days[j]) {
+					selday = days[j]+"-"+nod;
+				}
+			}
+		}
+		var preselday = currmonth+":"+selday;
+		$("#commission_period option[value='"+preselday+"']").prop("selected", true);	
+	}
+}
+
+function loadPeriodDates(period) {
+	if (period == 1) {
+		$("#period_type").text('Month:');
+		populateDates(period,$("#commission_year").val());
+	} else if (period == 2) {
+		$("#period_type").text('Range:');
+		populateDates(period,$("#commission_year").val());
+	}
+}
+
 // LOAD
 $(document).ready(function() {
 
+	// disable dropdowns by default
+	$("#commission_year").prop("disabled", true);
+	$("#commission_period").prop("disabled", true);
+	
+	// LOAD PERIOD ON CHANGE
+	$("#period2").on("click", function(event) {
+		$("#commission_year").prop("disabled", false);
+		$("#commission_period").prop("disabled", false);
+	});
+	$("#period1").on("click", function(event) {
+		var now = new Date();
+		var curryear = now.getFullYear();
+		populateDates($("#the_frequency").val(),curryear);
+		$("#commission_year option[value='"+curryear+"']").prop("selected", true);
+		$("#commission_year").prop("disabled", true);
+		$("#commission_period").prop("disabled", true);
+	});
+	
+	$("#commission_year").on("change", function(event) {
+		// do stuff here
+		populateDates($("#the_frequency").val(),$(this).val());
+	});
+
 	// HIGHLIGHT MAIN SECTION
 	$("#commissions").closest(".main-button").css("background-color","#cccccc");
-	
-	// LOAD FREQUENCY DATA
-	function loadFrequency() {
-			// get agency frequency
-			$.ajax({
-					type: "GET",
-					url: "/app/commissions/getCommissionFrequency",
-					data: $(this).serialize(),
-					dataType: "json",
-					cache: false,
-						async: true,
-					success: function (data) {
-						console.log(data);
-						if (data.error == true) {
-							// show returned error msg here
-							openModal('error',data.msg);
-						} else {
-							// populate form fields with json data
-							$.each(data, function(key, value) {
-								// fill out fields with data
-								if (value.period_frequency == 1) {
-									$("#commission_frequency").text('Monthly');
-								} else if (value.period_frequency == 1) {
-									$("#commission_frequency").text('Bi-Monthly');
-								}
-							});
-						}	
-					},
-					error: function (request, status, error) {
-							console.log(error);
-					}
-			});
-	}
 
 	// LOAD EMPLOYEES AND UPDATE DROPDOWN
 	function updateEmployeeList() {
@@ -98,9 +154,13 @@ $(document).ready(function() {
 								$("#commission_employees").append(
 									$("<option></option>").val(value.user_id).html(value.user_first_name+" "+value.user_last_name)
 								);
+							} else if (value.user_active == 2) {
+								$("#commission_employees").append(
+									$("<option></option>").val(value.user_id).html("* INACTIVE* ("+value.user_first_name+" "+value.user_last_name+")")
+								);
 							} else {
 								$("#commission_employees").append(
-									$("<option></option>").val(value.user_id).html("* Inactive User * ("+value.user_first_name+" "+value.user_last_name+")")
+									$("<option></option>").val(value.user_id).html("* INVITED * ("+value.user_first_name+" "+value.user_last_name+")")
 								);
 							}
 						});
@@ -190,8 +250,7 @@ $(document).ready(function() {
 	// LOAD INFO TABLE
 	loadUserData(0);
 	
-	// LOAD FREQUENCY
-	loadFrequency();
+	loadPeriodDates($("#the_frequency").val());
 
 });
 

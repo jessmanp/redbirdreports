@@ -129,8 +129,8 @@ class Home extends Controller
 	/*
      * This method handles what happens when the setup page invites an Employee
      */
-    	public function inviteEmployeeSetup()
-    	{
+	public function inviteEmployeeSetup()
+	{
 
 		// load model, to perform all setup actions
 		$setup_model = $this->loadModel('SetupModel');
@@ -190,6 +190,39 @@ class Home extends Controller
 			$return['id'] = $invited_user_id;
 		}
  
+		//Return json encoded results
+		echo json_encode($return);
+
+	}
+	
+	/*
+     * This method handles what happens when the Employees are invited
+	 */
+    public function resendInvite()
+    {
+
+		// load model, to perform all setup actions
+		$setup_model = $this->loadModel('SetupModel');
+ 
+		// array values that will be returned via ajax
+		$return = array();
+		$return['msg'] = '';
+		$return['error'] = false;
+		
+		$invite_id = @$_POST['reinvite_employee_id'];
+			
+		if (isset($invite_id) && is_numeric($invite_id)) {
+			// put settings
+			$resendinvite = $setup_model->resendInviteVerificationEmail($invite_id);
+		}
+
+		if (empty($resendinvite)) {
+			$return['error'] = true;
+			$return['msg'] .= 'ERROR. Invite not sent. Invalid email address.';
+		} else {
+			$return['msg'] = '<strong>Success</strong>, the invitation email has been resent.';
+		}
+
 		//Return json encoded results
 		echo json_encode($return);
 

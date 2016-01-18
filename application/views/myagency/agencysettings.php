@@ -17,6 +17,9 @@
 							</select>
 							<br /><br />
 							<button id="agency_settings_save" data-type="save" class="plain-btn">Update Settings</button>
+							<br /><br />
+							<div class="myagency-required-key"><sup>*</sup>Required Field(s)</div>
+							<br />
 						</div>
 						<div class="myagency-text-footer">&nbsp;</div>
 					</form>

@@ -131,9 +131,18 @@ class SetupModel
 						return $invite_user_id;
                     } else {
                         // delete this users account immediately, as we could not send a verification email
-                        $query_delete_user = $this->db->prepare('DELETE FROM users WHERE user_id=:user_id');
+                        $query_delete_user = $this->db->prepare('DELETE FROM users WHERE user_id = :user_id');
                         $query_delete_user->bindValue(':user_id', $invite_user_id, PDO::PARAM_INT);
                         $query_delete_user->execute();
+                        // delete user linked agency data
+						$query_delete_user_agency = $this->db->prepare("DELETE FROM agencies_users WHERE user_id = :user_id");
+						$query_delete_user_agency->bindValue(':user_id', $invite_user_id, PDO::PARAM_INT);
+						$query_delete_user_agency->execute();
+						// delete user linked compensation data
+						$query_delete_user_comp = $this->db->prepare("DELETE FROM compensation_plans WHERE user_id = :user_id");
+						$query_delete_user_agency->bindValue(':user_id', $invite_user_id, PDO::PARAM_INT);
+						$query_delete_user_comp->execute();
+                        
                     }
                 }
 
@@ -239,6 +248,48 @@ If you do not wish to receive email from <span style="font-weight:bold; color:#0
             return true;
         }
     }
+    
+    /*
+     * re-sends an email to the provided email address
+     * invited employee id is passed in to query user info
+     */
+    public function resendInviteVerificationEmail($user_id)
+    {	
+
+		// check if user id already exists
+		$query_check_user_id = $this->db->prepare('SELECT user_activation_hash, user_email, user_name FROM users WHERE user_id = :user_id');
+		$query_check_user_id->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		$query_check_user_id->execute();
+		$result = $query_check_user_id->fetchAll();
+
+		// if user id is NOT found in the database pass error
+		if (count($result) > 0) {
+			$rs_user_id = $user_id;
+			$rs_user_email = $result[0]->user_email;
+			$rs_user_activation_hash = $result[0]->user_activation_hash;
+			$rs_auto_username = $result[0]->user_name;
+			
+			// generate new temp password and update in database
+			$hash_cost_factor = (defined('HASH_COST_FACTOR') ? HASH_COST_FACTOR : null);
+			$rs_auto_password = $this->rand_string(8);
+			$rs_password_hash = password_hash($rs_auto_password, PASSWORD_DEFAULT, array('cost' => $hash_cost_factor));
+			
+			$sql = "UPDATE users SET user_password_hash = :user_password_hash WHERE user_id = :user_id";
+			$query_new_password = $this->db->prepare($sql);
+			$query_new_password->bindValue(':user_password_hash', $rs_password_hash, PDO::PARAM_STR);
+			$query_new_password->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+			$query_new_password->execute();
+			
+			 if ($this->sendVerificationEmail($rs_user_id, $rs_user_email, $rs_user_activation_hash, $rs_auto_username, $rs_auto_password)) {
+				// SUCCESS
+				return true;
+			}
+		} else {
+			// ERROR
+			return false;
+		}
+
+	}
 
     /**
      * Get Employees from database based on Agency ID

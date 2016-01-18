@@ -305,7 +305,11 @@ $(document).ready(function() {
 							$("#employee_email").val("");
 							$("#employee_email_verify").val("");
 							$("#employee_type").val("").change();
-							// update user drop down in step 3...
+							// tuen on update button
+							$("#agency_employee_save").removeClass();
+							$("#agency_employee_save").addClass("plain-btn");
+							$("#agency_employee_save").prop("disabled", false);
+							// update user drop down
 							updateEmployeeList();
   							// auto select added employee and auto populate data into form
 							loadUserData(data.id);
@@ -318,6 +322,44 @@ $(document).ready(function() {
         					console.log(error);
 					}
 		});
+		event.preventDefault();
+	});
+	
+	$("#resend-invite-employee").on("click", function(event) {
+		event.preventDefault();
+		$('#reinvite_employee').submit();
+	});
+	
+	// REINVITE EMPLOYEE SUBMIT ACTION
+	$("#reinvite_employee").submit(function(event) {
+		if ($("#reinvite_employee_id").val() > 0) {
+			$.ajax({
+					type: "POST",
+					url: "/home/resendInvite",
+					data: $(this).serialize(),
+					dataType: "json",
+					cache: false,
+        			//async: true,
+					success: function (data) {
+						console.log(data);
+						if (data.error == true) {
+							// show returned error msg here
+							openModal('error',data.msg);
+							//$("#employee_email").focus();
+						} else {
+							// show success message...
+							openModal('info',data.msg);
+						}	
+					},
+					error: function (request, status, error) {
+        					console.log(error);
+					}
+			});
+		} else {
+			var msg = "<strong>ERROR</strong>, Invalid employee or no employee was selected.";
+			// show error message...
+			openModal('info',msg);
+		}
 		event.preventDefault();
 	});
 	
@@ -358,11 +400,11 @@ $(document).ready(function() {
 								);
 							} else if (value.user_active == 2) {
 								$("#agency_employees").append(
-									$("<option></option>").val(value.user_id).html("* Inactive User * ("+value.user_first_name+" "+value.user_last_name+")")
+									$("<option></option>").val(value.user_id).html("* INACTIVE* ("+value.user_first_name+" "+value.user_last_name+")")
 								);
 							} else {
 								$("#agency_employees").append(
-									$("<option></option>").val(value.user_id).html("* Invited User * ("+value.user_first_name+" "+value.user_last_name+")")
+									$("<option></option>").val(value.user_id).html("* INVITED * ("+value.user_first_name+" "+value.user_last_name+")")
 								);
 							}
 						});
@@ -403,6 +445,7 @@ $(document).ready(function() {
 						} else {
 							$("#agency_employee_erase").hide();
 							$("#agency_employee_restore").hide();
+							$("#resend-invite-employee").hide();
 							// populate form fields with json data
 							$.each(data, function(key, value) {
 								// fill out fields with data
@@ -435,7 +478,7 @@ $(document).ready(function() {
 								$("#employee_fire_transferred").val(value.commission_fire_transfer);
 								$("#employee_fire_renewal").val(value.commission_fire_renew);
 								$("#employee_life_new").val(value.commission_life_new);
-								$("#employee_life_increase").val(value.commission_life_increase);
+								//$("#employee_life_increase").val(value.commission_life_increase);
 								$("#employee_life_policy").val(value.commission_life_dollar);
 								$("#employee_health_new").val(value.commission_health_new);
 								$("#employee_health_policy").val(value.commission_health_dollar);
@@ -452,6 +495,8 @@ $(document).ready(function() {
 									$("#agency_employee_restore").addClass("plain-btn-erase");
 									$("#agency_employee_restore").prop("disabled", false);
 								} else {
+									$("#reinvite_employee_id").val(user_id);
+									$("#resend-invite-employee").css("display","inline");
 									$("#agency_employee_erase").fadeIn();
 									$("#agency_employee_erase").switchClass("plain-btn-erase","plain-btn-erase-disabled");
 									$("#agency_employee_erase").prop("disabled", true);
@@ -493,7 +538,7 @@ $(document).ready(function() {
 			$("#employee_fire_transferred").val('');
 			$("#employee_fire_renewal").val('');
 			$("#employee_life_new").val('');
-			$("#employee_life_increase").val('');
+			//$("#employee_life_increase").val('');
 			$("#employee_life_policy").val('');
 			$("#employee_health_new").val('');
 			$("#employee_health_policy").val('');
@@ -506,6 +551,7 @@ $(document).ready(function() {
 			$("#agency_employee_erase").prop("disabled", true);
 			$("#agency_employee_restore").switchClass("plain-btn-erase","plain-btn-erase-disabled");
 			$("#agency_employee_restore").prop("disabled", true);
+			$("#resend-invite-employee").hide();
 			
 		}
 	}

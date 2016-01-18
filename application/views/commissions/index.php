@@ -201,3 +201,15 @@ chart here
 
 </div>
 <!-- end content area -->
+<script>
+/* <![CDATA[ */
+
+// LOAD
+$(document).ready(function() {
+
+	
+	
+});
+
+/* ]]> */
+</script>

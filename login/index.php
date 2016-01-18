@@ -47,7 +47,7 @@ if (isset($_GET['register'])) {
 	// ... check if we are new and verified
 	if ($registration->verification_successful == true) {
 		// the user is verified pass to setup screen
-		header("location: /home/setup");
+		header("location: /app/myagency");
 	} else {
 		// load registeration form
 		include("views/register.php");	

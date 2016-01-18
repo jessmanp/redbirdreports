@@ -1,6 +1,6 @@
 <footer>
 	<div id="top">&#9650; Back to Top</div>
-	&copy; <?php echo date("Y",time()); ?> Red Bird Reports. All Rights Reserved.
+	&copy; <?php echo date("Y",time()); ?> Red Bird Reports&trade;. All Rights Reserved.
 </footer>
 <!-- END CANVAS AREA -->
 </div>
