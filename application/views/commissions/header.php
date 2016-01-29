@@ -45,7 +45,7 @@ if ($open == 1) {
 					<input id="the_frequency" name="the_frequency" type="hidden" value="<?php echo $frequency; ?>" />
 					<input type="radio" id="period1" name="period" value="1" checked /><span class="search-text">Current</span> 
 					<input type="radio" id="period2" name="period" value="2" /><span class="search-text">Previous</span>
-					&nbsp;&nbsp;
+					&nbsp;
 					<span class="search-text">Year:</span>
 					<select id="commission_year" name="commission_year" class="short-select">
 <?php

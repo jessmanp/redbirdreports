@@ -143,18 +143,28 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 		$("#policy_source_type option[value="+src+"]").prop("selected", true);
 		if (category == 'auto') {
 			$("#policy_length_type option[value=1]").prop("selected", true);
+			$("#policy_premium").prop("readonly", false);
 		} else if (category == 'fire') {
 			$("#policy_length_type option[value=2]").prop("selected", true);
+			$("#policy_premium").prop("readonly", false);
 		} else if (category == 'life') {
 			$("#policy_length_type option[value=2]").prop("selected", true);
+			$("#policy_premium").prop("readonly", false);
 		} else if (category == 'health') {
 			$("#policy_length_type option[value=2]").prop("selected", true);
+			$("#policy_premium").prop("readonly", false);
 		} else if (category == 'deposit') {
 			$("#policy_length_type option[value=3]").prop("selected", true);
+			$("#policy_premium").val('0.00');
+			$("#policy_premium").prop("readonly", true);
 		} else if (category == 'loan') {
 			$("#policy_length_type option[value=3]").prop("selected", true);
+			$("#policy_premium").val('0.00');
+			$("#policy_premium").prop("readonly", true);
 		} else if (category == 'fund') {
 			$("#policy_length_type option[value=3]").prop("selected", true);
+			$("#policy_premium").val('0.00');
+			$("#policy_premium").prop("readonly", true);
 		} else {
 			$("#policy_length_type option[value="+len+"]").prop("selected", true);
 		}
@@ -178,6 +188,7 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 		$("#policy-edit").fadeIn();
 		//$("#policy-edit #icon").html('<img src="/public/img/icon_'+cat+'.png class="policy-entry-icon" />');
 		$("#policy-edit #id").val(id);
+		$("#policy-edit #status").val(stat);
 		$("#policy-add").hide();
 		// only show erase button if policy is written
 		if (stat == 1) {
@@ -191,6 +202,7 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 		$("#policy_description").val(desc);
 		$("#policy_premium_org").val(prem);
 		$("#policy_premium").val(prem);
+		$("#policy_issued_amount").val('');
 		$("#policy_zip").val(zip);
 		$("#policy_notes").val(text);
 		$("#policy_number").val(pnum);
@@ -377,6 +389,12 @@ function closeWindow() {
 	$("#policy-do-renew").fadeOut("fast");
 	$("#policy-renew-cancel").fadeOut("fast");
 	$("#policy-reinstate").fadeOut("fast");
+	$("#policy-issued-premium").fadeOut("fast");
+	$("#issued-premium").fadeOut("fast");
+}
+function closeIssueWindow() {
+	$("#policy-issued-premium").fadeOut("fast");
+	$("#issued-premium").fadeOut("fast");
 }
 
 function calendarPickerSubmit() {
@@ -416,7 +434,7 @@ function formatText(str) {
 // CLEAR ALL SORT CLASSES
 function resetSortLinks(searchSubmit) {
 	// setup array of sort link IDs
-	var sortLinkArray = ["#sortfirst","#sortlast","#sortdesc","#sortcat","#sortprem","#sorttype","#sortsold","#sortsrc","#sortlen","#sortwdate","#sortidate","#sortedate"];
+	var sortLinkArray = ["#sortstatus","#sortfirst","#sortlast","#sortdesc","#sortcat","#sortprem","#sorttype","#sortsold","#sortsrc","#sortlen","#sortwdate","#sortidate","#sortedate"];
 		
 	// loop over sort links
 		for (var i=0; i < sortLinkArray.length; i++) {
@@ -584,12 +602,43 @@ $(document).ready(function() {
 
 	$("#policy-add").on("click", function(event) {
 		event.preventDefault();
+		$(this).text("Adding...");
+		$(this).switchClass("plain-btn","plain-btn-disabled");
+		$(this).prop("disabled", true);
 		$('#policy_entry_form').submit();
 	});
 
 	$("#policy-save").on("click", function(event) {
 		event.preventDefault();
-		$('#policy_entry_form').submit();
+		$("#written_premium").text($("#policy_premium_org").val());
+		// check status and do issued premium popup
+		if ($("#policy-edit #status").val() == 1 && $("#policy-edit input[name='policy_status']:checked").val() == 2) {
+			$("#policy-issued-premium").fadeIn();
+			$("#issued-premium").fadeIn();
+		} else {
+			$('#policy_entry_form').submit();
+		}
+	});
+	
+	$("#policy-issued-save").on("click", function(event) {
+		event.preventDefault();
+		if ($("#policy_issued_amount").val() != '') {
+			if ($.isNumeric($("#policy_issued_amount").val())) {
+				$("#policy_premium").val($("#policy_issued_amount").val());
+				$("#premiumdate").val(currentdate());
+				closeIssueWindow();
+				$('#policy_entry_form').submit();
+			} else {
+				openModal('error','<strong>Policy Issue Failed.</strong> Issued Premium Must be a Dollar Amount.');
+			}
+		} else {
+			openModal('error','<strong>Policy Issue Failed.</strong> Issued Premium Amount Missing.<br /><br /><strong>Issued Premium</strong> Field is Required.<br /><br />');
+		}
+	});
+	
+	$("#policy-issued-cancel").on("click", function(event) {
+		event.preventDefault();
+		closeIssueWindow();
 	});
 			
 	$("#policy-erase").on("click", function(event) {
@@ -604,7 +653,7 @@ $(document).ready(function() {
 	$('#policy_entry_form').submit(function(event) {
 			// set current path for listing of policies
 			var path = "/"+$("#policy-edit #edit_path").val();
-
+			
 			if ($("#policy-edit #id").val() == 0) {
                 $.ajax({
 					type: 'POST',
@@ -612,7 +661,7 @@ $(document).ready(function() {
 					data: $(this).serialize(),
 					dataType: 'json',
 					cache: false,
-        			//async: true,
+        			//async: false,
 				success: function (data) {
 						console.log(data);
 						if (data.error == true) {
@@ -623,12 +672,19 @@ $(document).ready(function() {
 							// show success message...
 							closeWindow();
 							openModal('info',data.msg);
-						}	
+						}
+						$("#policy-add").switchClass("plain-btn-disabled","plain-btn");
+						$("#policy-add").text("Add");
+               		 	$("#policy-add").prop("disabled", false);
 				},
 					error: function (request, status, error) {
+							$("#policy-add").switchClass("plain-btn-disabled","plain-btn");
+							$("#policy-add").text("Add");
+							$("#policy-add").prop("disabled", false);
         					console.log(error);
 				}
                 });
+                
 			} // end if add
 
 			if ($("#policy-edit #id").val() > 0) {
@@ -1261,6 +1317,32 @@ $(document).ready(function() {
 	var order = 'asc';
 
 	// SORTING
+	$("#sortstatus").on("click", function(event) {
+		event.preventDefault();
+		resetSortLinks(0);
+		var sdate = $("#datepick1").val().replace(/\//g, "-");
+		var edate = $("#datepick2").val().replace(/\//g, "-");
+		if (sdate != '' && edate != '') {
+			dateRange = sdate+"."+edate+".a";
+		} else {
+			dateRange = 'any';
+		}
+		if ($("#field").val() != '') {
+			var phrase = $("#field").val()+".a";
+		} else {
+			phrase = '';
+		}
+		$(this).removeClass();
+		if (order == "desc") {
+    		$(this).addClass('sort-link-desc');
+			$("#policy-content").load("/app/policies/"+currcat+"/statusnamedesc/"+dateRange+"/"+phrase);
+			order = "asc";
+		} else {
+    		$(this).addClass('sort-link-asc');
+			$("#policy-content").load("/app/policies/"+currcat+"/statusname/"+dateRange+"/"+phrase);
+			order = "desc";
+		}
+	});
 	$("#sortfirst").on("click", function(event) {
 		event.preventDefault();
 		resetSortLinks(0);
@@ -1600,6 +1682,8 @@ $(document).ready(function() {
 		$("#field").val('');
 		$(".date-pickers").html("All Time:");
 		$("#policy-content").load("/app/policies/"+currcat);
+		// clear any sorting that might be clicked
+		resetSortLinks(1);
    		$("#pre-dates-container").toggle();
 	});
 

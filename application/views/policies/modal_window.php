@@ -78,6 +78,17 @@
 <div class="policy-edit-bar"></div>
 		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="policy-uncancel" class="plain-btn">Yes</button>
 	</div>
+	
+	
+	<div id="policy-issued-premium"></div>
+	<div id="issued-premium">
+			Enter the &quot;<strong>ISSUED</strong>&quot; Premium Amount
+<div class="policy-edit-bar"></div>
+			Written Premium: <strong>$<span id="written_premium"></span></strong><br />
+			Issued Premium: <span style="font-size:12px;font-weight:bold;">$</span> <input style="width:75px;" type="text" maxlength="20" id="policy_issued_amount" name="policy_issued_amount" placeholder="0.00" value="" />
+<div class="policy-edit-bar"></div>
+		<button id="policy-issued-cancel" class="plain-btn">Cancel</button>&nbsp;&nbsp;&nbsp;<button id="policy-issued-save" class="plain-btn">Continue</button>
+	</div>
 
 
 	<div id="policy-edit">
@@ -86,6 +97,7 @@
 			<form id="policy_entry_form" name="policy_entry_form">
 			<input type="hidden" id="edit_path" name="edit_path" value="" />
 			<input type="hidden" id="id" name="id" value="-2" />
+			<input type="hidden" id="status" name="status" value="-2" />
 			<input type="hidden" id="captionsmain" name="captionsmain" value='<option value="0">- Select -</option><?php foreach ($policy_categories_main as $category) { ?><option value="<?php echo $category->id; ?>"><?php if ($category->parent_id == 0) { echo $category->name; } else { echo "&nbsp;&nbsp;-".$category->name; } ?></option><?php } ?>' />
 			<input type="hidden" id="captionsall" name="captionsall" value='<option value="0">- Select -</option><?php foreach ($policy_categories_all as $category) { ?><option value="<?php echo $category->id; ?>"><?php if ($category->parent_id == 0) { echo $category->name; } else { echo "&nbsp;&nbsp;-".$category->name; } ?></option><?php } ?>' />
 			<input type="hidden" id="captionsauto" name="captionsauto" value='<?php foreach ($policy_categories_auto as $category) { ?><option value="<?php echo $category->id; ?>"<?php if ($category->parent_id == 0) { echo " selected"; } ?>><?php if ($category->parent_id == 0) { echo $category->name; } else { echo "&nbsp;&nbsp;-".$category->name; } ?></option><?php } ?>' />

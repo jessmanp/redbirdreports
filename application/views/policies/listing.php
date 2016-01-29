@@ -12,7 +12,7 @@
 	$rowswithpremium = 0;
 	$avgpremium = 0;
 	$rowcnt = 1;
-  if ($policy_data) {
+  if (isset($policy_data)) {
 	foreach ($policy_data as $policy) {
 	
 			$cancellationvalue = 0;
@@ -70,7 +70,7 @@
 		}
 		
 		// calculate total premium
-		if ($policy->premium != null) {
+		if ($policy->premium != null && $policy->status < 3) {
 			$rowswithpremium++;
 			if ($cancellationvalue > 0) {
 				$totalpremium = ($totalpremium+$cancellationvalue);
@@ -79,13 +79,13 @@
 			}
 		}
 		// do average calc
-		$avgpremium = round(($totalpremium/$rowswithpremium));
+		@$avgpremium = round(($totalpremium/$rowswithpremium));
 
 		// policy counts
 		if ($policy->renewal == 0) {
 			// do written count
 			$totalwritten++;
-			if ($policy->date_issued == null) {
+			if ($policy->status == 1) {
 				// do NOT issued count
 				$notissued++;
 			}
@@ -93,12 +93,27 @@
 			// do pending renewal count
 			$totpending++;
 		}
-		if ($policy->date_canceled != null) {
+		if ($policy->status == 4) {
 			// do canceled policy count
 			$totcanceled++;
 		}
 		
 ///////////////////////////////////  END CALCS  ///////////////////////////////////
+
+		switch ($policy->status) {
+    		case 1: 
+				$statusname = "Pending";
+				break;
+			case 2: 
+				$statusname = "Issued";
+				break;
+			case 3: 
+				$statusname = "Declined";
+				break;
+			case 4: 
+				$statusname = "Canceled";
+				break;
+		}
 	
 		if ($rowcnt & 1) {
 			$rowclass = "table-row";
@@ -106,8 +121,12 @@
 			$rowclass = "table-row-alt";
 		}
 
-		if ($policy->date_canceled != null) {
+		if ($policy->status == 4) {
+			// cancelled
 			$addStyle = 'text-decoration:line-through;color:#666666;font-style:italic;';
+		} else if ($policy->status == 3) {
+			// declined
+			$addStyle = 'color:#666666;font-style:italic;';
 		} else {
 			$addStyle = "";
 		}
@@ -122,6 +141,7 @@
 <?php } else { ?>
 				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-edit-action" data-info="<?php echo $policy->id."','".$policy->renewal."','".$policy->first."','".$policy->last."','".$policy->description."','".$policy->category_id."-".$policy->cat_pid."','".$policy->premium."','".$policy->business_type_id."','".$policy->user_id."','".$policy->source_type_id."','".$policy->length_type_id."','".$policy->notes."','".$policy->policy_number."','".$policy->date_written."','".$policy->date_issued."','".$policy->date_effective."','".$policy->date_canceled."','".$policy->zip_code."','".$policy->status; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button-edit" alt="Edit" /></a></div>
 <?php } ?>
+				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><?php echo $statusname; ?></div>
 				<div class="col" style="width:10%;<?php echo $addStyle; ?>"><?php echo $policy->first; ?></div>
 				<div class="col" style="width:10%;<?php echo $addStyle; ?>"><?php echo $policy->last; ?></div>
 				<div class="col" style="width:10%;"><?php if (strlen($policy->description) > 12) { echo '<a class="policy-desc-action" data-desc="'.$policy->description.'">'.substr($policy->description, 0, 12).'</a>&hellip;'; } else { echo $policy->description; } ?></div>
@@ -129,16 +149,16 @@
 <?php if ($cancellationvalue > 0) { ?>
 				<div class="col" style="width:9%;font-size:11px;font-style:italic;"><?php echo '$'.number_format($cancellationvalue, 2); if ($chargebackvalue > 0) { echo '&nbsp;<span class="chargeback">($'.number_format($chargebackvalue, 2).')</span>'; } ?></div>
 <?php } else { ?>
-				<div class="col" style="width:9%;"><?php echo '$'.number_format($policy->premium, 2); ?></div>
+				<div class="col" style="width:9%;"><?php if ($policy->status == 3) { echo '<span class="chargeback">($'.number_format($policy->premium, 2).')</span>'; } else { echo '$'.number_format($policy->premium, 2); } ?></div>
 <?php } ?>
 				<div class="col" style="width:6%;<?php echo $addStyle; ?>"><?php echo $policy->busi_name; ?></div>
 				<div class="col" style="width:8%;<?php echo $addStyle; ?>"><?php if (strlen($fullname) > 14) { echo substr($fullname, 0, 14)."&hellip;"; } else { echo $fullname; } ?></div>
 				<div class="col" style="width:6%;<?php echo $addStyle; ?>"><?php echo $policy->src_name; ?></div>
 				<div class="col" style="width:7%;<?php echo $addStyle; ?>"><?php echo $policy->len_name; ?></div>
 				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-note-action" data-notes="<?php echo $policy->notes; ?>"><img src="/public/img/policy_note_btn.png" class="policy-listing-button-note" alt="Notes" /></a></div>
-				<div class="col" style="width:6%;"><?php if ($policy->date_written) { echo date('m/d/y',strtotime($policy->date_written)); } else { echo "&nbsp;";} ?></div>
-				<div class="col" style="width:6%;"><?php if ($policy->date_effective) { echo date('m/d/y',strtotime($policy->date_effective)); } else { echo "&nbsp;";} ?></div>
-				<div class="col" style="width:2%;<?php echo $addStyle; ?>"></div>
+				<div class="col" style="width:5%;"><?php if ($policy->date_written) { echo date('m/d/y',strtotime($policy->date_written)); } else { echo "&nbsp;";} ?></div>
+				<div class="col" style="width:5%;"><?php if ($policy->date_effective) { echo date('m/d/y',strtotime($policy->date_effective)); } else { echo "&nbsp;";} ?></div>
+				<div class="col" style="width:1%;<?php echo $addStyle; ?>"></div>
 			</div>
 <?php
 		$rowcnt++;

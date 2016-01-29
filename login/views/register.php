@@ -56,7 +56,7 @@
 
 <h1>Welcome New User</h1>
 <br />
-<p>You will receive your first email with a link to activate your account and setup your agency. It only takes a few minutes to setup and start using <span style="font-weight:bold; color:#000000;">Red Bird</span> <span style="font-family:Courier, 'Courier New Bold', monospace; color:#ff0000; font-style:normal; font-weight:normal;">reports</span>&trade; to make your agency smarter!</p>
+<p>You will receive your first email with a link to activate your account and setup your agency. It only takes a few minutes to setup and start using <span style="font-weight:bold; color:#000000;">Red Bird Reports</span>&trade; to make your agency smarter!</p>
 <div class="signup-icons">
 <img src="<?php echo URL; ?>public/img/check_inbox_icon.png" class="signup-icon" alt="Check Your Inbox" />
 <img src="<?php echo URL; ?>public/img/setup_agency_icon.png" class="signup-icon" alt="Setup Your Agency" />

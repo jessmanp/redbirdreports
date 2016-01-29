@@ -187,7 +187,11 @@ class App extends Controller
 				$newpremdate = '';
 			}
 			
-			if ($cdate == '' && $stat == 4) {
+			if ($edate == '' && $stat == 2) {
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Edit Policy Failed.</strong> One or More of the Required Fields Was Missing.<br /><br />';
+				$return['msg'] .= '<strong>Effective Date</strong> Field is Required.<br /><br />';
+			} else if ($cdate == '' && $stat == 4) {
 				$return['error'] = true;
 				$return['msg'] .= '<strong>Edit Policy Failed.</strong> One or More of the Required Fields Was Missing.<br /><br />';
 				$return['msg'] .= '<strong>Canceled Date</strong> Field is Required.<br /><br />';
@@ -554,11 +558,12 @@ class App extends Controller
 		$header_data = $main_model->getHeaderInfo($_SESSION['user_id']);
 		$myagency_model = $this->loadModel('MyAgencyModel');
 		$setup_model = $this->loadModel('SetupModel');
+		$commissions_model = $this->loadModel('CommissionsModel');
 		
 		// check if logged in and set agency ID
 		if (!empty($_SESSION['user_name']) && ($_SESSION['user_logged_in'] == 1)) {
 			// get and set agency ID based on the owner
-				$agency_id = $setup_model->getOwnerAgencyID($_SESSION['user_id']);
+				$agency_id = $setup_model->getAgencyID($_SESSION['user_id']);
 		}
 
 		// get commission freq
@@ -567,6 +572,32 @@ class App extends Controller
 		
 		// get period info
 		$open = 1;
+		
+		if ($sub == 'getEmployeeList') {
+
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+		
+			// get agency id based on owner
+			$agency_id = $setup_model->getAgencyID($_SESSION['user_id']);
+
+			// get list of employees
+			$employees = $commissions_model->getAllEmployees($agency_id);
+
+			if (empty($employees)) {
+				$return['error'] = true;
+				$return['msg'] .= 'ERROR. No employee(s) found.';
+			} else {
+				$return = $employees;
+			}
+
+			//Return json encoded results
+			echo json_encode($return);
+			exit();
+
+		}
 		
 		if ($sub == 'getEmployeeCommissionHistory') {
 			// get employee commissions
@@ -585,7 +616,7 @@ class App extends Controller
 			}
 			
 			// get employees data
-			$employee_data = $myagency_model->getEmployeeCommissionHistory($employee_id);
+			$employee_data = $commissions_model->getEmployeeCommissionHistory($employee_id);
 
 			if (empty($employee_data)) {
 				$return['error'] = true;
@@ -617,7 +648,7 @@ class App extends Controller
 			}
 			
 			// put data
-			$commission_special = $myagency_model->saveCommissionSpecial($employee_id);
+			$commission_special = $commissions_model->saveCommissionSpecial($employee_id);
 
 			if (empty($commission_special)) {
 				$return['error'] = true;
@@ -658,7 +689,7 @@ class App extends Controller
 		// check if logged in and set agency ID
 		if (!empty($_SESSION['user_name']) && ($_SESSION['user_logged_in'] == 1)) {
 			// get and set agency ID based on the owner
-				$agency_id = $setup_model->getOwnerAgencyID($_SESSION['user_id']);
+				$agency_id = $setup_model->getAgencyID($_SESSION['user_id']);
 		}
 		
 		if ($sub == 'getSettings') {
@@ -695,7 +726,7 @@ class App extends Controller
 			$agency_frequency = @$_POST['agency_frequency'];
 		
 			// get agency id based on owner
-			$agency_id = $setup_model->getOwnerAgencyID($_SESSION['user_id']);
+			$agency_id = $setup_model->getAgencyID($_SESSION['user_id']);
 
 			if (isset($agency_frequency) && is_numeric($agency_frequency)) {
 				// put settings
@@ -723,7 +754,7 @@ class App extends Controller
 			$return['error'] = false;
 		
 			// get agency id based on owner
-			$agency_id = $setup_model->getOwnerAgencyID($_SESSION['user_id']);
+			$agency_id = $setup_model->getAgencyID($_SESSION['user_id']);
 
 			// get list of employees
 			$employees = $myagency_model->getAllEmployees($agency_id);
@@ -749,7 +780,7 @@ class App extends Controller
 			$return['error'] = false;
 		
 			// get agency id based on owner
-			$agency_id = $setup_model->getOwnerAgencyID($_SESSION['user_id']);
+			$agency_id = $setup_model->getAgencyID($_SESSION['user_id']);
 
 			// get list of employees
 			$employees = $myagency_model->getTransferEmployees($agency_id);
@@ -840,13 +871,14 @@ class App extends Controller
 			$employee_life_new = @$_POST['employee_life_new']; // must be decimal percent
 			//$employee_life_increase = @$_POST['employee_life_increase']; // must be decimal percent
 			$employee_life_increase = 0; // REMOVED
-			$employee_life_policy = @$_POST['employee_life_policy']; // must be decimal percent
+			$employee_life_policy = @$_POST['employee_life_policy']; // must be dollar amount
 			
 			$employee_health_new = @$_POST['employee_health_new']; // must be decimal percent
-			$employee_health_policy = @$_POST['employee_health_policy']; // must be decimal percent
+			$employee_health_policy = @$_POST['employee_health_policy']; // must be dollar amount
 			
-			$employee_bank_deposit_product = @$_POST['employee_bank_deposit_product']; // must be decimal percent
-			$employee_bank_loan_product = @$_POST['employee_bank_loan_product']; // must be decimal percent
+			$employee_bank_deposit_product = @$_POST['employee_bank_deposit_product']; // must be dollar amount
+			$employee_bank_loan_product = @$_POST['employee_bank_loan_product']; // must be dollar amount
+			$employee_bank_fund_product = @$_POST['employee_bank_fund_product']; // must be dollar amount
 
 			// validate update employee compensation form to make sure the data was entered correctly
 
@@ -949,12 +981,16 @@ class App extends Controller
 				$return['error'] = true;
 				$return['msg'] .= '<strong>Bank Loan $ / Product Commission</strong> Field is Required.<br />';
 			}
+			if (!isset($employee_bank_fund_product) || !is_numeric($employee_bank_fund_product)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Bank Fund $ / Product Commission</strong> Field is Required.<br />';
+			}
 
 			// submit success functionality
 			if ($return['error'] === false) {
 			
 				// execute update employee compensation functions
-				$updated_employee_id = $myagency_model->saveEmployeeData($employee_id, $employee_first_name, $employee_last_name, $employee_job_title, $employee_email, $employee_phone, $employee_mobile, $employee_zip_code, $employee_type, $employee_hire_date, $employee_auto_new, $employee_auto_added, $employee_auto_reinstated, $employee_auto_transferred, $employee_auto_renewal, $employee_fire_new, $employee_fire_added, $employee_fire_reinstated, $employee_fire_transferred, $employee_fire_renewal, $employee_life_new, $employee_life_increase, $employee_life_policy, $employee_health_new, $employee_health_policy, $employee_bank_deposit_product, $employee_bank_loan_product);
+				$updated_employee_id = $myagency_model->saveEmployeeData($employee_id, $employee_first_name, $employee_last_name, $employee_job_title, $employee_email, $employee_phone, $employee_mobile, $employee_zip_code, $employee_type, $employee_hire_date, $employee_auto_new, $employee_auto_added, $employee_auto_reinstated, $employee_auto_transferred, $employee_auto_renewal, $employee_fire_new, $employee_fire_added, $employee_fire_reinstated, $employee_fire_transferred, $employee_fire_renewal, $employee_life_new, $employee_life_increase, $employee_life_policy, $employee_health_new, $employee_health_policy, $employee_bank_deposit_product, $employee_bank_loan_product, $employee_bank_fund_product);
 				$return['msg'] = '<strong>Success</strong>, the employee&rsquo;s information has been updated.';
 				
 				if (!isset($updated_employee_id) || empty($updated_employee_id)) {
@@ -1022,6 +1058,34 @@ class App extends Controller
 				} else {
 					$return['error'] = true;
 					$return['msg'] .= '<strong>Employee Reactivate Failed.</strong> Employee ID is empty.';
+				}
+ 
+				//Return json encoded results
+				echo json_encode($return);
+				exit();
+
+		}
+		
+		if ($sub == 'removeEmployee') {
+			
+				// array values that will be returned via ajax
+				$return = array();
+				$return['msg'] = '';
+				$return['error'] = false;
+
+				$rmID = @$_POST['remove_employee_id'];
+				
+				if (isset($rmID) && is_numeric($rmID)) {
+					$employee_removed = $myagency_model->removeEmployee($rmID);
+					if ($employee_removed) {
+						$return['msg'] = '<strong>Success</strong>, Employee Removed.';
+					} else {
+						$return['error'] = true;
+						$return['msg'] .= '<strong>Remove Failed.</strong> Employee Was Not Removed.';
+					}
+				} else {
+					$return['error'] = true;
+					$return['msg'] .= '<strong>Employee Removal Failed.</strong> Remove Employee is Missing.';
 				}
  
 				//Return json encoded results

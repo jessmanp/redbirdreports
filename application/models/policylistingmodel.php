@@ -55,13 +55,13 @@ class PolicyListingModel
 			// set status filter
 			switch ($status) {
     				case 'written':
-        				$addedSQL .= ' AND policies.renewal = 0 AND policies.date_written IS NOT null';
+        				$addedSQL .= ' AND policies.renewal = 0 AND policies.status = 1';
         				break;
     				case 'notissued':
-        				$addedSQL .= ' AND policies.renewal = 0 AND policies.date_issued IS null';
+        				$addedSQL .= ' AND policies.renewal = 0 AND policies.status = 1';
         				break;
     				case 'canceled':
-        				$addedSQL .= ' AND policies.renewal = 0 AND policies.date_canceled IS NOT null';
+        				$addedSQL .= ' AND policies.renewal = 0 AND policies.status = 4';
         				break;
     				case 'renewal':
         				$addedSQL .= ' AND policies.renewal = 1';
@@ -232,7 +232,13 @@ class PolicyListingModel
     			case 'default':
         			$orderbySQL = ' policies.date_written DESC';
         			break;
-    			case 'firstname':
+    			case 'statusname':
+        			$orderbySQL = ' policies.status ASC';
+        			break;
+        		case 'statusnamedesc':
+        			$orderbySQL = ' policies.status DESC';
+        			break;
+        		case 'firstname':
         			$orderbySQL = ' policies.first ASC';
         			break;
 				case 'firstnamedesc':

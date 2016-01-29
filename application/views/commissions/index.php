@@ -1,6 +1,6 @@
 <!-- begin content area -->
 <div id="commissions-content">
-<h1><strong>Report Period:</strong> December 2015 (Current Period)</h1>
+<h1><strong>Report Period:</strong> <span id="com_year"></span> - <span id="com_range"></span> (<span id="com_period">Current</span> Period)</h1>
 <div class="commission-table">
 
 <div class="commission-left-cell">
@@ -24,7 +24,7 @@
 			</div>
 		  </form>
 		</div>
-		<input type="text" maxlength="100" style="width:210px;" id="com_bonus_description" name="com_bonus_description" placeholder="Enter a Brief Description" value="">
+		<input type="text" maxlength="100" style="width:215px;margin:7px 0 0 10px;" id="com_bonus_description" name="com_bonus_description" placeholder="Enter a Brief Description" value="">
 <!-- end form -->
 </form>
 <form >
@@ -38,7 +38,7 @@
 				</div>
 			</div>
 		</div>
-		<input type="text" maxlength="100" style="width:210px;" id="com_other_description" name="com_other_description" placeholder="Enter a Brief Description" value="">
+		<input type="text" maxlength="100" style="width:215px;margin:7px 0 0 10px;" id="com_other_description" name="com_other_description" placeholder="Enter a Brief Description" value="">
 		<!-- end form -->
 </form>
 	</div>
@@ -57,42 +57,39 @@
 		<div class="com-holder">
 		  <div class="table-container">
 			<div class="table-row">
-				<div class="col" style="width:60%;"><div class="com-earned-bold">New Policies</div></div>
-				<div class="col" style="width:40%;"><div class="com-earned-amount">$100,000.00</div></div>
+				<div class="col" style="width:60%;"><div class="com-earned">New Policies</div></div>
+				<div class="col" style="width:40%;"><div class="com-earned-amount">$2,696.33</div></div>
 			</div>
 			<div class="table-row">
-				<div class="col" style="width:60%;"><div class="com-earned-bold">Renewals</div></div>
-				<div class="col" style="width:40%;"><div class="com-earned-amount">$100,000.00</div></div>
+				<div class="col" style="width:60%;"><div class="com-earned">Renewals</div></div>
+				<div class="col" style="width:40%;"><div class="com-earned-amount">$4,139.00</div></div>
 			</div>
 			<div class="table-row">
-				<div class="col" style="width:60%;"><div class="com-earned-bold">Bonus</div></div>
-				<div class="col" style="width:40%;"><div class="com-earned-amount">$100,000.00</div></div>
+				<div class="col" style="width:60%;"><div class="com-earned">Bonus</div></div>
+				<div class="col" style="width:40%;"><div class="com-earned-amount">$100.00</div></div>
 			</div>
 			<div class="table-row">
-				<div class="col" style="width:60%;"><div class="com-earned-bold">Other</div></div>
-				<div class="col" style="width:40%;"><div class="com-earned-amount">$100,000.00</div></div>
+				<div class="col" style="width:60%;"><div class="com-earned">Other</div></div>
+				<div class="col" style="width:40%;"><div class="com-earned-amount">$50.00</div></div>
 			</div>
 			<div class="table-row">
-				<div class="col" style="width:60%;"><div class="com-earned-bold">Charge Backs</div></div>
-				<div class="col" style="width:40%;"><div class="com-earned-amount">($10,000.00)</div></div>
+				<div class="col" style="width:60%;"><div class="com-earned">Charge Backs</div></div>
+				<div class="col" style="width:40%;"><div class="com-earned-chargeback">($655.12)</div></div>
+			</div>
+			<div class="table-row">
+				<div class="col" style="width:60%;"><div class="com-earned-bold">Total Commissions</div></div>
+				<div class="col" style="width:40%;"><div class="com-earned-amount-bold">$6,330.21</div></div>
 			</div>
 		  </div>
 		</div>
-		<div class="commission-text-footer">
-			<div class="table-container">
-				<div class="table-row">
-					<div class="col" style="width:60%;text-align:left;padding:0 10px 0 10px;">Total Commissions</div>
-					<div class="col" style="width:40%;text-align:right;padding:0 10px 0 10px;">$100,000.00</div>
-				</div>
-			</div>
-		</div>
+		<div class="commission-text-footer">&nbsp;</div>
 	</div>
 	<div class="commission-trends">
-		<div class="com-title">Commissions Trends - Trailing 12 Months</div>
+		<div class="com-title">Commissions Trends (Trailing 12 Months)</div>
 		<div class="com-holder">
 		  <div class="table-container">
 <!-- begin row -->
-chart here
+				<canvas id="compensationChart" width="620" height="160" style="margin:10px 0 0 30px;width:620px; height:160px;"></canvas>
 <!-- end row -->
 		  </div>
 		</div>
@@ -114,33 +111,33 @@ chart here
 <!-- begin rows -->
 			<div class="table-row">
 				<div class="col" style="width:16%;padding:5px;"><span class="com-type">Auto</span></div>
-				<div class="col" style="width:28%;padding:5px;">25,000</div>
-				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
-				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
+				<div class="col" style="width:28%;padding:5px;">22</div>
+				<div class="col" style="width:28%;padding:5px;">$12,100.34</div>
+				<div class="col" style="width:28%;padding:5px;">$968.03</div>
 			</div>
 			<div class="table-row">
 				<div class="col" style="width:16%;padding:5px;"><span class="com-type">Fire</span></div>
-				<div class="col" style="width:28%;padding:5px;">25,000</div>
-				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
-				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
+				<div class="col" style="width:28%;padding:5px;">18</div>
+				<div class="col" style="width:28%;padding:5px;">$14,422.73</div>
+				<div class="col" style="width:28%;padding:5px;">$1,153.82</div>
 			</div>
 			<div class="table-row">
 				<div class="col" style="width:16%;padding:5px;"><span class="com-type">Life</span></div>
-				<div class="col" style="width:28%;padding:5px;">25,000</div>
-				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
-				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
+				<div class="col" style="width:28%;padding:5px;">5</div>
+				<div class="col" style="width:28%;padding:5px;">$5,032.11</div>
+				<div class="col" style="width:28%;padding:5px;">$402.57</div>
 			</div>
 			<div class="table-row">
 				<div class="col" style="width:16%;padding:5px;"><span class="com-type">Health</span></div>
-				<div class="col" style="width:28%;padding:5px;">25,000</div>
-				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
-				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
+				<div class="col" style="width:28%;padding:5px;">1</div>
+				<div class="col" style="width:28%;padding:5px;">$898.91</div>
+				<div class="col" style="width:28%;padding:5px;">$71.91</div>
 			</div>
 			<div class="table-row">
 				<div class="col" style="width:16%;padding:5px;"><span class="com-type">Bank</span></div>
-				<div class="col" style="width:28%;padding:5px;">25,000</div>
-				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
-				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
+				<div class="col" style="width:28%;padding:5px;">2</div>
+				<div class="col" style="width:28%;padding:5px;">-</div>
+				<div class="col" style="width:28%;padding:5px;">$100.00</div>
 			</div>
 <!-- end rows -->
 		  </div>
@@ -149,9 +146,9 @@ chart here
 		  <div class="table-container">
 			<div class="table-row">
 				<div class="col" style="width:16%;">Total</div>
-				<div class="col" style="width:28%;">100,000</div>
-				<div class="col" style="width:28%;">$100,000.00</div>
-				<div class="col" style="width:28%;">$100,000.00</div>
+				<div class="col" style="width:28%;">48</div>
+				<div class="col" style="width:28%;">$32,454.09</div>
+				<div class="col" style="width:28%;">$2,696.33</div>
 			</div>
 		  </div>
 		</div>
@@ -169,15 +166,15 @@ chart here
 <!-- begin rows -->
 			<div class="table-row">
 				<div class="col" style="width:16%;padding:5px;"><span class="com-type">Auto</span></div>
-				<div class="col" style="width:28%;padding:5px;">25,000</div>
-				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
-				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
+				<div class="col" style="width:28%;padding:5px;">179</div>
+				<div class="col" style="width:28%;padding:5px;">$98,450.00</div>
+				<div class="col" style="width:28%;padding:5px;">$2,170.00</div>
 			</div>
 			<div class="table-row">
 				<div class="col" style="width:16%;padding:5px;"><span class="com-type">Fire</span></div>
-				<div class="col" style="width:28%;padding:5px;">25,000</div>
-				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
-				<div class="col" style="width:28%;padding:5px;">$100,000.00</div>
+				<div class="col" style="width:28%;padding:5px;">155</div>
+				<div class="col" style="width:28%;padding:5px;">$108,500.00</div>
+				<div class="col" style="width:28%;padding:5px;">$1,969.00</div>
 			</div>
 <!-- end rows -->
 		  </div>
@@ -186,9 +183,9 @@ chart here
 		  <div class="table-container">
 			<div class="table-row">
 				<div class="col" style="width:16%;">Total</div>
-				<div class="col" style="width:28%;">100,000</div>
-				<div class="col" style="width:28%;">$100,000.00</div>
-				<div class="col" style="width:28%;">$100,000.00</div>
+				<div class="col" style="width:28%;">334</div>
+				<div class="col" style="width:28%;">$206,950.00</div>
+				<div class="col" style="width:28%;">$4,139.00</div>
 			</div>
 		  </div>
 		</div>
@@ -204,9 +201,42 @@ chart here
 <script>
 /* <![CDATA[ */
 
+function addCommas(nStr)
+{
+    nStr += '';
+    x = nStr.split('.');
+    x1 = x[0];
+    x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return '$' + x1 + x2;
+}
+
 // LOAD
 $(document).ready(function() {
 
+	var data = {
+		labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan"],
+		datasets: [
+			{
+				label: "Monthly",
+				fillColor: "#ba0000",
+				data: [4501.00, 4607.00, 4789.00, 4728.00, 5021.00, 4887.00, 5255.00, 5487.00, 5301.00, 5699.00, 5781.00, 5998.00, 6330.00]
+			}
+		]
+	};
+ 
+    var ctx = $("#compensationChart").get(0).getContext("2d");
+    var compensationChart = new Chart(ctx).Bar(data, {
+    	barShowStroke : true,
+    	animation: false,
+    	scaleLabel : "<%=addCommas(value)%>",
+    	tooltipTemplate : function (label) {
+			return label.label + ': ' + '$' + label.value.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
+	});
 	
 	
 });

@@ -132,7 +132,7 @@ $(document).ready(function() {
 	function updateEmployeeList() {
 		$.ajax({
 				type: "POST",
-				url: "/app/myagency/getEmployeeList",
+				url: "/app/commissions/getEmployeeList",
 				data: $(this).serialize(),
 				dataType: "json",
 				cache: false,
@@ -251,6 +251,10 @@ $(document).ready(function() {
 	loadUserData(0);
 	
 	loadPeriodDates($("#the_frequency").val());
+	
+	$("#com_range").text($("#commission_period option:selected").text());
+	$("#com_year").text($("#commission_year").val());
+	
 
 });
 

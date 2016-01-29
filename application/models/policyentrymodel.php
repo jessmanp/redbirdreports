@@ -98,7 +98,7 @@ class PolicyEntryModel
      */
     public function getAllLengthTypes()
     {
-        $sql = "SELECT id,name FROM policy_length_types ORDER BY name";
+        $sql = "SELECT id,name FROM policy_length_types ORDER BY id";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();

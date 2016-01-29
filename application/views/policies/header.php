@@ -103,6 +103,7 @@
 			<div class="heading">
 				<div class="col" style="width:1%;"></div>
 				<div class="col" style="width:4%;"><span class="sort-text">Edit</span></div>
+				<div class="col" style="width:4%;"><a id="sortstatus" class="sort-link">Status</a></div>
 				<div class="col" style="width:10%;"><a id="sortfirst" class="sort-link">First</a></div>
 				<div class="col" style="width:10%;"><a id="sortlast" class="sort-link">Last</a></div>
 				<div class="col" style="width:10%;"><a id="sortdesc" class="sort-link">Description</a></div>
@@ -113,9 +114,9 @@
 				<div class="col" style="width:6%;"><a id="sortsrc" class="sort-link" href="#">Source</a></div>
 				<div class="col" style="width:7%;"><a id="sortlen" class="sort-link" href="#">Length</a></div>
 				<div class="col" style="width:4%;"><span class="sort-text">&nbsp;Notes</span></div>
-				<div class="col" style="width:6%;"><a id="sortwdate" class="sort-link" href="#">Written</a></div>
-				<div class="col" style="width:6%;"><a id="sortedate" class="sort-link" href="#">Effective</a></div>
-				<div class="col" style="width:2%;"></div>
+				<div class="col" style="width:5%;"><a id="sortwdate" class="sort-link" href="#">Written</a></div>
+				<div class="col" style="width:5%;"><a id="sortedate" class="sort-link" href="#">Effective</a></div>
+				<div class="col" style="width:1%;"></div>
 			</div>
 			
 

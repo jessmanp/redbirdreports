@@ -41,6 +41,19 @@ class SetupModel
         // $options = array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC ...
         //return $query->fetchAll();
     }
+    
+    /**
+     * Get Agency ID from database based on Logged in ID
+     */
+    public function getAgencyID($user_id)
+    {
+		// query agency ID for new owner
+        $sql = 'SELECT agency_id FROM agencies_users WHERE user_id = '.$user_id;
+        $query = $this->db->prepare($sql);
+        $query->execute();
+		return $query->fetch()->agency_id;
+		
+    }
 
 	/**
      * Add/Update agency info to database

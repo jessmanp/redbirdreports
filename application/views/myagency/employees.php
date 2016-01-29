@@ -2,6 +2,18 @@
 <div id="myagency-content">
 	<div id="myagency-container">
 	
+		<button id="invite-employee">Add / Invite Employee&nbsp;&nbsp;<img src="/public/img/btn_invite.png" class="search-btn-icon" alt=""></button>
+		<!-- form to resend invite email -->
+		<form id="reinvite_employee" name="reinvite_employee">
+			<input type="hidden" id="reinvite_employee_id" name="reinvite_employee_id" value="-2" />
+			<button id="resend-invite-employee">Resend Invitation Email&nbsp;&nbsp;<img src="/public/img/btn_reinvite.png" class="search-btn-icon" alt=""></button>
+		</form>
+		<!-- form to remove invited employee -->
+		<form id="remove_employee" name="remove_employee">
+			<input type="hidden" id="remove_employee_id" name="remove_employee_id" value="-2" />
+			<button id="remove-invite-employee">Erase Invited Employee</button>
+		</form>
+
 		<div id="agency-employee-box">
 			<strong>Modify Employee</strong><br />
 			<div class="agency-employee-name">
@@ -13,12 +25,7 @@
 				<option value="0">- Select -</option>
 			</select>
 		</div>
-		<button id="invite-employee">Add / Invite Employee&nbsp;&nbsp;<img src="/public/img/btn_invite.png" class="search-btn-icon" alt=""></button>
-		<!-- form to resend invite email -->
-		<form id="reinvite_employee" name="reinvite_employee">
-			<input type="hidden" id="reinvite_employee_id" name="reinvite_employee_id" value="-2" />
-			<button id="resend-invite-employee">Resend Invitation Email&nbsp;&nbsp;<img src="/public/img/btn_reinvite.png" class="search-btn-icon" alt=""></button>
-		</form>
+		
 	</div>
 	
 	<div id="agency-employee-current">
@@ -143,18 +150,18 @@
 						<br />
 						<div class="table-row">
 							<div class="col" style="width:20%;">&nbsp;</div>
+							<div class="col" style="width:16%;"><strong>$ / Deposit</strong></div>
+							<div class="col" style="width:16%;"><strong>$ / Loan</strong></div>
+							<div class="col" style="width:16%;"><strong>$ / Fund</strong></div>
 							<div class="col" style="width:16%;">&nbsp;</div>
-							<div class="col" style="width:16%;"><strong>$ / Product</strong></div>
-							<div class="col" style="width:16%;">&nbsp;</div>
-							<div class="col" style="width:16%;"><strong>$ / Product</strong></div>
 							<div class="col" style="width:16%;">&nbsp;</div>
 						</div>
 						<div class="table-row">
 							<div class="col" style="width:20%;background-color:#cccccc;"><span class="table-title"><strong>Bank</strong><sup>*</sup></span></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;text-align:right;"><strong>Deposit:</strong></div>
 							<div class="col" style="width:16%;background-color:#eeeeee;"><strong>$</strong> <input type="text" id="employee_bank_deposit_product" name="employee_bank_deposit_product" placeholder="0.00"></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;text-align:right;"><strong>Loan:</strong></div>
 							<div class="col" style="width:16%;background-color:#eeeeee;"><strong>$</strong> <input type="text" id="employee_bank_loan_product" name="employee_bank_loan_product" placeholder="0.00"></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><strong>$</strong> <input type="text" id="employee_bank_fund_product" name="employee_bank_fund_product" placeholder="0.00"></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;">&nbsp;</div>
 							<div class="col" style="width:16%;background-color:#eeeeee;">&nbsp;</div>
 						</div>
 						<!--- end percetage area --->

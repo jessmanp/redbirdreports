@@ -17,6 +17,8 @@
 <!-- jQuery -->
 <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
+<!-- Chart.js -->
+<script src="<?php echo URL; ?>/public/js/chart.js"></script>
 <!-- JavaScript -->
 <script src="<?php echo URL; ?>public/js/global.js"></script>
 <script src="<?php echo URL; ?>public/js/application.js"></script>
