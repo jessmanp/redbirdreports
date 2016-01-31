@@ -849,6 +849,7 @@ class App extends Controller
 			$employee_phone = trim(@$_POST['employee_phone']); // must be a string
 			$employee_mobile = trim(@$_POST['employee_mobile']); // must be a string
 			$employee_zip_code = trim(@$_POST['employee_zip_code']); // must be a string
+			$employee_username = trim(@$_POST['employee_username']); // must be a string
 			$employee_type = trim(@$_POST['employee_type']); // must be numeric
 			if (trim(@$_POST['employee_hire_date']) != '') {
 				$employee_hire_date = date('Y-m-d H:i:s', strtotime(trim(@$_POST['employee_hire_date']))); // must be a date
@@ -905,6 +906,19 @@ class App extends Controller
 			if (!isset($employee_type) || !is_numeric($employee_type)){
 				$return['error'] = true;
 				$return['msg'] .= '<strong>User Type</strong> Field is Required.<br /><br />';
+			}
+			if (!isset($employee_username) || empty($employee_username)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Username</strong> Field is Required.<br />';
+			} else {
+				if (!filter_var($employee_email, FILTER_VALIDATE_EMAIL) === false) {
+					// check if username exists
+					$username_taken = $myagency_model->isUsernameTaken($employee_username,$employee_email);
+					if ($username_taken) {
+						$return['error'] = true;
+						$return['msg'] .= '<strong>That Username is Already Taken.</strong> Try again.<br />';
+					}
+				}
 			}
 			
 			if (!isset($employee_auto_new) || !is_numeric($employee_auto_new)){
@@ -990,7 +1004,7 @@ class App extends Controller
 			if ($return['error'] === false) {
 			
 				// execute update employee compensation functions
-				$updated_employee_id = $myagency_model->saveEmployeeData($employee_id, $employee_first_name, $employee_last_name, $employee_job_title, $employee_email, $employee_phone, $employee_mobile, $employee_zip_code, $employee_type, $employee_hire_date, $employee_auto_new, $employee_auto_added, $employee_auto_reinstated, $employee_auto_transferred, $employee_auto_renewal, $employee_fire_new, $employee_fire_added, $employee_fire_reinstated, $employee_fire_transferred, $employee_fire_renewal, $employee_life_new, $employee_life_increase, $employee_life_policy, $employee_health_new, $employee_health_policy, $employee_bank_deposit_product, $employee_bank_loan_product, $employee_bank_fund_product);
+				$updated_employee_id = $myagency_model->saveEmployeeData($employee_id, $employee_first_name, $employee_last_name, $employee_username, $employee_job_title, $employee_email, $employee_phone, $employee_mobile, $employee_zip_code, $employee_type, $employee_hire_date, $employee_auto_new, $employee_auto_added, $employee_auto_reinstated, $employee_auto_transferred, $employee_auto_renewal, $employee_fire_new, $employee_fire_added, $employee_fire_reinstated, $employee_fire_transferred, $employee_fire_renewal, $employee_life_new, $employee_life_increase, $employee_life_policy, $employee_health_new, $employee_health_policy, $employee_bank_deposit_product, $employee_bank_loan_product, $employee_bank_fund_product);
 				$return['msg'] = '<strong>Success</strong>, the employee&rsquo;s information has been updated.';
 				
 				if (!isset($updated_employee_id) || empty($updated_employee_id)) {

@@ -77,7 +77,7 @@ class MyAgencyModel
     {
 
 		// query to get employee data
-		$query_get_employee_compensation = $this->db->prepare('SELECT users.user_level, users.user_first_name, users.user_last_name, users.user_email, users.user_phone, users.user_mobile, users.user_zip_code, users.user_job_title, users.user_hire_date, users.user_active, compensation_plans.* FROM users, compensation_plans WHERE users.user_id = compensation_plans.user_id AND compensation_plans.user_id = :employee_id');
+		$query_get_employee_compensation = $this->db->prepare('SELECT users.user_level, users.user_name, users.user_first_name, users.user_last_name, users.user_email, users.user_phone, users.user_mobile, users.user_zip_code, users.user_job_title, users.user_hire_date, users.user_active, compensation_plans.* FROM users, compensation_plans WHERE users.user_id = compensation_plans.user_id AND compensation_plans.user_id = :employee_id');
 		$query_get_employee_compensation->bindValue(':employee_id', $employee_id, PDO::PARAM_INT);
 		$query_get_employee_compensation->execute();
 		return $query_get_employee_compensation->fetchAll();
@@ -85,12 +85,31 @@ class MyAgencyModel
 	}
 	
 	/**
+     * Check database to see if the username is already taken
+     */
+    public function isUsernameTaken($username,$email)
+    {
+		// query username
+        $sql = "SELECT count(*) as count FROM users WHERE user_email != '".$email."' AND user_name = '".$username."';";
+        $query_check_username = $this->db->prepare($sql);
+        $query_check_username->execute();
+        $got_username = $query_check_username->fetch()->count;
+        
+		if ($got_username == 1) {
+			return true;
+		}
+		
+		return false;
+		
+    }
+	
+	/**
      * Update employee compensation data
      */
-    public function saveEmployeeData($employee_id, $employee_first_name, $employee_last_name, $employee_job_title, $employee_email, $employee_phone, $employee_mobile, $employee_zip_code, $employee_type, $employee_hire_date, $employee_auto_new, $employee_auto_added, $employee_auto_reinstated, $employee_auto_transferred, $employee_auto_renewal, $employee_fire_new, $employee_fire_added, $employee_fire_reinstated, $employee_fire_transferred, $employee_fire_renewal, $employee_life_new, $employee_life_increase, $employee_life_policy, $employee_health_new, $employee_health_policy, $employee_bank_deposit_product, $employee_bank_loan_product, $employee_bank_fund_product)
+    public function saveEmployeeData($employee_id, $employee_first_name, $employee_last_name, $employee_username, $employee_job_title, $employee_email, $employee_phone, $employee_mobile, $employee_zip_code, $employee_type, $employee_hire_date, $employee_auto_new, $employee_auto_added, $employee_auto_reinstated, $employee_auto_transferred, $employee_auto_renewal, $employee_fire_new, $employee_fire_added, $employee_fire_reinstated, $employee_fire_transferred, $employee_fire_renewal, $employee_life_new, $employee_life_increase, $employee_life_policy, $employee_health_new, $employee_health_policy, $employee_bank_deposit_product, $employee_bank_loan_product, $employee_bank_fund_product)
     {
 		// query to update user data
-		$query_update_employee_data = $this->db->prepare('UPDATE users SET user_first_name = :employee_first_name, user_last_name = :employee_last_name, user_job_title = :employee_job_title, user_email = :employee_email, user_phone = :employee_phone, user_mobile = :employee_mobile, user_zip_code = :employee_zip_code, user_level = :employee_type, user_hire_date = :employee_hire_date WHERE user_id = :employee_id');
+		$query_update_employee_data = $this->db->prepare('UPDATE users SET user_first_name = :employee_first_name, user_last_name = :employee_last_name, user_job_title = :employee_job_title, user_email = :employee_email, user_phone = :employee_phone, user_mobile = :employee_mobile, user_zip_code = :employee_zip_code, user_level = :employee_type, user_name = :employee_username, user_hire_date = :employee_hire_date WHERE user_id = :employee_id');
 		
 		$query_update_employee_data->bindValue(':employee_first_name', $employee_first_name, PDO::PARAM_STR);
 		$query_update_employee_data->bindValue(':employee_last_name', $employee_last_name, PDO::PARAM_STR);
@@ -101,6 +120,7 @@ class MyAgencyModel
 		$query_update_employee_data->bindValue(':employee_zip_code', $employee_zip_code, PDO::PARAM_STR);
 		$query_update_employee_data->bindValue(':employee_type', $employee_type, PDO::PARAM_INT);
 		$query_update_employee_data->bindValue(':employee_hire_date', $employee_hire_date, PDO::PARAM_STR);
+		$query_update_employee_data->bindValue(':employee_username', $employee_username, PDO::PARAM_STR);
 		$query_update_employee_data->bindValue(':employee_id', $employee_id, PDO::PARAM_INT);
 		
 		$query_update_employee_data->execute();

@@ -35,7 +35,7 @@
     <input id="user_password_new" type="password" name="user_password_new" pattern=".{6,}" placeholder="Enter Password" required autocomplete="off" />
 
     <label for="user_password_repeat">Password<span class="small">*Required</span></label>
-    <input id="user_password_repeat" type="password" name="user_password_repeat" pattern=".{6,}" placeholder="Password Again" required autocomplete="off" />
+    <input id="user_password_repeat" type="password" name="user_password_repeat" pattern=".{6,}" placeholder="Enter Password Again" required autocomplete="off" />
 	
 	<br /><img id="captcha-image" src="tools/showCaptcha.php" alt="captcha" />
 	<div style="clear:both;"></div>

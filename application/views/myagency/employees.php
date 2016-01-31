@@ -62,9 +62,11 @@
 				<label for="employee_zip_code">Zip Code:</label>
 				<input id="employee_zip_code_field" style="width:85px;" type="text" name="employee_zip_code" maxlength="64" placeholder="Zip Code" />
 				<br />
-				<div style="text-align:center;margin:25px 0 15px 0;">
+				<label for="employee_username">Username<sup>*</sup>:</label>
+				<input id="employee_username_field" style="width:180px;" type="text" name="employee_username" maxlength="64" placeholder="Username" />
+				&nbsp;
 				<label for="employee_type">User Type<sup>*</sup>:</label>
-				<select class="policy-entry-select" id="employee_type_field" name="employee_type" required>
+				<select class="short-select" id="employee_type_field" name="employee_type" required>
 					<option value="">- Select -</option>
 					<option value="0">Employee</option>
 					<option value="1">Manager</option>
@@ -72,7 +74,7 @@
 				</select>
 				&nbsp;
 				Hire Date:<input id="employeehiredate" name="employee_hire_date" placeholder="" readonly>
-				</div>
+				<br />
 				
 				<div style="text-align:center;margin:25px 0 15px 10px;padding:10px;background-color:#a20004;color:#ffffff;">
 					Commission Settings

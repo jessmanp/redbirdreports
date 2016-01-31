@@ -504,6 +504,7 @@ $(document).ready(function() {
 								$("#employee_zip_code_field").val(value.user_zip_code);
 								$("#employee_phone_field").val(value.user_phone);
 								$("#employee_mobile_field").val(value.user_mobile);
+								$("#employee_username_field").val(value.user_name);
 								if (value.user_hire_date) {
 									$("#employeehiredate").val(sqlToJsDate(value.user_hire_date));
 								} else {
@@ -571,6 +572,7 @@ $(document).ready(function() {
 			$("#employee_zip_code_field").val('');
 			$("#employee_phone_field").val('');
 			$("#employee_mobile_field").val('');
+			$("#employee_username_field").val('');
 			$("#employee_type_field option[value='']").prop("selected", true);
 			$("#employeehiredate").val('');
 			$("#employee_auto_new").val('');

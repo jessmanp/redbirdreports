@@ -32,9 +32,9 @@ $msg = '';
 		<h1>Application Login</h1>
 		<br />
 		<form name="login" action="/login/index.php" method="post">
-			<input id="username" name="user_name" type="text" placeholder="Enter Username" required />
+			<input id="username" name="user_name" type="text" placeholder="Username or Email" required />
 			<br />
-			<input id="password" name="user_password" type="password" placeholder="Enter Password" autocomplete="off" required />
+			<input id="password" name="user_password" type="password" placeholder="Password" autocomplete="off" required />
 			<br /><br />
 			<input type="checkbox" id="remember-me" name="user_rememberme" value="1" />
 			<label for="remember-me"><span><span></span></span>Remember Me<!-- <em>(for 2 weeks)</em>--></label>
