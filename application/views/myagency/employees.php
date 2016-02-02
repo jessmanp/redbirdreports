@@ -73,7 +73,7 @@
 					<option value="2">Administrator</option>
 				</select>
 				&nbsp;
-				Hire Date:<input id="employeehiredate" name="employee_hire_date" placeholder="" readonly>
+				Hire Date:<input id="employeehiredate" name="employee_hire_date" placeholder="01/01/2001">
 				<br />
 				
 				<div style="text-align:center;margin:25px 0 15px 10px;padding:10px;background-color:#a20004;color:#ffffff;">

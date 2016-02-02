@@ -1518,13 +1518,15 @@ a.policy-edit-action:hover {
     background-color:#000000;
     border:2px solid #000000;
 }
-#update-com-bonus {
+.update-com-bonus {
 	position:absolute;
 	margin:50px 2px 0 245px;
 	padding:0 0 0 10px;
-    cursor:pointer; 
     width:140px; 
-    height:37px; 
+    height:37px;
+	font-size:12px;
+	text-align:center;
+	line-height:28px;
     background-color:#a20004;
     color:#ffffff;
     border:2px solid #a20004;
@@ -1534,21 +1536,41 @@ a.policy-edit-action:hover {
 	-moz-border-radius:10px;
 	/* for IE 5.5 - 9 & firefox 13+ */
 	border-radius:10px;
-	font-size:12px;
-	text-align:left;
-	line-height:30px;
+	cursor:pointer;
 }
-#update-com-bonus:hover {
+.update-com-bonus:hover {
     background-color:#000000;
     border:2px solid #000000;
 }
-#update-com-other {
+.update-com-bonus-disabled {
+	position:absolute;
+	margin:50px 2px 0 245px;
+	padding:0 0 0 10px;
+    width:140px; 
+    height:37px;
+	font-size:12px;
+	text-align:center;
+	line-height:28px;
+    background-color:#cccccc;
+    color:#000000;
+    border:2px solid #cccccc;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+	opacity:0.5;
+}
+.update-com-other {
 	position:absolute;
 	margin:137px 2px 0 245px;
-	padding:0 0 0 10px;
-    cursor:pointer; 
+	padding:0 0 0 10px; 
     width:140px; 
-    height:37px; 
+    height:37px;
+    font-size:12px;
+	text-align:center;
+	line-height:28px;
     background-color:#a20004;
     color:#ffffff;
     border:2px solid #a20004;
@@ -1558,13 +1580,31 @@ a.policy-edit-action:hover {
 	-moz-border-radius:10px;
 	/* for IE 5.5 - 9 & firefox 13+ */
 	border-radius:10px;
-	font-size:12px;
-	text-align:left;
-	line-height:30px;
+	cursor:pointer;
 }
-#update-com-other:hover {
+.update-com-other:hover {
     background-color:#000000;
     border:2px solid #000000;
+}
+.update-com-other-disabled {
+	position:absolute;
+	margin:137px 2px 0 245px;
+	padding:0 0 0 10px; 
+    width:140px; 
+    height:37px;
+    font-size:12px;
+	text-align:center;
+	line-height:28px;
+    background-color:#cccccc;
+    color:#000000;
+    border:2px solid #cccccc;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+	opacity:0.5;
 }
 #invite-employee {
 	position:absolute;

@@ -757,7 +757,7 @@ $(document).ready(function() {
 	updateEmployeeList();
 	
 	// load employee date picker
-	$("#employeehiredate").datepicker();
+	$("#employeehiredate").datepicker({ dateFormat: 'mm/dd/yy', constrainInput: false });
 
 });
 

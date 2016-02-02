@@ -5,16 +5,15 @@
 
 <div class="commission-left-cell">
 	<div class="commission-special">
-		<div class="com-title">Special</div>
+		<div class="com-title">Special Commissions</div>
 		<div class="com-holder">
-		<button id="update-com-bonus">Update Bonus&nbsp;&nbsp;<img src="/public/img/btn_com_bonus.png" class="search-btn-icon" alt="" width="33" height="28"></button>
-		<button id="update-com-other">Update Other&nbsp;&nbsp;<img src="/public/img/btn_com_bonus.png" class="search-btn-icon" alt="" width="33" height="28"></button>
+		<button id="update-com-bonus" class="update-com-bonus">Update Bonus&nbsp;&nbsp;<img src="/public/img/btn_com_bonus.png" class="search-btn-icon" alt="" width="33" height="28"></button>
+		<button id="update-com-other" class="update-com-other">Update Other&nbsp;&nbsp;<img src="/public/img/btn_com_bonus.png" class="search-btn-icon" alt="" width="33" height="28"></button>
 	<div class="com-special-all">
-<form >
+<form method="post" action="/app/commissions/putSpecialBonus" id="com_update_special_bonus" name="com_update_special_bonus">
+	<input type="hidden" id="bonus_employee_id" name="bonus_employee_id" value="-2" />
 <!-- begin form -->
 		<div class="table-container">
-		  <!-- form for editing employees -->
-		  <form method="post" action="/app/commissions/putCommissionSpecial" id="com_update_commission_special" name="com_update_commission_special">
 			<div class="table-row">
 				<div class="col" style="width:40%;"><div class="com-special">Bonus</div></div>
 				<div class="col" style="width:60%;">
@@ -22,12 +21,12 @@
 					<input type="text" maxlength="40" style="width:100px;" id="commissions_bonus" name="commissions_bonus" placeholder="0.00" value="">
 				</div>
 			</div>
-		  </form>
 		</div>
 		<input type="text" maxlength="100" style="width:215px;margin:7px 0 0 10px;" id="com_bonus_description" name="com_bonus_description" placeholder="Enter a Brief Description" value="">
 <!-- end form -->
 </form>
-<form >
+<form method="post" action="/app/commissions/putSpecialOther" id="com_update_special_other" name="com_update_special_other">
+	<input type="hidden" id="other_employee_id" name="other_employee_id" value="-2" />
 <!-- begin form -->
 		<div class="table-container">
 			<div class="table-row">

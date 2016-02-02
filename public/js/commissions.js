@@ -19,7 +19,7 @@ function openModal(type,message) {
 		var neww = (winw/2)-298;
 	}
 	//var scrolled_val = $(document).scrollTop().valueOf();
-	var newh = -175;
+	var newh = -300;
 	$("#popupmessage").css({ "margin-left": neww+"px", "margin-top": newh+"px" });
 	$("#popupmessage").fadeIn();
 	$("#message").fadeIn();
@@ -50,8 +50,10 @@ function populateDates(period,year) {
 	if (period == 1) {
 		// fill dropdown with months based on year
 		for (var i=0; i < months.length;++i) {
+			var month = (i+1);
+			var nod = numberOfDays(year,month);
 			$("#commission_period").append(
-				$("<option></option>").val(i+1).html(months[i])
+				$("<option></option>").val((i+1)+":1-"+nod).html(months[i])
 			);
 		}
 		$("#commission_period option[value="+currmonth+"]").prop("selected", true);
@@ -102,6 +104,11 @@ function loadPeriodDates(period) {
 // LOAD
 $(document).ready(function() {
 
+	// CLOSE MODAL WINDOW
+	$("#popupmessage").find(".plain-btn").on("click", function() {
+		closeModal();
+	});
+
 	// disable dropdowns by default
 	$("#commission_year").prop("disabled", true);
 	$("#commission_period").prop("disabled", true);
@@ -121,6 +128,7 @@ $(document).ready(function() {
 	});
 	
 	$("#commission_year").on("change", function(event) {
+		event.preventDefault();
 		// do stuff here
 		populateDates($("#the_frequency").val(),$(this).val());
 	});
@@ -181,10 +189,12 @@ $(document).ready(function() {
 	// LOAD EMPLOYEE DATA
 	function loadUserData(user_id) {
 		if (user_id > 0) {
+			var date_range = $("#commission_period").val();
+			date_range = date_range+":"+$("#commission_year").val();
 			// update employee info into form
 			$.ajax({
 					type: "GET",
-					url: "/app/commissions/getEmployeeCommissionHistory/?eid="+user_id,
+					url: "/app/commissions/getEmployeeCommissionHistory/?eid="+user_id+"&date="+date_range,
 					data: $(this).serialize(),
 					dataType: "json",
 					cache: false,
@@ -198,6 +208,8 @@ $(document).ready(function() {
 							// populate form fields with json data
 							$.each(data, function(key, value) {
 								// fill out fields with data
+								$("#bonus_employee_id").val(user_id);
+								$("#other_employee_id").val(user_id);
 								$("#emp_default_label").text('');
 								$("#emp_first_label").text(value.user_first_name);
 								$("#emp_last_label").text(value.user_last_name);
@@ -213,8 +225,17 @@ $(document).ready(function() {
 									$("#chired").text(sqlToJsDate(value.user_hire_date));
 								} else {
 									$("#chired").text('');
-								}
-								
+								}								
+								$("#commissions_bonus").val(value.user_bonus);
+								$("#com_bonus_description").val(value.user_bonus_desc);
+								$("#commissions_other").val(value.user_other);
+								$("#com_other_description").val(value.user_other_desc);
+								$("#update-com-bonus").removeClass();
+								$("#update-com-bonus").addClass("update-com-bonus");
+								$("#update-com-bonus").prop("disabled", false);
+								$("#update-com-other").removeClass();
+								$("#update-com-other").addClass("update-com-other");
+								$("#update-com-other").prop("disabled", false);
 							});
 						}	
 					},
@@ -223,6 +244,11 @@ $(document).ready(function() {
 					}
 			});
 		} else {
+			// DISABLE BUTTONS
+			$("#update-com-bonus").switchClass("update-com-bonus","update-com-bonus-disabled");
+			$("#update-com-bonus").prop("disabled", true);
+			$("#update-com-other").switchClass("update-com-other","update-com-other-disabled");
+			$("#update-com-other").prop("disabled", true);
 			var empty_val = 0;
 			var clifetime_default = '$'+empty_val.toFixed(2);
 			var clastyear_default = '$'+empty_val.toFixed(2);
@@ -241,8 +267,101 @@ $(document).ready(function() {
 			$("#clastytd").text(clastytd_default);
 			$("#ccurrentytd").text(ccurrentytd_default);
 			$("#clastmonth").text(clastmonth_default);
+			$("#bonus_employee_id").val(-2);
+			$("#other_employee_id").val(-2);
+			$("#commissions_bonus").val('');
+			$("#com_bonus_description").val('');
+			$("#commissions_other").val('');
+			$("#com_other_description").val('');
 		}
 	}
+	
+	// UPDATE SPECIAL BONUS
+	$("#update-com-bonus").on("click", function(event) {
+		event.preventDefault();
+		$("#com_update_special_bonus").submit();
+	});
+	
+	// UPDATE BONUS SUBMIT ACTION
+	$("#com_update_special_bonus").submit(function(event) {
+		if ($("#bonus_employee_id").val() > 0) {
+			$.ajax({
+					type: "POST",
+					url: "/app/commissions/putSpecialBonus",
+					data: $(this).serialize(),
+					dataType: "json",
+					cache: false,
+        			//async: true,
+					success: function (data) {
+						console.log(data);
+						if (data.error == true) {
+							// show returned error msg here
+							openModal('error',data.msg);
+							//$("#employee_email").focus();
+						} else {
+							//loadUserData('');
+							// show success message...
+							openModal('info',data.msg);
+						}	
+					},
+					error: function (request, status, error) {
+        					console.log(error);
+					}
+			});
+		} else {
+			var msg = "<strong>ERROR</strong>, Invalid employee or no employee was selected.";
+			// show error message...
+			openModal('info',msg);
+		}
+		event.preventDefault();
+	});
+	
+	// UPDATE SPECIAL OTHER
+	$("#update-com-other").on("click", function(event) {
+		event.preventDefault();
+		$("#com_update_special_other").submit();
+	});
+	
+	// UPDATE OTHER SUBMIT ACTION
+	$("#com_update_special_other").submit(function(event) {
+		if ($("#other_employee_id").val() > 0) {
+			$.ajax({
+					type: "POST",
+					url: "/app/commissions/putSpecialOther",
+					data: $(this).serialize(),
+					dataType: "json",
+					cache: false,
+        			//async: true,
+					success: function (data) {
+						console.log(data);
+						if (data.error == true) {
+							// show returned error msg here
+							openModal('error',data.msg);
+							//$("#employee_email").focus();
+						} else {
+							//loadUserData('');
+							// show success message...
+							openModal('info',data.msg);
+						}	
+					},
+					error: function (request, status, error) {
+        					console.log(error);
+					}
+			});
+		} else {
+			var msg = "<strong>ERROR</strong>, Invalid employee or no employee was selected.";
+			// show error message...
+			openModal('info',msg);
+		}
+		event.preventDefault();
+	});
+	
+	// do submit action when search button is clicked
+	$("#dosubmit2").on("click", function(event) {
+		event.preventDefault();
+		alert("do period search");
+	});
+	
 	
 	// LOAD EMPLOYEES
 	updateEmployeeList();

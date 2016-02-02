@@ -609,14 +609,31 @@ class App extends Controller
 
 			// *POPULATE EMPLOYEE COMPENSATION DATA*
 			$employee_id = trim(@$_GET['eid']); // must be an existing ID
+			$date_range = trim(@$_GET['date']); // must be a custom range (i.e. 1:1-31:2016 would be Jan 1st thru 31st in 2016)
 			
 			if (!isset($employee_id) || $employee_id == '' || !is_numeric($employee_id)) {
 				$return['error'] = true;
 				$return['msg'] .= '<strong>ERROR</strong>, Invalid employee or no employee was selected.';
 			}
 			
+			if (isset($date_range) && $date_range != '') {
+				$monthsplit = explode(':',$date_range);
+				$daysplit = explode('-',$monthsplit[1]);
+				$dmonth = $monthsplit[0];
+				$ddayfirst = $daysplit[0];
+				$ddaylast = $daysplit[1];
+				$dyear = $monthsplit[2];
+				if (!is_numeric($dmonth) || !is_numeric($ddayfirst) || !is_numeric($ddaylast)) {
+					$return['error'] = true;
+					$return['msg'] .= '<strong>ERROR</strong>, Invalid date range was selected.';
+				} else {
+					$dateA = $dyear.'-'.str_pad($dmonth, 2, '0', STR_PAD_LEFT).'-'.str_pad($ddayfirst, 2, '0', STR_PAD_LEFT).'  00:00:00';
+					$dateB = $dyear.'-'.str_pad($dmonth, 2, '0', STR_PAD_LEFT).'-'.str_pad($ddaylast, 2, '0', STR_PAD_LEFT).' 23:59:59';
+				}				
+			}
+			
 			// get employees data
-			$employee_data = $commissions_model->getEmployeeCommissionHistory($employee_id);
+			$employee_data = $commissions_model->getEmployeeCommissionHistory($agency_id,$employee_id,$dateA,$dateB);
 
 			if (empty($employee_data)) {
 				$return['error'] = true;
@@ -631,8 +648,8 @@ class App extends Controller
 
 		}
 		
-		if ($sub == 'putCommissionSpecial') {
-			// put commission special
+		if ($sub == 'putSpecialBonus') {
+			// put commission special bonus
 			
 			// array values that will be returned via ajax
 			$return = array();
@@ -640,21 +657,95 @@ class App extends Controller
 			$return['error'] = false;
 			
 			// *UPDATE EMPLOYEE COMPENSATION DATA*
-			$employee_id = trim(@$_GET['eid']); // must be an existing ID
+			$employee_id = trim(@$_POST['bonus_employee_id']); // must be an existing ID
+			$bonus = trim(@$_POST['commissions_bonus']); // must be numeric
+			$bonus_desc = trim(@$_POST['com_bonus_description']); // must be a string
 			
+			// validate update employee special form to make sure the data was entered correctly
+
 			if (!isset($employee_id) || $employee_id == '' || !is_numeric($employee_id)) {
 				$return['error'] = true;
-				$return['msg'] .= '<strong>ERROR</strong>, Invalid employee or no employee was selected.';
+				$return['msg'] .= 'No employee was selected. Please select an employee.';
+			}
+			if (!isset($bonus) || !is_numeric($bonus)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Bonus Amount</strong> Field is Required.<br />';
+			}
+			if (!isset($bonus_desc) || !filter_var($bonus_desc, FILTER_SANITIZE_STRING)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Bonus Description</strong> Field is Required.<br />';
 			}
 			
-			// put data
-			$commission_special = $commissions_model->saveCommissionSpecial($employee_id);
+			// submit success functionality
+			if ($return['error'] === false) {
+			
+				// put data
+				$commission_special_bonus = $commissions_model->saveCommissionSpecialBonus($employee_id,$bonus,$bonus_desc);
 
-			if (empty($commission_special)) {
-				$return['error'] = true;
-				$return['msg'] .= '<strong>ERROR</strong>, Special Commission was not updated.';
+				if (empty($commission_special_bonus)) {
+					$return['error'] = true;
+					$return['msg'] .= '<strong>ERROR</strong>, Special Bonus commission was not updated.';
+				} else {
+					$return['msg'] = '<strong>Success</strong>, Special Bonus commission was updated.';
+				}
+				
 			} else {
-				$return = $commission_special;
+			
+				$return['msg'] = '<strong>Update Special Failed.</strong> One or More of the Required Fields Was Missing:<br /><br />'.$return['msg'];
+			
+			}
+
+			//Return json encoded results
+			echo json_encode($return);			
+			exit();
+			
+		}
+		
+		if ($sub == 'putSpecialOther') {
+			// put commission special other
+			
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+			
+			// *UPDATE EMPLOYEE COMPENSATION DATA*
+			$employee_id = trim(@$_POST['other_employee_id']); // must be an existing ID
+			$other = trim(@$_POST['commissions_other']); // must be numeric
+			$other_desc = trim(@$_POST['com_other_description']); // must be a string
+			
+			// validate update employee special form to make sure the data was entered correctly
+
+			if (!isset($employee_id) || $employee_id == '' || !is_numeric($employee_id)) {
+				$return['error'] = true;
+				$return['msg'] .= 'No employee was selected. Please select an employee.';
+			}
+			if (!isset($other) || !is_numeric($other)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Other Amount</strong> Field is Required.<br />';
+			}
+			if (!isset($other_desc) || !filter_var($other_desc, FILTER_SANITIZE_STRING)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Other Description</strong> Field is Required.<br />';
+			}
+			
+			// submit success functionality
+			if ($return['error'] === false) {
+			
+				// put data
+				$commission_special_other = $commissions_model->saveCommissionSpecialOther($employee_id,$other,$other_desc);
+
+				if (empty($commission_special_other)) {
+					$return['error'] = true;
+					$return['msg'] .= '<strong>ERROR</strong>, Special Other commission was not updated.';
+				} else {
+					$return['msg'] = '<strong>Success</strong>, Special Other commission was updated.';
+				}
+				
+			} else {
+			
+				$return['msg'] = '<strong>Update Special Failed.</strong> One or More of the Required Fields Was Missing:<br /><br />'.$return['msg'];
+			
 			}
 
 			//Return json encoded results
@@ -852,7 +943,13 @@ class App extends Controller
 			$employee_username = trim(@$_POST['employee_username']); // must be a string
 			$employee_type = trim(@$_POST['employee_type']); // must be numeric
 			if (trim(@$_POST['employee_hire_date']) != '') {
-				$employee_hire_date = date('Y-m-d H:i:s', strtotime(trim(@$_POST['employee_hire_date']))); // must be a date
+				$the_hire_date = trim(@$_POST['employee_hire_date']);
+				$date_parts = explode("/",$the_hire_date);
+				if (count($date_parts) == 3 && checkdate($date_parts[0],$date_parts[1],$date_parts[2])) {
+					$employee_hire_date = date('Y-m-d H:i:s', strtotime($the_hire_date)); // must be a date
+				} else {
+					$employee_hire_date = 0;
+				}
 			} else {
 				$employee_hire_date = null;
 			}
@@ -919,6 +1016,10 @@ class App extends Controller
 						$return['msg'] .= '<strong>That Username is Already Taken.</strong> Try again.<br />';
 					}
 				}
+			}
+			if ($employee_hire_date == 0) {
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Hire Date Invalid.</strong> Try again. (i.e. 1/1/2001)<br />';
 			}
 			
 			if (!isset($employee_auto_new) || !is_numeric($employee_auto_new)){
