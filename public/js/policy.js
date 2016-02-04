@@ -256,17 +256,17 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 		$("#policy_source_type option[value="+src+"]").prop("selected", true);
 		$("#policy_length_type option[value="+len+"]").prop("selected", true);
 		$("#writtendate").val(sqlToJsDate(dw));
-		if (di == '') {
+		if (di == '' || di == null) {
 			$("#issueddate").val('');
 		} else {
 			$("#issueddate").val(sqlToJsDate(di));
 		}
-		if (de == '') {
+		if (de == '' || de == null) {
 			$("#effectivedate").val('');
 		} else {
 			$("#effectivedate").val(sqlToJsDate(de));
 		}
-		if (dc == '') {
+		if (dc == '' || dc == null) {
 			$("#canceleddate").val('');
 		} else {
 			$("#canceleddate").val(sqlToJsDate(dc));
@@ -369,6 +369,7 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 	if (type == 'renewcancel') {
 		$("#policy-renew-cancel").fadeIn();
 		$("#policy-renew-cancel #rencid").val(id);
+		$("#renew_canceleddate").val('');
 		$("#policy-renew-cancel").find("p").text('');
 		$("#policy-renew-cancel").find("p").html('<em>Policy Preview</em><br /><br /><div class="delete-table-container"><div class="delete-table-row"><div class="edit-col"><strong>Customer Name:</strong></div><div class="delete-col">'+fname+'&nbsp;'+lname+'</div></div><div class="delete-table-row"><div class="edit-col"><strong>Description:</strong></div><div class="delete-col">'+desc+'</div></div></div>');
 	}
@@ -803,7 +804,7 @@ $(document).ready(function() {
 							// show edit window...
 							$.each(data, function(key, value) {
 								//openWindow(currcat,'edit','Edit',value.id,value.notes,value.first,value.last,value.description,value.premium,value.zip_code,value.category_id,value.business_type_id,value.user_id,value.source_type_id,value.length_type_id,value.date_written,'','','','dorenew');
-								openWindow(currcat,'renew','Renew',value.id,'',value.first,value.last,value.description,value.premium);
+								openWindow(currcat,'renew','Renew',value.id,'','',value.first,value.last,value.description,value.premium);
 							});
 						}	
 				},
@@ -895,7 +896,7 @@ $(document).ready(function() {
 							$("#policy-content").load(path);
 							// show edit window...
 							$.each(data, function(key, value) {
-								openWindow(currcat,'edit','Edit',value.id,value.notes,value.first,value.last,value.description,value.premium,value.zip_code,value.category_id,value.business_type_id,value.user_id,value.source_type_id,value.length_type_id,value.date_written,value.date_issued,value.date_effective,value.date_canceled,value.renewal);
+								openWindow(currcat,'edit','Edit',value.id,value.notes,value.policy_number,value.first,value.last,value.description,value.premium,value.zip_code,value.category_id+'-'+value.cat_pid,value.business_type_id,value.user_id,value.source_type_id,value.length_type_id,value.date_written,value.date_issued,value.date_effective,value.date_canceled,value.renewal,value.status);
 							});
 						}	
 				},

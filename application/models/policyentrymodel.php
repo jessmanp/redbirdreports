@@ -219,7 +219,7 @@ class PolicyEntryModel
 	 /**
      * Do Rewnewal Process, Add new record and Erase old one
      */
-    public function renewPolicy($oldid)
+    public function renewPolicy($oldid,$agency_id)
     {
 		// query old info and make a new policy
 		$sql = "SELECT * FROM policies WHERE id = ".$oldid;
@@ -244,8 +244,9 @@ class PolicyEntryModel
 	}
 
 		// write new policy data into database based on old info
-		$sql = "INSERT INTO policies (user_id, first, last, description, category_id, premium, business_type_id, source_type_id, length_type_id, notes, zip_code, date_written, date_issued) VALUES (:user_id, :first, :last, :description, :category_id, :premium, :business_type_id, :source_type_id, :length_type_id, :notes, :zip_code, :written_date, :issued_date)";
+		$sql = "INSERT INTO policies (agency_id, user_id, first, last, description, category_id, premium, business_type_id, source_type_id, length_type_id, notes, zip_code, date_written, date_issued) VALUES (:agency_id, :user_id, :first, :last, :description, :category_id, :premium, :business_type_id, :source_type_id, :length_type_id, :notes, :zip_code, :written_date, :issued_date)";
 		$query_new_policy_insert = $this->db->prepare($sql);
+		$query_new_policy_insert->bindValue(':agency_id', $agency_id, PDO::PARAM_INT);
 		$query_new_policy_insert->bindValue(':user_id', $sold, PDO::PARAM_INT);
 		$query_new_policy_insert->bindValue(':first', $first, PDO::PARAM_STR);
 		$query_new_policy_insert->bindValue(':last', $last, PDO::PARAM_STR);
@@ -266,8 +267,8 @@ class PolicyEntryModel
 			// id of new policy
 			$newpid = $this->db->lastInsertId();
 
-			// set old policy to normal
-			$sql = "UPDATE policies SET renewal = 0 WHERE id = ".$oldid;
+			// delete old policy
+			$sql = "UPDATE policies SET active = 0 WHERE id = ".$oldid;
 			$query = $this->db->prepare($sql);
 			$query->execute();
 
@@ -287,13 +288,13 @@ class PolicyEntryModel
     public function reinstatePolicy($oldid)
     {
 
-		// set old policy to normal
-		$sql = "UPDATE policies SET date_canceled = null WHERE id = ".$oldid;
+		// set old policy to normal by clearing the cancel date, change status to issued
+		$sql = "UPDATE policies SET status = 2, date_canceled = null WHERE id = ".$oldid;
 		$query = $this->db->prepare($sql);
 		$query->execute();
 
 		// query old info
-		$sql = "SELECT * FROM policies WHERE id = ".$oldid;
+		$sql = "SELECT policies.*, policy_categories.parent_id AS cat_pid FROM policies, policy_categories WHERE policy_categories.id = policies.category_id AND policies.id = ".$oldid;
 		$getoldquery = $this->db->prepare($sql);
 		$getoldquery->execute();
 		return $getoldquery->fetchAll();
@@ -324,7 +325,7 @@ class PolicyEntryModel
     		}
     	}
     	
-    	if ($effectiveDate) {
+    	if (isset($effectiveDate)) {
     	
     		// update business_type_id = 2 (Renewal), then update the premium
 			$sql = "UPDATE policies SET premium = :premium, business_type_id = :business_type_id, date_effective = :date_effective WHERE id = :id";
@@ -358,10 +359,11 @@ class PolicyEntryModel
     public function renewCancelPolicy($id,$canceldate)
     {
     	// update canceled date to cancel policy and set renewal = 0
-        $sql = "UPDATE policies SET renewal = :renewal, date_canceled = :date_canceled WHERE id = :id";
+        $sql = "UPDATE policies SET status = :status, renewal = :renewal, date_canceled = :date_canceled WHERE id = :id";
         $query = $this->db->prepare($sql);
         $query->bindValue(':id', $id, PDO::PARAM_INT);
         $query->bindValue(':renewal', 0, PDO::PARAM_INT);
+        $query->bindValue(':status', 4, PDO::PARAM_INT);
 		$query->bindValue(':date_canceled', $canceldate, PDO::PARAM_STR);
         $query->execute();
         

@@ -291,7 +291,7 @@ class App extends Controller
 			if (isset($rnewID) && is_numeric($rnewID)) {
 				// load entry model
 				$policy_entry_model = $this->loadModel('PolicyEntryModel');
-				$policy_renewed = $policy_entry_model->renewPolicy($rnewID);
+				$policy_renewed = $policy_entry_model->renewPolicy($rnewID,$agency_id);
 				if ($policy_renewed) {
 					$return = $policy_renewed;
 				} else {

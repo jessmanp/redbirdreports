@@ -53,14 +53,13 @@
 
 	
 	<div id="policy-renew-cancel">
-	<div class="policy-required-key"><sup>*</sup> Denotes Required Field(s)</div>
 		<div class="policy-message"></div>
 			This Policy needs to be &quot;<strong>CANCELED</strong>&quot;. Enter the &quot;<strong>CANCEL DATE</strong>&quot; for this Policy.<br />
 			<p class="policy-delete-box"></p>
 			<form id="policy_renew_cancel_form" name="policy_renew_cancel_form">
 			<input type="hidden" id="renew_cancel_path" name="renew_cancel_path" value="" />
 			<input type="hidden" id="rencid" name="rencid" value="-2" />
-			Canceled<sup>*</sup>:<input id="renew_canceleddate" name="renew_canceleddate" value="" placeholder="" readonly />
+			Cancel Date<sup>*</sup>:<input id="renew_canceleddate" name="renew_canceleddate" value="" placeholder="" readonly />
 			</form>
 <div class="policy-edit-bar"></div>
 		<button id="policy-renew-cancel-save" class="plain-btn">Save</button>
@@ -92,7 +91,7 @@
 
 
 	<div id="policy-edit">
-<div class="policy-required-key"><sup>*</sup>Required Field(s)</div>
+<div class="policy-required-key"><sup>*</sup> Denotes Required Field(s)</div>
 		<div class="policy-message"></div>
 			<form id="policy_entry_form" name="policy_entry_form">
 			<input type="hidden" id="edit_path" name="edit_path" value="" />
