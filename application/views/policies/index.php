@@ -202,11 +202,29 @@ $(document).ready(function() {
 	$("#policy-reinstate #reinstate_path").val(url);
 	$("#policy-renew-cancel #renew_cancel_path").val(url);
 	*/
-	$("#policy-edit #edit_path").val("app/policies/listall");
-	$("#policy-delete #delete_path").val("app/policies/listall");
-	$("#policy-do-renew #renew_path").val("app/policies/listall");
-	$("#policy-reinstate #reinstate_path").val("app/policies/listall");
-	$("#policy-renew-cancel #renew_cancel_path").val("app/policies/listall");
+	
+	var sdate = $("#datepick1").val().replace(/\//g, "-");
+	var edate = $("#datepick2").val().replace(/\//g, "-");
+	if (sdate != '' && edate != '') {
+		dateRange = sdate+"."+edate+".a";
+	} else {
+		dateRange = 'any';
+	}
+	// add date to edit path
+	var appendedEditPath = "app/policies/listall/default/"+dateRange;
+	$("#policy-edit #edit_path").val(appendedEditPath);
+	$("#policy-delete #delete_path").val(appendedEditPath);
+	$("#policy-do-renew #renew_path").val(appendedEditPath);
+	$("#policy-reinstate #reinstate_path").val(appendedEditPath);
+	$("#policy-renew-cancel #renew_cancel_path").val(appendedEditPath);
+
+	/*
+		$("#policy-edit #edit_path").val("app/policies/listall");
+		$("#policy-delete #delete_path").val("app/policies/listall");
+		$("#policy-do-renew #renew_path").val("app/policies/listall");
+		$("#policy-reinstate #reinstate_path").val("app/policies/listall");
+		$("#policy-renew-cancel #renew_cancel_path").val("app/policies/listall");
+	*/
 
 	$("#rowcnt").text('<?php echo ($rowcnt-1); ?>');
 	$("#totwritten").text('<?php echo $totalwritten; ?>');
