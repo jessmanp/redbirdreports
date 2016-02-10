@@ -55,7 +55,7 @@ class PolicyListingModel
 			// set status filter
 			switch ($status) {
     				case 'written':
-        				$addedSQL .= ' AND policies.renewal = 0 AND policies.status = 1';
+        				$addedSQL .= ' AND policies.renewal = 0 AND (policies.status = 1 OR policies.status = 2)';
         				break;
     				case 'notissued':
         				$addedSQL .= ' AND policies.renewal = 0 AND policies.status = 1';

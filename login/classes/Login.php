@@ -157,15 +157,14 @@ class Login
      * Search into database for the user data of user_name specified as parameter
      * @return user data as an object if existing user
      * @return false if user_name is not found in the database
-     * TODO: @devplanete This returns two different types. Maybe this is valid, but it feels bad. We should rework this.
-     * TODO: @devplanete After some resarch I'm VERY sure that this is not good coding style! Please fix this.
+     * TODO: after some resarch I'm VERY sure that this is not good coding style! need to fix this.
      */
     private function getUserData($user_name)
     {
         // if database connection opened
         if ($this->databaseConnection()) {
             // database query, getting all the info of the selected user
-            $query_user = $this->db_connection->prepare('SELECT * FROM users WHERE user_name = :user_name');
+            $query_user = $this->db_connection->prepare('SELECT users.*, agencies_users.agency_id FROM users, agencies_users WHERE agencies_users.user_id = users.user_id AND users.user_name = :user_name');
             $query_user->bindValue(':user_name', $user_name, PDO::PARAM_STR);
             $query_user->execute();
             // get result row (as an object)
@@ -181,6 +180,9 @@ class Login
      */
     private function loginWithSessionData()
     {
+    	
+		$this->user_id = $_SESSION['user_id'];
+		$this->agency_id = $_SESSION['agency_id'];
         $this->user_name = $_SESSION['user_name'];
         $this->user_email = $_SESSION['user_email'];
 
@@ -270,7 +272,7 @@ class Login
             } else if ($this->databaseConnection()) {
                 // database query, getting all the info of the selected user
                 //$query_user = $this->db_connection->prepare('SELECT * FROM users WHERE user_email = :user_email');
-                $query_user = $this->db_connection->prepare('SELECT users.*, agencies_users.agency_id FROM users, agencies_users WHERE users.user_id = agencies_users.user_id AND users.user_email = :user_email;');
+                $query_user = $this->db_connection->prepare('SELECT users.* agencies_users.agency_id FROM users, agencies_users WHERE agencies_users.user_id = users.user_id AND users.user_email = :user_email;');
                 $query_user->bindValue(':user_email', trim($user_name), PDO::PARAM_STR);
                 $query_user->execute();
                 // get result row (as an object)
