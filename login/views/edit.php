@@ -93,11 +93,11 @@ include('../application/views/_templates/header.php');
 <!-- edit form for user's info / this form uses the HTML5 attribute "required" -->
 <form method="post" action="/login/?edit=info&r=<?php echo urlencode($rpath); ?>" name="user_edit_form_info">
 	<input type="hidden" id="user_edit_submit_info" name="user_edit_submit_info" value="1" />
-    <label for="user_first_name"><?php echo WORDING_FIRST_NAME; ?><span class="small">*Optional</span></label>
-    <input id="user_first_name" type="text" name="user_first_name" maxlength="64" value="<?php if (isset($user->user_first_name)) echo $user->user_first_name; ?>" />
+    <label for="user_first_name"><?php echo WORDING_FIRST_NAME; ?><span class="small">*Required</span></label>
+    <input id="user_first_name" type="text" name="user_first_name" maxlength="64" value="<?php if (isset($user->user_first_name)) echo $user->user_first_name; ?>" required />
 
-	<label for="user_last_name"><?php echo WORDING_LAST_NAME; ?><span class="small">*Optional</span></label>
-    <input id="user_last_name" type="text" name="user_last_name" maxlength="64" value="<?php if (isset($user->user_last_name)) echo $user->user_last_name; ?>" />
+	<label for="user_last_name"><?php echo WORDING_LAST_NAME; ?><span class="small">*Required</span></label>
+    <input id="user_last_name" type="text" name="user_last_name" maxlength="64" value="<?php if (isset($user->user_last_name)) echo $user->user_last_name; ?>" required />
 
     <label for="user_job_title"><?php echo WORDING_JOB_TITLE; ?><span class="small">*Optional</span></label>
     <input id="user_job_title" type="text" name="user_job_title" maxlength="64" value="<?php if (isset($user->user_job_title)) echo $user->user_job_title; ?>" />

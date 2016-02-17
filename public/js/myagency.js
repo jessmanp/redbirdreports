@@ -489,6 +489,8 @@ $(document).ready(function() {
 							$("#agency_employee_restore").hide();
 							$("#resend-invite-employee").hide();
 							$("#remove-invite-employee").hide();
+							$("#employee_type_field option[value='3']").remove();
+							$("#employee_type_field").prop("disabled", false);
 							// populate form fields with json data
 							$.each(data, function(key, value) {
 								// fill out fields with data
@@ -509,6 +511,11 @@ $(document).ready(function() {
 									$("#employeehiredate").val(sqlToJsDate(value.user_hire_date));
 								} else {
 									$("#employeehiredate").val('');
+								}
+								if (value.user_level == 3) {
+									$("#employee_type_field").append($("<option></option>").val("3").html("Owner"));
+									$("#agency_update_employee").prepend('<input type="hidden" name="employee_type" value="3" />');
+									$("#employee_type_field").prop("disabled", true);
 								}
 								$("#employee_type_field option[value="+value.user_level+"]").prop("selected", true);
 								$("#employee_auto_new").val(value.commission_auto_new);
@@ -545,6 +552,10 @@ $(document).ready(function() {
 									$("#remove_employee_id").val(user_id);
 									$("#remove-invite-employee").css("display","inline");
 									$("#agency_employee_erase").fadeIn();
+									$("#agency_employee_erase").switchClass("plain-btn-erase","plain-btn-erase-disabled");
+									$("#agency_employee_erase").prop("disabled", true);
+								}
+								if (value.user_level == 3) {									
 									$("#agency_employee_erase").switchClass("plain-btn-erase","plain-btn-erase-disabled");
 									$("#agency_employee_erase").prop("disabled", true);
 								}

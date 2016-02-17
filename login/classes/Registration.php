@@ -294,9 +294,12 @@ If you do not wish to receive email from <span style="font-weight:bold; color:#0
         // if database connection opened
         if ($this->databaseConnection()) {
             // try to update user with specified information
-            $query_update_user = $this->db_connection->prepare('UPDATE users SET user_active = 1, user_activation_hash = NULL WHERE user_id = :user_id AND user_activation_hash = :user_activation_hash');
+            $query_update_user = $this->db_connection->prepare('UPDATE users SET user_active = 1, user_activation_hash = NULL, user_first_name = :first_name, user_last_name = :last_name, user_job_title = :job_title WHERE user_id = :user_id AND user_activation_hash = :user_activation_hash');
             $query_update_user->bindValue(':user_id', intval(trim($user_id)), PDO::PARAM_INT);
             $query_update_user->bindValue(':user_activation_hash', $user_activation_hash, PDO::PARAM_STR);
+            $query_update_user->bindValue(':first_name', 'New', PDO::PARAM_STR);
+            $query_update_user->bindValue(':last_name', 'Agency', PDO::PARAM_STR);
+            $query_update_user->bindValue(':job_title', 'Owner', PDO::PARAM_STR);
             $query_update_user->execute();
 
             if ($query_update_user->rowCount() > 0) {
@@ -308,10 +311,12 @@ If you do not wish to receive email from <span style="font-weight:bold; color:#0
                 		$query_user = $this->db_connection->prepare('SELECT * FROM users WHERE user_id = :user_id');
                 		$query_user->bindValue(':user_id', $user_id, PDO::PARAM_STR);
                 		$query_user->execute();
+                		
                 		// get result row (as an object)
                 		$result_row = $query_user->fetchObject();
 
 					if ($result_row->user_level == 3) {
+					
 						// create a new agency as this new user has been verified as level 3, make the selected user the owner
                 			$query_agency_owner_insert = $this->db_connection->prepare('INSERT INTO agencies (agency_owner_id) VALUES (:user_id)');
                 			$query_agency_owner_insert->bindValue(':user_id', $user_id, PDO::PARAM_STR);
@@ -324,21 +329,29 @@ If you do not wish to receive email from <span style="font-weight:bold; color:#0
                 			$query_agency_settings_insert = $this->db_connection->prepare('INSERT INTO agencies_settings (agency_id) VALUES (:agency_id)');
                 			$query_agency_settings_insert->bindValue(':agency_id', $agency_id, PDO::PARAM_STR);
                 			$query_agency_settings_insert->execute();
+                			
+                		// create compensation data for this owner
+							$query_user_compensation_insert = $this->db_connection->prepare('INSERT INTO compensation_plans (user_id) VALUES (:user_id)');
+							$query_user_compensation_insert->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+							$query_user_compensation_insert->execute();
+                
 					} else {
+					
 						// find what agency this user belongs to since they are not an owner (less than level 3)
-						$query_get_user_agency = $this->db_connection->prepare('SELECT agency_id FROM agencies_users WHERE user_id = :user_id');
+							$query_get_user_agency = $this->db_connection->prepare('SELECT agency_id FROM agencies_users WHERE user_id = :user_id');
                 			$query_get_user_agency->bindValue(':user_id', $user_id, PDO::PARAM_STR);
                 			$query_get_user_agency->execute();
-                			// get result row (as an object)
+                			
+                		// get result row (as an object)
                 			$result2_row = $query_get_user_agency->fetchObject();
 
 						// id of existing agency
-						$agency_id = $result2_row->agency_id;
+							$agency_id = $result2_row->agency_id;
 					}
 
 					// link this user to the agency
                 		$query_agency_user_insert = $this->db_connection->prepare('INSERT INTO agencies_users (agency_id,user_id) VALUES (:agency_id,:user_id)');
-					$query_agency_user_insert->bindValue(':agency_id', $agency_id, PDO::PARAM_INT);
+						$query_agency_user_insert->bindValue(':agency_id', $agency_id, PDO::PARAM_INT);
                 		$query_agency_user_insert->bindValue(':user_id', $user_id, PDO::PARAM_INT);
                 		$query_agency_user_insert->execute();
 
@@ -347,6 +360,7 @@ If you do not wish to receive email from <span style="font-weight:bold; color:#0
 			   // do auto login since its a new user - set login sessions
 			   // write user data into PHP SESSION [a file on your server]
                 $_SESSION['user_id'] = $result_row->user_id;
+                $_SESSION['agency_id'] = $result_row->agency_id;
                 $_SESSION['user_name'] = $result_row->user_name;
                 $_SESSION['user_email'] = $result_row->user_email;
                 $_SESSION['user_logged_in'] = 1;

@@ -944,11 +944,15 @@ class App extends Controller
 			$employee_type = trim(@$_POST['employee_type']); // must be numeric
 			if (trim(@$_POST['employee_hire_date']) != '') {
 				$the_hire_date = trim(@$_POST['employee_hire_date']);
-				$date_parts = explode("/",$the_hire_date);
-				if (count($date_parts) == 3 && checkdate($date_parts[0],$date_parts[1],$date_parts[2])) {
-					$employee_hire_date = date('Y-m-d H:i:s', strtotime($the_hire_date)); // must be a date
+				if (strpos($the_hire_date,"/") !== false) {
+					$date_parts = explode("/",$the_hire_date);
+					if (count($date_parts) == 3 && checkdate($date_parts[0],$date_parts[1],$date_parts[2])) {
+						$employee_hire_date = date('Y-m-d H:i:s', strtotime($the_hire_date)); // must be a date
+					} else {
+						$employee_hire_date = 'bad';
+					}
 				} else {
-					$employee_hire_date = 0;
+					$employee_hire_date = 'bad';
 				}
 			} else {
 				$employee_hire_date = null;
@@ -1017,7 +1021,8 @@ class App extends Controller
 					}
 				}
 			}
-			if ($employee_hire_date == 0) {
+			
+			if ($employee_hire_date == 'bad') {
 				$return['error'] = true;
 				$return['msg'] .= '<strong>Hire Date Invalid.</strong> Try again. (i.e. 1/1/2001)<br />';
 			}
