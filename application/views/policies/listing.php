@@ -12,7 +12,7 @@
 	$rowswithpremium = 0;
 	$avgpremium = 0;
 	$rowcnt = 1;
-  if (isset($policy_data)) {
+  if ($policy_data) {
 	foreach ($policy_data as $policy) {
 	
 			$cancellationvalue = 0;
