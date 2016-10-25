@@ -66,7 +66,9 @@ function openWindow(type,message,id,fname,lname,jobtitle) {
 	if (type == 'delete') {
 		// LOAD TRANSFER EMPLOYEES
 		updateEmployeeTransferList(id);
+		$(".modal-required-key").fadeIn();
 		$("#employee-invite").hide();
+		$("#myagency-save-employee").hide();
 		$("#myagency-undelete").hide();
 		$("#myagency-delete").fadeIn();
 		$("#myagency-delete #delid").val(id);
@@ -75,17 +77,28 @@ function openWindow(type,message,id,fname,lname,jobtitle) {
 	}
 	
 	if (type == 'undelete') {
+		$(".modal-required-key").fadeIn();
 		$("#employee-invite").hide();
+		$("#myagency-save-employee").hide();
 		$("#myagency-delete").hide();
 		$("#myagency-undelete").fadeIn();
 		$("#myagency-undelete #udelid").val(id);
 		$("#myagency-undelete").find("p").text('');
 		$("#myagency-undelete").find("p").html('<em>Employee Preview</em><br /><br /><div class="delete-table-container"><div class="delete-table-row"><div class="edit-col"><strong>Employee Name:</strong></div><div class="delete-col">'+fname+'&nbsp;'+lname+'</div></div><div class="delete-table-row"><div class="edit-col"><strong>Job Title:</strong></div><div class="delete-col">'+jobtitle+'</div></div></div>');
 	}
+	
+	if (type == 'update') {
+		$(".modal-required-key").hide();
+		$("#employee-invite").hide();
+		$("#myagency-delete").hide();
+		$("#myagency-undelete").hide();
+		$("#myagency-save-employee").fadeIn();
+	}
 
 }
 
 function closeWindow() {
+	$("#myagency-save-employee").fadeOut("fast");
 	$("#myagency-popup").fadeOut("fast");
 	$("#myagency-window").fadeOut("fast");
 	$(".myagency-message").fadeOut("fast");
@@ -619,6 +632,20 @@ $(document).ready(function() {
 	
 	$("#agency_employee_save").on("click", function(event) {
 		event.preventDefault();
+		// popup warning
+		openWindow('update','Update Employee');
+	});
+	
+	$("#employee_close_periods").on("click", function(event) {
+		event.preventDefault();
+		// don't save and jump to commissions if answer yes on update employee
+		window.location.href = "/app/commissions";
+	});
+	
+	$("#employee_update").on("click", function(event) {
+		event.preventDefault();
+		closeWindow();
+		// save employee updates
 		$('#agency_update_employee').submit();
 	});
 	

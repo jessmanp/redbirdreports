@@ -1518,6 +1518,9 @@ a.policy-edit-action:hover {
     background-color:#000000;
     border:2px solid #000000;
 }
+.current-period {
+	font-weight:bold;
+}
 .update-com-bonus {
 	position:absolute;
 	margin:50px 2px 0 245px;
@@ -2114,6 +2117,9 @@ a.policy-edit-action:hover {
 	display:none;
 }
 #myagency-undelete {
+	display:none;
+}
+#myagency-save-employee {
 	display:none;
 }
 #agency_employee_restore {

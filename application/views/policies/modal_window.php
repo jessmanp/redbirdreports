@@ -207,7 +207,7 @@
 			<div class="status-col">Policy Status</div>
 			<div class="policy-date-fields">
 			<div class="policy-state">
-			<input type="radio" id="status_pending" name="policy_status" value="1" checked />Pending<br /><br />
+			<input type="radio" id="status_pending" name="policy_status" value="1" checked />Unissued<br /><br />
 			<input type="radio" id="status_issued" name="policy_status" value="2" />Issued<br /><br />
 			<input type="radio" id="status_declined" name="policy_status" value="3" />Declined<br /><br />
 			<input type="radio" id="status_canceled" name="policy_status" value="4" />Canceled<br />

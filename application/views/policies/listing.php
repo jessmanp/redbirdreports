@@ -102,17 +102,21 @@
 
 		switch ($policy->status) {
     		case 1: 
-				$statusname = "Pending";
+				$statusname = '<span style="font-style:italic;">Unissued</span>';
 				break;
 			case 2: 
-				$statusname = "Issued";
+				$statusname = 'Issued';
 				break;
 			case 3: 
-				$statusname = "Declined";
+				$statusname = '<span style="color:#ff0000;">Declined</span>';
 				break;
 			case 4: 
-				$statusname = "Canceled";
+				$statusname = '<span style="color:#ff0000;font-style:italic;">Canceled</span>';
 				break;
+		}
+		
+		if ($policy->renewal == 1) {
+			$statusname = '<span style="color:#ff0000;font-weight:bold;">Pending</span>';
 		}
 	
 		if ($rowcnt & 1) {
@@ -141,7 +145,7 @@
 <?php } else { ?>
 				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-edit-action" data-info="<?php echo $policy->id."','".$policy->renewal."','".$policy->first."','".$policy->last."','".$policy->description."','".$policy->category_id."-".$policy->cat_pid."','".$policy->premium."','".$policy->business_type_id."','".$policy->user_id."','".$policy->source_type_id."','".$policy->length_type_id."','".$policy->notes."','".$policy->policy_number."','".$policy->date_written."','".$policy->date_issued."','".$policy->date_effective."','".$policy->date_canceled."','".$policy->zip_code."','".$policy->status; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button-edit" alt="Edit" /></a></div>
 <?php } ?>
-				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><?php echo $statusname; ?></div>
+				<div class="col" style="width:4%;"><?php echo $statusname; ?></div>
 				<div class="col" style="width:10%;<?php echo $addStyle; ?>"><?php echo $policy->first; ?></div>
 				<div class="col" style="width:10%;<?php echo $addStyle; ?>"><?php echo $policy->last; ?></div>
 				<div class="col" style="width:10%;"><?php if (strlen($policy->description) > 12) { echo '<a class="policy-desc-action" data-desc="'.$policy->description.'">'.substr($policy->description, 0, 12).'</a>&hellip;'; } else { echo $policy->description; } ?></div>

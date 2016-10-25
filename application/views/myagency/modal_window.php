@@ -41,6 +41,15 @@
 		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="employee_undelete" class="plain-btn">Yes</button>
 	</div>
 	
+	<div id="myagency-save-employee">
+		<div class="myagency-message"></div>
+			<strong>NOTICE:</strong> Commission changes will only effect open and future periods.<br /><br />
+			Do you want to close out any periods before you &quot;<strong>UPDATE</strong>&quot; this Employee?<br /><br />
+			Click &quot;<strong>No</strong>&quot; if you want to update this Employee.<br />
+<div class="myagency-edit-bar"></div>
+		<button id="employee_update" class="plain-btn">No</button>&nbsp;&nbsp;&nbsp;<button id="employee_close_periods" class="plain-btn">Yes</button>
+	</div>
+	
 	
 	<div id="employee-invite">
 		<div style="clear:both;"><br /></div>

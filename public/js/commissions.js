@@ -39,27 +39,57 @@ function numberOfDays(year,month) {
     return d.getDate();
 }
 
+// add commas to chart values
+function addCommas(nStr)
+{
+    nStr += '';
+    x = nStr.split('.');
+    x1 = x[0];
+    x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return '$' + x1 + x2;
+}
+
 // setup month array
 var months = new Array("January","February","March","April","May","June","July","August","September","October","November","December");
 
 function populateDates(period,year) {
 	var now = new Date();
+	var curryear = now.getFullYear();
 	var currmonth = now.getMonth()+1;
 	var currday = now.getDate();
 	$("#commission_period").empty();
 	if (period == 1) {
+		// check for current year and remove months not yet available
+		if (curryear == $("#commission_year").val()) {
+			var allmonths = currmonth;
+		} else {
+			var allmonths = months.length;
+		}
 		// fill dropdown with months based on year
-		for (var i=0; i < months.length;++i) {
+		for (var i=0; i < allmonths;++i) {
 			var month = (i+1);
 			var nod = numberOfDays(year,month);
 			$("#commission_period").append(
 				$("<option></option>").val((i+1)+":1-"+nod).html(months[i])
 			);
 		}
-		$("#commission_period option[value="+currmonth+"]").prop("selected", true);
+		var preselmonth = currmonth+":1-"+numberOfDays(year,currmonth);
+		if ($("#period1").prop("checked") && curryear == $("#commission_year").val()) {
+			$("#commission_period option[value='"+preselmonth+"']").prop("selected", true);
+		}
 	} else if (period == 2) {
+		// check for current year and remove months not yet available
+		if (curryear == $("#commission_year").val()) {
+			var allmonths = currmonth;
+		} else {
+			var allmonths = months.length;
+		}
 		// fill dropdown with bi-months based on year
-		for (var i=0; i < months.length;++i) {
+		for (var i=0; i < allmonths;++i) {
 			// calculate days and split in 2
 			var month = (i+1);
 			var nod = numberOfDays(year,month);
@@ -74,20 +104,26 @@ function populateDates(period,year) {
 					$("#commission_period").append(
 						$("<option></option>").val((i+1)+":1-"+days[j]).html(months[i].substring(0,3)+" 1-"+days[j])
 					);
+					if (currmonth == month && currday <= days[j]) {
+						var selday = currmonth+":1-"+days[j];
+					}
 				} else {
-					$("#commission_period").append(
-						$("<option></option>").val((i+1)+":"+days[j]+"-"+nod).html(months[i].substring(0,3)+" "+days[j]+"-"+nod)
-					);	
-				}
-				if (currday <= days[j]) {
-					var selday = "1-"+days[j];
-				} else if (currday >= days[j]) {
-					selday = days[j]+"-"+nod;
+					if (curryear == year && currmonth == month && currday <= days[j]) {
+						// do not add second half of month to dropdown
+					} else {
+						$("#commission_period").append(
+							$("<option></option>").val((i+1)+":"+days[j]+"-"+nod).html(months[i].substring(0,3)+" "+days[j]+"-"+nod)
+						);
+					}
+					if (currmonth == month && currday >= days[j]) {
+						var selday = currmonth+":"+days[j]+"-"+nod;
+					}
 				}
 			}
 		}
-		var preselday = currmonth+":"+selday;
-		$("#commission_period option[value='"+preselday+"']").prop("selected", true);	
+		if ($("#period1").prop("checked") && curryear == $("#commission_year").val()) {
+			$("#commission_period option[value='"+selday+"']").prop("selected", true);
+		}
 	}
 }
 
@@ -121,8 +157,8 @@ $(document).ready(function() {
 	$("#period1").on("click", function(event) {
 		var now = new Date();
 		var curryear = now.getFullYear();
-		populateDates($("#the_frequency").val(),curryear);
 		$("#commission_year option[value='"+curryear+"']").prop("selected", true);
+		populateDates($("#the_frequency").val(),curryear);
 		$("#commission_year").prop("disabled", true);
 		$("#commission_period").prop("disabled", true);
 	});
@@ -207,7 +243,67 @@ $(document).ready(function() {
 						} else {
 							// populate form fields with json data
 							$.each(data, function(key, value) {
-								// fill out fields with data
+								// populate special pay
+								$("#bonus_total").text(value.user_bonus.toFixed(2));
+								$("#other_total").text(value.user_other.toFixed(2));
+								// populate new policy counts
+								$("#auto_count_new").text(value.user_new_policy_count_auto);
+								$("#fire_count_new").text(value.user_new_policy_count_fire);
+								$("#life_count_new").text(value.user_new_policy_count_life);
+								$("#health_count_new").text(value.user_new_policy_count_health);
+								$("#bank_count_new").text(value.user_new_policy_count_bank);
+								var new_policy_count_total = (value.user_new_policy_count_auto+value.user_new_policy_count_fire+value.user_new_policy_count_life+value.user_new_policy_count_health+value.user_new_policy_count_bank);
+								$("#new_policy_count_total").text(new_policy_count_total);
+								// populate new policy premiums
+								$("#auto_premium_new").text(value.user_new_policy_premium_auto.toFixed(2));
+								$("#fire_premium_new").text(value.user_new_policy_premium_fire.toFixed(2));
+								$("#life_premium_new").text(value.user_new_policy_premium_life.toFixed(2));
+								$("#health_premium_new").text(value.user_new_policy_premium_health.toFixed(2));
+								$("#bank_premium_new").text(value.user_new_policy_premium_bank.toFixed(2));
+								var new_policy_premium_total = (value.user_new_policy_premium_auto+value.user_new_policy_premium_fire+value.user_new_policy_premium_life+value.user_new_policy_premium_health+value.user_new_policy_premium_bank);
+								$("#new_policy_premium_total").text(new_policy_premium_total.toFixed(2));
+								// populate new policy commissions
+								$("#auto_commission_new").text(value.user_new_policy_commission_auto.toFixed(2));
+								$("#fire_commission_new").text(value.user_new_policy_commission_fire.toFixed(2));
+								$("#life_commission_new").text(value.user_new_policy_commission_life.toFixed(2));
+								$("#health_commission_new").text(value.user_new_policy_commission_health.toFixed(2));
+								$("#bank_commission_new").text(value.user_new_policy_commission_bank.toFixed(2));
+								var new_policy_commission_total = (value.user_new_policy_commission_auto+value.user_new_policy_commission_fire+value.user_new_policy_commission_life+value.user_new_policy_commission_health+value.user_new_policy_commission_bank);
+								$("#new_policy_commission_total").text(new_policy_commission_total.toFixed(2));
+								// populate renewal counts
+								$("#auto_count_renew").text(value.user_renewal_policy_count_auto);
+								$("#fire_count_renew").text(value.user_renewal_policy_count_fire);
+								var renew_policy_count_total = (value.user_renewal_policy_count_auto+value.user_renewal_policy_count_fire);
+								$("#renew_policy_count_total").text(renew_policy_count_total);
+								// populate renewal premiums
+								$("#auto_premium_renew").text(value.user_renewal_policy_premium_auto.toFixed(2));
+								$("#fire_premium_renew").text(value.user_renewal_policy_premium_fire.toFixed(2));
+								var renew_policy_premium_total = (value.user_renewal_policy_premium_auto+value.user_renewal_policy_premium_fire);
+								$("#renew_policy_premium_total").text(renew_policy_premium_total.toFixed(2));
+								// populate renewal commissions
+								$("#auto_commission_renew").text(value.user_renewal_policy_commission_auto.toFixed(2));
+								$("#fire_commission_renew").text(value.user_renewal_policy_commission_fire.toFixed(2));
+								var renew_policy_commission_total = (value.user_renewal_policy_commission_auto+value.user_renewal_policy_commission_fire);
+								$("#renew_policy_commission_total").text(renew_policy_commission_total.toFixed(2));
+								// populate commissions earned data
+								if (!value.user_new_policies){
+									$("#new_policies_total").text('0.00');
+								} else {
+									$("#new_policies_total").text(new_policy_commission_total.toFixed(2));
+								}
+								if (!value.user_renewals){
+									$("#renewals_total").text('0.00');
+								} else {
+									$("#renewals_total").text(renew_policy_commission_total.toFixed(2));
+								}
+								if (!value.user_chargebacks) {
+									$("#chargebacks_total").text('0.00');
+								} else {
+									$("#chargebacks_total").text(value.user_chargebacks.toFixed(2));
+								}
+								var totalcom = ((new_policy_commission_total+renew_policy_commission_total+value.user_bonus+value.user_other)-value.user_chargebacks);
+								$("#com_total").text(totalcom.toFixed(2));
+								// populate employee info fields
 								$("#bonus_employee_id").val(user_id);
 								$("#other_employee_id").val(user_id);
 								$("#emp_default_label").text('');
@@ -226,16 +322,43 @@ $(document).ready(function() {
 								} else {
 									$("#chired").text('');
 								}								
-								$("#commissions_bonus").val(value.user_bonus);
+								$("#commissions_bonus").val(value.user_bonus.toFixed(2));
 								$("#com_bonus_description").val(value.user_bonus_desc);
-								$("#commissions_other").val(value.user_other);
+								$("#commissions_other").val(value.user_other.toFixed(2));
 								$("#com_other_description").val(value.user_other_desc);
-								$("#update-com-bonus").removeClass();
-								$("#update-com-bonus").addClass("update-com-bonus");
-								$("#update-com-bonus").prop("disabled", false);
-								$("#update-com-other").removeClass();
-								$("#update-com-other").addClass("update-com-other");
-								$("#update-com-other").prop("disabled", false);
+								var totalspecial = (value.user_bonus+value.user_other);
+								$("#special_total").text(totalspecial.toFixed(2));
+								// update report period title	
+								$("#com_range").text($("#commission_period option:selected").text());
+								$("#com_year").text($("#commission_year").val());
+								if ($("#period2").prop("checked")) {
+									$("#com_period").text("Previous");
+									// DISABLE BONUS BUTTONS
+									$("#update-com-bonus").switchClass("update-com-bonus","update-com-bonus-disabled");
+									$("#update-com-bonus").prop("disabled", true);
+									$("#update-com-other").switchClass("update-com-other","update-com-other-disabled");
+									$("#update-com-other").prop("disabled", true);
+									// DISABLE BONUS FIELDS
+									$("#commissions_bonus").prop("disabled", true);
+									$("#com_bonus_description").prop("disabled", true);
+									$("#commissions_other").prop("disabled", true);
+									$("#com_other_description").prop("disabled", true);
+								}
+								if ($("#period1").prop("checked")) {
+									$("#com_period").text("Current");
+									// ENABLE BONUS BUTTONS
+									$("#update-com-bonus").removeClass();
+									$("#update-com-bonus").addClass("update-com-bonus");
+									$("#update-com-bonus").prop("disabled", false);
+									$("#update-com-other").removeClass();
+									$("#update-com-other").addClass("update-com-other");
+									$("#update-com-other").prop("disabled", false);
+									// ENABLE BONUS FIELDS
+									$("#commissions_bonus").prop("disabled", false);
+									$("#com_bonus_description").prop("disabled", false);
+									$("#commissions_other").prop("disabled", false);
+									$("#com_other_description").prop("disabled", false);
+								}
 							});
 						}	
 					},
@@ -244,11 +367,16 @@ $(document).ready(function() {
 					}
 			});
 		} else {
-			// DISABLE BUTTONS
+			// DISABLE BONUS BUTTONS
 			$("#update-com-bonus").switchClass("update-com-bonus","update-com-bonus-disabled");
 			$("#update-com-bonus").prop("disabled", true);
 			$("#update-com-other").switchClass("update-com-other","update-com-other-disabled");
 			$("#update-com-other").prop("disabled", true);
+			// DISABLE BONUS FIELDS
+			$("#commissions_bonus").prop("disabled", true);
+			$("#com_bonus_description").prop("disabled", true);
+			$("#commissions_other").prop("disabled", true);
+			$("#com_other_description").prop("disabled", true);
 			var empty_val = 0;
 			var clifetime_default = '$'+empty_val.toFixed(2);
 			var clastyear_default = '$'+empty_val.toFixed(2);
@@ -359,9 +487,8 @@ $(document).ready(function() {
 	// do submit action when search button is clicked
 	$("#dosubmit2").on("click", function(event) {
 		event.preventDefault();
-		alert("do period search");
+		loadUserData($("#commission_employees option:selected").val());
 	});
-	
 	
 	// LOAD EMPLOYEES
 	updateEmployeeList();
@@ -369,10 +496,33 @@ $(document).ready(function() {
 	// LOAD INFO TABLE
 	loadUserData(0);
 	
+	// POPULATE SEARCH DROP DOWNS
 	loadPeriodDates($("#the_frequency").val());
 	
 	$("#com_range").text($("#commission_period option:selected").text());
 	$("#com_year").text($("#commission_year").val());
+	
+	// POPULATE CHART
+	var data = {
+		labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan"],
+		datasets: [
+			{
+				label: "Monthly",
+				fillColor: "#ba0000",
+				data: [4501.00, 4607.00, 4789.00, 4728.00, 5021.00, 4887.00, 5255.00, 5487.00, 5301.00, 5699.00, 5781.00, 5998.00, 6330.00]
+			}
+		]
+	};
+ 
+    var ctx = $("#compensationChart").get(0).getContext("2d");
+    var compensationChart = new Chart(ctx).Bar(data, {
+    	barShowStroke : true,
+    	animation: false,
+    	scaleLabel : "<%=addCommas(value)%>",
+    	tooltipTemplate : function (label) {
+			return label.label + ': ' + '$' + label.value.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
+	});
 	
 
 });

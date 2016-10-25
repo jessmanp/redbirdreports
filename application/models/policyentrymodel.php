@@ -327,22 +327,22 @@ class PolicyEntryModel
     	
     	if (isset($effectiveDate)) {
     	
-    		// update business_type_id = 2 (Renewal), then update the premium
+    		// update business_type_id = 5 (Renewal), then update the premium
 			$sql = "UPDATE policies SET premium = :premium, business_type_id = :business_type_id, date_effective = :date_effective WHERE id = :id";
 			$query = $this->db->prepare($sql);
 			$query->bindValue(':id', $id, PDO::PARAM_INT);
-			$query->bindValue(':business_type_id', 2, PDO::PARAM_INT);
+			$query->bindValue(':business_type_id', 5, PDO::PARAM_INT);
 			$query->bindValue(':premium', $prem, PDO::PARAM_STR);
 			$query->bindValue(':date_effective', $effectiveDate, PDO::PARAM_STR);
 			$query->execute();
 			
     	} else {
     	
-			// update business_type_id = 2 (Renewal), then update the premium
+			// update business_type_id = 5 (Renewal), then update the premium
 			$sql = "UPDATE policies SET premium = :premium, business_type_id = :business_type_id WHERE id = :id";
 			$query = $this->db->prepare($sql);
 			$query->bindValue(':id', $id, PDO::PARAM_INT);
-			$query->bindValue(':business_type_id', 2, PDO::PARAM_INT);
+			$query->bindValue(':business_type_id', 5, PDO::PARAM_INT);
 			$query->bindValue(':premium', $prem, PDO::PARAM_STR);
 			$query->execute();
         
