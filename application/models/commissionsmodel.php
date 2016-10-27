@@ -394,6 +394,20 @@ class CommissionsModel
 		// CALCULATE current year to date total ////////////////////////////////////////////////////////////////////////
 		$current_ytd_commission_total = 0;
 		
+		// setup variable to hold each months total
+		$current_ytd_commission_jan = 0;
+		$current_ytd_commission_feb = 0;
+		$current_ytd_commission_mar = 0;
+		$current_ytd_commission_apr = 0;
+		$current_ytd_commission_may = 0;
+		$current_ytd_commission_jun = 0;
+		$current_ytd_commission_jul = 0;
+		$current_ytd_commission_aug = 0;
+		$current_ytd_commission_sep = 0;
+		$current_ytd_commission_oct = 0;
+		$current_ytd_commission_nov = 0;
+		$current_ytd_commission_dec = 0;
+		
 		foreach ($current_ytd_policies_query as $new_policy_info) {
 		
 			if  ($new_policy_info->id == 1) {
@@ -451,9 +465,715 @@ class CommissionsModel
 				$current_ytd_commission_total = ($current_ytd_commission_total+$new_policy_info->premium);
 			}
 			
+			// get policy month
+			$month = explode("-",$new_policy_info->date_written);
+			$month = $month[1];
+			
+			// add up totals in the trailing months
+			if ($month == "01") {
+				// calculate trailing month
+					if  ($new_policy_info->id == 1) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate auto commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_jan = ($current_ytd_commission_jan+(($auto_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_jan = ($current_ytd_commission_jan+(($auto_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_jan = ($current_ytd_commission_jan+(($auto_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_jan = ($current_ytd_commission_jan+(($auto_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate auto renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_jan = ($current_ytd_commission_jan+(($auto_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 9) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate fire commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_jan = ($current_ytd_commission_jan+(($fire_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_jan = ($current_ytd_commission_jan+(($fire_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_jan = ($current_ytd_commission_jan+(($fire_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_jan = ($current_ytd_commission_jan+(($fire_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate fire renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_jan = ($current_ytd_commission_jan+(($fire_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 26) {
+						// calculate life commission
+						$current_ytd_commission_jan = ($current_ytd_commission_jan+(($life_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_jan = ($current_ytd_commission_jan+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 40) {
+						// calculate health commission
+						$current_ytd_commission_jan = ($current_ytd_commission_jan+(($health_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_jan = ($current_ytd_commission_jan+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
+						// calculate bank commission
+						$current_ytd_commission_jan = ($current_ytd_commission_jan+$new_policy_info->premium);
+						$current_ytd_commission_jan = ($current_ytd_commission_jan+$new_policy_info->premium);
+						$current_ytd_commission_jan = ($current_ytd_commission_jan+$new_policy_info->premium);
+					}
+				// *end* calculate trailing month
+			} else if ($month == "02") {
+				// calculate trailing month
+					if  ($new_policy_info->id == 1) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate auto commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_feb = ($current_ytd_commission_feb+(($auto_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_feb = ($current_ytd_commission_feb+(($auto_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_feb = ($current_ytd_commission_feb+(($auto_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_feb = ($current_ytd_commission_feb+(($auto_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate auto renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_feb = ($current_ytd_commission_feb+(($auto_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 9) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate fire commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_feb = ($current_ytd_commission_feb+(($fire_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_feb = ($current_ytd_commission_feb+(($fire_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_feb = ($current_ytd_commission_feb+(($fire_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_feb = ($current_ytd_commission_feb+(($fire_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate fire renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_feb = ($current_ytd_commission_feb+(($fire_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 26) {
+						// calculate life commission
+						$current_ytd_commission_feb = ($current_ytd_commission_feb+(($life_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_feb = ($current_ytd_commission_feb+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 40) {
+						// calculate health commission
+						$current_ytd_commission_feb = ($current_ytd_commission_feb+(($health_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_feb = ($current_ytd_commission_feb+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
+						// calculate bank commission
+						$current_ytd_commission_feb = ($current_ytd_commission_feb+$new_policy_info->premium);
+						$current_ytd_commission_feb = ($current_ytd_commission_feb+$new_policy_info->premium);
+						$current_ytd_commission_feb = ($current_ytd_commission_feb+$new_policy_info->premium);
+					}
+				// *end* calculate trailing month
+			} else if ($month == "03") {
+				// calculate trailing month
+					if  ($new_policy_info->id == 1) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate auto commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_mar = ($current_ytd_commission_mar+(($auto_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_mar = ($current_ytd_commission_mar+(($auto_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_mar = ($current_ytd_commission_mar+(($auto_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_mar = ($current_ytd_commission_mar+(($auto_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate auto renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_mar = ($current_ytd_commission_mar+(($auto_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 9) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate fire commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_mar = ($current_ytd_commission_mar+(($fire_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_mar = ($current_ytd_commission_mar+(($fire_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_mar = ($current_ytd_commission_mar+(($fire_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_mar = ($current_ytd_commission_mar+(($fire_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate fire renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_mar = ($current_ytd_commission_mar+(($fire_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 26) {
+						// calculate life commission
+						$current_ytd_commission_mar = ($current_ytd_commission_mar+(($life_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_mar = ($current_ytd_commission_mar+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 40) {
+						// calculate health commission
+						$current_ytd_commission_mar = ($current_ytd_commission_mar+(($health_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_mar = ($current_ytd_commission_mar+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
+						// calculate bank commission
+						$current_ytd_commission_mar = ($current_ytd_commission_mar+$new_policy_info->premium);
+						$current_ytd_commission_mar = ($current_ytd_commission_mar+$new_policy_info->premium);
+						$current_ytd_commission_mar = ($current_ytd_commission_mar+$new_policy_info->premium);
+					}
+				// *end* calculate trailing month
+			} else if ($month == "04") {
+				// calculate trailing month
+					if  ($new_policy_info->id == 1) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate auto commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_apr = ($current_ytd_commission_apr+(($auto_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_apr = ($current_ytd_commission_apr+(($auto_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_apr = ($current_ytd_commission_apr+(($auto_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_apr = ($current_ytd_commission_apr+(($auto_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate auto renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_apr = ($current_ytd_commission_apr+(($auto_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 9) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate fire commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_apr = ($current_ytd_commission_apr+(($fire_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_apr = ($current_ytd_commission_apr+(($fire_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_apr = ($current_ytd_commission_apr+(($fire_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_apr = ($current_ytd_commission_apr+(($fire_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate fire renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_apr = ($current_ytd_commission_apr+(($fire_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 26) {
+						// calculate life commission
+						$current_ytd_commission_apr = ($current_ytd_commission_apr+(($life_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_apr = ($current_ytd_commission_apr+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 40) {
+						// calculate health commission
+						$current_ytd_commission_apr = ($current_ytd_commission_apr+(($health_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_apr = ($current_ytd_commission_apr+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
+						// calculate bank commission
+						$current_ytd_commission_apr = ($current_ytd_commission_apr+$new_policy_info->premium);
+						$current_ytd_commission_apr = ($current_ytd_commission_apr+$new_policy_info->premium);
+						$current_ytd_commission_apr = ($current_ytd_commission_apr+$new_policy_info->premium);
+					}
+				// *end* calculate trailing month
+			} else if ($month == "05") {
+				// calculate trailing month
+					if  ($new_policy_info->id == 1) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate auto commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_may = ($current_ytd_commission_may+(($auto_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_may = ($current_ytd_commission_may+(($auto_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_may = ($current_ytd_commission_may+(($auto_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_may = ($current_ytd_commission_may+(($auto_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate auto renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_may = ($current_ytd_commission_may+(($auto_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 9) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate fire commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_may = ($current_ytd_commission_may+(($fire_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_may = ($current_ytd_commission_may+(($fire_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_may = ($current_ytd_commission_may+(($fire_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_may = ($current_ytd_commission_may+(($fire_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate fire renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_may = ($current_ytd_commission_may+(($fire_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 26) {
+						// calculate life commission
+						$current_ytd_commission_may = ($current_ytd_commission_may+(($life_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_may = ($current_ytd_commission_may+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 40) {
+						// calculate health commission
+						$current_ytd_commission_may = ($current_ytd_commission_may+(($health_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_may = ($current_ytd_commission_may+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
+						// calculate bank commission
+						$current_ytd_commission_may = ($current_ytd_commission_may+$new_policy_info->premium);
+						$current_ytd_commission_may = ($current_ytd_commission_may+$new_policy_info->premium);
+						$current_ytd_commission_may = ($current_ytd_commission_may+$new_policy_info->premium);
+					}
+				// *end* calculate trailing month
+			} else if ($month == "06") {
+				// calculate trailing month
+					if  ($new_policy_info->id == 1) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate auto commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_jun = ($current_ytd_commission_jun+(($auto_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_jun = ($current_ytd_commission_jun+(($auto_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_jun = ($current_ytd_commission_jun+(($auto_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_jun = ($current_ytd_commission_jun+(($auto_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate auto renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_jun = ($current_ytd_commission_jun+(($auto_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 9) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate fire commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_jun = ($current_ytd_commission_jun+(($fire_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_jun = ($current_ytd_commission_jun+(($fire_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_jun = ($current_ytd_commission_jun+(($fire_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_jun = ($current_ytd_commission_jun+(($fire_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate fire renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_jun = ($current_ytd_commission_jun+(($fire_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 26) {
+						// calculate life commission
+						$current_ytd_commission_jun = ($current_ytd_commission_jun+(($life_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_jun = ($current_ytd_commission_jun+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 40) {
+						// calculate health commission
+						$current_ytd_commission_jun = ($current_ytd_commission_jun+(($health_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_jun = ($current_ytd_commission_jun+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
+						// calculate bank commission
+						$current_ytd_commission_jun = ($current_ytd_commission_jun+$new_policy_info->premium);
+						$current_ytd_commission_jun = ($current_ytd_commission_jun+$new_policy_info->premium);
+						$current_ytd_commission_jun = ($current_ytd_commission_jun+$new_policy_info->premium);
+					}
+				// *end* calculate trailing month
+			} else if ($month == "07") {
+				// calculate trailing month
+					if  ($new_policy_info->id == 1) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate auto commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_jul = ($current_ytd_commission_jul+(($auto_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_jul = ($current_ytd_commission_jul+(($auto_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_jul = ($current_ytd_commission_jul+(($auto_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_jul = ($current_ytd_commission_jul+(($auto_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate auto renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_jul = ($current_ytd_commission_jul+(($auto_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 9) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate fire commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_jul = ($current_ytd_commission_jul+(($fire_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_jul = ($current_ytd_commission_jul+(($fire_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_jul = ($current_ytd_commission_jul+(($fire_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_jul = ($current_ytd_commission_jul+(($fire_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate fire renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_jul = ($current_ytd_commission_jul+(($fire_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 26) {
+						// calculate life commission
+						$current_ytd_commission_jul = ($current_ytd_commission_jul+(($life_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_jul = ($current_ytd_commission_jul+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 40) {
+						// calculate health commission
+						$current_ytd_commission_jul = ($current_ytd_commission_jul+(($health_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_jul = ($current_ytd_commission_jul+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
+						// calculate bank commission
+						$current_ytd_commission_jul = ($current_ytd_commission_jul+$new_policy_info->premium);
+						$current_ytd_commission_jul = ($current_ytd_commission_jul+$new_policy_info->premium);
+						$current_ytd_commission_jul = ($current_ytd_commission_jul+$new_policy_info->premium);
+					}
+				// *end* calculate trailing month
+			} else if ($month == "08") {
+				// calculate trailing month
+					if  ($new_policy_info->id == 1) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate auto commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_aug = ($current_ytd_commission_aug+(($auto_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_aug = ($current_ytd_commission_aug+(($auto_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_aug = ($current_ytd_commission_aug+(($auto_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_aug = ($current_ytd_commission_aug+(($auto_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate auto renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_aug = ($current_ytd_commission_aug+(($auto_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 9) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate fire commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_aug = ($current_ytd_commission_aug+(($fire_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_aug = ($current_ytd_commission_aug+(($fire_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_aug = ($current_ytd_commission_aug+(($fire_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_aug = ($current_ytd_commission_aug+(($fire_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate fire renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_aug = ($current_ytd_commission_aug+(($fire_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 26) {
+						// calculate life commission
+						$current_ytd_commission_aug = ($current_ytd_commission_aug+(($life_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_aug = ($current_ytd_commission_aug+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 40) {
+						// calculate health commission
+						$current_ytd_commission_aug = ($current_ytd_commission_aug+(($health_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_aug = ($current_ytd_commission_aug+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
+						// calculate bank commission
+						$current_ytd_commission_aug = ($current_ytd_commission_aug+$new_policy_info->premium);
+						$current_ytd_commission_aug = ($current_ytd_commission_aug+$new_policy_info->premium);
+						$current_ytd_commission_aug = ($current_ytd_commission_aug+$new_policy_info->premium);
+					}
+				// *end* calculate trailing month
+			} else if ($month == "09") {
+				// calculate trailing month
+					if  ($new_policy_info->id == 1) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate auto commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_sep = ($current_ytd_commission_sep+(($auto_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_sep = ($current_ytd_commission_sep+(($auto_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_sep = ($current_ytd_commission_sep+(($auto_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_sep = ($current_ytd_commission_sep+(($auto_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate auto renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_sep = ($current_ytd_commission_sep+(($auto_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 9) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate fire commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_sep = ($current_ytd_commission_sep+(($fire_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_sep = ($current_ytd_commission_sep+(($fire_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_sep = ($current_ytd_commission_sep+(($fire_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_sep = ($current_ytd_commission_sep+(($fire_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate fire renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_sep = ($current_ytd_commission_sep+(($fire_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 26) {
+						// calculate life commission
+						$current_ytd_commission_sep = ($current_ytd_commission_sep+(($life_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_sep = ($current_ytd_commission_sep+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 40) {
+						// calculate health commission
+						$current_ytd_commission_sep = ($current_ytd_commission_sep+(($health_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_sep = ($current_ytd_commission_sep+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
+						// calculate bank commission
+						$current_ytd_commission_sep = ($current_ytd_commission_sep+$new_policy_info->premium);
+						$current_ytd_commission_sep = ($current_ytd_commission_sep+$new_policy_info->premium);
+						$current_ytd_commission_sep = ($current_ytd_commission_sep+$new_policy_info->premium);
+					}
+				// *end* calculate trailing month
+			} else if ($month == "10") {
+				// calculate trailing month
+					if  ($new_policy_info->id == 1) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate auto commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_oct = ($current_ytd_commission_oct+(($auto_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_oct = ($current_ytd_commission_oct+(($auto_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_oct = ($current_ytd_commission_oct+(($auto_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_oct = ($current_ytd_commission_oct+(($auto_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate auto renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_oct = ($current_ytd_commission_oct+(($auto_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 9) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate fire commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_oct = ($current_ytd_commission_oct+(($fire_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_oct = ($current_ytd_commission_oct+(($fire_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_oct = ($current_ytd_commission_oct+(($fire_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_oct = ($current_ytd_commission_oct+(($fire_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate fire renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_oct = ($current_ytd_commission_oct+(($fire_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 26) {
+						// calculate life commission
+						$current_ytd_commission_oct = ($current_ytd_commission_oct+(($life_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_oct = ($current_ytd_commission_oct+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 40) {
+						// calculate health commission
+						$current_ytd_commission_oct = ($current_ytd_commission_oct+(($health_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_oct = ($current_ytd_commission_oct+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
+						// calculate bank commission
+						$current_ytd_commission_oct = ($current_ytd_commission_oct+$new_policy_info->premium);
+						$current_ytd_commission_oct = ($current_ytd_commission_oct+$new_policy_info->premium);
+						$current_ytd_commission_oct = ($current_ytd_commission_oct+$new_policy_info->premium);
+					}
+				// *end* calculate trailing month
+			} else if ($month == "11") {
+				// calculate trailing month
+					if  ($new_policy_info->id == 1) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate auto commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_nov = ($current_ytd_commission_nov+(($auto_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_nov = ($current_ytd_commission_nov+(($auto_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_nov = ($current_ytd_commission_nov+(($auto_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_nov = ($current_ytd_commission_nov+(($auto_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate auto renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_nov = ($current_ytd_commission_nov+(($auto_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 9) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate fire commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_nov = ($current_ytd_commission_nov+(($fire_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_nov = ($current_ytd_commission_nov+(($fire_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_nov = ($current_ytd_commission_nov+(($fire_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_nov = ($current_ytd_commission_nov+(($fire_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate fire renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_nov = ($current_ytd_commission_nov+(($fire_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 26) {
+						// calculate life commission
+						$current_ytd_commission_nov = ($current_ytd_commission_nov+(($life_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_nov = ($current_ytd_commission_nov+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 40) {
+						// calculate health commission
+						$current_ytd_commission_nov = ($current_ytd_commission_nov+(($health_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_nov = ($current_ytd_commission_nov+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
+						// calculate bank commission
+						$current_ytd_commission_nov = ($current_ytd_commission_nov+$new_policy_info->premium);
+						$current_ytd_commission_nov = ($current_ytd_commission_nov+$new_policy_info->premium);
+						$current_ytd_commission_nov = ($current_ytd_commission_nov+$new_policy_info->premium);
+					}
+				// *end* calculate trailing month
+			} else if ($month == "12") {
+				// calculate trailing month
+					if  ($new_policy_info->id == 1) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate auto commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_dec = ($current_ytd_commission_dec+(($auto_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_dec = ($current_ytd_commission_dec+(($auto_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_dec = ($current_ytd_commission_dec+(($auto_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_dec = ($current_ytd_commission_dec+(($auto_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate auto renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_dec = ($current_ytd_commission_dec+(($auto_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 9) {
+						if  ($new_policy_info->renewal == 0) {
+							// calculate fire commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 1) {
+								$current_ytd_commission_dec = ($current_ytd_commission_dec+(($fire_policy_compensation_new/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 2) {
+								$current_ytd_commission_dec = ($current_ytd_commission_dec+(($fire_policy_compensation_add/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 3) {
+								$current_ytd_commission_dec = ($current_ytd_commission_dec+(($fire_policy_compensation_reinstate/100)*$new_policy_info->premium));
+							} else if ($new_policy_info->business_type_id == 4) {
+								$current_ytd_commission_dec = ($current_ytd_commission_dec+(($fire_policy_compensation_transfer/100)*$new_policy_info->premium));
+							}
+						} else if ($new_policy_info->renewal == 1) {
+							// calculate fire renewal commissions based on compensation plans
+							if ($new_policy_info->business_type_id == 5) {
+								$current_ytd_commission_dec = ($current_ytd_commission_dec+(($fire_policy_compensation_renew/100)*$new_policy_info->premium));
+							}
+						}
+					}
+					if  ($new_policy_info->id == 26) {
+						// calculate life commission
+						$current_ytd_commission_dec = ($current_ytd_commission_dec+(($life_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_dec = ($current_ytd_commission_dec+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 40) {
+						// calculate health commission
+						$current_ytd_commission_dec = ($current_ytd_commission_dec+(($health_policy_compensation_new/100)*$new_policy_info->premium));
+						$current_ytd_commission_dec = ($current_ytd_commission_dec+$new_policy_info->premium);
+					}
+					if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
+						// calculate bank commission
+						$current_ytd_commission_dec = ($current_ytd_commission_dec+$new_policy_info->premium);
+						$current_ytd_commission_dec = ($current_ytd_commission_dec+$new_policy_info->premium);
+						$current_ytd_commission_dec = ($current_ytd_commission_dec+$new_policy_info->premium);
+					}
+				// *end* calculate trailing month
+			}
+			
 		}
 		
 		$commission_summary[0]['user_new_current_ytd_commission_total'] = $current_ytd_commission_total;
+		
+		$commission_summary[0]['user_new_current_ytd_commission_trailing'] = array(
+			$current_ytd_commission_jan,
+			$current_ytd_commission_feb,
+			$current_ytd_commission_mar,
+			$current_ytd_commission_apr,
+			$current_ytd_commission_may,
+			$current_ytd_commission_jun,
+			$current_ytd_commission_jul,
+			$current_ytd_commission_aug,
+			$current_ytd_commission_sep,
+			$current_ytd_commission_oct,
+			$current_ytd_commission_nov,
+			$current_ytd_commission_dec
+		);
 		
 		// CALCULATE last month total ////////////////////////////////////////////////////////////////////////
 		$lastmonth_commission_total = 0;

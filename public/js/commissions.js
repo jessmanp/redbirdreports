@@ -354,7 +354,13 @@ $(document).ready(function() {
 								$("#commissions_other").prop("disabled", false);
 								$("#com_other_description").prop("disabled", false);
 								// POPULATE CHART
-								popChart(abrvmonths,4501.00,4607.00,4789.00,4728.00,5021.00,4887.00,5255.00,5487.00,5301.00,5699.00,5781.00,5998.00,value.user_new_lastmonth_commission_total.toFixed(2));
+								var trailing_totals = value.user_new_current_ytd_commission_trailing;
+								var currtime = new Date();
+								var thismonth = currtime.getMonth();
+								var currmo = trailing_totals[thismonth];
+								trailing_totals.push.apply(trailing_totals,trailing_totals.splice(0,thismonth));
+								trailing_totals.push(value.user_new_lastmonth_commission_total);
+								popChart(abrvmonths,trailing_totals);
 							});
 						}	
 					},
@@ -542,7 +548,7 @@ $(document).ready(function() {
 	$("#com_range").text($("#commission_period option:selected").text());
 	$("#com_year").text($("#commission_year").val());
 	
-	function popChart(theMonths,total13,total12,total11,total10,total9,total8,total7,total6,total5,total4,total3,total2,total1) {
+	function popChart(theMonths,trailing_totals) {
 
 		// CLEAR CANVAS
 		$('#compensationChart').replaceWith('<canvas id="compensationChart" width="620" height="160" style="margin:10px 0 0 30px;width:620px; height:160px;"></canvas>');
@@ -554,7 +560,7 @@ $(document).ready(function() {
 				{
 					label: "Monthly",
 					fillColor: "#ba0000",
-					data: [total13,total12,total11,total10,total9,total8,total7,total6,total5,total4,total3,total2,total1]
+					data: trailing_totals
 				}
 			]
 		};
@@ -572,13 +578,17 @@ $(document).ready(function() {
 		
 	}
 	
+	// set order of trailing months
 	var currtime = new Date();
 	var thismonth = currtime.getMonth();
 	var currmo = abrvmonths[thismonth];
 	abrvmonths.push.apply(abrvmonths,abrvmonths.splice(0,thismonth));
-	abrvmonths.push(currmo);
+	abrvmonths.push(currmo); 
 
-	popChart(abrvmonths,0,0,0,0,0,0,0,0,0,0,0,0,0);
+	// set defaults for chart
+	var trailing_totals = new Array(0,0,0,0,0,0,0,0,0,0,0,0,0);
+	
+	popChart(abrvmonths,trailing_totals);
 	
 
 });
