@@ -55,6 +55,8 @@ function addCommas(nStr)
 
 // setup month array
 var months = new Array("January","February","March","April","May","June","July","August","September","October","November","December");
+// setup month abbreviated array
+var abrvmonths = new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
 
 function populateDates(period,year) {
 	var now = new Date();
@@ -351,6 +353,8 @@ $(document).ready(function() {
 								$("#com_bonus_description").prop("disabled", false);
 								$("#commissions_other").prop("disabled", false);
 								$("#com_other_description").prop("disabled", false);
+								// POPULATE CHART
+								popChart(abrvmonths,4501.00,4607.00,4789.00,4728.00,5021.00,4887.00,5255.00,5487.00,5301.00,5699.00,5781.00,5998.00,value.user_new_lastmonth_commission_total.toFixed(2));
 							});
 						}	
 					},
@@ -389,12 +393,54 @@ $(document).ready(function() {
 			$("#clastmonth").text(clastmonth_default);
 			$("#bonus_employee_id").val(-2);
 			$("#bonus_period").val('');
+			$("#bonus_total").text('0.00');
 			$("#other_employee_id").val(-2);
 			$("#other_period").val('');
+			$("#other_total").text('0.00');
 			$("#commissions_bonus").val('');
 			$("#com_bonus_description").val('');
 			$("#commissions_other").val('');
 			$("#com_other_description").val('');
+			// clear commissions earned data
+			$("#new_policies_total").text('0.00');
+			$("#renewals_total").text('0.00');
+			$("#chargebacks_total").text('0.00');
+			$("#com_total").text('0.00');
+			// clear new policy counts
+			$("#auto_count_new").text('0');
+			$("#fire_count_new").text('0');
+			$("#life_count_new").text('0');
+			$("#health_count_new").text('0');
+			$("#bank_count_new").text('0');
+			$("#new_policy_count_total").text('0');
+			// clear new policy premiums
+			$("#auto_premium_new").text('0.00');
+			$("#fire_premium_new").text('0.00');
+			$("#life_premium_new").text('0.00');
+			$("#health_premium_new").text('0.00');
+			$("#bank_premium_new").text('0.00');
+			$("#new_policy_premium_total").text('0.00');
+			// clear new policy commissions
+			$("#auto_commission_new").text('0.00');
+			$("#fire_commission_new").text('0.00');
+			$("#life_commission_new").text('0.00');
+			$("#health_commission_new").text('0.00');
+			$("#bank_commission_new").text('0.00');
+			$("#new_policy_commission_total").text('0.00');
+			// clear renewal counts
+			$("#auto_count_renew").text('0');
+			$("#fire_count_renew").text('0');
+			$("#renew_policy_count_total").text('0');
+			// clear renewal premiums
+			$("#auto_premium_renew").text('0.00');
+			$("#fire_premium_renew").text('0.00');
+			$("#renew_policy_premium_total").text('0.00');
+			// clear renewal commissions
+			$("#auto_commission_renew").text('0.00');
+			$("#fire_commission_renew").text('0.00');
+			$("#renew_policy_commission_total").text('0.00');
+			// clear out chart
+			popChart(abrvmonths,0,0,0,0,0,0,0,0,0,0,0,0,0);
 		}
 	}
 	
@@ -496,27 +542,43 @@ $(document).ready(function() {
 	$("#com_range").text($("#commission_period option:selected").text());
 	$("#com_year").text($("#commission_year").val());
 	
-	// POPULATE CHART
-	var data = {
-		labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan"],
-		datasets: [
-			{
-				label: "Monthly",
-				fillColor: "#ba0000",
-				data: [4501.00, 4607.00, 4789.00, 4728.00, 5021.00, 4887.00, 5255.00, 5487.00, 5301.00, 5699.00, 5781.00, 5998.00, 6330.00]
+	function popChart(theMonths,total13,total12,total11,total10,total9,total8,total7,total6,total5,total4,total3,total2,total1) {
+
+		// CLEAR CANVAS
+		$('#compensationChart').replaceWith('<canvas id="compensationChart" width="620" height="160" style="margin:10px 0 0 30px;width:620px; height:160px;"></canvas>');
+		
+		// POPULATE CHART
+		var data = {
+			labels: theMonths,
+			datasets: [
+				{
+					label: "Monthly",
+					fillColor: "#ba0000",
+					data: [total13,total12,total11,total10,total9,total8,total7,total6,total5,total4,total3,total2,total1]
+				}
+			]
+		};
+
+		var ctx = $("#compensationChart").get(0).getContext("2d");
+	
+		var compensationChart = new Chart(ctx).Bar(data, {
+			barShowStroke : true,
+			animation: false,
+			scaleLabel : "<%=addCommas(value)%>",
+			tooltipTemplate : function (label) {
+				return label.label + ': ' + '$' + label.value.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 			}
-		]
-	};
- 
-    var ctx = $("#compensationChart").get(0).getContext("2d");
-    var compensationChart = new Chart(ctx).Bar(data, {
-    	barShowStroke : true,
-    	animation: false,
-    	scaleLabel : "<%=addCommas(value)%>",
-    	tooltipTemplate : function (label) {
-			return label.label + ': ' + '$' + label.value.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		}
-	});
+		});
+		
+	}
+	
+	var currtime = new Date();
+	var thismonth = currtime.getMonth();
+	var currmo = abrvmonths[thismonth];
+	abrvmonths.push.apply(abrvmonths,abrvmonths.splice(0,thismonth));
+	abrvmonths.push(currmo);
+
+	popChart(abrvmonths,0,0,0,0,0,0,0,0,0,0,0,0,0);
 	
 
 });

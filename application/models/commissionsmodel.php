@@ -87,7 +87,7 @@ class CommissionsModel
 		$current_ytd = array(date('Y-m-d', $start), date('Y-m-d', strtotime('+12 months', $start)));
 		$date_current_year_to_dateA = $current_ytd[0]." 00:00:00";
 		$date_current_year_to_dateB = $current_ytd[1]." 23:59:59";
-		$query_get_policies_current_ytd = $this->db->prepare('SELECT CASE policy_categories.parent_id WHEN 0 THEN policy_categories.id ELSE policy_categories.parent_id END AS id, policies.premium, policies.business_type_id, policies.renewal FROM policies, policy_categories WHERE policies.category_id = policy_categories.id AND policies.agency_id = :agency_id AND policies.user_id = :user_id AND (policies.status = 1 OR policies.status = 2) AND (policies.date_written >= :date_a AND policies.date_written <= :date_b);');
+		$query_get_policies_current_ytd = $this->db->prepare('SELECT CASE policy_categories.parent_id WHEN 0 THEN policy_categories.id ELSE policy_categories.parent_id END AS id, policies.date_written, policies.premium, policies.business_type_id, policies.renewal FROM policies, policy_categories WHERE policies.category_id = policy_categories.id AND policies.agency_id = :agency_id AND policies.user_id = :user_id AND (policies.status = 1 OR policies.status = 2) AND (policies.date_written >= :date_a AND policies.date_written <= :date_b);');
 		$query_get_policies_current_ytd->bindValue(':agency_id', $agency_id, PDO::PARAM_INT);
 		$query_get_policies_current_ytd->bindValue(':user_id', $employee_id, PDO::PARAM_INT);
 		$query_get_policies_current_ytd->bindValue(':date_a', $date_current_year_to_dateA, PDO::PARAM_STR);
