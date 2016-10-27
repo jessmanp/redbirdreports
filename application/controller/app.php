@@ -633,7 +633,7 @@ class App extends Controller
 			}
 			
 			// get employees data
-			$employee_data = $commissions_model->getEmployeeCommissionHistory($agency_id,$employee_id,$dateA,$dateB);
+			$employee_data = $commissions_model->getEmployeeCommissionHistory($agency_id,$employee_id,$dateA,$dateB,$date_range);
 
 			if (empty($employee_data)) {
 				$return['error'] = true;
@@ -658,6 +658,7 @@ class App extends Controller
 			
 			// *UPDATE EMPLOYEE COMPENSATION DATA*
 			$employee_id = trim(@$_POST['bonus_employee_id']); // must be an existing ID
+			$period = trim(@$_POST['bonus_period']); // must be a custom date range
 			$bonus = trim(@$_POST['commissions_bonus']); // must be numeric
 			$bonus_desc = trim(@$_POST['com_bonus_description']); // must be a string
 			
@@ -680,7 +681,7 @@ class App extends Controller
 			if ($return['error'] === false) {
 			
 				// put data
-				$commission_special_bonus = $commissions_model->saveCommissionSpecialBonus($employee_id,$bonus,$bonus_desc);
+				$commission_special_bonus = $commissions_model->saveCommissionSpecialBonus($employee_id,$bonus,$bonus_desc,$period);
 
 				if (empty($commission_special_bonus)) {
 					$return['error'] = true;
@@ -711,6 +712,7 @@ class App extends Controller
 			
 			// *UPDATE EMPLOYEE COMPENSATION DATA*
 			$employee_id = trim(@$_POST['other_employee_id']); // must be an existing ID
+			$period = trim(@$_POST['other_period']); // must be a custom date range
 			$other = trim(@$_POST['commissions_other']); // must be numeric
 			$other_desc = trim(@$_POST['com_other_description']); // must be a string
 			
@@ -733,7 +735,7 @@ class App extends Controller
 			if ($return['error'] === false) {
 			
 				// put data
-				$commission_special_other = $commissions_model->saveCommissionSpecialOther($employee_id,$other,$other_desc);
+				$commission_special_other = $commissions_model->saveCommissionSpecialOther($employee_id,$other,$other_desc,$period);
 
 				if (empty($commission_special_other)) {
 					$return['error'] = true;

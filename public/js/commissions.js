@@ -243,6 +243,12 @@ $(document).ready(function() {
 						} else {
 							// populate form fields with json data
 							$.each(data, function(key, value) {
+								// populate history
+								$("#clifetime").text("$"+value.user_new_lifetime_commission_total.toFixed(2));
+								$("#clastyear").text("$"+value.user_new_lastyear_commission_total.toFixed(2));
+								$("#clastytd").text("$"+value.user_new_last_ytd_commission_total.toFixed(2));
+								$("#ccurrentytd").text("$"+value.user_new_current_ytd_commission_total.toFixed(2));
+								$("#clastmonth").text("$"+value.user_new_lastmonth_commission_total.toFixed(2));
 								// populate special pay
 								$("#bonus_total").text(value.user_bonus.toFixed(2));
 								$("#other_total").text(value.user_other.toFixed(2));
@@ -305,7 +311,9 @@ $(document).ready(function() {
 								$("#com_total").text(totalcom.toFixed(2));
 								// populate employee info fields
 								$("#bonus_employee_id").val(user_id);
+								$("#bonus_period").val(date_range);
 								$("#other_employee_id").val(user_id);
+								$("#other_period").val(date_range);
 								$("#emp_default_label").text('');
 								$("#emp_first_label").text(value.user_first_name);
 								$("#emp_last_label").text(value.user_last_name);
@@ -331,34 +339,18 @@ $(document).ready(function() {
 								// update report period title	
 								$("#com_range").text($("#commission_period option:selected").text());
 								$("#com_year").text($("#commission_year").val());
-								if ($("#period2").prop("checked")) {
-									$("#com_period").text("Previous");
-									// DISABLE BONUS BUTTONS
-									$("#update-com-bonus").switchClass("update-com-bonus","update-com-bonus-disabled");
-									$("#update-com-bonus").prop("disabled", true);
-									$("#update-com-other").switchClass("update-com-other","update-com-other-disabled");
-									$("#update-com-other").prop("disabled", true);
-									// DISABLE BONUS FIELDS
-									$("#commissions_bonus").prop("disabled", true);
-									$("#com_bonus_description").prop("disabled", true);
-									$("#commissions_other").prop("disabled", true);
-									$("#com_other_description").prop("disabled", true);
-								}
-								if ($("#period1").prop("checked")) {
-									$("#com_period").text("Current");
-									// ENABLE BONUS BUTTONS
-									$("#update-com-bonus").removeClass();
-									$("#update-com-bonus").addClass("update-com-bonus");
-									$("#update-com-bonus").prop("disabled", false);
-									$("#update-com-other").removeClass();
-									$("#update-com-other").addClass("update-com-other");
-									$("#update-com-other").prop("disabled", false);
-									// ENABLE BONUS FIELDS
-									$("#commissions_bonus").prop("disabled", false);
-									$("#com_bonus_description").prop("disabled", false);
-									$("#commissions_other").prop("disabled", false);
-									$("#com_other_description").prop("disabled", false);
-								}
+								// ENABLE BONUS BUTTONS
+								$("#update-com-bonus").removeClass();
+								$("#update-com-bonus").addClass("update-com-bonus");
+								$("#update-com-bonus").prop("disabled", false);
+								$("#update-com-other").removeClass();
+								$("#update-com-other").addClass("update-com-other");
+								$("#update-com-other").prop("disabled", false);
+								// ENABLE BONUS FIELDS
+								$("#commissions_bonus").prop("disabled", false);
+								$("#com_bonus_description").prop("disabled", false);
+								$("#commissions_other").prop("disabled", false);
+								$("#com_other_description").prop("disabled", false);
 							});
 						}	
 					},
@@ -396,7 +388,9 @@ $(document).ready(function() {
 			$("#ccurrentytd").text(ccurrentytd_default);
 			$("#clastmonth").text(clastmonth_default);
 			$("#bonus_employee_id").val(-2);
+			$("#bonus_period").val('');
 			$("#other_employee_id").val(-2);
+			$("#other_period").val('');
 			$("#commissions_bonus").val('');
 			$("#com_bonus_description").val('');
 			$("#commissions_other").val('');
