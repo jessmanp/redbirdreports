@@ -359,7 +359,7 @@ $(document).ready(function() {
 								var thismonth = currtime.getMonth();
 								var currmo = trailing_totals[thismonth];
 								trailing_totals.push.apply(trailing_totals,trailing_totals.splice(0,thismonth));
-								trailing_totals.push(value.user_new_lastmonth_commission_total);
+								trailing_totals.push(totalcom);
 								popChart(abrvmonths,trailing_totals);
 							});
 						}	

@@ -69,8 +69,8 @@ class CommissionsModel
 		
 		// query last year to date
 		$ts = time();
-		$start = strtotime('-2 years', $ts);
-		$last_ytd = array(date('Y-m-d', $start), date('Y-m-d', strtotime('+12 months', $start)));
+		$start = strtotime('first day of January last year', $ts);
+		$last_ytd = array(date('Y-m-d', $start), date('Y-m-d', strtotime('today last year', $ts)));
 		$date_last_year_to_dateA = $last_ytd[0]." 00:00:00";
 		$date_last_year_to_dateB = $last_ytd[1]." 23:59:59";
 		$query_get_policies_last_ytd = $this->db->prepare('SELECT CASE policy_categories.parent_id WHEN 0 THEN policy_categories.id ELSE policy_categories.parent_id END AS id, policies.premium, policies.business_type_id, policies.renewal FROM policies, policy_categories WHERE policies.category_id = policy_categories.id AND policies.agency_id = :agency_id AND policies.user_id = :user_id AND (policies.status = 1 OR policies.status = 2) AND (policies.date_written >= :date_a AND policies.date_written <= :date_b);');
@@ -83,8 +83,8 @@ class CommissionsModel
 		
 		// query current year to date
 		$ts = time();
-		$start = strtotime('-1 years', $ts);
-		$current_ytd = array(date('Y-m-d', $start), date('Y-m-d', strtotime('+12 months', $start)));
+		$start = strtotime('first day of January this year', $ts);
+		$current_ytd = array(date('Y-m-d', $start), date('Y-m-d', strtotime('today', $ts)));
 		$date_current_year_to_dateA = $current_ytd[0]." 00:00:00";
 		$date_current_year_to_dateB = $current_ytd[1]." 23:59:59";
 		$query_get_policies_current_ytd = $this->db->prepare('SELECT CASE policy_categories.parent_id WHEN 0 THEN policy_categories.id ELSE policy_categories.parent_id END AS id, policies.date_written, policies.premium, policies.business_type_id, policies.renewal FROM policies, policy_categories WHERE policies.category_id = policy_categories.id AND policies.agency_id = :agency_id AND policies.user_id = :user_id AND (policies.status = 1 OR policies.status = 2) AND (policies.date_written >= :date_a AND policies.date_written <= :date_b);');
@@ -108,6 +108,20 @@ class CommissionsModel
 		$query_get_policies_lastmonth->bindValue(':date_b', $date_last_monthB, PDO::PARAM_STR);
 		$query_get_policies_lastmonth->execute();
 		$lastmonth_policies_query = $query_get_policies_lastmonth->fetchAll();
+		
+		// query trailing 12 months
+		$ts = time();
+		$start = strtotime('-1 year', $ts);
+		$trailing_year = array(date('Y-m-d', $start), date('Y-m-d', strtotime('+11 months -1 day', $start)));
+		$date_trailing_year_to_dateA = $trailing_year[0]." 00:00:00";
+		$date_trailing_year_to_dateB = $trailing_year[1]." 23:59:59";
+		$query_get_policies_trailing_year = $this->db->prepare('SELECT CASE policy_categories.parent_id WHEN 0 THEN policy_categories.id ELSE policy_categories.parent_id END AS id, policies.date_written, policies.premium, policies.business_type_id, policies.renewal FROM policies, policy_categories WHERE policies.category_id = policy_categories.id AND policies.agency_id = :agency_id AND policies.user_id = :user_id AND (policies.status = 1 OR policies.status = 2) AND (policies.date_written >= :date_a AND policies.date_written <= :date_b);');
+		$query_get_policies_trailing_year->bindValue(':agency_id', $agency_id, PDO::PARAM_INT);
+		$query_get_policies_trailing_year->bindValue(':user_id', $employee_id, PDO::PARAM_INT);
+		$query_get_policies_trailing_year->bindValue(':date_a', $date_trailing_year_to_dateA, PDO::PARAM_STR);
+		$query_get_policies_trailing_year->bindValue(':date_b', $date_trailing_year_to_dateB, PDO::PARAM_STR);
+		$query_get_policies_trailing_year->execute();
+		$trailing_year_policies_query = $query_get_policies_trailing_year->fetchAll();
 
 		// query all policies
 		$query_get_policies_new = $this->db->prepare('SELECT CASE policy_categories.parent_id WHEN 0 THEN policy_categories.id ELSE policy_categories.parent_id END AS id, policies.premium, policies.business_type_id, policies.renewal FROM policies, policy_categories WHERE policies.category_id = policy_categories.id AND policies.agency_id = :agency_id AND policies.user_id = :user_id AND (policies.status = 1 OR policies.status = 2) AND (policies.date_written >= :date_a AND policies.date_written <= :date_b);');
@@ -394,20 +408,6 @@ class CommissionsModel
 		// CALCULATE current year to date total ////////////////////////////////////////////////////////////////////////
 		$current_ytd_commission_total = 0;
 		
-		// setup variable to hold each months total
-		$current_ytd_commission_jan = 0;
-		$current_ytd_commission_feb = 0;
-		$current_ytd_commission_mar = 0;
-		$current_ytd_commission_apr = 0;
-		$current_ytd_commission_may = 0;
-		$current_ytd_commission_jun = 0;
-		$current_ytd_commission_jul = 0;
-		$current_ytd_commission_aug = 0;
-		$current_ytd_commission_sep = 0;
-		$current_ytd_commission_oct = 0;
-		$current_ytd_commission_nov = 0;
-		$current_ytd_commission_dec = 0;
-		
 		foreach ($current_ytd_policies_query as $new_policy_info) {
 		
 			if  ($new_policy_info->id == 1) {
@@ -465,7 +465,91 @@ class CommissionsModel
 				$current_ytd_commission_total = ($current_ytd_commission_total+$new_policy_info->premium);
 			}
 			
-			// get policy month
+		}
+		
+		$commission_summary[0]['user_new_current_ytd_commission_total'] = $current_ytd_commission_total;
+		
+		// CALCULATE last month total ////////////////////////////////////////////////////////////////////////
+		$lastmonth_commission_total = 0;
+		
+		foreach ($lastmonth_policies_query as $new_policy_info) {
+		
+			if  ($new_policy_info->id == 1) {
+				if  ($new_policy_info->renewal == 0) {
+					// calculate auto commissions based on compensation plans
+					if ($new_policy_info->business_type_id == 1) {
+						$lastmonth_commission_total = ($lastmonth_commission_total+(($auto_policy_compensation_new/100)*$new_policy_info->premium));
+					} else if ($new_policy_info->business_type_id == 2) {
+						$lastmonth_commission_total = ($lastmonth_commission_total+(($auto_policy_compensation_add/100)*$new_policy_info->premium));
+					} else if ($new_policy_info->business_type_id == 3) {
+						$lastmonth_commission_total = ($lastmonth_commission_total+(($auto_policy_compensation_reinstate/100)*$new_policy_info->premium));
+					} else if ($new_policy_info->business_type_id == 4) {
+						$lastmonth_commission_total = ($lastmonth_commission_total+(($auto_policy_compensation_transfer/100)*$new_policy_info->premium));
+					}
+				} else if ($new_policy_info->renewal == 1) {
+					// calculate auto renewal commissions based on compensation plans
+					if ($new_policy_info->business_type_id == 5) {
+						$lastmonth_commission_total = ($lastmonth_commission_total+(($auto_policy_compensation_renew/100)*$new_policy_info->premium));
+					}
+				}
+			}
+			if  ($new_policy_info->id == 9) {
+				if  ($new_policy_info->renewal == 0) {
+					// calculate fire commissions based on compensation plans
+					if ($new_policy_info->business_type_id == 1) {
+						$lastmonth_commission_total = ($lastmonth_commission_total+(($fire_policy_compensation_new/100)*$new_policy_info->premium));
+					} else if ($new_policy_info->business_type_id == 2) {
+						$lastmonth_commission_total = ($lastmonth_commission_total+(($fire_policy_compensation_add/100)*$new_policy_info->premium));
+					} else if ($new_policy_info->business_type_id == 3) {
+						$lastmonth_commission_total = ($lastmonth_commission_total+(($fire_policy_compensation_reinstate/100)*$new_policy_info->premium));
+					} else if ($new_policy_info->business_type_id == 4) {
+						$lastmonth_commission_total = ($lastmonth_commission_total+(($fire_policy_compensation_transfer/100)*$new_policy_info->premium));
+					}
+				} else if ($new_policy_info->renewal == 1) {
+					// calculate fire renewal commissions based on compensation plans
+					if ($new_policy_info->business_type_id == 5) {
+						$lastmonth_commission_total = ($lastmonth_commission_total+(($fire_policy_compensation_renew/100)*$new_policy_info->premium));
+					}
+				}
+			}
+			if  ($new_policy_info->id == 26) {
+				// calculate life commission
+				$lastmonth_commission_total = ($lastmonth_commission_total+(($life_policy_compensation_new/100)*$new_policy_info->premium));
+				$lastmonth_commission_total = ($lastmonth_commission_total+$new_policy_info->premium);
+			}
+			if  ($new_policy_info->id == 40) {
+				// calculate health commission
+				$lastmonth_commission_total = ($lastmonth_commission_total+(($health_policy_compensation_new/100)*$new_policy_info->premium));
+				$lastmonth_commission_total = ($lastmonth_commission_total+$new_policy_info->premium);
+			}
+			if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
+				// calculate bank commission
+				$lastmonth_commission_total = ($lastmonth_commission_total+$new_policy_info->premium);
+				$lastmonth_commission_total = ($lastmonth_commission_total+$new_policy_info->premium);
+				$lastmonth_commission_total = ($lastmonth_commission_total+$new_policy_info->premium);
+			}
+			
+		}
+		
+		$commission_summary[0]['user_new_lastmonth_commission_total'] = $lastmonth_commission_total;
+		
+		// CALCULATE trailing years total ////////////////////////////////////////////////////////////////////////
+		$current_ytd_commission_jan = 0;
+		$current_ytd_commission_feb = 0;
+		$current_ytd_commission_mar = 0;
+		$current_ytd_commission_apr = 0;
+		$current_ytd_commission_may = 0;
+		$current_ytd_commission_jun = 0;
+		$current_ytd_commission_jul = 0;
+		$current_ytd_commission_aug = 0;
+		$current_ytd_commission_sep = 0;
+		$current_ytd_commission_oct = 0;
+		$current_ytd_commission_nov = 0;
+		$current_ytd_commission_dec = 0;
+		
+		foreach ($trailing_year_policies_query as $new_policy_info) {
+            
+            // get policy month
 			$month = explode("-",$new_policy_info->date_written);
 			$month = $month[1];
 			
@@ -1158,8 +1242,6 @@ class CommissionsModel
 			
 		}
 		
-		$commission_summary[0]['user_new_current_ytd_commission_total'] = $current_ytd_commission_total;
-		
 		$commission_summary[0]['user_new_current_ytd_commission_trailing'] = array(
 			$current_ytd_commission_jan,
 			$current_ytd_commission_feb,
@@ -1174,70 +1256,6 @@ class CommissionsModel
 			$current_ytd_commission_nov,
 			$current_ytd_commission_dec
 		);
-		
-		// CALCULATE last month total ////////////////////////////////////////////////////////////////////////
-		$lastmonth_commission_total = 0;
-		
-		foreach ($lastmonth_policies_query as $new_policy_info) {
-		
-			if  ($new_policy_info->id == 1) {
-				if  ($new_policy_info->renewal == 0) {
-					// calculate auto commissions based on compensation plans
-					if ($new_policy_info->business_type_id == 1) {
-						$lastmonth_commission_total = ($lastmonth_commission_total+(($auto_policy_compensation_new/100)*$new_policy_info->premium));
-					} else if ($new_policy_info->business_type_id == 2) {
-						$lastmonth_commission_total = ($lastmonth_commission_total+(($auto_policy_compensation_add/100)*$new_policy_info->premium));
-					} else if ($new_policy_info->business_type_id == 3) {
-						$lastmonth_commission_total = ($lastmonth_commission_total+(($auto_policy_compensation_reinstate/100)*$new_policy_info->premium));
-					} else if ($new_policy_info->business_type_id == 4) {
-						$lastmonth_commission_total = ($lastmonth_commission_total+(($auto_policy_compensation_transfer/100)*$new_policy_info->premium));
-					}
-				} else if ($new_policy_info->renewal == 1) {
-					// calculate auto renewal commissions based on compensation plans
-					if ($new_policy_info->business_type_id == 5) {
-						$lastmonth_commission_total = ($lastmonth_commission_total+(($auto_policy_compensation_renew/100)*$new_policy_info->premium));
-					}
-				}
-			}
-			if  ($new_policy_info->id == 9) {
-				if  ($new_policy_info->renewal == 0) {
-					// calculate fire commissions based on compensation plans
-					if ($new_policy_info->business_type_id == 1) {
-						$lastmonth_commission_total = ($lastmonth_commission_total+(($fire_policy_compensation_new/100)*$new_policy_info->premium));
-					} else if ($new_policy_info->business_type_id == 2) {
-						$lastmonth_commission_total = ($lastmonth_commission_total+(($fire_policy_compensation_add/100)*$new_policy_info->premium));
-					} else if ($new_policy_info->business_type_id == 3) {
-						$lastmonth_commission_total = ($lastmonth_commission_total+(($fire_policy_compensation_reinstate/100)*$new_policy_info->premium));
-					} else if ($new_policy_info->business_type_id == 4) {
-						$lastmonth_commission_total = ($lastmonth_commission_total+(($fire_policy_compensation_transfer/100)*$new_policy_info->premium));
-					}
-				} else if ($new_policy_info->renewal == 1) {
-					// calculate fire renewal commissions based on compensation plans
-					if ($new_policy_info->business_type_id == 5) {
-						$lastmonth_commission_total = ($lastmonth_commission_total+(($fire_policy_compensation_renew/100)*$new_policy_info->premium));
-					}
-				}
-			}
-			if  ($new_policy_info->id == 26) {
-				// calculate life commission
-				$lastmonth_commission_total = ($lastmonth_commission_total+(($life_policy_compensation_new/100)*$new_policy_info->premium));
-				$lastmonth_commission_total = ($lastmonth_commission_total+$new_policy_info->premium);
-			}
-			if  ($new_policy_info->id == 40) {
-				// calculate health commission
-				$lastmonth_commission_total = ($lastmonth_commission_total+(($health_policy_compensation_new/100)*$new_policy_info->premium));
-				$lastmonth_commission_total = ($lastmonth_commission_total+$new_policy_info->premium);
-			}
-			if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
-				// calculate bank commission
-				$lastmonth_commission_total = ($lastmonth_commission_total+$new_policy_info->premium);
-				$lastmonth_commission_total = ($lastmonth_commission_total+$new_policy_info->premium);
-				$lastmonth_commission_total = ($lastmonth_commission_total+$new_policy_info->premium);
-			}
-			
-		}
-		
-		$commission_summary[0]['user_new_lastmonth_commission_total'] = $lastmonth_commission_total;
 		
 		// CALCULATE policy commissions / setup default count values ////////////////////////////////////////////////////////////////////////
 		$auto_policy_count = 0;
