@@ -1,4 +1,8 @@
 <?php
+$bonus = '$1,200.00abcd%^&*()';
+$bonus = preg_replace('/[^0-9.]+/ui', '', $bonus);
+
+echo $bonus."<hr />";
 
 		// query last year commissions
 		$ts = time();
@@ -22,8 +26,14 @@
 	  	
 	  	// query trailing 12 months
 		$ts = time();
-		$start = strtotime('-1 year', $ts);
-		$trailing_year = array(date('Y-m-d', $start), date('Y-m-d', strtotime('+11 months -1 day', $start)));
+		$start = strtotime('today -1 year', $ts);
+		$trailing_year = array(date('Y-m-d', $start), date('Y-m-d', strtotime('last day of +11 months', $start)));
+		
+		// query this month
+		$ts = time();
+	  	$start = strtotime('first day of this month', $ts);
+	  	$this_month = array(date('Y-m-d', $start), date('Y-m-d', $start));
+		
 
 echo "last year =".print_r($last_year)."<br />";
 
@@ -34,6 +44,9 @@ echo "current YTD =".print_r($current_ytd)."<br />";
 echo "last month =".print_r($last_month)."<br />";	
 
 echo "trailing 12 months =".print_r($trailing_year)."<br />";
+
+echo "this month =".print_r($this_month)."<br />";
+
 
 /*
 $date_lastA = $last_year[0]." 00:00:00";

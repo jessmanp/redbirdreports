@@ -19,7 +19,7 @@
 				<div class="col" style="width:40%;"><div class="com-special">Bonus</div></div>
 				<div class="col" style="width:60%;">
 					<span style="font-size:12px;font-weight:bold;">$</span>
-					<input type="text" maxlength="40" style="width:100px;" id="commissions_bonus" name="commissions_bonus" placeholder="0.00" value="">
+					<input type="text" maxlength="10" style="width:100px;" id="commissions_bonus" name="commissions_bonus" placeholder="0.00" value="">
 				</div>
 			</div>
 		</div>
@@ -35,7 +35,7 @@
 				<div class="col" style="width:40%;"><div class="com-special">Other</div></div>
 				<div class="col" style="width:60%;">
 					<span style="font-size:12px;font-weight:bold;">$</span>
-					<input type="text" maxlength="40" style="width:100px;" id="commissions_other" name="commissions_other" placeholder="0.00" value="">
+					<input type="text" maxlength="10" style="width:100px;" id="commissions_other" name="commissions_other" placeholder="0.00" value="">
 				</div>
 			</div>
 		</div>

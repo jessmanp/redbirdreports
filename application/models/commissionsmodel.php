@@ -112,7 +112,7 @@ class CommissionsModel
 		// query trailing 12 months
 		$ts = time();
 		$start = strtotime('-1 year', $ts);
-		$trailing_year = array(date('Y-m-d', $start), date('Y-m-d', strtotime('+11 months -1 day', $start)));
+		$trailing_year = array(date('Y-m-d', $start), date('Y-m-d', strtotime('last day of +11 months', $start)));
 		$date_trailing_year_to_dateA = $trailing_year[0]." 00:00:00";
 		$date_trailing_year_to_dateB = $trailing_year[1]." 23:59:59";
 		$query_get_policies_trailing_year = $this->db->prepare('SELECT CASE policy_categories.parent_id WHEN 0 THEN policy_categories.id ELSE policy_categories.parent_id END AS id, policies.date_written, policies.premium, policies.business_type_id, policies.renewal FROM policies, policy_categories WHERE policies.category_id = policy_categories.id AND policies.agency_id = :agency_id AND policies.user_id = :user_id AND (policies.status = 1 OR policies.status = 2) AND (policies.date_written >= :date_a AND policies.date_written <= :date_b);');
@@ -122,6 +122,20 @@ class CommissionsModel
 		$query_get_policies_trailing_year->bindValue(':date_b', $date_trailing_year_to_dateB, PDO::PARAM_STR);
 		$query_get_policies_trailing_year->execute();
 		$trailing_year_policies_query = $query_get_policies_trailing_year->fetchAll();
+		
+		// query this months commissions
+		$ts = time();
+	  	$start = strtotime('first day of this month', $ts);
+	  	$this_month = array(date('Y-m-d', $start), date('Y-m-d', $start));
+		$date_this_month_dateA = $this_month[0]." 00:00:00";
+		$date_this_month_dateB = $this_month[1]." 23:59:59";
+		$query_get_policies_this_month = $this->db->prepare('SELECT CASE policy_categories.parent_id WHEN 0 THEN policy_categories.id ELSE policy_categories.parent_id END AS id, policies.date_written, policies.premium, policies.business_type_id, policies.renewal FROM policies, policy_categories WHERE policies.category_id = policy_categories.id AND policies.agency_id = :agency_id AND policies.user_id = :user_id AND (policies.status = 1 OR policies.status = 2) AND (policies.date_written >= :date_a AND policies.date_written <= :date_b);');
+		$query_get_policies_this_month->bindValue(':agency_id', $agency_id, PDO::PARAM_INT);
+		$query_get_policies_this_month->bindValue(':user_id', $employee_id, PDO::PARAM_INT);
+		$query_get_policies_this_month->bindValue(':date_a', $date_this_month_dateA, PDO::PARAM_STR);
+		$query_get_policies_this_month->bindValue(':date_b', $date_this_month_dateB, PDO::PARAM_STR);
+		$query_get_policies_this_month->execute();
+		$this_month_policies_query = $query_get_policies_this_month->fetchAll();
 
 		// query all policies
 		$query_get_policies_new = $this->db->prepare('SELECT CASE policy_categories.parent_id WHEN 0 THEN policy_categories.id ELSE policy_categories.parent_id END AS id, policies.premium, policies.business_type_id, policies.renewal FROM policies, policy_categories WHERE policies.category_id = policy_categories.id AND policies.agency_id = :agency_id AND policies.user_id = :user_id AND (policies.status = 1 OR policies.status = 2) AND (policies.date_written >= :date_a AND policies.date_written <= :date_b);');
@@ -1256,6 +1270,70 @@ class CommissionsModel
 			$current_ytd_commission_nov,
 			$current_ytd_commission_dec
 		);
+		
+		// CALCULATE this months total ////////////////////////////////////////////////////////////////////////
+		$this_month_commission_total = 0;
+		
+		foreach ($this_month_policies_query as $new_policy_info) {
+		
+			if  ($new_policy_info->id == 1) {
+				if  ($new_policy_info->renewal == 0) {
+					// calculate auto commissions based on compensation plans
+					if ($new_policy_info->business_type_id == 1) {
+						$this_month_commission_total = ($this_month_commission_total+(($auto_policy_compensation_new/100)*$new_policy_info->premium));
+					} else if ($new_policy_info->business_type_id == 2) {
+						$this_month_commission_total = ($this_month_commission_total+(($auto_policy_compensation_add/100)*$new_policy_info->premium));
+					} else if ($new_policy_info->business_type_id == 3) {
+						$this_month_commission_total = ($this_month_commission_total+(($auto_policy_compensation_reinstate/100)*$new_policy_info->premium));
+					} else if ($new_policy_info->business_type_id == 4) {
+						$this_month_commission_total = ($this_month_commission_total+(($auto_policy_compensation_transfer/100)*$new_policy_info->premium));
+					}
+				} else if ($new_policy_info->renewal == 1) {
+					// calculate auto renewal commissions based on compensation plans
+					if ($new_policy_info->business_type_id == 5) {
+						$this_month_commission_total = ($this_month_commission_total+(($auto_policy_compensation_renew/100)*$new_policy_info->premium));
+					}
+				}
+			}
+			if  ($new_policy_info->id == 9) {
+				if  ($new_policy_info->renewal == 0) {
+					// calculate fire commissions based on compensation plans
+					if ($new_policy_info->business_type_id == 1) {
+						$this_month_commission_total = ($this_month_commission_total+(($fire_policy_compensation_new/100)*$new_policy_info->premium));
+					} else if ($new_policy_info->business_type_id == 2) {
+						$this_month_commission_total = ($this_month_commission_total+(($fire_policy_compensation_add/100)*$new_policy_info->premium));
+					} else if ($new_policy_info->business_type_id == 3) {
+						$this_month_commission_total = ($this_month_commission_total+(($fire_policy_compensation_reinstate/100)*$new_policy_info->premium));
+					} else if ($new_policy_info->business_type_id == 4) {
+						$this_month_commission_total = ($this_month_commission_total+(($fire_policy_compensation_transfer/100)*$new_policy_info->premium));
+					}
+				} else if ($new_policy_info->renewal == 1) {
+					// calculate fire renewal commissions based on compensation plans
+					if ($new_policy_info->business_type_id == 5) {
+						$this_month_commission_total = ($this_month_commission_total+(($fire_policy_compensation_renew/100)*$new_policy_info->premium));
+					}
+				}
+			}
+			if  ($new_policy_info->id == 26) {
+				// calculate life commission
+				$this_month_commission_total = ($this_month_commission_total+(($life_policy_compensation_new/100)*$new_policy_info->premium));
+				$this_month_commission_total = ($this_month_commission_total+$new_policy_info->premium);
+			}
+			if  ($new_policy_info->id == 40) {
+				// calculate health commission
+				$this_month_commission_total = ($this_month_commission_total+(($health_policy_compensation_new/100)*$new_policy_info->premium));
+				$this_month_commission_total = ($this_month_commission_total+$new_policy_info->premium);
+			}
+			if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
+				// calculate bank commission
+				$this_month_commission_total = ($this_month_commission_total+$new_policy_info->premium);
+				$this_month_commission_total = ($this_month_commission_total+$new_policy_info->premium);
+				$this_month_commission_total = ($this_month_commission_total+$new_policy_info->premium);
+			}
+			
+		}
+		
+		$commission_summary[0]['user_new_this_month_commission_total'] = $this_month_commission_total;
 		
 		// CALCULATE policy commissions / setup default count values ////////////////////////////////////////////////////////////////////////
 		$auto_policy_count = 0;

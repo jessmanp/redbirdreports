@@ -229,6 +229,12 @@ $(document).ready(function() {
 		if (user_id > 0) {
 			var date_range = $("#commission_period").val();
 			date_range = date_range+":"+$("#commission_year").val();
+			// update title
+			if ($("#period2").prop("checked")) {
+				$("#com_period").text("Previous");
+			} else {
+				$("#com_period").text("Current");
+			}
 			// update employee info into form
 			$.ajax({
 					type: "GET",
@@ -246,14 +252,14 @@ $(document).ready(function() {
 							// populate form fields with json data
 							$.each(data, function(key, value) {
 								// populate history
-								$("#clifetime").text("$"+value.user_new_lifetime_commission_total.toFixed(2));
-								$("#clastyear").text("$"+value.user_new_lastyear_commission_total.toFixed(2));
-								$("#clastytd").text("$"+value.user_new_last_ytd_commission_total.toFixed(2));
-								$("#ccurrentytd").text("$"+value.user_new_current_ytd_commission_total.toFixed(2));
-								$("#clastmonth").text("$"+value.user_new_lastmonth_commission_total.toFixed(2));
+								$("#clifetime").text("$"+value.user_new_lifetime_commission_total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+								$("#clastyear").text("$"+value.user_new_lastyear_commission_total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+								$("#clastytd").text("$"+value.user_new_last_ytd_commission_total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+								$("#ccurrentytd").text("$"+value.user_new_current_ytd_commission_total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+								$("#clastmonth").text("$"+value.user_new_lastmonth_commission_total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
 								// populate special pay
-								$("#bonus_total").text(value.user_bonus.toFixed(2));
-								$("#other_total").text(value.user_other.toFixed(2));
+								$("#bonus_total").text(value.user_bonus.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+								$("#other_total").text(value.user_other.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
 								// populate new policy counts
 								$("#auto_count_new").text(value.user_new_policy_count_auto);
 								$("#fire_count_new").text(value.user_new_policy_count_fire);
@@ -263,54 +269,54 @@ $(document).ready(function() {
 								var new_policy_count_total = (value.user_new_policy_count_auto+value.user_new_policy_count_fire+value.user_new_policy_count_life+value.user_new_policy_count_health+value.user_new_policy_count_bank);
 								$("#new_policy_count_total").text(new_policy_count_total);
 								// populate new policy premiums
-								$("#auto_premium_new").text(value.user_new_policy_premium_auto.toFixed(2));
-								$("#fire_premium_new").text(value.user_new_policy_premium_fire.toFixed(2));
-								$("#life_premium_new").text(value.user_new_policy_premium_life.toFixed(2));
-								$("#health_premium_new").text(value.user_new_policy_premium_health.toFixed(2));
-								$("#bank_premium_new").text(value.user_new_policy_premium_bank.toFixed(2));
+								$("#auto_premium_new").text(value.user_new_policy_premium_auto.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+								$("#fire_premium_new").text(value.user_new_policy_premium_fire.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+								$("#life_premium_new").text(value.user_new_policy_premium_life.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+								$("#health_premium_new").text(value.user_new_policy_premium_health.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+								$("#bank_premium_new").text(value.user_new_policy_premium_bank.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
 								var new_policy_premium_total = (value.user_new_policy_premium_auto+value.user_new_policy_premium_fire+value.user_new_policy_premium_life+value.user_new_policy_premium_health+value.user_new_policy_premium_bank);
-								$("#new_policy_premium_total").text(new_policy_premium_total.toFixed(2));
+								$("#new_policy_premium_total").text(new_policy_premium_total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
 								// populate new policy commissions
-								$("#auto_commission_new").text(value.user_new_policy_commission_auto.toFixed(2));
-								$("#fire_commission_new").text(value.user_new_policy_commission_fire.toFixed(2));
-								$("#life_commission_new").text(value.user_new_policy_commission_life.toFixed(2));
-								$("#health_commission_new").text(value.user_new_policy_commission_health.toFixed(2));
-								$("#bank_commission_new").text(value.user_new_policy_commission_bank.toFixed(2));
+								$("#auto_commission_new").text(value.user_new_policy_commission_auto.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+								$("#fire_commission_new").text(value.user_new_policy_commission_fire.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+								$("#life_commission_new").text(value.user_new_policy_commission_life.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+								$("#health_commission_new").text(value.user_new_policy_commission_health.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+								$("#bank_commission_new").text(value.user_new_policy_commission_bank.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
 								var new_policy_commission_total = (value.user_new_policy_commission_auto+value.user_new_policy_commission_fire+value.user_new_policy_commission_life+value.user_new_policy_commission_health+value.user_new_policy_commission_bank);
-								$("#new_policy_commission_total").text(new_policy_commission_total.toFixed(2));
+								$("#new_policy_commission_total").text(new_policy_commission_total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
 								// populate renewal counts
 								$("#auto_count_renew").text(value.user_renewal_policy_count_auto);
 								$("#fire_count_renew").text(value.user_renewal_policy_count_fire);
 								var renew_policy_count_total = (value.user_renewal_policy_count_auto+value.user_renewal_policy_count_fire);
 								$("#renew_policy_count_total").text(renew_policy_count_total);
 								// populate renewal premiums
-								$("#auto_premium_renew").text(value.user_renewal_policy_premium_auto.toFixed(2));
-								$("#fire_premium_renew").text(value.user_renewal_policy_premium_fire.toFixed(2));
+								$("#auto_premium_renew").text(value.user_renewal_policy_premium_auto.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+								$("#fire_premium_renew").text(value.user_renewal_policy_premium_fire.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
 								var renew_policy_premium_total = (value.user_renewal_policy_premium_auto+value.user_renewal_policy_premium_fire);
-								$("#renew_policy_premium_total").text(renew_policy_premium_total.toFixed(2));
+								$("#renew_policy_premium_total").text(renew_policy_premium_total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
 								// populate renewal commissions
-								$("#auto_commission_renew").text(value.user_renewal_policy_commission_auto.toFixed(2));
-								$("#fire_commission_renew").text(value.user_renewal_policy_commission_fire.toFixed(2));
+								$("#auto_commission_renew").text(value.user_renewal_policy_commission_auto.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+								$("#fire_commission_renew").text(value.user_renewal_policy_commission_fire.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
 								var renew_policy_commission_total = (value.user_renewal_policy_commission_auto+value.user_renewal_policy_commission_fire);
-								$("#renew_policy_commission_total").text(renew_policy_commission_total.toFixed(2));
+								$("#renew_policy_commission_total").text(renew_policy_commission_total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
 								// populate commissions earned data
 								if (!value.user_new_policies){
 									$("#new_policies_total").text('0.00');
 								} else {
-									$("#new_policies_total").text(new_policy_commission_total.toFixed(2));
+									$("#new_policies_total").text(new_policy_commission_total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
 								}
 								if (!value.user_renewals){
 									$("#renewals_total").text('0.00');
 								} else {
-									$("#renewals_total").text(renew_policy_commission_total.toFixed(2));
+									$("#renewals_total").text(renew_policy_commission_total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
 								}
 								if (!value.user_chargebacks) {
 									$("#chargebacks_total").text('0.00');
 								} else {
-									$("#chargebacks_total").text(value.user_chargebacks.toFixed(2));
+									$("#chargebacks_total").text(value.user_chargebacks.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
 								}
 								var totalcom = ((new_policy_commission_total+renew_policy_commission_total+value.user_bonus+value.user_other)-value.user_chargebacks);
-								$("#com_total").text(totalcom.toFixed(2));
+								$("#com_total").text(totalcom.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
 								// populate employee info fields
 								$("#bonus_employee_id").val(user_id);
 								$("#bonus_period").val(date_range);
@@ -332,12 +338,12 @@ $(document).ready(function() {
 								} else {
 									$("#chired").text('');
 								}								
-								$("#commissions_bonus").val(value.user_bonus.toFixed(2));
+								$("#commissions_bonus").val(value.user_bonus.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
 								$("#com_bonus_description").val(value.user_bonus_desc);
-								$("#commissions_other").val(value.user_other.toFixed(2));
+								$("#commissions_other").val(value.user_other.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
 								$("#com_other_description").val(value.user_other_desc);
 								var totalspecial = (value.user_bonus+value.user_other);
-								$("#special_total").text(totalspecial.toFixed(2));
+								$("#special_total").text(totalspecial.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
 								// update report period title	
 								$("#com_range").text($("#commission_period option:selected").text());
 								$("#com_year").text($("#commission_year").val());
@@ -359,7 +365,7 @@ $(document).ready(function() {
 								var thismonth = currtime.getMonth();
 								var currmo = trailing_totals[thismonth];
 								trailing_totals.push.apply(trailing_totals,trailing_totals.splice(0,thismonth));
-								trailing_totals.push(totalcom);
+								trailing_totals.push(value.user_new_this_month_commission_total);
 								popChart(abrvmonths,trailing_totals);
 							});
 						}	
@@ -380,11 +386,11 @@ $(document).ready(function() {
 			$("#commissions_other").prop("disabled", true);
 			$("#com_other_description").prop("disabled", true);
 			var empty_val = 0;
-			var clifetime_default = '$'+empty_val.toFixed(2);
-			var clastyear_default = '$'+empty_val.toFixed(2);
-			var clastytd_default = '$'+empty_val.toFixed(2);
-			var ccurrentytd_default = '$'+empty_val.toFixed(2);
-			var clastmonth_default = '$'+empty_val.toFixed(2);
+			var clifetime_default = '$'+empty_val.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+			var clastyear_default = '$'+empty_val.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+			var clastytd_default = '$'+empty_val.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+			var ccurrentytd_default = '$'+empty_val.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+			var clastmonth_default = '$'+empty_val.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
 			// clear fields with data
 			$("#emp_default_label").text('No Employee Selected');
 			$("#emp_first_label").text('');
@@ -572,7 +578,7 @@ $(document).ready(function() {
 			animation: false,
 			scaleLabel : "<%=addCommas(value)%>",
 			tooltipTemplate : function (label) {
-				return label.label + ': ' + '$' + label.value.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+				return label.label + ': ' + '$' + label.value.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 			}
 		});
 		

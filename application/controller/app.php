@@ -662,6 +662,9 @@ class App extends Controller
 			$bonus = trim(@$_POST['commissions_bonus']); // must be numeric
 			$bonus_desc = trim(@$_POST['com_bonus_description']); // must be a string
 			
+			// remove all non-numeric except period
+			$bonus = preg_replace('/[^0-9.]+/ui', '', $bonus);
+			
 			// validate update employee special form to make sure the data was entered correctly
 
 			if (!isset($employee_id) || $employee_id == '' || !is_numeric($employee_id)) {
@@ -715,6 +718,9 @@ class App extends Controller
 			$period = trim(@$_POST['other_period']); // must be a custom date range
 			$other = trim(@$_POST['commissions_other']); // must be numeric
 			$other_desc = trim(@$_POST['com_other_description']); // must be a string
+			
+			// remove all non-numeric except period
+			$other = preg_replace('/[^0-9.]+/ui', '', $other);
 			
 			// validate update employee special form to make sure the data was entered correctly
 
