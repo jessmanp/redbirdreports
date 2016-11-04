@@ -1423,6 +1423,7 @@ a.policy-edit-action:hover {
 	font-size:14px;
 }
 #commission-period-box {
+	display:none;
 	float:right;
 	margin:8px 0 5px 0;
 	width:175px;
@@ -1434,6 +1435,24 @@ a.policy-edit-action:hover {
 	border-radius:8px;
 	text-align:center;
 	font-size:14px;
+}
+#commission-period-box-closed {
+	float:right;
+	margin:8px 0 5px 0;
+	width:175px;
+	height:90px;
+	background-color:#cccccc;
+	padding:5px;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	text-align:center;
+	font-size:14px;
+}
+.period-bold {
+	font-weight:bold;
+	font-size:24px;
+	line-height:36px;
 }
 .commission-search-area {
 	margin:10px auto 5px auto;
@@ -2147,6 +2166,65 @@ a.policy-edit-action:hover {
 	font-style:italic;
 }
 
+#commissions-popup {
+	display:none;
+	background-color:#000000;
+	opacity:0.35;
+	position:absolute;
+	z-index:80;
+	top:0px;
+	left:0px;
+	width:100%;
+}
+#commissions-window {
+	display:none;
+	position:fixed;
+	z-index:81;
+	width:800px;
+	text-align:center;
+	background-color:#ffffff;
+	border:2px solid #ff0000;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-box-shadow:2px 2px 24px #000000;
+	/* for FireFox 3.6+ */
+	-moz-box-shadow:2px 2px 24px #000000;
+	/* for IE 5.5 - 9 */
+	box-shadow:2px 2px 24px #000000;
+}
+.commissions-message {
+	display:none;
+	margin:0 20px 10px 20px;
+	font-size:20px;
+	font-weight:bold;
+	min-height:25px;
+	padding:10px 25px 10px 25px;
+	border-bottom:2px solid #cccccc;
+}
+.commissions-text-box {
+	padding:0 45px 0 45px;
+	text-align:left;
+	font-weight:normal;
+	font-size:14px;
+}
+.commissions-edit-bar {
+	margin:10px 20px 10px 20px;
+	border-top:2px solid #cccccc;
+	clear:both;
+}
+#commissions-edit {
+	display:none;
+}
+.commissions-required-key {
+	float:right;
+	font-size:11px;
+	font-weight:bold;
+}
 
 
 

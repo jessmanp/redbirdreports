@@ -762,6 +762,209 @@ class App extends Controller
 			
 		}
 		
+		if ($sub == 'closePeriod') {
+			// put commission data into commission history
+			
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+			
+			// *UPDATE COMMISSISION HISTORY DATA*
+			$employee_id = trim(@$_POST['user_id']); // must be an existing ID
+			$period = trim(@$_POST['period']); // must be a custom date range
+			$lifetime = trim(@$_POST['lifetime']); // must be numeric
+			$last_year = trim(@$_POST['last_year']); // must be numeric
+			$last_ytd = trim(@$_POST['last_ytd']); // must be numeric
+			$current_ytd = trim(@$_POST['current_ytd']); // must be numeric
+			$last_month = trim(@$_POST['last_month']); // must be numeric
+			$new_policies = trim(@$_POST['new_policies']); // must be numeric
+			$renewals = trim(@$_POST['renewals']); // must be numeric
+			$charge_backs = trim(@$_POST['charge_backs']); // must be numeric
+			$auto_policies_issued = trim(@$_POST['auto_policies_issued']); // must be numeric
+			$fire_policies_issued = trim(@$_POST['fire_policies_issued']); // must be numeric
+			$life_policies_issued = trim(@$_POST['life_policies_issued']); // must be numeric
+			$health_policies_issued = trim(@$_POST['health_policies_issued']); // must be numeric
+			$bank_policies_issued = trim(@$_POST['bank_policies_issued']); // must be numeric
+			$auto_issued_premiums = trim(@$_POST['auto_issued_premiums']); // must be numeric
+			$fire_issued_premiums = trim(@$_POST['fire_issued_premiums']); // must be numeric
+			$life_issued_premiums = trim(@$_POST['life_issued_premiums']); // must be numeric
+			$health_issued_premiums = trim(@$_POST['health_issued_premiums']); // must be numeric
+			$bank_issued_premiums = trim(@$_POST['bank_issued_premiums']); // must be numeric
+			$auto_commissions = trim(@$_POST['auto_commissions']); // must be numeric
+			$fire_commissions = trim(@$_POST['fire_commissions']); // must be numeric
+			$life_commissions = trim(@$_POST['life_commissions']); // must be numeric
+			$health_commissions = trim(@$_POST['health_commissions']); // must be numeric
+			$bank_commissions = trim(@$_POST['bank_commissions']); // must be numeric
+			$auto_policies_renewed = trim(@$_POST['auto_policies_renewed']); // must be numeric
+			$fire_policies_renewed = trim(@$_POST['fire_policies_renewed']); // must be numeric
+			$auto_renewal_premiums = trim(@$_POST['auto_renewal_premiums']); // must be numeric
+			$fire_renewal_premiums = trim(@$_POST['fire_renewal_premiums']); // must be numeric
+			$auto_renewal_commissions = trim(@$_POST['auto_renewal_commissions']); // must be numeric
+			$fire_renewal_commissions = trim(@$_POST['fire_renewal_commissions']); // must be numeric
+			$trailing_chart_totals = @$_POST['trailing_chart_totals']; // must be a list
+			$trailing_chart_extra_month = trim(@$_POST['trailing_chart_extra_month']); // must be numeric
+			
+			// validate close period form to make sure the data was not altered
+
+			if (!isset($employee_id) || $employee_id == '' || !is_numeric($employee_id)) {
+				$return['error'] = true;
+				$return['msg'] .= 'No employee was selected. Please select an employee.';
+			}
+			if (!isset($period) || !filter_var($period, FILTER_SANITIZE_STRING)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>ERROR</strong>, Period is Invalid or Missing.<br />';
+			}
+			if (!isset($lifetime) || !is_numeric($lifetime)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Lifetime</strong> Total is Required.<br />';
+			}
+			if (!isset($last_year) || !is_numeric($last_year)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Last Year</strong> Total is Required.<br />';
+			}
+			if (!isset($last_ytd) || !is_numeric($last_ytd)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Last YTD</strong> Total is Required.<br />';
+			}
+			if (!isset($current_ytd) || !is_numeric($current_ytd)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Current YTD</strong> Total is Required.<br />';
+			}
+			if (!isset($last_month) || !is_numeric($last_month)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Last Month</strong> Total is Required.<br />';
+			}
+			if (!isset($new_policies) || !is_numeric($new_policies)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Policies</strong> Total is Required.<br />';
+			}
+			if (!isset($charge_backs) || !is_numeric($charge_backs)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Charge Backs</strong> Total is Required.<br />';
+			}
+			if (!isset($auto_policies_issued) || !is_numeric($auto_policies_issued)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Auto Policies Issued</strong> Amount is Required.<br />';
+			}
+			if (!isset($fire_policies_issued) || !is_numeric($fire_policies_issued)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Fire Policies Issued</strong> Amount is Required.<br />';
+			}
+			if (!isset($life_policies_issued) || !is_numeric($life_policies_issued)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Life Policies Issued</strong> Amount is Required.<br />';
+			}
+			if (!isset($health_policies_issued) || !is_numeric($health_policies_issued)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Health Policies Issued</strong> Amount is Required.<br />';
+			}
+			if (!isset($bank_policies_issued) || !is_numeric($bank_policies_issued)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Bank Policies Issued</strong> Amount is Required.<br />';
+			}
+			if (!isset($auto_policies_issued) || !is_numeric($auto_policies_issued)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Auto Policies Issued</strong> Amount is Required.<br />';
+			}
+			if (!isset($auto_issued_premiums) || !is_numeric($auto_issued_premiums)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Auto Issued Premiums</strong> Total is Required.<br />';
+			}
+			if (!isset($fire_issued_premiums) || !is_numeric($fire_issued_premiums)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Fire Issued Premiums</strong> Total is Required.<br />';
+			}
+			if (!isset($life_issued_premiums) || !is_numeric($life_issued_premiums)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Life Issued Premiums</strong> Total is Required.<br />';
+			}
+			if (!isset($health_issued_premiums) || !is_numeric($health_issued_premiums)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Health Issued Premiums</strong> Total is Required.<br />';
+			}
+			if (!isset($bank_issued_premiums) || !is_numeric($bank_issued_premiums)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Bank Issued Premiums</strong> Total is Required.<br />';
+			}
+			if (!isset($auto_commissions) || !is_numeric($auto_commissions)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Auto Commissions</strong> Total is Required.<br />';
+			}
+			if (!isset($fire_commissions) || !is_numeric($fire_commissions)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Fire Commissions</strong> Total is Required.<br />';
+			}
+			if (!isset($life_commissions) || !is_numeric($life_commissions)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Life Commissions</strong> Total is Required.<br />';
+			}
+			if (!isset($health_commissions) || !is_numeric($health_commissions)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Health Commissions</strong> Total is Required.<br />';
+			}
+			if (!isset($bank_commissions) || !is_numeric($bank_commissions)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Bank Commissions</strong> Total is Required.<br />';
+			}
+			if (!isset($auto_policies_renewed) || !is_numeric($auto_policies_renewed)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Auto Policies Renewed</strong> Amount is Required.<br />';
+			}
+			if (!isset($fire_policies_renewed) || !is_numeric($fire_policies_renewed)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Fire Policies Renewed</strong> Amount is Required.<br />';
+			}
+			if (!isset($auto_renewal_premiums) || !is_numeric($auto_renewal_premiums)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Auto Renewal Premiums</strong> Total is Required.<br />';
+			}
+			if (!isset($fire_renewal_premiums) || !is_numeric($fire_renewal_premiums)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Fire Renewal Premiums</strong> Total is Required.<br />';
+			}
+			if (!isset($auto_renewal_commissions) || !is_numeric($auto_renewal_commissions)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Auto Renewal Commissions</strong> Total is Required.<br />';
+			}
+			if (!isset($fire_renewal_commissions) || !is_numeric($fire_renewal_commissions)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>New Fire Renewal Commissions</strong> Total is Required.<br />';
+			}
+			if (!isset($trailing_chart_totals) || !is_array($trailing_chart_totals)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>ERROR</strong>, Trailing 12 Months is Invalid or Missing.<br />';
+			}	
+			if (!isset($trailing_chart_extra_month) || !is_numeric($trailing_chart_extra_month)){
+				$return['error'] = true;
+				$return['msg'] .= '<strong>Trailing Current Month</strong> Total is Required.<br />';
+			}
+			
+			// submit success functionality
+			if ($return['error'] === false) {
+			
+				// put data
+				$commission_close_period = $commissions_model->saveClosePeriodData($employee_id,$period,$lifetime,$last_year,$last_ytd,$current_ytd,$last_month,$new_policies,$renewals,$charge_backs,$auto_policies_issued,$fire_policies_issued,$life_policies_issued,$health_policies_issued,$bank_policies_issued,$auto_issued_premiums,$fire_issued_premiums,$life_issued_premiums,$health_issued_premiums,$bank_issued_premiums,$auto_commissions,$fire_commissions,$life_commissions,$health_commissions,$bank_commissions,$auto_policies_renewed,$fire_policies_renewed,$auto_renewal_premiums,$fire_renewal_premiums,$auto_renewal_commissions,$fire_renewal_commissions,$trailing_chart_totals,$trailing_chart_extra_month);
+
+				if (empty($commission_close_period)) {
+					$return['error'] = true;
+					$return['msg'] .= '<strong>ERROR</strong>, Commission Period was not closed.';
+				} else {
+					$return['msg'] = '<strong>Success</strong>, Commission Period was closed.';
+				}
+				
+			} else {
+			
+				$return['msg'] = '<strong>Close Period Failed.</strong> One or More of the Required Fields Was Missing:<br /><br />'.$return['msg'];
+			
+			}
+
+			//Return json encoded results
+			echo json_encode($return);			
+			exit();
+			
+		}
+		
 		// load CSS based on method
 		$css = 'app_style.css';
 		// load jQuery script based on method
@@ -770,6 +973,7 @@ class App extends Controller
         // load views.
         require 'application/views/_templates/header.php';
         require 'application/views/_templates/main_header.php';
+        require 'application/views/commissions/modal_window.php';
         require 'application/views/commissions/header.php';
         require 'application/views/commissions/'.$sub.'.php';
         require 'application/views/_templates/footer.php';

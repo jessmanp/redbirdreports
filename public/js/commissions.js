@@ -33,6 +33,38 @@ function closeModal() {
 	$("#message").fadeOut();
 }
 
+// OPEN/CLOSE POPUP WINDOW
+function openWindow(type,message,id,fname,lname) {
+
+	$("#commissions-window").hide();
+
+	var winh = $(window).height();
+	var doch = $(document).height();
+	if (winh > doch) {
+		$("#commissions-popup").height(winh);
+	} else {
+		$("#commissions-popup").height(doch);
+	}
+	$("#commissions-popup").fadeIn();
+				
+	var winw = $(window).width();
+	var neww = (winw/2)-398;
+	var scrolled_val = $(document).scrollTop().valueOf();
+	var newh = (scrolled_val+25);
+	
+	$("#commissions-window").css({ "margin-left": neww+"px", "margin-top": "-300px" });
+	$("#commissions-window").fadeIn("fast");
+	$(".commissions-message").fadeIn("fast");
+
+}
+
+function closeWindow() {
+	$("#commissions-popup").fadeOut("fast");
+	$("#commissions-window").fadeOut("fast");
+	$(".commissions-message").fadeOut("fast");
+}
+
+
 // get number of days in a given month/year
 function numberOfDays(year,month) {
     var d = new Date(year, month, 0);
@@ -139,6 +171,11 @@ function loadPeriodDates(period) {
 	}
 }
 
+// CLOSE PERIOD
+function doClosePeriod() {
+	openWindow('close','Close Period','','','');
+}
+
 // LOAD
 $(document).ready(function() {
 
@@ -146,10 +183,71 @@ $(document).ready(function() {
 	$("#popupmessage").find(".plain-btn").on("click", function() {
 		closeModal();
 	});
+	
+	// CLOSE POPUP WINDOW
+	$(".plain-btn-close").on("click", function(event) {
+		event.preventDefault();
+		closeWindow();
+	});
 
 	// disable dropdowns by default
 	$("#commission_year").prop("disabled", true);
 	$("#commission_period").prop("disabled", true);
+	
+	// CLOSE PERIOD FORM SUBMIT
+	$("#commissions_close_period").on("click", function(event) {
+		event.preventDefault();
+		$("#close_current_period").submit();
+	});
+	
+	// CLOSE PERIOD BUTTON
+	$("#close-period").on("click", function(event) {
+		if ($("#user_id").val() > 0) {
+			//var emp_id = $("#user_id").val();
+			//var first = $("#emp_first_label").val();
+			//var last = $("#emp_last_label").val();
+			doClosePeriod();
+		} else {
+			var msg = "<strong>ERROR</strong>, No employee was selected.";
+			// show error message...
+			openModal('info',msg);
+		}
+	});
+	
+	// CLOSE PERIOD SUBMIT ACTION
+	$("#close_current_period").submit(function(event) {
+		event.preventDefault();
+		closeWindow();
+		//close the period for this employee
+		if ($("#user_id").val() > 0) {
+			$.ajax({
+					type: "POST",
+					url: "/app/commissions/closePeriod",
+					data: $(this).serialize(),
+					dataType: "json",
+					cache: false,
+        			//async: true,
+					success: function (data) {
+						console.log(data);
+						if (data.error == true) {
+							// show returned error msg here
+							openModal('error',data.msg);
+						} else {
+							// show success message...
+							openModal('info',data.msg);
+						}	
+					},
+					error: function (request, status, error) {
+        					console.log(error);
+					}
+			});
+		} else {
+			var msg = "<strong>ERROR</strong>, Invalid employee or no employee was selected.";
+			// show error message...
+			openModal('info',msg);
+		}
+		event.preventDefault();
+	});
 	
 	// LOAD PERIOD ON CHANGE
 	$("#period2").on("click", function(event) {
@@ -251,6 +349,15 @@ $(document).ready(function() {
 						} else {
 							// populate form fields with json data
 							$.each(data, function(key, value) {
+								if (value.user_new_open == 1) {
+									// change period status to open
+									$("#commission-period-box-closed").hide();
+									$("#commission-period-box").show();
+								} else {
+									// change period status to closed
+									$("#commission-period-box").hide();
+									$("#commission-period-box-closed").show();
+								}
 								// populate history
 								$("#clifetime").text("$"+value.user_new_lifetime_commission_total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
 								$("#clastyear").text("$"+value.user_new_lastyear_commission_total.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
@@ -347,26 +454,114 @@ $(document).ready(function() {
 								// update report period title	
 								$("#com_range").text($("#commission_period option:selected").text());
 								$("#com_year").text($("#commission_year").val());
-								// ENABLE BONUS BUTTONS
-								$("#update-com-bonus").removeClass();
-								$("#update-com-bonus").addClass("update-com-bonus");
-								$("#update-com-bonus").prop("disabled", false);
-								$("#update-com-other").removeClass();
-								$("#update-com-other").addClass("update-com-other");
-								$("#update-com-other").prop("disabled", false);
-								// ENABLE BONUS FIELDS
-								$("#commissions_bonus").prop("disabled", false);
-								$("#com_bonus_description").prop("disabled", false);
-								$("#commissions_other").prop("disabled", false);
-								$("#com_other_description").prop("disabled", false);
-								// POPULATE CHART
-								var trailing_totals = value.user_new_current_ytd_commission_trailing;
-								var currtime = new Date();
-								var thismonth = currtime.getMonth();
-								var currmo = trailing_totals[thismonth];
-								trailing_totals.push.apply(trailing_totals,trailing_totals.splice(0,thismonth));
-								trailing_totals.push(value.user_new_this_month_commission_total);
-								popChart(abrvmonths,trailing_totals);
+								if (value.user_new_open == 1) {
+									// ENABLE BONUS BUTTONS
+									$("#update-com-bonus").removeClass();
+									$("#update-com-bonus").addClass("update-com-bonus");
+									$("#update-com-bonus").prop("disabled", false);
+									$("#update-com-other").removeClass();
+									$("#update-com-other").addClass("update-com-other");
+									$("#update-com-other").prop("disabled", false);
+									// ENABLE BONUS FIELDS
+									$("#commissions_bonus").prop("disabled", false);
+									$("#com_bonus_description").prop("disabled", false);
+									$("#commissions_other").prop("disabled", false);
+									$("#com_other_description").prop("disabled", false);
+								} else {
+									// DISABLE BONUS BUTTONS
+									$("#update-com-bonus").switchClass("update-com-bonus","update-com-bonus-disabled");
+									$("#update-com-bonus").prop("disabled", true);
+									$("#update-com-other").switchClass("update-com-other","update-com-other-disabled");
+									$("#update-com-other").prop("disabled", true);
+									// DISABLE BONUS FIELDS
+									$("#commissions_bonus").prop("disabled", true);
+									$("#com_bonus_description").prop("disabled", true);
+									$("#commissions_other").prop("disabled", true);
+									$("#com_other_description").prop("disabled", true);
+								}
+								if (value.user_new_open == 1) {
+									// POPULATE CHART
+									var trailing_totals = value.user_new_current_ytd_commission_trailing;
+									var org_trailing_totals = trailing_totals;
+									var currtime = new Date();
+									var thismonth = currtime.getMonth();
+									var currmo = trailing_totals[thismonth];
+									trailing_totals.push.apply(trailing_totals,trailing_totals.splice(0,thismonth));
+									trailing_totals.push(value.user_new_this_month_commission_total);
+									popChart(abrvmonths,trailing_totals);
+									// POPULATE CLOSE PERIOD FIELDS
+									$("#user_id").val($("#commission_employees option:selected").val());
+									$("#period").val(date_range);
+									$("#lifetime").val(value.user_new_lifetime_commission_total);
+									$("#last_year").val(value.user_new_lastyear_commission_total);
+									$("#last_ytd").val(value.user_new_last_ytd_commission_total);
+									$("#current_ytd").val(value.user_new_current_ytd_commission_total);
+									$("#last_month").val(value.user_new_lastmonth_commission_total);
+									$("#new_policies").val(value.user_new_policies);
+									$("#renewals").val(value.user_renewals);
+									$("#charge_backs").val(value.user_chargebacks);
+									$("#auto_policies_issued").val(value.user_new_policy_count_auto);
+									$("#fire_policies_issued").val(value.user_new_policy_count_fire);
+									$("#life_policies_issued").val(value.user_new_policy_count_life);
+									$("#health_policies_issued").val(value.user_new_policy_count_health);
+									$("#bank_policies_issued").val(value.user_new_policy_count_bank);
+									$("#auto_issued_premiums").val(value.user_new_policy_premium_auto);
+									$("#fire_issued_premiums").val(value.user_new_policy_premium_fire);
+									$("#life_issued_premiums").val(value.user_new_policy_premium_life);
+									$("#health_issued_premiums").val(value.user_new_policy_premium_health);
+									$("#bank_issued_premiums").val(value.user_new_policy_premium_bank);
+									$("#auto_commissions").val(value.user_new_policy_commission_auto);
+									$("#fire_commissions").val(value.user_new_policy_commission_fire);
+									$("#life_commissions").val(value.user_new_policy_commission_life);
+									$("#health_commissions").val(value.user_new_policy_commission_health);
+									$("#bank_commissions").val(value.user_new_policy_commission_bank);
+									$("#auto_policies_renewed").val(value.user_renewal_policy_count_auto);
+									$("#fire_policies_renewed").val(value.user_renewal_policy_count_fire);
+									$("#auto_renewal_premiums").val(value.user_renewal_policy_premium_auto);
+									$("#fire_renewal_premiums").val(value.user_renewal_policy_premium_fire);
+									$("#auto_renewal_commissions").val(value.user_renewal_policy_commission_auto);
+									$("#fire_renewal_commissions").val(value.user_renewal_policy_commission_fire);
+									$("#trailing_chart_totals").val(org_trailing_totals);
+									$("#trailing_chart_extra_month").val(value.user_new_this_month_commission_total);
+								} else {
+									// POPULATE CHART
+									var trailing_totals = value.user_new_current_ytd_commission_trailing;
+									popChart(abrvmonths,trailing_totals);
+									// clear out close period fields
+									$("#user_id").val(-1);
+									$("#period").val("");
+									$("#lifetime").val("");
+									$("#last_year").val("");
+									$("#last_ytd").val("");
+									$("#current_ytd").val("");
+									$("#last_month").val("");
+									$("#new_policies").val("");
+									$("#renewals").val("");
+									$("#charge_backs").val("");
+									$("#auto_policies_issued").val("");
+									$("#fire_policies_issued").val("");
+									$("#life_policies_issued").val("");
+									$("#health_policies_issued").val("");
+									$("#bank_policies_issued").val("");
+									$("#auto_issued_premiums").val("");
+									$("#fire_issued_premiums").val("");
+									$("#life_issued_premiums").val("");
+									$("#health_issued_premiums").val("");
+									$("#bank_issued_premiums").val("");
+									$("#auto_commissions").val("");
+									$("#fire_commissions").val("");
+									$("#life_commissions").val("");
+									$("#health_commissions").val("");
+									$("#bank_commissions").val("");
+									$("#auto_policies_renewed").val("");
+									$("#fire_policies_renewed").val("");
+									$("#auto_renewal_premiums").val("");
+									$("#fire_renewal_premiums").val("");
+									$("#auto_renewal_commissions").val("");
+									$("#fire_renewal_commissions").val("");
+									$("#trailing_chart_totals").val("");
+									$("#trailing_chart_extra_month").val("");
+								}
 							});
 						}	
 					},
@@ -375,6 +570,10 @@ $(document).ready(function() {
 					}
 			});
 		} else {
+			// MAKE SURE PERIOD STATUS IS CLOSED
+			$("#commission-period-box").hide();
+			//$("#commission-period-box-closed").html('<br /><br /><em>No Period Selected</em>');
+			$("#commission-period-box-closed").show();
 			// DISABLE BONUS BUTTONS
 			$("#update-com-bonus").switchClass("update-com-bonus","update-com-bonus-disabled");
 			$("#update-com-bonus").prop("disabled", true);
@@ -453,6 +652,40 @@ $(document).ready(function() {
 			$("#renew_policy_commission_total").text('0.00');
 			// clear out chart
 			popChart(abrvmonths,0,0,0,0,0,0,0,0,0,0,0,0,0);
+			// clear out close period fields
+			$("#user_id").val(-1);
+			$("#period").val("");
+			$("#lifetime").val("");
+			$("#last_year").val("");
+			$("#last_ytd").val("");
+			$("#current_ytd").val("");
+			$("#last_month").val("");
+			$("#new_policies").val("");
+			$("#renewals").val("");
+			$("#charge_backs").val("");
+			$("#auto_policies_issued").val("");
+			$("#fire_policies_issued").val("");
+			$("#life_policies_issued").val("");
+			$("#health_policies_issued").val("");
+			$("#bank_policies_issued").val("");
+			$("#auto_issued_premiums").val("");
+			$("#fire_issued_premiums").val("");
+			$("#life_issued_premiums").val("");
+			$("#health_issued_premiums").val("");
+			$("#bank_issued_premiums").val("");
+			$("#auto_commissions").val("");
+			$("#fire_commissions").val("");
+			$("#life_commissions").val("");
+			$("#health_commissions").val("");
+			$("#bank_commissions").val("");
+			$("#auto_policies_renewed").val("");
+			$("#fire_policies_renewed").val("");
+			$("#auto_renewal_premiums").val("");
+			$("#fire_renewal_premiums").val("");
+			$("#auto_renewal_commissions").val("");
+			$("#fire_renewal_commissions").val("");
+			$("#trailing_chart_totals").val("");
+			$("#trailing_chart_extra_month").val("");
 		}
 	}
 	

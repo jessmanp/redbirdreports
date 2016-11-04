@@ -22,21 +22,50 @@ if ($frequency == 1) {
 			</div>
 			<div id="commission-period-box">
 				This Period is<br />
-<?php
-if ($open == 1) {
-?>
 				<img src="/public/img/period_open.png" class="period-open" />
-				<span style="font-weight:bold;font-size:24px;line-height:36px;">OPEN</span>
+				<span class="period-bold">OPEN</span>
+				<form id="close_current_period" name="close_current_period">
+					<input type="hidden" id="user_id" name="user_id" value="-1" />
+					<input type="hidden" id="period" name="period" value="" />
+					<input type="hidden" id="lifetime" name="lifetime" value="" />
+					<input type="hidden" id="last_year" name="last_year" value="" />
+					<input type="hidden" id="last_ytd" name="last_ytd" value="" />
+					<input type="hidden" id="current_ytd" name="current_ytd" value="" />
+					<input type="hidden" id="last_month" name="last_month" value="" />
+					<input type="hidden" id="new_policies" name="new_policies" value="" />
+					<input type="hidden" id="renewals" name="renewals" value="" />
+					<input type="hidden" id="charge_backs" name="charge_backs" value="" />
+					<input type="hidden" id="auto_policies_issued" name="auto_policies_issued" value="" />
+					<input type="hidden" id="fire_policies_issued" name="fire_policies_issued" value="" />
+					<input type="hidden" id="life_policies_issued" name="life_policies_issued" value="" />
+					<input type="hidden" id="health_policies_issued" name="health_policies_issued" value="" />
+					<input type="hidden" id="bank_policies_issued" name="bank_policies_issued" value="" />
+					<input type="hidden" id="auto_issued_premiums" name="auto_issued_premiums" value="" />
+					<input type="hidden" id="fire_issued_premiums" name="fire_issued_premiums" value="" />
+					<input type="hidden" id="life_issued_premiums" name="life_issued_premiums" value="" />
+					<input type="hidden" id="health_issued_premiums" name="health_issued_premiums" value="" />
+					<input type="hidden" id="bank_issued_premiums" name="bank_issued_premiums" value="" />
+					<input type="hidden" id="auto_commissions" name="auto_commissions" value="" />
+					<input type="hidden" id="fire_commissions" name="fire_commissions" value="" />
+					<input type="hidden" id="life_commissions" name="life_commissions" value="" />
+					<input type="hidden" id="health_commissions" name="health_commissions" value="" />
+					<input type="hidden" id="bank_commissions" name="bank_commissions" value="" />
+					<input type="hidden" id="auto_policies_renewed" name="auto_policies_renewed" value="" />
+					<input type="hidden" id="fire_policies_renewed" name="fire_policies_renewed" value="" />
+					<input type="hidden" id="auto_renewal_premiums" name="auto_renewal_premiums" value="" />
+					<input type="hidden" id="fire_renewal_premiums" name="fire_renewal_premiums" value="" />
+					<input type="hidden" id="auto_renewal_commissions" name="auto_renewal_commissions" value="" />
+					<input type="hidden" id="fire_renewal_commissions" name="fire_renewal_commissions" value="" />
+					<input type="hidden" id="trailing_chart_totals" name="trailing_chart_totals[]" value="" />
+					<input type="hidden" id="trailing_chart_extra_month" name="trailing_chart_extra_month" value="" />
+				</form>
 				<button id="close-period">Close This Period&nbsp;&nbsp;<img src="/public/img/btn_close.png" class="search-btn-icon" alt=""></button>
-<?php
-} elseif ($open == 0) {
-?>
+			</div>
+			<div id="commission-period-box-closed">
+				This Period is<br />
 				<br />
 				<img src="/public/img/period_closed.png" class="period-closed" />
-				<span style="font-weight:bold;font-size:24px;line-height:36px;">CLOSED</span>
-<?php
-}
-?>
+				<span class="period-bold">CLOSED</span>
 			</div>
 			<div class="sub-title">Commissions Frequency is <span id="commission_frequency"><?php echo $cf; ?></span></div>
 			<div class="commission-search-area">
