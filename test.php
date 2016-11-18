@@ -2,7 +2,7 @@
 $bonus = '$1,200.00abcd%^&*()';
 $bonus = preg_replace('/[^0-9.]+/ui', '', $bonus);
 
-echo $bonus."<hr />";
+//echo $bonus."<hr />";
 
 		// query last year commissions
 		$ts = time();

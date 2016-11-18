@@ -84,41 +84,41 @@
 						<!--- begin percetage area --->
 						<div class="table-row">
 							<div class="col" style="width:20%;">&nbsp;</div>
-							<div class="col" style="width:16%;"><strong>New</strong></div>
-							<div class="col" style="width:16%;"><strong>Added</strong></div>
-							<div class="col" style="width:16%;"><strong>Reinstated</strong></div>
-							<div class="col" style="width:16%;"><strong>Transferred</strong></div>
-							<div class="col" style="width:16%;"><strong>Renewal</strong></div>
+							<div class="col" style="width:16%;padding-right:16px;"><strong>New</strong></div>
+							<div class="col" style="width:16%;padding-right:16px;"><strong>Added</strong></div>
+							<div class="col" style="width:16%;padding-right:16px;"><strong>Reinstated</strong></div>
+							<div class="col" style="width:16%;padding-right:14px;"><strong>Transferred</strong></div>
+							<div class="col" style="width:16%;padding-right:14px;"><strong>Renewal</strong></div>
 						</div>
 						<div class="table-row">
 							<div class="col" style="width:20%;background-color:#cccccc;"><span class="table-title"><strong>Auto</strong><sup>*</sup></span></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_auto_new" name="employee_auto_new" placeholder="0%"></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_auto_added" name="employee_auto_added" placeholder="0%"></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_auto_reinstated" name="employee_auto_reinstated" placeholder="0%"></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_auto_transferred" name="employee_auto_transferred" placeholder="0%"></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_auto_renewal" name="employee_auto_renewal" placeholder="0%"></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_auto_new" name="employee_auto_new" placeholder="0"> <strong>%</strong></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_auto_added" name="employee_auto_added" placeholder="0"> <strong>%</strong></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_auto_reinstated" name="employee_auto_reinstated" placeholder="0"> <strong>%</strong></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_auto_transferred" name="employee_auto_transferred" placeholder="0"> <strong>%</strong></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_auto_renewal" name="employee_auto_renewal" placeholder="0"> <strong>%</strong></div>
 						</div>
 						<br />
 						<div class="table-row">
 							<div class="col" style="width:20%;">&nbsp;</div>
-							<div class="col" style="width:16%;"><strong>New</strong></div>
-							<div class="col" style="width:16%;"><strong>Added</strong></div>
-							<div class="col" style="width:16%;"><strong>Reinstated</strong></div>
-							<div class="col" style="width:16%;"><strong>Transferred</strong></div>
-							<div class="col" style="width:16%;"><strong>Renewal</strong></div>
+							<div class="col" style="width:16%;padding-right:16px;"><strong>New</strong></div>
+							<div class="col" style="width:16%;padding-right:16px;"><strong>Added</strong></div>
+							<div class="col" style="width:16%;padding-right:16px;"><strong>Reinstated</strong></div>
+							<div class="col" style="width:16%;padding-right:14px;"><strong>Transferred</strong></div>
+							<div class="col" style="width:16%;padding-right:14px;"><strong>Renewal</strong></div>
 						</div>
 						<div class="table-row">
 							<div class="col" style="width:20%;background-color:#cccccc;"><span class="table-title"><strong>Fire</strong><sup>*</sup></span></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_fire_new" name="employee_fire_new" placeholder="0%"></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_fire_added" name="employee_fire_added" placeholder="0%"></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_fire_reinstated" name="employee_fire_reinstated" placeholder="0%"></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_fire_transferred" name="employee_fire_transferred" placeholder="0%"></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_fire_renewal" name="employee_fire_renewal" placeholder="0%"></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_fire_new" name="employee_fire_new" placeholder="0"> <strong>%</strong></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_fire_added" name="employee_fire_added" placeholder="0"> <strong>%</strong></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_fire_reinstated" name="employee_fire_reinstated" placeholder="0"> <strong>%</strong></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_fire_transferred" name="employee_fire_transferred" placeholder="0"> <strong>%</strong></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_fire_renewal" name="employee_fire_renewal" placeholder="0"> <strong>%</strong></div>
 						</div>
 						<br />
 						<div class="table-row">
 							<div class="col" style="width:20%;">&nbsp;</div>
-							<div class="col" style="width:16%;"><strong>New</strong></div>
+							<div class="col" style="width:16%;padding-right:16px;"><strong>New</strong></div>
 							<div class="col" style="width:16%;"><strong>$ / Policy</strong></div>
 							<div class="col" style="width:16%;">&nbsp;</div>
 							<div class="col" style="width:16%;">&nbsp;</div>
@@ -126,7 +126,7 @@
 						</div>
 						<div class="table-row">
 							<div class="col" style="width:20%;background-color:#cccccc;"><span class="table-title"><strong>Life</strong><sup>*</sup></span></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_life_new" name="employee_life_new" placeholder="0%"></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_life_new" name="employee_life_new" placeholder="0"> <strong>%</strong></div>
 							<div class="col" style="width:16%;background-color:#eeeeee;"><strong>$</strong> <input type="text" id="employee_life_policy" name="employee_life_policy" placeholder="0.00"></div>
 							<div class="col" style="width:16%;background-color:#eeeeee;">&nbsp;</div>
 							<div class="col" style="width:16%;background-color:#eeeeee;">&nbsp;</div>
@@ -135,7 +135,7 @@
 						<br />
 						<div class="table-row">
 							<div class="col" style="width:20%;">&nbsp;</div>
-							<div class="col" style="width:16%;"><strong>New</strong></div>
+							<div class="col" style="width:16%;padding-right:16px;"><strong>New</strong></div>
 							<div class="col" style="width:16%;"><strong>$ / Policy</strong></div>
 							<div class="col" style="width:16%;">&nbsp;</div>
 							<div class="col" style="width:16%;">&nbsp;</div>
@@ -143,7 +143,7 @@
 						</div>
 						<div class="table-row">
 							<div class="col" style="width:20%;background-color:#cccccc;"><span class="table-title"><strong>Health</strong><sup>*</sup></span></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_health_new" name="employee_health_new" placeholder="0%"></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_health_new" name="employee_health_new" placeholder="0"> <strong>%</strong></div>
 							<div class="col" style="width:16%;background-color:#eeeeee;"><strong>$</strong> <input type="text" id="employee_health_policy" name="employee_health_policy" placeholder="0.00"></div>
 							<div class="col" style="width:16%;background-color:#eeeeee;">&nbsp;</div>
 							<div class="col" style="width:16%;background-color:#eeeeee;">&nbsp;</div>
