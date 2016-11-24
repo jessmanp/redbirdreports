@@ -357,10 +357,16 @@ class CommissionsModel
 					$lifetime_commission_total = ($lifetime_commission_total+(($health_policy_compensation_new/100)*$new_policy_info->premium));
 					$lifetime_commission_total = ($lifetime_commission_total+$health_policy_compensation_dollar);
 				}
-				if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
-					// calculate bank commission
-					$lifetime_commission_total = ($lifetime_commission_total+$deposit_policy_compensation_product);
+				if  ($new_policy_info->id == 50) {
+					// calculate bank commission on loan
 					$lifetime_commission_total = ($lifetime_commission_total+$loan_policy_compensation_product);
+				}
+				if  ($new_policy_info->id == 58) {
+					// calculate bank commission on deposit
+					$lifetime_commission_total = ($lifetime_commission_total+$deposit_policy_compensation_product);
+				}
+				if  ($new_policy_info->id == 70) {
+					// calculate bank commission on fund
 					$lifetime_commission_total = ($lifetime_commission_total+$fund_policy_compensation_product);
 				}
 			
@@ -421,10 +427,16 @@ class CommissionsModel
 					$lastyear_commission_total = ($lastyear_commission_total+(($health_policy_compensation_new/100)*$new_policy_info->premium));
 					$lastyear_commission_total = ($lastyear_commission_total+$health_policy_compensation_dollar);
 				}
-				if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
-					// calculate bank commission
-					$lastyear_commission_total = ($lastyear_commission_total+$deposit_policy_compensation_product);
+				if  ($new_policy_info->id == 50) {
+					// calculate bank commission on loan
 					$lastyear_commission_total = ($lastyear_commission_total+$loan_policy_compensation_product);
+				}
+				if  ($new_policy_info->id == 58) {
+					// calculate bank commission on deposit
+					$lastyear_commission_total = ($lastyear_commission_total+$deposit_policy_compensation_product);
+				}
+				if  ($new_policy_info->id == 70) {
+					// calculate bank commission on fund
 					$lastyear_commission_total = ($lastyear_commission_total+$fund_policy_compensation_product);
 				}
 			
@@ -485,10 +497,16 @@ class CommissionsModel
 					$last_ytd_commission_total = ($last_ytd_commission_total+(($health_policy_compensation_new/100)*$new_policy_info->premium));
 					$last_ytd_commission_total = ($last_ytd_commission_total+$health_policy_compensation_dollar);
 				}
-				if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
-					// calculate bank commission
-					$last_ytd_commission_total = ($last_ytd_commission_total+$deposit_policy_compensation_product);
+				if  ($new_policy_info->id == 50) {
+					// calculate bank commission on loan
 					$last_ytd_commission_total = ($last_ytd_commission_total+$loan_policy_compensation_product);
+				}
+				if  ($new_policy_info->id == 58) {
+					// calculate bank commission on deposit
+					$last_ytd_commission_total = ($last_ytd_commission_total+$deposit_policy_compensation_product);
+				}
+				if  ($new_policy_info->id == 70) {
+					// calculate bank commission on fund
 					$last_ytd_commission_total = ($last_ytd_commission_total+$fund_policy_compensation_product);
 				}
 			
@@ -549,10 +567,16 @@ class CommissionsModel
 					$current_ytd_commission_total = ($current_ytd_commission_total+(($health_policy_compensation_new/100)*$new_policy_info->premium));
 					$current_ytd_commission_total = ($current_ytd_commission_total+$health_policy_compensation_dollar);
 				}
-				if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
-					// calculate bank commission
-					$current_ytd_commission_total = ($current_ytd_commission_total+$deposit_policy_compensation_product);
+				if  ($new_policy_info->id == 50) {
+					// calculate bank commission on loan
 					$current_ytd_commission_total = ($current_ytd_commission_total+$loan_policy_compensation_product);
+				}
+				if  ($new_policy_info->id == 58) {
+					// calculate bank commission on deposit
+					$current_ytd_commission_total = ($current_ytd_commission_total+$deposit_policy_compensation_product);
+				}
+				if  ($new_policy_info->id == 70) {
+					// calculate bank commission on fund
 					$current_ytd_commission_total = ($current_ytd_commission_total+$fund_policy_compensation_product);
 				}
 			
@@ -613,10 +637,16 @@ class CommissionsModel
 					$lastmonth_commission_total = ($lastmonth_commission_total+(($health_policy_compensation_new/100)*$new_policy_info->premium));
 					$lastmonth_commission_total = ($lastmonth_commission_total+$health_policy_compensation_dollar);
 				}
-				if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
-					// calculate bank commission
-					$lastmonth_commission_total = ($lastmonth_commission_total+$deposit_policy_compensation_product);
+				if  ($new_policy_info->id == 50) {
+					// calculate bank commission on loan
 					$lastmonth_commission_total = ($lastmonth_commission_total+$loan_policy_compensation_product);
+				}
+				if  ($new_policy_info->id == 58) {
+					// calculate bank commission on deposit
+					$lastmonth_commission_total = ($lastmonth_commission_total+$deposit_policy_compensation_product);
+				}
+				if  ($new_policy_info->id == 70) {
+					// calculate bank commission on fund
 					$lastmonth_commission_total = ($lastmonth_commission_total+$fund_policy_compensation_product);
 				}
 			
@@ -695,10 +725,16 @@ class CommissionsModel
 							$current_ytd_commission_jan = ($current_ytd_commission_jan+(($health_policy_compensation_new/100)*$new_policy_info->premium));
 							$current_ytd_commission_jan = ($current_ytd_commission_jan+$health_policy_compensation_dollar);
 						}
-						if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
-							// calculate bank commission
-							$current_ytd_commission_jan = ($current_ytd_commission_jan+$deposit_policy_compensation_product);
+						if  ($new_policy_info->id == 50) {
+							// calculate bank commission on loan
 							$current_ytd_commission_jan = ($current_ytd_commission_jan+$loan_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 58) {
+							// calculate bank commission on deposit
+							$current_ytd_commission_jan = ($current_ytd_commission_jan+$deposit_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 70) {
+							// calculate bank commission on fund
 							$current_ytd_commission_jan = ($current_ytd_commission_jan+$fund_policy_compensation_product);
 						}
 					// *end* calculate trailing month
@@ -752,10 +788,16 @@ class CommissionsModel
 							$current_ytd_commission_feb = ($current_ytd_commission_feb+(($health_policy_compensation_new/100)*$new_policy_info->premium));
 							$current_ytd_commission_feb = ($current_ytd_commission_feb+$health_policy_compensation_dollar);
 						}
-						if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
-							// calculate bank commission
-							$current_ytd_commission_feb = ($current_ytd_commission_feb+$deposit_policy_compensation_product);
+						if  ($new_policy_info->id == 50) {
+							// calculate bank commission on loan
 							$current_ytd_commission_feb = ($current_ytd_commission_feb+$loan_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 58) {
+							// calculate bank commission on deposit
+							$current_ytd_commission_feb = ($current_ytd_commission_feb+$deposit_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 70) {
+							// calculate bank commission on fund
 							$current_ytd_commission_feb = ($current_ytd_commission_feb+$fund_policy_compensation_product);
 						}
 					// *end* calculate trailing month
@@ -809,10 +851,16 @@ class CommissionsModel
 							$current_ytd_commission_mar = ($current_ytd_commission_mar+(($health_policy_compensation_new/100)*$new_policy_info->premium));
 							$current_ytd_commission_mar = ($current_ytd_commission_mar+$health_policy_compensation_dollar);
 						}
-						if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
-							// calculate bank commission
-							$current_ytd_commission_mar = ($current_ytd_commission_mar+$deposit_policy_compensation_product);
+						if  ($new_policy_info->id == 50) {
+							// calculate bank commission on loan
 							$current_ytd_commission_mar = ($current_ytd_commission_mar+$loan_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 58) {
+							// calculate bank commission on deposit
+							$current_ytd_commission_mar = ($current_ytd_commission_mar+$deposit_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 70) {
+							// calculate bank commission on fund
 							$current_ytd_commission_mar = ($current_ytd_commission_mar+$fund_policy_compensation_product);
 						}
 					// *end* calculate trailing month
@@ -866,10 +914,16 @@ class CommissionsModel
 							$current_ytd_commission_apr = ($current_ytd_commission_apr+(($health_policy_compensation_new/100)*$new_policy_info->premium));
 							$current_ytd_commission_apr = ($current_ytd_commission_apr+$health_policy_compensation_dollar);
 						}
-						if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
-							// calculate bank commission
-							$current_ytd_commission_apr = ($current_ytd_commission_apr+$deposit_policy_compensation_product);
+						if  ($new_policy_info->id == 50) {
+							// calculate bank commission on loan
 							$current_ytd_commission_apr = ($current_ytd_commission_apr+$loan_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 58) {
+							// calculate bank commission on deposit
+							$current_ytd_commission_apr = ($current_ytd_commission_apr+$deposit_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 70) {
+							// calculate bank commission on fund
 							$current_ytd_commission_apr = ($current_ytd_commission_apr+$fund_policy_compensation_product);
 						}
 					// *end* calculate trailing month
@@ -923,10 +977,16 @@ class CommissionsModel
 							$current_ytd_commission_may = ($current_ytd_commission_may+(($health_policy_compensation_new/100)*$new_policy_info->premium));
 							$current_ytd_commission_may = ($current_ytd_commission_may+$health_policy_compensation_dollar);
 						}
-						if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
-							// calculate bank commission
-							$current_ytd_commission_may = ($current_ytd_commission_may+$deposit_policy_compensation_product);
+						if  ($new_policy_info->id == 50) {
+							// calculate bank commission on loan
 							$current_ytd_commission_may = ($current_ytd_commission_may+$loan_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 58) {
+							// calculate bank commission on deposit
+							$current_ytd_commission_may = ($current_ytd_commission_may+$deposit_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 70) {
+							// calculate bank commission on fund
 							$current_ytd_commission_may = ($current_ytd_commission_may+$fund_policy_compensation_product);
 						}
 					// *end* calculate trailing month
@@ -980,10 +1040,16 @@ class CommissionsModel
 							$current_ytd_commission_jun = ($current_ytd_commission_jun+(($health_policy_compensation_new/100)*$new_policy_info->premium));
 							$current_ytd_commission_jun = ($current_ytd_commission_jun+$health_policy_compensation_dollar);
 						}
-						if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
-							// calculate bank commission
-							$current_ytd_commission_jun = ($current_ytd_commission_jun+$deposit_policy_compensation_product);
+						if  ($new_policy_info->id == 50) {
+							// calculate bank commission on loan
 							$current_ytd_commission_jun = ($current_ytd_commission_jun+$loan_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 58) {
+							// calculate bank commission on deposit
+							$current_ytd_commission_jun = ($current_ytd_commission_jun+$deposit_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 70) {
+							// calculate bank commission on fund
 							$current_ytd_commission_jun = ($current_ytd_commission_jun+$fund_policy_compensation_product);
 						}
 					// *end* calculate trailing month
@@ -1037,10 +1103,16 @@ class CommissionsModel
 							$current_ytd_commission_jul = ($current_ytd_commission_jul+(($health_policy_compensation_new/100)*$new_policy_info->premium));
 							$current_ytd_commission_jul = ($current_ytd_commission_jul+$health_policy_compensation_dollar);
 						}
-						if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
-							// calculate bank commission
-							$current_ytd_commission_jul = ($current_ytd_commission_jul+$deposit_policy_compensation_product);
+						if  ($new_policy_info->id == 50) {
+							// calculate bank commission on loan
 							$current_ytd_commission_jul = ($current_ytd_commission_jul+$loan_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 58) {
+							// calculate bank commission on deposit
+							$current_ytd_commission_jul = ($current_ytd_commission_jul+$deposit_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 70) {
+							// calculate bank commission on fund
 							$current_ytd_commission_jul = ($current_ytd_commission_jul+$fund_policy_compensation_product);
 						}
 					// *end* calculate trailing month
@@ -1094,10 +1166,16 @@ class CommissionsModel
 							$current_ytd_commission_aug = ($current_ytd_commission_aug+(($health_policy_compensation_new/100)*$new_policy_info->premium));
 							$current_ytd_commission_aug = ($current_ytd_commission_aug+$health_policy_compensation_dollar);
 						}
-						if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
-							// calculate bank commission
-							$current_ytd_commission_aug = ($current_ytd_commission_aug+$deposit_policy_compensation_product);
+						if  ($new_policy_info->id == 50) {
+							// calculate bank commission on loan
 							$current_ytd_commission_aug = ($current_ytd_commission_aug+$loan_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 58) {
+							// calculate bank commission on deposit
+							$current_ytd_commission_aug = ($current_ytd_commission_aug+$deposit_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 70) {
+							// calculate bank commission on fund
 							$current_ytd_commission_aug = ($current_ytd_commission_aug+$fund_policy_compensation_product);
 						}
 					// *end* calculate trailing month
@@ -1151,10 +1229,16 @@ class CommissionsModel
 							$current_ytd_commission_sep = ($current_ytd_commission_sep+(($health_policy_compensation_new/100)*$new_policy_info->premium));
 							$current_ytd_commission_sep = ($current_ytd_commission_sep+$health_policy_compensation_dollar);
 						}
-						if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
-							// calculate bank commission
-							$current_ytd_commission_sep = ($current_ytd_commission_sep+$deposit_policy_compensation_product);
+						if  ($new_policy_info->id == 50) {
+							// calculate bank commission on loan
 							$current_ytd_commission_sep = ($current_ytd_commission_sep+$loan_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 58) {
+							// calculate bank commission on deposit
+							$current_ytd_commission_sep = ($current_ytd_commission_sep+$deposit_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 70) {
+							// calculate bank commission on fund
 							$current_ytd_commission_sep = ($current_ytd_commission_sep+$fund_policy_compensation_product);
 						}
 					// *end* calculate trailing month
@@ -1208,10 +1292,16 @@ class CommissionsModel
 							$current_ytd_commission_oct = ($current_ytd_commission_oct+(($health_policy_compensation_new/100)*$new_policy_info->premium));
 							$current_ytd_commission_oct = ($current_ytd_commission_oct+$health_policy_compensation_dollar);
 						}
-						if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
-							// calculate bank commission
-							$current_ytd_commission_oct = ($current_ytd_commission_oct+$deposit_policy_compensation_product);
+						if  ($new_policy_info->id == 50) {
+							// calculate bank commission on loan
 							$current_ytd_commission_oct = ($current_ytd_commission_oct+$loan_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 58) {
+							// calculate bank commission on deposit
+							$current_ytd_commission_oct = ($current_ytd_commission_oct+$deposit_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 70) {
+							// calculate bank commission on fund
 							$current_ytd_commission_oct = ($current_ytd_commission_oct+$fund_policy_compensation_product);
 						}
 					// *end* calculate trailing month
@@ -1265,10 +1355,16 @@ class CommissionsModel
 							$current_ytd_commission_nov = ($current_ytd_commission_nov+(($health_policy_compensation_new/100)*$new_policy_info->premium));
 							$current_ytd_commission_nov = ($current_ytd_commission_nov+$health_policy_compensation_dollar);
 						}
-						if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
-							// calculate bank commission
-							$current_ytd_commission_nov = ($current_ytd_commission_nov+$deposit_policy_compensation_product);
+						if  ($new_policy_info->id == 50) {
+							// calculate bank commission on loan
 							$current_ytd_commission_nov = ($current_ytd_commission_nov+$loan_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 58) {
+							// calculate bank commission on deposit
+							$current_ytd_commission_nov = ($current_ytd_commission_nov+$deposit_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 70) {
+							// calculate bank commission on fund
 							$current_ytd_commission_nov = ($current_ytd_commission_nov+$fund_policy_compensation_product);
 						}
 					// *end* calculate trailing month
@@ -1322,10 +1418,16 @@ class CommissionsModel
 							$current_ytd_commission_dec = ($current_ytd_commission_dec+(($health_policy_compensation_new/100)*$new_policy_info->premium));
 							$current_ytd_commission_dec = ($current_ytd_commission_dec+$health_policy_compensation_dollar);
 						}
-						if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
-							// calculate bank commission
-							$current_ytd_commission_dec = ($current_ytd_commission_dec+$deposit_policy_compensation_product);
+						if  ($new_policy_info->id == 50) {
+							// calculate bank commission on loan
 							$current_ytd_commission_dec = ($current_ytd_commission_dec+$loan_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 58) {
+							// calculate bank commission on deposit
+							$current_ytd_commission_dec = ($current_ytd_commission_dec+$deposit_policy_compensation_product);
+						}
+						if  ($new_policy_info->id == 70) {
+							// calculate bank commission on fund
 							$current_ytd_commission_dec = ($current_ytd_commission_dec+$fund_policy_compensation_product);
 						}
 					// *end* calculate trailing month
@@ -1401,10 +1503,16 @@ class CommissionsModel
 					$this_month_commission_total = ($this_month_commission_total+(($health_policy_compensation_new/100)*$new_policy_info->premium));
 					$this_month_commission_total = ($this_month_commission_total+$health_policy_compensation_dollar);
 				}
-				if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
-					// calculate bank commission
-					$this_month_commission_total = ($this_month_commission_total+$deposit_policy_compensation_product);
+				if  ($new_policy_info->id == 50) {
+					// calculate bank commission on loan
 					$this_month_commission_total = ($this_month_commission_total+$loan_policy_compensation_product);
+				}
+				if  ($new_policy_info->id == 58) {
+					// calculate bank commission on deposit
+					$this_month_commission_total = ($this_month_commission_total+$deposit_policy_compensation_product);
+				}
+				if  ($new_policy_info->id == 70) {
+					// calculate bank commission on fund
 					$this_month_commission_total = ($this_month_commission_total+$fund_policy_compensation_product);
 				}
 			
@@ -1509,13 +1617,25 @@ class CommissionsModel
 					$health_policy_commission_total = ($health_policy_commission_total+(($health_policy_compensation_new/100)*$new_policy_info->premium));
 					$health_policy_commission_total = ($health_policy_commission_total+$health_policy_compensation_dollar);
 				}
-				if  ($new_policy_info->id == 50 || $new_policy_info->id == 58 || $new_policy_info->id == 70) {
+				if  ($new_policy_info->id == 50) {
 					// calculate bank issued count
 					$bank_policy_count++;
 					$bank_policy_premium_total = ($bank_policy_premium_total+$new_policy_info->premium);
-					// calculate bank commission
-					$bank_policy_commission_total = ($bank_policy_commission_total+$deposit_policy_compensation_product);
+					// calculate bank commission on loan
 					$bank_policy_commission_total = ($bank_policy_commission_total+$loan_policy_compensation_product);
+				}
+				if  ($new_policy_info->id == 58) {
+					// calculate bank issued count
+					$bank_policy_count++;
+					$bank_policy_premium_total = ($bank_policy_premium_total+$new_policy_info->premium);
+					// calculate bank commission on deposit
+					$bank_policy_commission_total = ($bank_policy_commission_total+$deposit_policy_compensation_product);
+				}
+				if  ($new_policy_info->id == 70) {
+					// calculate bank issued count
+					$bank_policy_count++;
+					$bank_policy_premium_total = ($bank_policy_premium_total+$new_policy_info->premium);
+					// calculate bank commission on fund
 					$bank_policy_commission_total = ($bank_policy_commission_total+$fund_policy_compensation_product);
 				}
 			

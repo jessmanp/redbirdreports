@@ -149,7 +149,7 @@ function populateDates(period,year) {
 							$("<option></option>").val((i+1)+":"+days[j]+"-"+nod).html(months[i].substring(0,3)+" "+days[j]+"-"+nod)
 						);
 					}
-					if (currmonth == month && currday == days[j]) {
+					if (currmonth == month && currday >= days[j]) {
 						var selday = currmonth+":"+days[j]+"-"+nod;
 					}
 				}
