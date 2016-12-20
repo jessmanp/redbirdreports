@@ -27,9 +27,121 @@ class App extends Controller
 
 	public function dashboard($sub = 'index')
     {
-		// load main model
+		// load models
 		$main_model = $this->loadModel('MainModel');
 		$header_data = $main_model->getHeaderInfo($_SESSION['user_id']);
+		$setup_model = $this->loadModel('SetupModel');
+		$dashboard_model = $this->loadModel('DashboardModel');
+		
+		if ($sub == 'getEmployeeList') {
+
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+		
+			// get agency id based on owner
+			$agency_id = $setup_model->getAgencyID($_SESSION['user_id']);
+
+			// get list of employees
+			$employees = $dashboard_model->getAllEmployees($agency_id);
+
+			if (empty($employees)) {
+				$return['error'] = true;
+				$return['msg'] .= 'ERROR. No employee(s) found.';
+			} else {
+				$return = $employees;
+			}
+
+			//Return json encoded results
+			echo json_encode($return);
+			exit();
+
+		}
+		
+		if ($sub == 'getChartData') {
+			// get dash data
+			
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+			
+			// get agency id based on owner
+			$agency_id = $setup_model->getAgencyID($_SESSION['user_id']);
+
+			// *POPULATE DASHBOARD CHART DATA*
+			$employee_id = trim(@$_GET['eid']); // must be an existing ID
+			$type = trim(@$_GET['type']); // must be policy or premium
+			$date_range = trim(@$_GET['date']); // must be a custom range (i.e. 1:1-31:2016 would be Jan 1st thru 31st in 2016)
+			
+			if (!isset($employee_id) || $employee_id == '' || !is_numeric($employee_id)) {
+				$return['error'] = true;
+				$return['msg'] .= '<strong>ERROR</strong>, Invalid employee or no employee was selected.';
+			}
+			
+			if (!isset($type) || $type == '') {
+				$return['error'] = true;
+				$return['msg'] .= '<strong>ERROR</strong>, Report type is missing.';
+			} else {
+				if ($type != 'policy' || $type != 'premium') {
+					$return['error'] = true;
+					$return['msg'] .= '<strong>ERROR</strong>, Invalid type was selected.';
+				}
+			}
+			
+			if (isset($date_range) && $date_range != '') {
+				// cechk for first date
+				$rangesplit = explode('.',$date_range);
+				$monthsplit = explode(':',$rangesplit[0]);
+				$daysplit = explode('-',$monthsplit[1]);
+				$dmonth = $monthsplit[0];
+				$ddayfirst = $daysplit[0];
+				$ddaylast = $daysplit[1];
+				$dyear = $monthsplit[2];
+				if (!is_numeric($dmonth) || !is_numeric($ddayfirst) || !is_numeric($ddaylast)) {
+					$return['error'] = true;
+					$return['msg'] .= '<strong>ERROR</strong>, Invalid first date range was selected.';
+				} else {
+					$dateA = $dyear.'-'.str_pad($dmonth, 2, '0', STR_PAD_LEFT).'-'.str_pad($ddayfirst, 2, '0', STR_PAD_LEFT).'  00:00:00';
+					$dateB = $dyear.'-'.str_pad($dmonth, 2, '0', STR_PAD_LEFT).'-'.str_pad($ddaylast, 2, '0', STR_PAD_LEFT).' 23:59:59';
+				}
+				// check for second date
+				if (isset($rangesplit[1]) && $rangesplit[1] != ''){
+					$monthsplit = explode(':',$rangesplit[1]);
+					$daysplit = explode('-',$monthsplit[1]);
+					$dmonth = $monthsplit[0];
+					$ddayfirst = $daysplit[0];
+					$ddaylast = $daysplit[1];
+					$dyear = $monthsplit[2];
+					if (!is_numeric($dmonth) || !is_numeric($ddayfirst) || !is_numeric($ddaylast)) {
+						$return['error'] = true;
+						$return['msg'] .= '<strong>ERROR</strong>, Invalid second date range was selected.';
+					} else {
+						$dateC = $dyear.'-'.str_pad($dmonth, 2, '0', STR_PAD_LEFT).'-'.str_pad($ddayfirst, 2, '0', STR_PAD_LEFT).'  00:00:00';
+						$dateD = $dyear.'-'.str_pad($dmonth, 2, '0', STR_PAD_LEFT).'-'.str_pad($ddaylast, 2, '0', STR_PAD_LEFT).' 23:59:59';
+					}
+				} else {
+					$dateC = 0;
+					$dateD = 0;
+				}				
+			}
+			
+			// get charts data
+			$chart_data = $dashboard_model->getDashChartInfo($agency_id,$employee_id,$dateA,$dateB,$dateC,$dateD,$date_range);
+
+			if (empty($chart_data)) {
+				$return['error'] = true;
+				$return['msg'] .= '<br /><br /><strong>ERROR</strong>, No agency data found.';
+			} else {
+				$return = $chart_data;
+			}
+
+			//Return json encoded results
+			echo json_encode($return);			
+			exit();
+		
+		}
 
 		// load CSS based on method
 		$css = 'app_style.css';
@@ -38,6 +150,7 @@ class App extends Controller
         // load views.
         require 'application/views/_templates/header.php';
         require 'application/views/_templates/main_header.php';
+        require 'application/views/dashboard/header.php';
         require 'application/views/dashboard/'.$sub.'.php';
         require 'application/views/_templates/footer.php';
     }

@@ -205,7 +205,7 @@ class CommissionsModel
 			// query this months commissions
 			$ts = time();
 			$start = strtotime('first day of this month', $ts);
-			$this_month = array(date('Y-m-d', $start), date('Y-m-d', $start));
+			$this_month = array(date('Y-m-d', $start), date('Y-m-d', strtotime('today', time())));
 			$date_this_month_dateA = $this_month[0]." 00:00:00";
 			$date_this_month_dateB = $this_month[1]." 23:59:59";
 			$query_get_policies_this_month = $this->db->prepare('SELECT CASE policy_categories.parent_id WHEN 0 THEN policy_categories.id ELSE policy_categories.parent_id END AS id, policies.date_written, policies.premium, policies.business_type_id, policies.renewal FROM policies, policy_categories WHERE policies.category_id = policy_categories.id AND policies.agency_id = :agency_id AND policies.user_id = :user_id AND (policies.status = 1 OR policies.status = 2) AND (policies.date_written >= :date_a AND policies.date_written <= :date_b);');
