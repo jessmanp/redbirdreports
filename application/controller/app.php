@@ -142,6 +142,66 @@ class App extends Controller
 			exit();
 		
 		}
+		
+		if ($sub == 'getBarData') {
+			// get dash data
+			
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+			
+			// get agency id based on owner
+			$agency_id = $setup_model->getAgencyID($_SESSION['user_id']);
+
+			// *POPULATE DASHBOARD CHART DATA*
+			$employee_id = trim(@$_GET['eid']); // must be an existing ID
+			$type = trim(@$_GET['type']); // must be policy or premium
+			$year = trim(@$_GET['year']); // must be a year only
+			
+			if (!isset($employee_id) || $employee_id == '' || !is_numeric($employee_id)) {
+				$return['error'] = true;
+				$return['msg'] .= '<strong>ERROR</strong>, Invalid employee or no employee was selected.';
+			}
+			
+			if (!isset($type) || $type == '') {
+				$return['error'] = true;
+				$return['msg'] .= '<strong>ERROR</strong>, Report type is missing.';
+			} else {
+				if ($type != 'policy' || $type != 'premium') {
+					$return['error'] = true;
+					$return['msg'] .= '<strong>ERROR</strong>, Invalid type was selected.';
+				}
+			}
+			
+			if (isset($year) && $year != '') {
+				if (!is_numeric($year)) {
+					$return['error'] = true;
+					$return['msg'] .= '<strong>ERROR</strong>, Invalid year was selected.';
+				} else {
+					$dateA = $year.'-01-01 00:00:00';
+					$dateB = $year.'-12-31 23:59:59';
+					$lyear = ($year-1);
+					$dateC = $lyear.'-01-01 00:00:00';
+					$dateD = $lyear.'-12-31 23:59:59';
+				}	
+			}
+			
+			// get charts data
+			$chart_data = $dashboard_model->getDashBarInfo($agency_id,$employee_id,$dateA,$dateB,$dateC,$dateD);
+
+			if (empty($chart_data)) {
+				$return['error'] = true;
+				$return['msg'] .= '<br /><br /><strong>ERROR</strong>, No agency data found.';
+			} else {
+				$return = $chart_data;
+			}
+
+			//Return json encoded results
+			echo json_encode($return);			
+			exit();
+		
+		}
 
 		// load CSS based on method
 		$css = 'app_style.css';

@@ -37,9 +37,9 @@ class DashboardModel
     	if ($dateC == 0 && $dateD == 0 ) {
 			// get policies based on month
 			if ($employee_id != 0) {
-				$query_get_policies_month = $this->db->prepare("SELECT CASE policy_categories.parent_id WHEN 0 THEN policy_categories.id ELSE policy_categories.parent_id END AS category_id, policies.source_type_id AS source_id, policies.premium FROM policies, policy_categories WHERE policies.category_id = policy_categories.id AND active = 1 AND agency_id = :agency_id AND user_id = :user_id AND (date_written >= :date_a AND date_written <= :date_b);");
+				$query_get_policies_month = $this->db->prepare("SELECT CASE policy_categories.parent_id WHEN 0 THEN policy_categories.id ELSE policy_categories.parent_id END AS category_id, policies.source_type_id AS source_id, policies.premium FROM policies, policy_categories WHERE policies.category_id = policy_categories.id AND policies.active = 1 AND policies.renewal = 0 AND policies.agency_id = :agency_id AND policies.user_id = :user_id AND (policies.status = 1 OR policies.status = 2) AND (date_written >= :date_a AND date_written <= :date_b);");
 			} else {
-				$query_get_policies_month = $this->db->prepare("SELECT CASE policy_categories.parent_id WHEN 0 THEN policy_categories.id ELSE policy_categories.parent_id END AS category_id, policies.source_type_id AS source_id, policies.premium FROM policies, policy_categories WHERE policies.category_id = policy_categories.id AND active = 1 AND agency_id = :agency_id AND (date_written >= :date_a AND date_written <= :date_b);");
+				$query_get_policies_month = $this->db->prepare("SELECT CASE policy_categories.parent_id WHEN 0 THEN policy_categories.id ELSE policy_categories.parent_id END AS category_id, policies.source_type_id AS source_id, policies.premium FROM policies, policy_categories WHERE policies.category_id = policy_categories.id AND policies.active = 1 AND policies.renewal = 0 AND policies.agency_id = :agency_id AND (policies.status = 1 OR policies.status = 2) AND (date_written >= :date_a AND date_written <= :date_b);");
 			}
 			$query_get_policies_month->bindValue(':agency_id', $agency_id, PDO::PARAM_INT);
 			if ($employee_id != 0) {
@@ -59,9 +59,9 @@ class DashboardModel
 		} else {
 			// get policies based on year
 			if ($employee_id != 0) {
-				$query_get_policies_year = $this->db->prepare("SELECT CASE policy_categories.parent_id WHEN 0 THEN policy_categories.id ELSE policy_categories.parent_id END AS category_id, policies.source_type_id AS source_id, policies.premium FROM policies, policy_categories WHERE policies.category_id = policy_categories.id AND active = 1 AND agency_id = :agency_id AND user_id = :user_id AND (date_written >= :date_a AND date_written <= :date_d);");
+				$query_get_policies_year = $this->db->prepare("SELECT CASE policy_categories.parent_id WHEN 0 THEN policy_categories.id ELSE policy_categories.parent_id END AS category_id, policies.source_type_id AS source_id, policies.premium FROM policies, policy_categories WHERE policies.category_id = policy_categories.id AND policies.active = 1 AND policies.agency_id = :agency_id AND policies.user_id = :user_id AND (policies.status = 1 OR policies.status = 2) AND (policies.date_written >= :date_a AND policies.date_written <= :date_d);");
 			} else {
-				$query_get_policies_year = $this->db->prepare("SELECT CASE policy_categories.parent_id WHEN 0 THEN policy_categories.id ELSE policy_categories.parent_id END AS category_id, policies.source_type_id AS source_id, policies.premium FROM policies, policy_categories WHERE policies.category_id = policy_categories.id AND active = 1 AND agency_id = :agency_id AND (date_written >= :date_a AND date_written <= :date_d);");
+				$query_get_policies_year = $this->db->prepare("SELECT CASE policy_categories.parent_id WHEN 0 THEN policy_categories.id ELSE policy_categories.parent_id END AS category_id, policies.source_type_id AS source_id, policies.premium FROM policies, policy_categories WHERE policies.category_id = policy_categories.id AND policies.active = 1 AND policies.agency_id = :agency_id AND (policies.status = 1 OR policies.status = 2) AND (policies.date_written >= :date_a AND policies.date_written <= :date_d);");
 			}
 			$query_get_policies_year->bindValue(':agency_id', $agency_id, PDO::PARAM_INT);
 			if ($employee_id != 0) {
@@ -264,6 +264,265 @@ class DashboardModel
 		$dash_summary[0]['psource_chart'] = $source_chart;
 		$dash_summary[0]['mpolicy_chart'] = $policy_chart_premium;
 		$dash_summary[0]['msource_chart'] = $source_chart_premium;
+		
+		if (!empty($dash_summary)) {
+			return $dash_summary;
+		}
+		
+		return false;
+		
+    }
+    
+    /**
+     * Query dashboard data to populate charts
+     */
+    public function getDashBarInfo($agency_id,$employee_id,$dateA,$dateB,$dateC,$dateD)
+    {	
+		// get policies based on current year
+		if ($employee_id != 0) {
+			$query_get_policies_tyear = $this->db->prepare("SELECT CASE policy_categories.parent_id WHEN 0 THEN policy_categories.id ELSE policy_categories.parent_id END AS category_id, policies.source_type_id AS source_id, policies.premium, policies.date_written FROM policies, policy_categories WHERE policies.category_id = policy_categories.id AND policies.active = 1 AND policies.agency_id = :agency_id AND policies.user_id = :user_id AND (policies.status = 1 OR policies.status = 2) AND (policies.date_written >= :date_a AND policies.date_written <= :date_b);");
+		} else {
+			$query_get_policies_tyear = $this->db->prepare("SELECT CASE policy_categories.parent_id WHEN 0 THEN policy_categories.id ELSE policy_categories.parent_id END AS category_id, policies.source_type_id AS source_id, policies.premium, policies.date_written FROM policies, policy_categories WHERE policies.category_id = policy_categories.id AND policies.active = 1 AND policies.agency_id = :agency_id AND (policies.status = 1 OR policies.status = 2) AND (policies.date_written >= :date_a AND policies.date_written <= :date_b);");
+		}
+		$query_get_policies_tyear->bindValue(':agency_id', $agency_id, PDO::PARAM_INT);
+		if ($employee_id != 0) {
+			$query_get_policies_tyear->bindValue(':user_id', $employee_id, PDO::PARAM_INT);
+		}
+		$query_get_policies_tyear->bindValue(':date_a', $dateA, PDO::PARAM_STR);
+		$query_get_policies_tyear->bindValue(':date_b', $dateB, PDO::PARAM_STR);
+		$query_get_policies_tyear->execute();
+		$this_year_policies_query = $query_get_policies_tyear->fetchAll();
+		$policy_this_year_count = $query_get_policies_tyear->rowCount();
+		
+		// get policies based on last year
+		if ($employee_id != 0) {
+			$query_get_policies_lyear = $this->db->prepare("SELECT CASE policy_categories.parent_id WHEN 0 THEN policy_categories.id ELSE policy_categories.parent_id END AS category_id, policies.source_type_id AS source_id, policies.premium, policies.date_written FROM policies, policy_categories WHERE policies.category_id = policy_categories.id AND policies.active = 1 AND policies.agency_id = :agency_id AND policies.user_id = :user_id AND (policies.status = 1 OR policies.status = 2) AND (policies.date_written >= :date_c AND policies.date_written <= :date_d);");
+		} else {
+			$query_get_policies_lyear = $this->db->prepare("SELECT CASE policy_categories.parent_id WHEN 0 THEN policy_categories.id ELSE policy_categories.parent_id END AS category_id, policies.source_type_id AS source_id, policies.premium, policies.date_written FROM policies, policy_categories WHERE policies.category_id = policy_categories.id AND policies.active = 1 AND policies.agency_id = :agency_id AND (policies.status = 1 OR policies.status = 2) AND (policies.date_written >= :date_c AND policies.date_written <= :date_d);");
+		}
+		$query_get_policies_lyear->bindValue(':agency_id', $agency_id, PDO::PARAM_INT);
+		if ($employee_id != 0) {
+			$query_get_policies_lyear->bindValue(':user_id', $employee_id, PDO::PARAM_INT);
+		}
+		$query_get_policies_lyear->bindValue(':date_c', $dateC, PDO::PARAM_STR);
+		$query_get_policies_lyear->bindValue(':date_d', $dateD, PDO::PARAM_STR);
+		$query_get_policies_lyear->execute();
+		$last_year_policies_query = $query_get_policies_lyear->fetchAll();
+		$policy_last_year_count = $query_get_policies_lyear->rowCount();
+		
+		// CALCULATE this years counts ////////////////////////////////////////////////////////////////////////
+		$current_year_count = array(0,0,0,0,0,0,0,0,0,0,0,0);
+	
+		if ($policy_this_year_count > 0) {
+			foreach($this_year_policies_query as $ty_policy_info) {
+		
+				// get policy month
+				$month = explode("-",$ty_policy_info->date_written);
+				$month = $month[1];
+		
+				// add up totals in this years months
+				if ($month == "01") {
+					$current_year_count[0] = (float) $current_year_count[0]+1;
+				}
+				if ($month == "02") {
+					$current_year_count[1] = (float) $current_year_count[1]+1;
+				}
+				if ($month == "03") {
+					$current_year_count[2] = (float) $current_year_count[2]+1;
+				}
+				if ($month == "04") {
+					$current_year_count[3] = (float) $current_year_count[3]+1;
+				}
+				if ($month == "05") {
+					$current_year_count[4] = (float) $current_year_count[4]+1;
+				}
+				if ($month == "06") {
+					$current_year_count[5] = (float) $current_year_count[5]+1;
+				}
+				if ($month == "07") {
+					$current_year_count[6] = (float) $current_year_count[6]+1;
+				}
+				if ($month == "08") {
+					$current_year_count[7] = (float) $current_year_count[7]+1;
+				}
+				if ($month == "09") {
+					$current_year_count[8] = (float) $current_year_count[8]+1;
+				}
+				if ($month == "10") {
+					$current_year_count[9] = (float) $current_year_count[9]+1;
+				}
+				if ($month == "11") {
+					$current_year_count[10] = (float) $current_year_count[10]+1;
+				}
+				if ($month == "12") {
+					$current_year_count[11] = (float) $current_year_count[11]+1;
+				}
+			
+			}
+			
+		}
+		
+		// CALCULATE last years counts ////////////////////////////////////////////////////////////////////////
+		$previous_year_count = array(0,0,0,0,0,0,0,0,0,0,0,0);
+	
+		if ($policy_last_year_count > 0) {
+			foreach($last_year_policies_query as $ly_policy_info) {
+		
+				// get policy month
+				$month = explode("-",$ly_policy_info->date_written);
+				$month = $month[1];
+		
+				// add up totals in last years months
+				if ($month == "01") {
+					$previous_year_count[0] = (float) $previous_year_count[0]+1;
+				}
+				if ($month == "02") {
+					$previous_year_count[1] = (float) $previous_year_count[1]+1;
+				}
+				if ($month == "03") {
+					$previous_year_count[2] = (float) $previous_year_count[2]+1;
+				}
+				if ($month == "04") {
+					$previous_year_count[3] = (float) $previous_year_count[3]+1;
+				}
+				if ($month == "05") {
+					$previous_year_count[4] = (float) $previous_year_count[4]+1;
+				}
+				if ($month == "06") {
+					$previous_year_count[5] = (float) $previous_year_count[5]+1;
+				}
+				if ($month == "07") {
+					$previous_year_count[6] = (float) $previous_year_count[6]+1;
+				}
+				if ($month == "08") {
+					$previous_year_count[7] = (float) $previous_year_count[7]+1;
+				}
+				if ($month == "09") {
+					$previous_year_count[8] = (float) $previous_year_count[8]+1;
+				}
+				if ($month == "10") {
+					$previous_year_count[9] = (float) $previous_year_count[9]+1;
+				}
+				if ($month == "11") {
+					$previous_year_count[10] = (float) $previous_year_count[10]+1;
+				}
+				if ($month == "12") {
+					$previous_year_count[11] = (float) $previous_year_count[11]+1;
+				}
+			
+			}
+			
+		}
+		
+		// CALCULATE this years premiums ////////////////////////////////////////////////////////////////////////
+		$current_year_amount = array(0,0,0,0,0,0,0,0,0,0,0,0);
+	
+		if ($policy_this_year_count > 0) {
+			foreach($this_year_policies_query as $ty_policy_info) {
+		
+				// get policy month
+				$month = explode("-",$ty_policy_info->date_written);
+				$month = $month[1];
+		
+				// add up totals in this years months
+				if ($month == "01") {
+					$current_year_amount[0] = (float) $current_year_amount[0]+$ty_policy_info->premium;
+				}
+				if ($month == "02") {
+					$current_year_amount[1] = (float) $current_year_amount[1]+$ty_policy_info->premium;
+				}
+				if ($month == "03") {
+					$current_year_amount[2] = (float) $current_year_amount[2]+$ty_policy_info->premium;
+				}
+				if ($month == "04") {
+					$current_year_amount[3] = (float) $current_year_amount[3]+$ty_policy_info->premium;
+				}
+				if ($month == "05") {
+					$current_year_amount[4] = (float) $current_year_amount[4]+$ty_policy_info->premium;
+				}
+				if ($month == "06") {
+					$current_year_amount[5] = (float) $current_year_amount[5]+$ty_policy_info->premium;
+				}
+				if ($month == "07") {
+					$current_year_amount[6] = (float) $current_year_amount[6]+$ty_policy_info->premium;
+				}
+				if ($month == "08") {
+					$current_year_amount[7] = (float) $current_year_amount[7]+$ty_policy_info->premium;
+				}
+				if ($month == "09") {
+					$current_year_amount[8] = (float) $current_year_amount[8]+$ty_policy_info->premium;
+				}
+				if ($month == "10") {
+					$current_year_amount[9] = (float) $current_year_amount[9]+$ty_policy_info->premium;
+				}
+				if ($month == "11") {
+					$current_year_amount[10] = (float) $current_year_amount[10]+$ty_policy_info->premium;
+				}
+				if ($month == "12") {
+					$current_year_amount[11] = (float) $current_year_amount[11]+$ty_policy_info->premium;
+				}
+			
+			}
+			
+		}
+		
+		// CALCULATE last years premiums ////////////////////////////////////////////////////////////////////////
+		$previous_year_amount = array(0,0,0,0,0,0,0,0,0,0,0,0);
+	
+		if ($policy_last_year_count > 0) {
+			foreach($last_year_policies_query as $ly_policy_info) {
+		
+				// get policy month
+				$month = explode("-",$ly_policy_info->date_written);
+				$month = $month[1];
+		
+				// add up totals in last years months
+				if ($month == "01") {
+					$previous_year_amount[0] = (float) $previous_year_amount[0]+$ly_policy_info->premium;
+				}
+				if ($month == "02") {
+					$previous_year_amount[1] = (float) $previous_year_amount[1]+$ly_policy_info->premium;
+				}
+				if ($month == "03") {
+					$previous_year_amount[2] = (float) $previous_year_amount[2]+$ly_policy_info->premium;
+				}
+				if ($month == "04") {
+					$previous_year_amount[3] = (float) $previous_year_amount[3]+$ly_policy_info->premium;
+				}
+				if ($month == "05") {
+					$previous_year_amount[4] = (float) $previous_year_amount[4]+$ly_policy_info->premium;
+				}
+				if ($month == "06") {
+					$previous_year_amount[5] = (float) $previous_year_amount[5]+$ly_policy_info->premium;
+				}
+				if ($month == "07") {
+					$previous_year_amount[6] = (float) $previous_year_amount[6]+$ly_policy_info->premium;
+				}
+				if ($month == "08") {
+					$previous_year_amount[7] = (float) $previous_year_amount[7]+$ly_policy_info->premium;
+				}
+				if ($month == "09") {
+					$previous_year_amount[8] = (float) $previous_year_amount[8]+$ly_policy_info->premium;
+				}
+				if ($month == "10") {
+					$previous_year_amount[9] = (float) $previous_year_amount[9]+$ly_policy_info->premium;
+				}
+				if ($month == "11") {
+					$previous_year_amount[10] = (float) $previous_year_amount[10]+$ly_policy_info->premium;
+				}
+				if ($month == "12") {
+					$previous_year_amount[11] = (float) $previous_year_amount[11]+$ly_policy_info->premium;
+				}
+			
+			}
+			
+		}
+
+		$dash_summary[0]['count_this_yoy'] = $current_year_count;
+		$dash_summary[0]['count_last_yoy'] = $previous_year_count;
+		$dash_summary[0]['money_this_yoy'] = $current_year_amount;
+		$dash_summary[0]['money_last_yoy'] = $previous_year_amount;
+		
 		
 		if (!empty($dash_summary)) {
 			return $dash_summary;

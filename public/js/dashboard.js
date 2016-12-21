@@ -57,6 +57,20 @@ function numberOfDays(year,month) {
     return d.getDate();
 }
 
+// add commas to chart values
+function addCommas(nStr)
+{
+    nStr += '';
+    x = nStr.split('.');
+    x1 = x[0];
+    x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return '$' + x1 + x2;
+}
+
 // LOAD
 $(document).ready(function() {
 
@@ -161,6 +175,7 @@ $(document).ready(function() {
 									popSourcePremiumChart(value.msource_chart);
 								}
 							});
+							loadYoYData(user_id);
 						}	
 					},
 					error: function (request, status, error) {
@@ -168,6 +183,45 @@ $(document).ready(function() {
 					}
 			});
 		//}
+	}
+	
+	// LOAD YEAR OVER YEAR CHART DATA
+	function loadYoYData(user_id) {
+		if ($("#dashboard-type-box input[type='radio']:checked").val() === "1") {
+		  var ptype = "policy";
+		} else if ($("#dashboard-type-box input[type='radio']:checked").val() === "2") {
+		  var ptype = "premium";
+		}
+		var now = new Date();
+		var curryear = now.getFullYear();
+			// update employee info into form
+			$.ajax({
+					type: "GET",
+					url: "/app/dashboard/getBarData/?eid="+user_id+"&type="+ptype+"&year="+curryear,
+					data: $(this).serialize(),
+					dataType: "json",
+					cache: false,
+						async: true,
+					success: function (data) {
+						console.log(data);
+						if (data.error == true) {
+							// show returned error msg here
+							openModal('error',data.msg);
+						} else {
+							$.each(data, function(key, value) {
+								if (ptype == 'policy') {
+									popYoYChart(value.count_last_yoy,value.count_this_yoy);
+								}
+								if (ptype == 'premium') {
+									popYoYPremiumChart(value.money_last_yoy,value.money_this_yoy);
+								}
+							});
+						}	
+					},
+					error: function (request, status, error) {
+							console.log(error);
+					}
+			});
 	}
 	
 	// LOAD POLICY TYPE
@@ -498,9 +552,12 @@ $(document).ready(function() {
 		
 	}
 	
-	// POPULATE POLICES YEARLY CHART FUNCTION
-	function popPolicesChart(lastyear,thisyear) {
+	// POPULATE POLICES YEARLY SOURCES CHART FUNCTION
+	function popYoYChart(thisyear,lastyear) {
 	
+		// CLEAR CANVAS
+		$('#policiesChart').replaceWith('<canvas id="policiesChart" width="590" height="190" style="width:590px; height:190px;"></canvas>');
+
 		var curryear = now.getFullYear();
 		var prevyear = now.getFullYear()-1;
 	
@@ -530,11 +587,45 @@ $(document).ready(function() {
 	
 	}
 	
-	var lastyear = "0,0,0,0,0,0,0,0,0,0,0,0";
-	var thisyear = "0,0,0,0,0,0,0,0,0,0,0,0";
-	var lyarr = lastyear.split(",");
-	var tyarr = thisyear.split(",");
-	popPolicesChart(lyarr,tyarr);
+	// POPULATE POLICES YEARLY PREMIUMS CHART FUNCTION
+	function popYoYPremiumChart(thisyear,lastyear) {
+	
+		// CLEAR CANVAS
+		$('#policiesChart').replaceWith('<canvas id="policiesChart" width="590" height="190" style="width:590px; height:190px;"></canvas>');
+
+		var curryear = now.getFullYear();
+		var prevyear = now.getFullYear()-1;
+	
+		var data = {
+			labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+			datasets: [
+				{
+					label: "Policies ("+prevyear+")",
+					fillColor: "#ba0000",
+					data: lastyear
+				},
+				{
+					label: "Policies ("+curryear+")",
+					fillColor: "#fe8484",
+					data: thisyear
+				}
+			]
+		};
+ 
+		var ctx = $("#policiesChart").get(0).getContext("2d");
+		
+		var policiesChart = new Chart(ctx).Bar(data, {
+			barShowStroke : true,
+			animation: false,
+			scaleLabel : "<%=addCommas(value)%>",
+			tooltipTemplate : function (label) {
+				return label.label + ': ' + '$' + label.value.toLocaleString();
+			}
+		});
+	
+		$("#policies_legend").html(policiesChart.generateLegend());
+	
+	}
 	
 	// LOAD INFO TABLE
 	loadUserData(0);
