@@ -618,8 +618,8 @@ $(document).ready(function() {
 			barShowStroke : true,
 			animation: false,
 			scaleLabel : "<%=addCommas(value)%>",
-			tooltipTemplate : function (label) {
-				return label.label + ': ' + '$' + label.value.toLocaleString();
+			multiTooltipTemplate : function (label) {
+				return '$' + label.value.toLocaleString();
 			}
 		});
 	
