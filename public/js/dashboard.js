@@ -366,8 +366,9 @@ $(document).ready(function() {
 			{ label: 'Fire', value: pvalues[1], color: colors[1] },
 			{ label: 'Life', value: pvalues[2], color: colors[2] },
 			{ label: 'Health', value: pvalues[3], color: colors[3] },
-			{ label: 'Bank', value: pvalues[4], color: colors[4] },
-			{ label: 'Other', value: pvalues[5], color: colors[5] }
+			{ label: 'Loan', value: pvalues[4], color: colors[4] },
+			{ label: 'Deposit', value: pvalues[5], color: colors[5] },
+			{ label: 'Mutual Fund', value: pvalues[6], color: colors[6] }
 		]
  
 		var ctx = $("#policyTypeChart").get(0).getContext("2d");
@@ -420,8 +421,9 @@ $(document).ready(function() {
 			{ label: 'Fire', value: pvalues[1], color: colors[1] },
 			{ label: 'Life', value: pvalues[2], color: colors[2] },
 			{ label: 'Health', value: pvalues[3], color: colors[3] },
-			{ label: 'Bank', value: pvalues[4], color: colors[4] },
-			{ label: 'Other', value: pvalues[5], color: colors[5] }
+			{ label: 'Loan', value: pvalues[4], color: colors[4] },
+			{ label: 'Deposit', value: pvalues[5], color: colors[5] },
+			{ label: 'Mutual Fund', value: pvalues[6], color: colors[6] }
 		]
  
 		var ctx = $("#policyTypeChart").get(0).getContext("2d");
