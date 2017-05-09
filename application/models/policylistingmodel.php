@@ -57,7 +57,10 @@ class PolicyListingModel
     				case 'written':
         				$addedSQL .= ' AND policies.renewal = 0 AND (policies.status = 1 OR policies.status = 2)';
         				break;
-    				case 'notissued':
+    				case 'issued':
+        				$addedSQL .= ' AND policies.renewal = 0 AND policies.status = 2';
+        				break;
+        			case 'notissued':
         				$addedSQL .= ' AND policies.renewal = 0 AND policies.status = 1';
         				break;
     				case 'canceled':
@@ -73,50 +76,55 @@ class PolicyListingModel
 			// break out and validate date range
 			$drange = explode('.',$date);
 
-			$sdate = $drange[0];
-			$edate = $drange[1];
-			$single = $drange[2];
+			if (count($drange) == 3) {
 			
-			$test_sdate = explode('-',$sdate);
-			$test_edate = explode('-',$edate);
-			if (checkdate($test_sdate[0], $test_sdate[1], $test_sdate[2]) && checkdate($test_edate[0], $test_edate[1], $test_edate[2])) {
-				// date range is valid, set date filter
-				$startDate = $test_sdate[2]."-".$test_sdate[0]."-".$test_sdate[1]." 00:00:00";
-				$endDate = $test_edate[2]."-".$test_edate[0]."-".$test_edate[1]." 23:59:59";
-				if ($single == 'w') {
-					$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."')";
-				} else if ($single == 'i') {
-					$addedSQL .= " AND (policies.date_issued >= '".$startDate."' AND policies.date_issued <= '".$endDate."')";
-				} else if ($single == 'e') {
-					$addedSQL .= " AND (policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."')";
-				} else if ($single == 'c') {
-					$addedSQL .= " AND (policies.date_canceled >= '".$startDate."' AND policies.date_canceled <= '".$endDate."')";
-				} else if ($single == 'we') {
-					$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."' OR policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."')";
-				} else if ($single == 'wi') {
-					$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."' OR policies.date_issued >= '".$startDate."' AND policies.date_issued <= '".$endDate."')";
-				} else if ($single == 'wc') {
-					$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."' OR policies.date_canceled >= '".$startDate."' AND policies.date_canceled <= '".$endDate."')";
-				} else if ($single == 'ei') {
-					$addedSQL .= " AND (policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."' OR policies.date_issued >= '".$startDate."' AND policies.date_issued <= '".$endDate."')";
-				} else if ($single == 'ic') {
-					$addedSQL .= " AND (policies.date_issued >= '".$startDate."' AND policies.date_issued <= '".$endDate."' OR policies.date_canceled >= '".$startDate."' AND policies.date_canceled <= '".$endDate."')";
-				} else if ($single == 'ec') {
-					$addedSQL .= " AND (policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."' OR policies.date_canceled >= '".$startDate."' AND policies.date_canceled <= '".$endDate."')";
-				} else if ($single == 'wie') {
-					$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."' OR policies.date_issued >= '".$startDate."' AND policies.date_issued <= '".$endDate."' OR policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."')";
-				} else if ($single == 'wec') {
-					$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."' OR policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."' OR policies.date_canceled >= '".$startDate."' AND policies.date_canceled <= '".$endDate."')";
-				} else if ($single == 'iwc') {
-					$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."' OR policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."' OR policies.date_canceled >= '".$startDate."' AND policies.date_canceled <= '".$endDate."')";
-				} else if ($single == 'eic') {
-					$addedSQL .= " AND (policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."' OR policies.date_issued >= '".$startDate."' AND policies.date_issued <= '".$endDate."' OR policies.date_canceled >= '".$startDate."' AND policies.date_canceled <= '".$endDate."')";
-				} else if ($single == 'none') {
-					$addedSQL .= " AND policies.date_written IS null AND policies.date_effective IS null AND policies.date_issued IS null AND policies.date_canceled IS null";
-				} else {
-					// covers all $single = a
-					$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."' OR policies.date_issued >= '".$startDate."' AND policies.date_issued <= '".$endDate."' OR policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."' OR policies.date_canceled >= '".$startDate."' AND policies.date_canceled <= '".$endDate."')";
+				$sdate = $drange[0];
+				$edate = $drange[1];
+				$single = $drange[2];
+			
+				$test_sdate = explode('-',$sdate);
+				$test_edate = explode('-',$edate);
+				
+				if (checkdate($test_sdate[0], $test_sdate[1], $test_sdate[2]) && checkdate($test_edate[0], $test_edate[1], $test_edate[2])) {
+					// date range is valid, set date filter
+					$startDate = $test_sdate[2]."-".$test_sdate[0]."-".$test_sdate[1]." 00:00:00";
+					$endDate = $test_edate[2]."-".$test_edate[0]."-".$test_edate[1]." 23:59:59";
+					if ($single == 'w') {
+						$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."')";
+					} else if ($single == 'i') {
+						$addedSQL .= " AND (policies.date_issued >= '".$startDate."' AND policies.date_issued <= '".$endDate."')";
+					} else if ($single == 'e') {
+						$addedSQL .= " AND (policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."')";
+					} else if ($single == 'c') {
+						$addedSQL .= " AND (policies.date_canceled >= '".$startDate."' AND policies.date_canceled <= '".$endDate."')";
+					} else if ($single == 'we') {
+						$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."' OR policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."')";
+					} else if ($single == 'wi') {
+						$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."' OR policies.date_issued >= '".$startDate."' AND policies.date_issued <= '".$endDate."')";
+					} else if ($single == 'wc') {
+						$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."' OR policies.date_canceled >= '".$startDate."' AND policies.date_canceled <= '".$endDate."')";
+					} else if ($single == 'ei') {
+						$addedSQL .= " AND (policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."' OR policies.date_issued >= '".$startDate."' AND policies.date_issued <= '".$endDate."')";
+					} else if ($single == 'ic') {
+						$addedSQL .= " AND (policies.date_issued >= '".$startDate."' AND policies.date_issued <= '".$endDate."' OR policies.date_canceled >= '".$startDate."' AND policies.date_canceled <= '".$endDate."')";
+					} else if ($single == 'ec') {
+						$addedSQL .= " AND (policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."' OR policies.date_canceled >= '".$startDate."' AND policies.date_canceled <= '".$endDate."')";
+					} else if ($single == 'wie') {
+						$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."' OR policies.date_issued >= '".$startDate."' AND policies.date_issued <= '".$endDate."' OR policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."')";
+					} else if ($single == 'wec') {
+						$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."' OR policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."' OR policies.date_canceled >= '".$startDate."' AND policies.date_canceled <= '".$endDate."')";
+					} else if ($single == 'iwc') {
+						$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."' OR policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."' OR policies.date_canceled >= '".$startDate."' AND policies.date_canceled <= '".$endDate."')";
+					} else if ($single == 'eic') {
+						$addedSQL .= " AND (policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."' OR policies.date_issued >= '".$startDate."' AND policies.date_issued <= '".$endDate."' OR policies.date_canceled >= '".$startDate."' AND policies.date_canceled <= '".$endDate."')";
+					} else if ($single == 'none') {
+						$addedSQL .= " AND policies.date_written IS null AND policies.date_effective IS null AND policies.date_issued IS null AND policies.date_canceled IS null";
+					} else {
+						// covers all $single = a
+						$addedSQL .= " AND (policies.date_written >= '".$startDate."' AND policies.date_written <= '".$endDate."' OR policies.date_issued >= '".$startDate."' AND policies.date_issued <= '".$endDate."' OR policies.date_effective >= '".$startDate."' AND policies.date_effective <= '".$endDate."' OR policies.date_canceled >= '".$startDate."' AND policies.date_canceled <= '".$endDate."')";
+					}
 				}
+				
 			}
 		}
 

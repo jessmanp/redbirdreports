@@ -46,8 +46,13 @@ if (isset($_GET['register'])) {
 
 	// ... check if we are new and verified
 	if ($registration->verification_successful == true) {
-		// the user is verified pass to setup screen
-		header("location: /app/myagency");
+		if ($registration->login_new == true) {
+			// the user is verified and new owner, pass to agency setup screen
+			header("location: /app/myagency");
+		} else {
+			// the user is verified, pass to dashboard screen
+			header("location: /app/dashboard");
+		}
 	} else {
 		// load registeration form
 		include("views/register.php");	

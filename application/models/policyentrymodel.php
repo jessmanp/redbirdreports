@@ -24,7 +24,18 @@ class PolicyEntryModel
         $query->execute();
         return $query->fetchAll();
     }
-
+    
+    /**
+     * Get Employee from database based on User ID
+     */
+    public function getEmployee($agency_id,$user_id)
+    {
+		// query agency ID for new owner
+        $sql = 'SELECT users.user_id,users.user_level,users.user_first_name,users.user_last_name,users.user_active FROM users, agencies, agencies_users WHERE agencies_users.user_id = users.user_id AND agencies_users.agency_id = agencies.id AND agencies.id = '.$agency_id.' AND users.user_active > 0 AND users.user_id = '.$user_id.' ORDER BY users.user_active DESC, users.user_last_name';
+        $query = $this->db->prepare($sql);
+        $query->execute();
+		return $query->fetchAll();
+    }
 
 	/**
      * Get all policy categories from database

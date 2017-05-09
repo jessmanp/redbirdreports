@@ -148,7 +148,7 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 			$("#policy_length_type option[value=2]").prop("selected", true);
 			$("#policy_premium").prop("readonly", false);
 		} else if (category == 'life') {
-			$("#policy_length_type option[value=2]").prop("selected", true);
+			$("#policy_length_type option[value=3]").prop("selected", true);
 			$("#policy_premium").prop("readonly", false);
 		} else if (category == 'health') {
 			$("#policy_length_type option[value=2]").prop("selected", true);
@@ -421,7 +421,7 @@ function calendarUnHighlightDay(target) {
 	$("#fourth_quarter").removeAttr("style");
 	$("#last_six_months").removeAttr("style");
 	$("#this_year").removeAttr("style");
-	$("#last_two_years").removeAttr("style");
+	$("#last_year").removeAttr("style");
 }
 
 // FORMAT TEXT
@@ -506,10 +506,10 @@ function doPolicyReinstate(id) {
 
 // SET DATE PICKERS AND LOAD LISTING
 function loadListing(currcat){
-		$("#datepick1").val(setClientDate('first'));
-		$("#datepick2").val(setClientDate('last'));
+		//$("#datepick1").val(setClientDate('first'));
+		//$("#datepick2").val(setClientDate('last'));
 		$("#field").val('');
-		$(".date-pickers").html("This Month:");
+		//$(".date-pickers").html("This Month:");
 		$("#search_text_form").submit();
 }
 
@@ -587,6 +587,36 @@ $(document).ready(function() {
         	$(this).val('');
     	}
     	
+	});
+	
+	$("#writtendate").focusout(function() {
+	
+		var regex = new RegExp("^[0-9/]+$");
+    	var str = $(this).val();
+    	if (!regex.test(str)) {
+        	$(this).val('');
+    	}
+
+	});
+	
+	$("#effectivedate").focusout(function() {
+	
+		var regex = new RegExp("^[0-9/]+$");
+    	var str = $(this).val();
+    	if (!regex.test(str)) {
+        	$(this).val('');
+    	}
+
+	});
+	
+	$("#canceleddate").focusout(function() {
+	
+		var regex = new RegExp("^[0-9/]+$");
+    	var str = $(this).val();
+    	if (!regex.test(str)) {
+        	$(this).val('');
+    	}
+
 	});
 
 	// HIGHLIGHT MAIN SECTION
@@ -978,7 +1008,7 @@ $(document).ready(function() {
 		$("#fourth_quarter").removeAttr("style");
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
-		$("#last_two_years").removeAttr("style");
+		$("#last_year").removeAttr("style");
 		// SET CATEGORY
 		currcat = 'listall';
 		// LOAD LISTING
@@ -1012,7 +1042,7 @@ $(document).ready(function() {
 		$("#fourth_quarter").removeAttr("style");
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
-		$("#last_two_years").removeAttr("style");
+		$("#last_year").removeAttr("style");
 		// SET CATEGORY
 		currcat = 'listauto';
 		// LOAD LISTING
@@ -1046,7 +1076,7 @@ $(document).ready(function() {
 		$("#fourth_quarter").removeAttr("style");
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
-		$("#last_two_years").removeAttr("style");
+		$("#last_year").removeAttr("style");
 		// SET CATEGORY
 		currcat = 'listfire';
 		// LOAD LISTING
@@ -1080,7 +1110,7 @@ $(document).ready(function() {
 		$("#fourth_quarter").removeAttr("style");
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
-		$("#last_two_years").removeAttr("style");
+		$("#last_year").removeAttr("style");
 		// SET CATEGORY
 		currcat = 'listlife';
 		// LOAD LISTING
@@ -1114,7 +1144,7 @@ $(document).ready(function() {
 		$("#fourth_quarter").removeAttr("style");
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
-		$("#last_two_years").removeAttr("style");
+		$("#last_year").removeAttr("style");
 		// SET CATEGORY
 		currcat = 'listhealth';
 		// LOAD LISTING
@@ -1148,7 +1178,7 @@ $(document).ready(function() {
 		$("#fourth_quarter").removeAttr("style");
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
-		$("#last_two_years").removeAttr("style");
+		$("#last_year").removeAttr("style");
 		// SET CATEGORY
 		currcat = 'listdeposit';
 		// LOAD LISTING
@@ -1182,7 +1212,7 @@ $(document).ready(function() {
 		$("#fourth_quarter").removeAttr("style");
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
-		$("#last_two_years").removeAttr("style");
+		$("#last_year").removeAttr("style");
 		// SET CATEGORY
 		currcat = 'listloan';
 		// LOAD LISTING
@@ -1216,7 +1246,7 @@ $(document).ready(function() {
 		$("#fourth_quarter").removeAttr("style");
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
-		$("#last_two_years").removeAttr("style");
+		$("#last_year").removeAttr("style");
 		// SET CATEGORY
 		currcat = 'listfund';
 		// LOAD LISTING
@@ -1248,6 +1278,27 @@ $(document).ready(function() {
 		$("#policy-content").load(path);
 	});
 
+	// VIEW ISSUED ONLY
+	$("#isissued").on("click", function(event) {
+		event.preventDefault();
+		resetSortLinks(0);
+		var sdate = $("#datepick1").val().replace(/\//g, "-");
+		var edate = $("#datepick2").val().replace(/\//g, "-");
+		if (sdate != '' && edate != '') {
+			dateRange = sdate+"."+edate+".a";
+		} else {
+			dateRange = 'any';
+		}
+		if ($("#field").val() != '') {
+			var phrase = $("#field").val()+".a";
+		} else {
+			phrase = '';
+		}
+		var path = "/app/policies/"+currcat+"/issued/"+dateRange+"/"+phrase;
+		//alert(path);
+		$("#policy-content").load(path);
+	});
+	
 	// VIEW NOT ISSUED ONLY
 	$("#notissued").on("click", function(event) {
 		event.preventDefault();
@@ -1677,7 +1728,7 @@ $(document).ready(function() {
 		$("#fourth_quarter").removeAttr("style");
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
-		$("#last_two_years").removeAttr("style");
+		$("#last_year").removeAttr("style");
 		$("#datepick1").val('');
 		$("#datepick2").val('');
 		$("#field").val('');
@@ -1704,7 +1755,7 @@ $(document).ready(function() {
 		$("#fourth_quarter").removeAttr("style");
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
-		$("#last_two_years").removeAttr("style");
+		$("#last_year").removeAttr("style");
 		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
@@ -1734,7 +1785,7 @@ $(document).ready(function() {
 		$("#fourth_quarter").removeAttr("style");
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
-		$("#last_two_years").removeAttr("style");
+		$("#last_year").removeAttr("style");
 		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
@@ -1764,7 +1815,7 @@ $(document).ready(function() {
 		$("#fourth_quarter").removeAttr("style");
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
-		$("#last_two_years").removeAttr("style");
+		$("#last_year").removeAttr("style");
 		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
@@ -1794,7 +1845,7 @@ $(document).ready(function() {
 		$("#fourth_quarter").removeAttr("style");
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
-		$("#last_two_years").removeAttr("style");
+		$("#last_year").removeAttr("style");
 		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
@@ -1824,7 +1875,7 @@ $(document).ready(function() {
 		$("#fourth_quarter").removeAttr("style");
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
-		$("#last_two_years").removeAttr("style");
+		$("#last_year").removeAttr("style");
 		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
@@ -1854,7 +1905,7 @@ $(document).ready(function() {
 		$("#fourth_quarter").removeAttr("style");
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
-		$("#last_two_years").removeAttr("style");
+		$("#last_year").removeAttr("style");
 		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
@@ -1884,7 +1935,7 @@ $(document).ready(function() {
 		$("#fourth_quarter").removeAttr("style");
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
-		$("#last_two_years").removeAttr("style");
+		$("#last_year").removeAttr("style");
 		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
@@ -1914,7 +1965,7 @@ $(document).ready(function() {
 		$("#fourth_quarter").removeAttr("style");
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
-		$("#last_two_years").removeAttr("style");
+		$("#last_year").removeAttr("style");
 		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
@@ -1944,7 +1995,7 @@ $(document).ready(function() {
 		$("#fourth_quarter").removeAttr("style");
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
-		$("#last_two_years").removeAttr("style");
+		$("#last_year").removeAttr("style");
 		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
@@ -1974,7 +2025,7 @@ $(document).ready(function() {
 		$("#third_quarter").removeAttr("style");
 		$("#last_six_months").removeAttr("style");
 		$("#this_year").removeAttr("style");
-		$("#last_two_years").removeAttr("style");
+		$("#last_year").removeAttr("style");
 		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
@@ -2004,7 +2055,7 @@ $(document).ready(function() {
 		$("#third_quarter").removeAttr("style");
 		$("#fourth_quarter").removeAttr("style");
 		$("#this_year").removeAttr("style");
-		$("#last_two_years").removeAttr("style");
+		$("#last_year").removeAttr("style");
 		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
@@ -2034,7 +2085,7 @@ $(document).ready(function() {
 		$("#third_quarter").removeAttr("style");
 		$("#fourth_quarter").removeAttr("style");
 		$("#last_six_months").removeAttr("style");
-		$("#last_two_years").removeAttr("style");
+		$("#last_year").removeAttr("style");
 		$("#field").val('');
 		var dateRange = $(this).data('dates');
 		var dates = dateRange.split(".");
@@ -2048,7 +2099,7 @@ $(document).ready(function() {
    		$("#pre-dates-container").toggle();
 	});
 
-	$("#last_two_years").on("click", function(event) {
+	$("#last_year").on("click", function(event) {
 		event.preventDefault();
 		$(this).css("background-color","#000000");
 		$(this).css("border-color","#000000");
@@ -2072,7 +2123,7 @@ $(document).ready(function() {
 		var edate = dates[1].replace(/-/g, "/");
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
-		$(".date-pickers").html("Last 2 Years:");
+		$(".date-pickers").html("Last Year:");
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -2346,8 +2397,8 @@ $(document).ready(function() {
 */
 
 	// load search date pickers
-	$("#datepick1").datepicker();
-	$("#datepick2").datepicker();
+	$("#datepick1").datepicker({ dateFormat: 'mm/dd/yy', constrainInput: false });
+	$("#datepick2").datepicker({ dateFormat: 'mm/dd/yy', constrainInput: false });
 	
 	$("#datepick1").datepicker("option", {
   		onClose: function(dateText, inst){
@@ -2368,12 +2419,12 @@ $(document).ready(function() {
 	});
 
 	// load edit window date pickers
-	$("#writtendate").datepicker();
+	$("#writtendate").datepicker({ dateFormat: 'mm/dd/yy', constrainInput: false });
 	//$("#issueddate").datepicker();
-	$("#effectivedate").datepicker();
-	$("#canceleddate").datepicker();
-	$("#premiumdate").datepicker();
-	$("#renew_canceleddate").datepicker();
+	$("#effectivedate").datepicker({ dateFormat: 'mm/dd/yy', constrainInput: false });
+	$("#canceleddate").datepicker({ dateFormat: 'mm/dd/yy', constrainInput: false });
+	$("#premiumdate").datepicker({ dateFormat: 'mm/dd/yy', constrainInput: false });
+	$("#renew_canceleddate").datepicker({ dateFormat: 'mm/dd/yy', constrainInput: false });
 
 	// SHOW/HIDE PREDEFINED DATES
 	$("#pre-dates").on("click", function(event) {

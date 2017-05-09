@@ -40,6 +40,10 @@ define("MESSAGE_VERIFICATION_MAIL_ERROR", "Sorry, we could not send you an verif
 define("MESSAGE_VERIFICATION_MAIL_NOT_SENT", "Sorry, your verification email was NOT successfully sent! Error: ");
 define("MESSAGE_VERIFICATION_MAIL_SENT", "Your account has been created successfully and we have sent you an email. Please click the VERIFICATION LINK within that email to continue.");
 define("MESSAGE_USER_DOES_NOT_EXIST", "Sorry, the username you entered does not exist. If you do not remember your username please email us so that we may further assist you.");
+define("MESSAGE_FIRSTNAME_EMPTY", "Sorry, the first name field was empty. Please enter your first name.");
+define("MESSAGE_FIRSTNAME_BAD_LENGTH", "Sorry, first name cannot be shorter than 2 characters or longer than 64 characters.");
+define("MESSAGE_LASTNAME_EMPTY", "Sorry, the last name field was empty. Please enter your last name.");
+define("MESSAGE_LASTNAME_BAD_LENGTH", "Sorry, last name cannot be shorter than 2 characters or longer than 64 characters.");
 define("MESSAGE_USERNAME_BAD_LENGTH", "Sorry, username cannot be shorter than 2 characters or longer than 64 characters.");
 define("MESSAGE_USERNAME_CHANGE_FAILED", "Sorry, the attempt to update your username failed.");
 define("MESSAGE_USERNAME_CHANGED_SUCCESSFULLY", "Your username has been changed successfully. Your new username is: ");

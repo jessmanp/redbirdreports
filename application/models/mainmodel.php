@@ -74,10 +74,10 @@ class MainModel
 		  return array(date('m-d-Y', $start), date('m-d-Y', strtotime('+12 months -1 day', $start)));
 		}
 
-		function last_two_years($date) {
+		function last_year($date) {
 		  $ts = strtotime($date);
-		  $start = strtotime('first day of -2 years', $ts);
-		  return array(date('m-d-Y', $start), date('m-d-Y', strtotime('+25 months -1 day', $start)));
+		  $start = strtotime('first day of january last year', $ts);
+		  return array(date('m-d-Y', $start), date('m-d-Y', strtotime('+12 months -1 day', $start)));
 		}
 
     /**
@@ -99,7 +99,7 @@ class MainModel
     public function getHeaderInfo($user_id)
     {
 		// query agency ID for new owner
-        $sql = 'SELECT agencies.agency_name, users.user_first_name, users.user_last_name FROM agencies, agencies_users, users WHERE agencies.id = agencies_users.agency_id AND agencies_users.user_id = users.user_id AND agencies_users.user_id = '.$user_id;
+        $sql = 'SELECT agencies.agency_name, users.user_first_name, users.user_last_name, users.user_level FROM agencies, agencies_users, users WHERE agencies.id = agencies_users.agency_id AND agencies_users.user_id = users.user_id AND agencies_users.user_id = '.$user_id;
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -207,8 +207,8 @@ class MainModel
 			// format date into single phrase
 			$readyDate = $theStartDate.".".$theEndDate;
 			return $readyDate;
-		} else if ($preset == 'last_two_years') {
-			$theFormattedDate = $this->last_two_years(date('Y-m-d',time()));
+		} else if ($preset == 'last_year') {
+			$theFormattedDate = $this->last_year(date('Y-m-d',time()));
 			$theStartDate = $theFormattedDate[0];
 			$theEndDate = $theFormattedDate[1];
 			// format date into single phrase

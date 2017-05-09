@@ -22,6 +22,10 @@ class Registration
      */
     public  $verification_successful  = false;
     /**
+     * @var bool login new
+     */
+    public  $login_new  = false;
+    /**
      * @var array collection of error messages
      */
     public  $errors                   = array();
@@ -43,10 +47,10 @@ class Registration
 
         // if we have such a POST request, call the registerNewUser() method
         if (isset($_POST["register"])) {
-            $this->registerNewUser($_POST['user_name'], $_POST['user_email'], $_POST['user_email_verfiy'], $_POST['user_password_new'], $_POST['user_password_repeat'], $_POST["captcha"]);
+            $this->registerNewUser($_POST['user_first_name'], $_POST['user_last_name'], $_POST['user_name'], $_POST['user_email'], $_POST['user_email_verfiy'], $_POST['user_password_new'], $_POST['user_password_repeat'], $_POST["captcha"]);
         // if we have such a GET request, call the verifyNewUser() method
-        } else if (isset($_GET["id"]) && isset($_GET["verification_code"])) {
-            $this->verifyNewUser($_GET["id"], $_GET["verification_code"]);
+        } else if (isset($_GET["register"]) && isset($_GET["id"]) && isset($_GET["verification_code"])) {
+            $this->verifyNewUser($_GET["register"], $_GET["id"], $_GET["verification_code"]);
 		// if we have a POST request to resend verification email, call sendVerificationEmail() method
         } else if (isset($_POST["resend"])) {
 			$this->resendVerificationEmail($_POST["tuid"]);
@@ -85,12 +89,16 @@ class Registration
      * handles the entire registration process. checks all error possibilities, and creates a new user in the database if
      * everything is fine
      */
-    private function registerNewUser($user_name, $user_email, $user_email_verify, $user_password, $user_password_repeat, $captcha)
+    private function registerNewUser($user_first_name, $user_last_name, $user_name, $user_email, $user_email_verify, $user_password, $user_password_repeat, $captcha)
     {
-        // we just remove extra space on username and email
+        // we just remove extra space on first, last, username and email
+        $user_first_name  = trim($user_first_name);
+        $user_last_name  = trim($user_last_name);
         $user_name  = trim($user_name);
         $user_email = trim($user_email);
 
+		$this->temp_user_first_name = $user_first_name;
+		$this->temp_user_last_name = $user_last_name;
 		$this->temp_user_name = $user_name;
 		$this->temp_user_email = $user_email;
 
@@ -98,6 +106,14 @@ class Registration
         // TODO: check for "return true" case early, so put this first
         if (strtolower($captcha) != strtolower($_SESSION['captcha'])) {
             $this->errors[] = MESSAGE_CAPTCHA_WRONG;
+        } elseif (empty($user_first_name)) {
+            $this->errors[] = MESSAGE_FIRSTNAME_EMPTY;
+        } elseif (strlen($user_first_name) > 64 || strlen($user_first_name) < 2) {
+            $this->errors[] = MESSAGE_FIRSTNAME_BAD_LENGTH;
+        } elseif (empty($user_last_name)) {
+            $this->errors[] = MESSAGE_LASTNAME_EMPTY;
+        } elseif (strlen($user_last_name) > 64 || strlen($user_last_name) < 2) {
+            $this->errors[] = MESSAGE_LASTNAME_BAD_LENGTH;
         } elseif (empty($user_name)) {
             $this->errors[] = MESSAGE_USERNAME_EMPTY;
         } elseif (empty($user_password) || empty($user_password_repeat)) {
@@ -150,8 +166,10 @@ class Registration
 			   $user_level = 3;
 
                 // write new users data into database
-                $query_new_user_insert = $this->db_connection->prepare('INSERT INTO users (user_name, user_password_hash, user_email, user_level, user_activation_hash, user_registration_ip, user_registration_datetime) VALUES (:user_name, :user_password_hash, :user_email, :user_level, :user_activation_hash, :user_registration_ip, now())');
+                $query_new_user_insert = $this->db_connection->prepare('INSERT INTO users (user_first_name, user_last_name, user_name, user_password_hash, user_email, user_level, user_activation_hash, user_registration_ip, user_registration_datetime) VALUES (:user_first_name, :user_last_name, :user_name, :user_password_hash, :user_email, :user_level, :user_activation_hash, :user_registration_ip, now())');
 
+				$query_new_user_insert->bindValue(':user_first_name', $user_first_name, PDO::PARAM_STR);
+				$query_new_user_insert->bindValue(':user_last_name', $user_last_name, PDO::PARAM_STR);
                 $query_new_user_insert->bindValue(':user_name', $user_name, PDO::PARAM_STR);
                 $query_new_user_insert->bindValue(':user_password_hash', $user_password_hash, PDO::PARAM_STR);
                 $query_new_user_insert->bindValue(':user_email', $user_email, PDO::PARAM_STR);
@@ -165,7 +183,7 @@ class Registration
 
                 if ($query_new_user_insert) {
                     // send a verification email
-                    if ($this->sendVerificationEmail($user_id, $user_email, $user_activation_hash)) {
+                    if ($this->sendVerificationEmail($user_id, $user_email, $user_name, $user_password, $user_activation_hash)) {
                         // when mail has been send successfully
                         $this->messages[] = MESSAGE_VERIFICATION_MAIL_SENT;
 					   $this->temp_user_id = $user_id;
@@ -188,7 +206,8 @@ class Registration
      * sends an email to the provided email address
      * @return boolean gives back true if mail has been sent, gives back false if no mail could been sent
      */
-    public function sendVerificationEmail($user_id, $user_email, $user_activation_hash)
+    //public function sendVerificationEmail($user_id, $user_email, $user_activation_hash)
+    public function sendVerificationEmail($user_id, $user_email, $user_name, $user_password, $user_activation_hash)
     {
         $mail = new PHPMailer;
 
@@ -249,10 +268,9 @@ Please confirm your email by clicking the link below. Once you have clicked the 
 <br /><br />
 ';
         $link = EMAIL_VERIFICATION_URL.'&id='.urlencode($user_id).'&verification_code='.urlencode($user_activation_hash);
-	    $body .= EMAIL_VERIFICATION_CONTENT.' <a href="'.$link.'">'.$link.'</a>';
-
+	    $body .= EMAIL_VERIFICATION_CONTENT.' <a href="'.$link.'">'.$link.'</a><br /><br />';
+		$body .= 'You will need to use the login information below to activate your new account.<br /><br /><strong>Username:</strong> '.$user_name.'<br /><strong>Password:</strong> '.$user_password;
 	    $body .= '
-<br /><br />
 Thanks! We look forward to making your agency smarter!
 <div style="clear:both;"></div>
 </div>
@@ -288,18 +306,16 @@ If you do not wish to receive email from <span style="font-weight:bold; color:#0
 
     /**
      * checks the id/verification code combination and set the user's activation status to true (=1) in the database
+     *** TO DO *** posibly use the register type to specify job title, but is not secure
      */
-    public function verifyNewUser($user_id, $user_activation_hash)
+    public function verifyNewUser($register_type, $user_id, $user_activation_hash)
     {
         // if database connection opened
         if ($this->databaseConnection()) {
             // try to update user with specified information
-            $query_update_user = $this->db_connection->prepare('UPDATE users SET user_active = 1, user_activation_hash = NULL, user_first_name = :first_name, user_last_name = :last_name, user_job_title = :job_title WHERE user_id = :user_id AND user_activation_hash = :user_activation_hash');
+            $query_update_user = $this->db_connection->prepare('UPDATE users SET user_active = 1, user_activation_hash = NULL WHERE user_id = :user_id AND user_activation_hash = :user_activation_hash');
             $query_update_user->bindValue(':user_id', intval(trim($user_id)), PDO::PARAM_INT);
             $query_update_user->bindValue(':user_activation_hash', $user_activation_hash, PDO::PARAM_STR);
-            $query_update_user->bindValue(':first_name', 'New', PDO::PARAM_STR);
-            $query_update_user->bindValue(':last_name', 'Agency', PDO::PARAM_STR);
-            $query_update_user->bindValue(':job_title', 'Owner', PDO::PARAM_STR);
             $query_update_user->execute();
 
             if ($query_update_user->rowCount() > 0) {
@@ -360,12 +376,15 @@ If you do not wish to receive email from <span style="font-weight:bold; color:#0
 			   // do auto login since its a new user - set login sessions
 			   // write user data into PHP SESSION [a file on your server]
                 $_SESSION['user_id'] = $result_row->user_id;
-                $_SESSION['agency_id'] = $result_row->agency_id;
+                $_SESSION['agency_id'] = $agency_id;
                 $_SESSION['user_name'] = $result_row->user_name;
                 $_SESSION['user_email'] = $result_row->user_email;
                 $_SESSION['user_logged_in'] = 1;
 
                 $this->verification_successful = true;
+                if ($result_row->user_level == 3) {
+                	$this->login_new = true;
+                }
                 $this->messages[] = MESSAGE_REGISTRATION_ACTIVATION_SUCCESSFUL;
             } else {
                 $this->errors[] = MESSAGE_REGISTRATION_ACTIVATION_NOT_SUCCESSFUL;
@@ -393,6 +412,7 @@ If you do not wish to receive email from <span style="font-weight:bold; color:#0
 				$rs_user_activation_hash = $result[0]['user_activation_hash'];
                  if ($this->sendVerificationEmail($rs_user_id, $rs_user_email, $rs_user_activation_hash)) {
 					$this->messages[] = MESSAGE_VERIFICATION_MAIL_SENT;
+                    $this->registration_successful = true;
 				}
             } else {
 				$this->errors[] = MESSAGE_VERIFICATION_MAIL_ERROR;

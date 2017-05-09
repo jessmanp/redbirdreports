@@ -27,9 +27,22 @@ class CommissionsModel
     }
     
     /**
+     * Get Employee from database based on User ID
+     */
+    public function getEmployee($agency_id,$user_id)
+    {
+		// query agency ID for new owner
+        $sql = 'SELECT users.user_id,users.user_level,users.user_first_name,users.user_last_name,users.user_active FROM users, agencies, agencies_users WHERE agencies_users.user_id = users.user_id AND agencies_users.agency_id = agencies.id AND agencies.id = '.$agency_id.' AND users.user_active > 0 AND users.user_id = '.$user_id.' ORDER BY users.user_active DESC, users.user_last_name';
+        $query = $this->db->prepare($sql);
+        $query->execute();
+		return $query->fetchAll();
+    }
+    
+    
+    /**
      * Query employee commission data to populate table
      */
-    public function getEmployeeCommissionHistory($agency_id,$employee_id,$dateA,$dateB,$period)
+    public function getEmployeeCommissionHistory($agency_id,$employee_id,$dateA,$dateB,$period,$current_user_level)
     {
 
 		// query to get employee data
@@ -262,6 +275,9 @@ class CommissionsModel
 				$commission_summary[0]['user_hire_date'] = $emp_info->user_hire_date;
 			}
 		
+			if ($current_user_level == 0) {
+				$commission_summary[0]['user_new_open'] = 0;
+			}
 		
 			if ($special_count > 0) {
 				foreach ($special_query as $special_info) {

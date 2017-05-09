@@ -77,6 +77,49 @@ h1 {
 	/* for IE 5.5 - 9 */
 	box-shadow:2px 2px 24px #000000;
 }
+.agency-setup {
+	display:none;
+	background-color:#000000;
+	opacity:0.35;
+	position:fixed;
+	z-index:80;
+	top:0px;
+	left:0px;
+	width:100%;
+	height:205px;
+}
+.agency-setup-help {
+	display:none;
+	position:absolute;
+	z-index:81;
+	top:0px;
+	padding:25px;
+	width:100%;
+	height:165px;
+	text-align:center;
+}
+.agency-setup-instruction {
+	display:none;
+	background-color:#ffffff;
+	margin:4px auto 0 auto;
+	padding:25px;
+	width:500px;
+	text-align:center;
+	background-color:#ffffff;
+	border:2px solid #ff0000;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-border-radius:10px;
+	/* for FireFox 3.6 - 12 */
+	-moz-border-radius:10px;
+	/* for IE 5.5 - 9 & firefox 13+ */
+	border-radius:10px;
+	/* for Chrome 10+ and Safari 5+ */
+	-webkit-box-shadow:2px 2px 24px #000000;
+	/* for FireFox 3.6+ */
+	-moz-box-shadow:2px 2px 24px #000000;
+	/* for IE 5.5 - 9 */
+	box-shadow:2px 2px 24px #000000;
+}
 #policy-popup {
 	display:none;
 	background-color:#000000;
@@ -482,6 +525,13 @@ input[type=radio]:not(old):checked + label > span > span{
 	background-color:#a20004;
 	min-width:900px;
 	height:95px;
+}
+
+#sub-menu-empty {
+	clear:both;
+	background-color:#a20004;
+	min-width:900px;
+	height:35px;
 }
 
 #logo {
@@ -1061,6 +1111,19 @@ input[type=radio]:not(old):checked + label > span > span{
 }
 
 .status-text-right {
+	float:right;
+	width:200px;
+	color:#cccccc;
+}
+
+.status-text-sm {
+	float:left;
+	margin:0 25px 0 0;
+	width:140px;
+	color:#cccccc;
+}
+
+.status-text-sm-right {
 	float:right;
 	width:200px;
 	color:#cccccc;
@@ -1995,7 +2058,7 @@ a.policy-edit-action:hover {
 }
 .chart-legend li span{
 	display:inline-block;
-	border:2px solid #000000;
+	border:1px solid #cccccc;
 	-webkit-border-radius:5px;
 	-moz-border-radius:5px;
 	border-radius:5px;
@@ -2041,6 +2104,11 @@ a.policy-edit-action:hover {
 #myagency-content {
 	clear:both;
 	margin:205px 0 32px 0;
+	text-align:center;
+}
+#myagency-content-short {
+	clear:both;
+	margin:165px 0 32px 0;
 	text-align:center;
 }
 #myagency-container {

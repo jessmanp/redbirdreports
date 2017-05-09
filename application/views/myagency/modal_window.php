@@ -80,7 +80,7 @@
 					<option value="">- Select -</option>
 					<option value="0">Employee</option>
 					<option value="1">Manager</option>
-					<option value="2">Administrator</option>
+					<!--<option value="2">Administrator</option>-->
 				</select>
 				<br /><br /><br />
 				<button id="close-add-employee-btn" class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="add-employee-btn" class="plain-btn">Add / Invite Employee</button>

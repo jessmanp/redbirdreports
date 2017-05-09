@@ -6,6 +6,7 @@
 	
 	$rowcnt = 1;
 	$totalwritten = 0;
+	$issued = 0;
 	$notissued = 0;
 	$totpending = 0;
 	$totcanceled = 0;
@@ -90,6 +91,10 @@
 			if ($policy->status == 1) {
 				// do NOT issued count
 				$notissued++;
+			}
+			if ($policy->status == 2) {
+				// do IS issued count
+				$issued++;
 			}
 		} else {
 			// do pending renewal count
@@ -232,6 +237,7 @@ $(document).ready(function() {
 
 	$("#rowcnt").text('<?php echo ($rowcnt-1); ?>');
 	$("#totwritten").text('<?php echo $totalwritten; ?>');
+	$("#totissued").text('<?php echo $issued; ?>');
 	$("#totnotissued").text('<?php echo $notissued; ?>');
 	$("#totpending").text('<?php echo $totpending; ?>');
 	$("#totcanceled").text('<?php echo $totcanceled; ?>');

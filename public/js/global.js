@@ -7,6 +7,8 @@ function echeck(str) {
 function setClientDate(whichday){
 	var now = new Date();
 	var curr_month = now.getMonth()+1;
+	// pad with "0" to match date formatting 
+	curr_month = curr_month < 10 ? '0' + curr_month : '' + curr_month;
 	if (whichday == 'first') {
 		var first_day = new Date(now.getFullYear(), now.getMonth(), 1);
 		var curr_day = first_day.getDate();
@@ -16,6 +18,8 @@ function setClientDate(whichday){
 	} else {
 		var curr_day = now.getDate();
 	}
+	// pad with "0" to match date formatting 
+	curr_day = curr_day < 10 ? '0' + curr_day : '' + curr_day;
 	var curr_year = now.getFullYear();
 	return curr_month + "/" + curr_day + "/" + curr_year;
 }

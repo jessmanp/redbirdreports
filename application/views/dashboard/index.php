@@ -43,15 +43,7 @@
 // LOAD
 $(document).ready(function() {
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 });

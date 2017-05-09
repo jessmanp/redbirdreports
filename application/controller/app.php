@@ -43,8 +43,14 @@ class App extends Controller
 			// get agency id based on owner
 			$agency_id = $setup_model->getAgencyID($_SESSION['user_id']);
 
-			// get list of employees
-			$employees = $dashboard_model->getAllEmployees($agency_id);
+			// check user level
+			if ($header_data[0]->user_level > 0) {
+				// get list of all employees
+				$employees = $dashboard_model->getAllEmployees($agency_id);
+			} else {
+				// get only logged in employee
+				$employees = $dashboard_model->getEmployee($agency_id,$_SESSION['user_id']);
+			}
 
 			if (empty($employees)) {
 				$return['error'] = true;
@@ -578,6 +584,8 @@ class App extends Controller
 		if ($sub == 'listall' || $sub == 'index') {
 			if ($param == 'allwritten') {
 				$policy_data = $policy_listing_model->getAllPolicies('all','default','written',$date,$phrase,$agency_id);
+			} else if ($param == 'issued') {
+				$policy_data = $policy_listing_model->getAllPolicies('all','default','issued',$date,$phrase,$agency_id);
 			} else if ($param == 'notissued') {
 				$policy_data = $policy_listing_model->getAllPolicies('all','default','notissued',$date,$phrase,$agency_id);
 			} else if ($param == 'allcanceled') {
@@ -689,11 +697,18 @@ class App extends Controller
 		$fourth_quarter = $main_model->getDate('fourth_quarter');
 		$last_six_months = $main_model->getDate('last_six_months');
 		$this_year = $main_model->getDate('this_year');
-		$last_two_years = $main_model->getDate('last_two_years');
+		$last_year = $main_model->getDate('last_year');
 
 		// load entry (add/edit) models
 		$policy_entry_model = $this->loadModel('PolicyEntryModel');
-		$agency_employees = $policy_entry_model->getAllEmployees($agency_id);
+		// check user level
+		if ($header_data[0]->user_level > 0) {
+			// get list of all employees
+			$agency_employees = $policy_entry_model->getAllEmployees($agency_id);
+		} else {
+			// get only logged in employee
+			$agency_employees = $policy_entry_model->getEmployee($agency_id,$_SESSION['user_id']);
+		}
 		$policy_categories_main = $policy_entry_model->getAllCategories('main');
 		$policy_categories_all = $policy_entry_model->getAllCategories('all');
 		$policy_categories_auto = $policy_entry_model->getAllCategories('auto');
@@ -755,9 +770,15 @@ class App extends Controller
 		
 			// get agency id based on owner
 			$agency_id = $setup_model->getAgencyID($_SESSION['user_id']);
-
-			// get list of employees
-			$employees = $commissions_model->getAllEmployees($agency_id);
+			
+			// check user level
+			if ($header_data[0]->user_level > 0) {
+				// get list of all employees
+				$employees = $commissions_model->getAllEmployees($agency_id);
+			} else {
+				// get only logged in employee
+				$employees = $commissions_model->getEmployee($agency_id,$_SESSION['user_id']);
+			}
 
 			if (empty($employees)) {
 				$return['error'] = true;
@@ -805,8 +826,10 @@ class App extends Controller
 				}				
 			}
 			
+			$current_user_level = $header_data[0]->user_level;
+			
 			// get employees data
-			$employee_data = $commissions_model->getEmployeeCommissionHistory($agency_id,$employee_id,$dateA,$dateB,$date_range);
+			$employee_data = $commissions_model->getEmployeeCommissionHistory($agency_id,$employee_id,$dateA,$dateB,$date_range,$current_user_level);
 
 			if (empty($employee_data)) {
 				$return['error'] = true;
@@ -1613,11 +1636,15 @@ class App extends Controller
         // load views.
         require 'application/views/_templates/header.php';
         require 'application/views/_templates/main_header.php';
-        require 'application/views/myagency/header.php';
-        if ($sub == 'employees') {
-        	require 'application/views/myagency/modal_window.php';
+        if ($header_data[0]->user_level > 0) {
+			require 'application/views/myagency/header.php';
+			if ($sub == 'employees') {
+				require 'application/views/myagency/modal_window.php';
+			}
+			require 'application/views/myagency/'.$sub.'.php';
+        } else {
+        	require 'application/views/myagency/employee.php';
         }
-        require 'application/views/myagency/'.$sub.'.php';
         require 'application/views/_templates/footer.php';
     }
 

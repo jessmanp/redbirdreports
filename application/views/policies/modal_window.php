@@ -212,10 +212,10 @@
 			<input type="radio" id="status_declined" name="policy_status" value="3" />Declined<br /><br />
 			<input type="radio" id="status_canceled" name="policy_status" value="4" />Canceled<br />
 			</div>
-			Written<sup>*</sup>:<input id="writtendate" name="writtendate" value="" placeholder="" readonly /><br />
+			Written<sup>*</sup>:<input id="writtendate" name="writtendate" value="" placeholder="" /><br />
 			<input type="hidden" id="issueddate" name="issueddate" value="" />
-			Effective:<input id="effectivedate" name="effectivedate" value="" placeholder="" readonly /><br />
-			Canceled:<input id="canceleddate" name="canceleddate" value="" placeholder="" readonly /><br />
+			Effective:<input id="effectivedate" name="effectivedate" value="" placeholder="" /><br />
+			Canceled:<input id="canceleddate" name="canceleddate" value="" placeholder="" /><br />
 			</div>
 		</div>
 	</div>

@@ -42,6 +42,9 @@ function populateDates() {
 	var lastyear = now.getFullYear()-1;
 	var currmonth = now.getMonth();
 	var lastmonth = now.getMonth()-1;
+	if (lastmonth < 0) {
+		lastmonth = 11;
+	}
 	$("#date_range").val(date_range);
 	$("#dash_this_month").text(abrvmonths[currmonth]);
 	$("#dash_last_month").text(abrvmonths[lastmonth]);
@@ -270,6 +273,10 @@ $(document).ready(function() {
 		var now = new Date();
 		var curryear = now.getFullYear();
 		var lastmonth = now.getMonth();
+		if (lastmonth == 0) {
+			curryear = now.getFullYear()-1;
+			lastmonth = 12;
+		}
 		var nod = numberOfDays(curryear,lastmonth);
 		// SET DEFAULT DATE RANGE
 		var date_range = lastmonth+":1-"+nod+":"+curryear+".";
@@ -351,14 +358,16 @@ $(document).ready(function() {
 	
 		// SET COLORS
 		var colors = [
-			'#fccbcc',
-			'#fda2a4',
-			'#ff676b', 
-			'#e42b30',
-			'#c50509',
-			'#a20004',
-			'#831a1d',
-			'#6e1316'
+			'#9bed74',
+			'#f1a354',
+			'#8186ed', 
+			'#e85c80',
+			'#e2d343',
+			'#3e908f',
+			'#fe8484',
+			'#83b5ef',
+			'#9ce8e1',
+			'#434348'
 		];
 
 		var data = [
@@ -373,7 +382,8 @@ $(document).ready(function() {
  
 		var ctx = $("#policyTypeChart").get(0).getContext("2d");
 		var policyTypeChart = new Chart(ctx).Doughnut(data, {
-			segmentStrokeColor : "#000000",
+			segmentStrokeColor : "#cccccc",
+			segmentStrokeWidth : "1",
 			animateRotate: false,
 			tooltipTemplate : function (label) {
 				return label.label + ': ' + label.value.toString();
@@ -406,14 +416,16 @@ $(document).ready(function() {
 	
 		// SET COLORS
 		var colors = [
-			'#fccbcc',
-			'#fda2a4',
-			'#ff676b', 
-			'#e42b30',
-			'#c50509',
-			'#a20004',
-			'#831a1d',
-			'#6e1316'
+			'#9bed74',
+			'#f1a354',
+			'#8186ed', 
+			'#e85c80',
+			'#e2d343',
+			'#3e908f',
+			'#fe8484',
+			'#83b5ef',
+			'#9ce8e1',
+			'#434348'
 		];
 
 		var data = [
@@ -428,7 +440,8 @@ $(document).ready(function() {
  
 		var ctx = $("#policyTypeChart").get(0).getContext("2d");
 		var policyTypeChart = new Chart(ctx).Doughnut(data, {
-			segmentStrokeColor : "#000000",
+			segmentStrokeColor : "#cccccc",
+			segmentStrokeWidth : "1",
 			animateRotate: false,
 			tooltipTemplate : function (label) {
 				return label.label + ': $' + label.value.toLocaleString();
@@ -461,14 +474,16 @@ $(document).ready(function() {
 		
 		// SET COLORS
 		var colors = [
-			'#fccbcc',
-			'#fda2a4',
-			'#ff676b', 
-			'#e42b30',
-			'#c50509',
-			'#a20004',
-			'#831a1d',
-			'#6e1316'
+			'#9bed74',
+			'#f1a354',
+			'#8186ed', 
+			'#e85c80',
+			'#e2d343',
+			'#3e908f',
+			'#fe8484',
+			'#83b5ef',
+			'#9ce8e1',
+			'#434348'
 		];
 		
 		var data = [
@@ -484,7 +499,8 @@ $(document).ready(function() {
  
 		var ctx = $("#sourceChart").get(0).getContext("2d");
 		var sourceChart = new Chart(ctx).Doughnut(data, {
-			segmentStrokeColor : "#000000",
+			segmentStrokeColor : "#cccccc",
+			segmentStrokeWidth : "1",
 			animateRotate: false,
 			tooltipTemplate : function (label) {
 				return label.label + ': ' + label.value.toString();
@@ -517,14 +533,16 @@ $(document).ready(function() {
 		
 		// SET COLORS
 		var colors = [
-			'#fccbcc',
-			'#fda2a4',
-			'#ff676b', 
-			'#e42b30',
-			'#c50509',
-			'#a20004',
-			'#831a1d',
-			'#6e1316'
+			'#9bed74',
+			'#f1a354',
+			'#8186ed', 
+			'#e85c80',
+			'#e2d343',
+			'#3e908f',
+			'#fe8484',
+			'#83b5ef',
+			'#9ce8e1',
+			'#434348'
 		];
 		
 		var data = [
@@ -540,7 +558,8 @@ $(document).ready(function() {
  
 		var ctx = $("#sourceChart").get(0).getContext("2d");
 		var sourceChart = new Chart(ctx).Doughnut(data, {
-			segmentStrokeColor : "#000000",
+			segmentStrokeColor : "#cccccc",
+			segmentStrokeWidth : "1",
 			animateRotate: false,
 			tooltipTemplate : function (label) {
 				return label.label + ': $' + label.value.toLocaleString();
@@ -567,12 +586,12 @@ $(document).ready(function() {
 			labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 			datasets: [
 				{
-					label: "Policies ("+prevyear+")",
+					label: "Policies ("+curryear+")",
 					fillColor: "#ba0000",
 					data: lastyear
 				},
 				{
-					label: "Policies ("+curryear+")",
+					label: "Policies ("+prevyear+")",
 					fillColor: "#fe8484",
 					data: thisyear
 				}
@@ -602,12 +621,12 @@ $(document).ready(function() {
 			labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 			datasets: [
 				{
-					label: "Policies ("+prevyear+")",
+					label: "Policies ("+curryear+")",
 					fillColor: "#ba0000",
 					data: lastyear
 				},
 				{
-					label: "Policies ("+curryear+")",
+					label: "Policies ("+prevyear+")",
 					fillColor: "#fe8484",
 					data: thisyear
 				}

@@ -215,6 +215,9 @@ $(document).ready(function() {
 							openModal('error',data.msg);
 							//$("#agency_name").focus();
 						} else {
+							$(".agency-setup").hide();
+							$(".agency-setup-help").hide();
+							$(".agency-setup-instruction").hide();
 							// show success message...
 							openModal('info',data.msg);
 						}	
@@ -318,12 +321,12 @@ $(document).ready(function() {
 							$("#employee_email").val("");
 							$("#employee_email_verify").val("");
 							$("#employee_type").val("").change();
-							// tuen on update button
+							/*/ turn on update button
 							$("#agency_employee_save").removeClass();
 							$("#agency_employee_save").addClass("plain-btn");
-							$("#agency_employee_save").prop("disabled", false);
+							$("#agency_employee_save").prop("disabled", false);*/
 							// update user drop down
-							updateEmployeeList();
+							updateEmployeeList(2);
   							// auto select added employee and auto populate data into form
 							loadUserData(data.id);
 							closeWindow();

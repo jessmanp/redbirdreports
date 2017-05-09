@@ -22,6 +22,12 @@
 <form method="post" action="/login/?register" id="registerform" name="registerform">
 	<input type="hidden" id="register" name="register" value="1" />
 	
+	<label for="user_first_name">First Name<span class="small">*Required</span></label>
+    <input id="user_first_name" type="text" pattern="[a-zA-Z0-9]{2,64}" name="user_first_name" placeholder="Enter First Name" value="<?php if (isset($registration->temp_user_first_name)) { echo $registration->temp_user_first_name; } ?>" required />
+	
+	<label for="user_last_name">Last Name<span class="small">*Required</span></label>
+    <input id="user_last_name" type="text" pattern="[a-zA-Z0-9]{2,64}" name="user_last_name" placeholder="Enter Last Name" value="<?php if (isset($registration->temp_user_last_name)) { echo $registration->temp_user_last_name; } ?>" required />
+	
     <label for="user_name">Username<span class="small">*Required</span></label>
     <input id="user_name" type="text" pattern="[a-zA-Z0-9]{2,64}" name="user_name" placeholder="Enter Username" value="<?php if (isset($registration->temp_user_name)) { echo $registration->temp_user_name; } ?>" required />
 	

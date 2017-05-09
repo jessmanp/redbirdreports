@@ -70,7 +70,7 @@
 					<option value="">- Select -</option>
 					<option value="0">Employee</option>
 					<option value="1">Manager</option>
-					<option value="2">Administrator</option>
+					<!--<option value="2">Administrator</option>-->
 				</select>
 				&nbsp;
 				Hire Date:<input id="employeehiredate" name="employee_hire_date" placeholder="01/01/2001">
@@ -119,16 +119,16 @@
 						<div class="table-row">
 							<div class="col" style="width:20%;">&nbsp;</div>
 							<div class="col" style="width:16%;padding-right:16px;"><strong>New</strong></div>
-							<div class="col" style="width:16%;"><strong>$ / Policy</strong></div>
 							<div class="col" style="width:16%;">&nbsp;</div>
+							<div class="col" style="width:16%;"><strong>$ / Policy</strong></div>
 							<div class="col" style="width:16%;">&nbsp;</div>
 							<div class="col" style="width:16%;">&nbsp;</div>
 						</div>
 						<div class="table-row">
 							<div class="col" style="width:20%;background-color:#cccccc;"><span class="table-title"><strong>Life</strong><sup>*</sup></span></div>
 							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_life_new" name="employee_life_new" placeholder="0"> <strong>%</strong></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><em>AND</em></div>
 							<div class="col" style="width:16%;background-color:#eeeeee;"><strong>$</strong> <input type="text" id="employee_life_policy" name="employee_life_policy" placeholder="0.00"></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;">&nbsp;</div>
 							<div class="col" style="width:16%;background-color:#eeeeee;">&nbsp;</div>
 							<div class="col" style="width:16%;background-color:#eeeeee;">&nbsp;</div>
 						</div>
@@ -136,16 +136,16 @@
 						<div class="table-row">
 							<div class="col" style="width:20%;">&nbsp;</div>
 							<div class="col" style="width:16%;padding-right:16px;"><strong>New</strong></div>
-							<div class="col" style="width:16%;"><strong>$ / Policy</strong></div>
 							<div class="col" style="width:16%;">&nbsp;</div>
+							<div class="col" style="width:16%;"><strong>$ / Policy</strong></div>
 							<div class="col" style="width:16%;">&nbsp;</div>
 							<div class="col" style="width:16%;">&nbsp;</div>
 						</div>
 						<div class="table-row">
 							<div class="col" style="width:20%;background-color:#cccccc;"><span class="table-title"><strong>Health</strong><sup>*</sup></span></div>
 							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_health_new" name="employee_health_new" placeholder="0"> <strong>%</strong></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><em>AND</em></div>
 							<div class="col" style="width:16%;background-color:#eeeeee;"><strong>$</strong> <input type="text" id="employee_health_policy" name="employee_health_policy" placeholder="0.00"></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;">&nbsp;</div>
 							<div class="col" style="width:16%;background-color:#eeeeee;">&nbsp;</div>
 							<div class="col" style="width:16%;background-color:#eeeeee;">&nbsp;</div>
 						</div>

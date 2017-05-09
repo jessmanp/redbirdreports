@@ -1,3 +1,13 @@
+<!-- begin setup area -->
+<div class="agency-setup"></div>
+<div class="agency-setup-help">
+	<div class="agency-setup-instruction">
+	<strong>Enter your agency information below to continue.</strong><br /><br />
+	After you update your agency information below,<br />add your employees and enter your billing information.<br /><br />
+	If you need help setting up your agency, visit our support section.<br />
+	</div>
+</div>
+<!-- end setup area -->
 <!-- begin content area -->
 <div id="myagency-content">
 <?php
@@ -51,6 +61,21 @@ $(document).ready(function() {
 
 	var url = "<?php echo $url; ?>";
 	$("#info").css("background-color","#000000");
+	
+	<?php if (empty($agency_data[0]->agency_name)) { ?>
+	$(".agency-setup").fadeIn("fast");
+	$(".agency-setup-help").fadeIn("fast");
+	$(".agency-setup-instruction").fadeIn("fast");
+	<?php } ?>
+	if (!$("#agency_name").val()) {
+		$(".agency-setup").fadeIn("fast");
+		$(".agency-setup-help").fadeIn("fast");
+		$(".agency-setup-instruction").fadeIn("fast");
+	} else {
+		$(".agency-setup").hide();
+		$(".agency-setup-help").hide();
+		$(".agency-setup-instruction").hide();
+	}
 	
 });
 

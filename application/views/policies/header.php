@@ -62,12 +62,12 @@
 				<button id="fourth_quarter" data-dates="<?php echo $fourth_quarter.".a"; ?>" class="pre-dates-btn">4th Quarter</button>
 				<button id="last_six_months" data-dates="<?php echo $last_six_months.".a"; ?>" class="pre-dates-btn">Last 6 Months</button>
 				<button id="this_year" data-dates="<?php echo $this_year.".a"; ?>" class="pre-dates-btn">This Year</button>
-				<button id="last_two_years" data-dates="<?php echo $last_two_years.".a"; ?>" class="pre-dates-btn">Last 2 Years</button>
+				<button id="last_year" data-dates="<?php echo $last_year.".a"; ?>" class="pre-dates-btn">Last Year</button>
 				<button id="all_time" class="pre-dates-btn">All Records</button>
 			</div>
 				<div class="date-pickers">&nbsp;Date Range:</div>
-				<input id="datepick1" name="datepick1" placeholder="" readonly />
-				<input id="datepick2" name="datepick2" placeholder="" readonly />
+				<input id="datepick1" name="datepick1" placeholder="" />
+				<input id="datepick2" name="datepick2" placeholder="" />
 				<input id="field" name="field" type="text" placeholder="Search" />
 				<button id="dosubmit"><img src="/public/img/btn_search.png" class="search-btn-icon" alt="Search" /></button>
 			<button id="advanced-search">Search Filters<img src="/public/img/btn_filter.png" class="search-btn-icon" alt="Advanced Search" /></button>
@@ -92,10 +92,11 @@
 			<div class="status-text">Average Premium: <span id="avgprem" class="status-item">$0</span></div>
 			<div class="status-text-right">Total Premium: <span id="totprem" class="status-item">$0</span></div>
 			<div style="clear:both;height:5px;"></div>
-			<div class="status-text"><a id="allwritten" class="status-link">Written</a>: <span id="totwritten" class="status-item">0</span></div>
-			<div class="status-text"><a id="notissued" class="status-link">Not Issued</a>: <span id="totnotissued" class="status-item">0</span></div>
-			<div class="status-text"><a id="allcanceled" class="status-link">Canceled</a>: <span id="totcanceled" class="status-item">0</span></div>
-			<div class="status-text-right"><a id="pendingrenewal" class="status-link">Pending Renewal</a>: <span id="totpending" class="status-item">0</span></div>
+			<div class="status-text-sm"><a id="allwritten" class="status-link">Written</a>: <span id="totwritten" class="status-item">0</span></div>
+			<div class="status-text-sm"><a id="isissued" class="status-link">Issued</a>: <span id="totissued" class="status-item">0</span></div>
+			<div class="status-text-sm"><a id="notissued" class="status-link">Not Issued</a>: <span id="totnotissued" class="status-item">0</span></div>
+			<div class="status-text-sm"><a id="allcanceled" class="status-link">Canceled</a>: <span id="totcanceled" class="status-item">0</span></div>
+			<div class="status-text-sm-right"><a id="pendingrenewal" class="status-link">Pending Renewal</a>: <span id="totpending" class="status-item">0</span></div>
 		</div>
 	</div>
 

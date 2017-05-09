@@ -164,7 +164,7 @@ class Login
         // if database connection opened
         if ($this->databaseConnection()) {
             // database query, getting all the info of the selected user
-            $query_user = $this->db_connection->prepare('SELECT users.*, agencies_users.agency_id FROM users, agencies_users WHERE agencies_users.user_id = users.user_id AND users.user_name = :user_name');
+            $query_user = $this->db_connection->prepare('SELECT users.*, agencies_users.agency_id FROM users, agencies_users WHERE agencies_users.user_id = users.user_id AND (users.user_name = :user_name OR users.user_email = :user_name);');
             $query_user->bindValue(':user_name', $user_name, PDO::PARAM_STR);
             $query_user->execute();
             // get result row (as an object)
@@ -629,13 +629,13 @@ class Login
                                                                WHERE user_name = :user_name');
                 $query_update->bindValue(':user_password_reset_hash', $user_password_reset_hash, PDO::PARAM_STR);
                 $query_update->bindValue(':user_password_reset_timestamp', $temporary_timestamp, PDO::PARAM_INT);
-                $query_update->bindValue(':user_name', $user_name, PDO::PARAM_STR);
+                $query_update->bindValue(':user_name', $result_row->user_name, PDO::PARAM_STR);
                 $query_update->execute();
 
                 // check if exactly one row was successfully changed:
                 if ($query_update->rowCount() == 1) {
                     // send a mail to the user, containing a link with that token hash string
-                    $this->sendPasswordResetMail($user_name, $result_row->user_email, $user_password_reset_hash);
+                    $this->sendPasswordResetMail($result_row->user_name, $result_row->user_email, $user_password_reset_hash);
                     return true;
                 } else {
                     $this->errors[] = MESSAGE_DATABASE_ERROR;

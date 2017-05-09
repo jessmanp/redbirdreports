@@ -205,9 +205,6 @@
 
 // LOAD
 $(document).ready(function() {
-
-	
-	
 	
 });
 
