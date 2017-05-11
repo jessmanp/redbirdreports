@@ -82,9 +82,9 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 			$("#policy_sub_category").append($("#captionslife").val());
 		} else if ($("#policy_type").val() == 40) {
 			$("#policy_sub_category").append($("#captionshealth").val());
-		} else if ($("#policy_type").val() == 50) {
-			$("#policy_sub_category").append($("#captionsdeposit").val());
 		} else if ($("#policy_type").val() == 58) {
+			$("#policy_sub_category").append($("#captionsdeposit").val());
+		} else if ($("#policy_type").val() == 50) {
 			$("#policy_sub_category").append($("#captionsloan").val());
 		} else if ($("#policy_type").val() == 70) {
 			$("#policy_sub_category").append($("#captionsfund").val());
@@ -111,11 +111,11 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 		$("#policy_type").prop("disabled", true);
 	} else if (category == 'deposit') {
 		$("#policy_sub_category").append($("#captionsdeposit").val());
-		$("#policy_type option[value=50]").prop("selected", true);
+		$("#policy_type option[value=58]").prop("selected", true);
 		$("#policy_type").prop("disabled", true);
 	} else if (category == 'loan') {
 		$("#policy_sub_category").append($("#captionsloan").val());
-		$("#policy_type option[value=58]").prop("selected", true);
+		$("#policy_type option[value=50]").prop("selected", true);
 		$("#policy_type").prop("disabled", true);
 	} else if (category == 'fund') {
 		$("#policy_sub_category").append($("#captionsfund").val());
@@ -221,9 +221,9 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 				$("#policy_sub_category").append($("#captionslife").val());
 			} else if (cat == 40) {
 				$("#policy_sub_category").append($("#captionshealth").val());
-			} else if (cat == 50) {
-				$("#policy_sub_category").append($("#captionsdeposit").val());
 			} else if (cat == 58) {
+				$("#policy_sub_category").append($("#captionsdeposit").val());
+			} else if (cat == 50) {
 				$("#policy_sub_category").append($("#captionsloan").val());
 			} else if (cat == 70) {
 				$("#policy_sub_category").append($("#captionsfund").val());
@@ -239,9 +239,9 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 				$("#policy_sub_category").append($("#captionslife").val());
 			} else if (catp == 40) {
 				$("#policy_sub_category").append($("#captionshealth").val());
-			} else if (catp == 50) {
-				$("#policy_sub_category").append($("#captionsdeposit").val());
 			} else if (catp == 58) {
+				$("#policy_sub_category").append($("#captionsdeposit").val());
+			} else if (catp == 50) {
 				$("#policy_sub_category").append($("#captionsloan").val());
 			} else if (catp == 70) {
 				$("#policy_sub_category").append($("#captionsfund").val());

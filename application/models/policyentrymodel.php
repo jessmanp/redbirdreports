@@ -66,10 +66,10 @@ class PolicyEntryModel
         			$addedSQL = ' WHERE (policy_categories.id = 40 OR policy_categories.parent_id = 40)';
         			break;
     			case 'deposit':
-        			$addedSQL = ' WHERE (policy_categories.id = 50 OR policy_categories.parent_id = 50)';
+        			$addedSQL = ' WHERE (policy_categories.id = 58 OR policy_categories.parent_id = 58)';
         			break;
     			case 'loan':
-        			$addedSQL = ' WHERE (policy_categories.id = 58 OR policy_categories.parent_id = 58)';
+        			$addedSQL = ' WHERE (policy_categories.id = 50 OR policy_categories.parent_id = 50)';
         			break;
     			case 'fund':
         			$addedSQL = ' WHERE (policy_categories.id = 70 OR policy_categories.parent_id = 70)';
