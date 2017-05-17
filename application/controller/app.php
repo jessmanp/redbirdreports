@@ -1692,7 +1692,7 @@ class App extends Controller
 			$files = array();
 			
 			$error = $_FILES['myfile']['error'];
-			// andle both cases of single/multi files
+			// handle both cases of single/multi files
 			// in case any browser does not support serializing of multiple files using FormData() 
 			if(!is_array($_FILES['myfile']['name'])) {
 				// handle single file

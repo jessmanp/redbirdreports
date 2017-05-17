@@ -64,7 +64,7 @@ $(document).ready(function() {
             showStatusAfterError: true,
             showFileCounter:true,
             fileCounterStyle:"). ",
-            showProgress:false,
+            showProgress:true,
             onSelect:function(files){ return true;},            
             onSubmit: function (files, xhr) {},
             onSuccess: function (files, response, xhr) {},

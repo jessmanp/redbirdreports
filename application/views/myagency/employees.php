@@ -39,41 +39,41 @@
 				<input type="hidden" id="employee_id" name="employee_id" value="-2" />
 
 				<label for="employee_first_name">First Name<sup>*</sup>:</label>
-				<input id="employee_first_name_field" style="width:115px;" type="text" name="employee_first_name" maxlength="64" placeholder="First Name" required />
+				<input id="employee_first_name_field" style="width:115px;" type="text" name="employee_first_name" maxlength="64" placeholder="First Name" disabled="disabled" required />
 				&nbsp;
 				<label for="employee_last_name">Last Name<sup>*</sup>:</label>
-				<input id="employee_last_name_field" style="width:110px;" type="text" name="employee_last_name" maxlength="64" placeholder="Last Name" required />
+				<input id="employee_last_name_field" style="width:110px;" type="text" name="employee_last_name" maxlength="64" placeholder="Last Name" disabled="disabled" required />
 				&nbsp;
 				<label for="employee_job_title">Job Title:</label>
-				<input id="employee_job_title_field" style="width:110px;" type="text" name="employee_job_title" maxlength="64" placeholder="Job Title" />
+				<input id="employee_job_title_field" style="width:110px;" type="text" name="employee_job_title" maxlength="64" placeholder="Job Title" disabled="disabled" />
 				<br />
 				<label for="employee_email">Email<sup>*</sup>:</label>
-				<input id="employee_email_field" style="width:205px;" type="email" name="employee_email" maxlength="64" placeholder="Email" required />
+				<input id="employee_email_field" style="width:205px;" type="email" name="employee_email" maxlength="64" placeholder="Email" disabled="disabled" required />
 				&nbsp;
 				<label for="employee_email_verify">Verify Email<sup>*</sup>:</label>
-				<input id="employee_email_verify_field" style="width:208px;" type="email" name="employee_email_verify" maxlength="64" placeholder="Verfiy Email" required />
+				<input id="employee_email_verify_field" style="width:208px;" type="email" name="employee_email_verify" maxlength="64" placeholder="Verfiy Email" disabled="disabled" required />
 				<br />
 				<label for="employee_phone">Phone:</label>
-				<input id="employee_phone_field" style="width:140px;" type="text" name="employee_phone" maxlength="64" placeholder="Phone" />
+				<input id="employee_phone_field" style="width:140px;" type="text" name="employee_phone" maxlength="64" placeholder="Phone" disabled="disabled" />
 				&nbsp;
 				<label for="employee_mobile">Mobile:</label>
-				<input id="employee_mobile_field" style="width:140px;" type="text" name="employee_mobile" maxlength="64" placeholder="Mobile" />
+				<input id="employee_mobile_field" style="width:140px;" type="text" name="employee_mobile" maxlength="64" placeholder="Mobile" disabled="disabled" />
 				&nbsp;
 				<label for="employee_zip_code">Zip Code:</label>
-				<input id="employee_zip_code_field" style="width:85px;" type="text" name="employee_zip_code" maxlength="64" placeholder="Zip Code" />
+				<input id="employee_zip_code_field" style="width:85px;" type="text" name="employee_zip_code" maxlength="64" placeholder="Zip Code" disabled="disabled" />
 				<br />
 				<label for="employee_username">Username<sup>*</sup>:</label>
-				<input id="employee_username_field" style="width:180px;" type="text" name="employee_username" maxlength="64" placeholder="Username" />
+				<input id="employee_username_field" style="width:180px;" type="text" name="employee_username" maxlength="64" placeholder="Username" disabled="disabled" />
 				&nbsp;
 				<label for="employee_type">User Type<sup>*</sup>:</label>
-				<select class="short-select" id="employee_type_field" name="employee_type" required>
+				<select class="short-select" id="employee_type_field" name="employee_type" disabled="disabled" required>
 					<option value="">- Select -</option>
 					<option value="0">Employee</option>
 					<option value="1">Manager</option>
 					<!--<option value="2">Administrator</option>-->
 				</select>
 				&nbsp;
-				Hire Date:<input id="employeehiredate" name="employee_hire_date" placeholder="01/01/2001">
+				Hire Date:<input id="employeehiredate" name="employee_hire_date" disabled="disabled" placeholder="01/01/2001">
 				<br />
 				
 				<div style="text-align:center;margin:25px 0 15px 10px;padding:10px;background-color:#a20004;color:#ffffff;">
@@ -92,11 +92,11 @@
 						</div>
 						<div class="table-row">
 							<div class="col" style="width:20%;background-color:#cccccc;"><span class="table-title"><strong>Auto</strong><sup>*</sup></span></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_auto_new" name="employee_auto_new" placeholder="0"> <strong>%</strong></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_auto_added" name="employee_auto_added" placeholder="0"> <strong>%</strong></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_auto_reinstated" name="employee_auto_reinstated" placeholder="0"> <strong>%</strong></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_auto_transferred" name="employee_auto_transferred" placeholder="0"> <strong>%</strong></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_auto_renewal" name="employee_auto_renewal" placeholder="0"> <strong>%</strong></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_auto_new" name="employee_auto_new" disabled="disabled" placeholder="0"> <strong>%</strong></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_auto_added" name="employee_auto_added" disabled="disabled" placeholder="0"> <strong>%</strong></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_auto_reinstated" name="employee_auto_reinstated" disabled="disabled" placeholder="0"> <strong>%</strong></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_auto_transferred" name="employee_auto_transferred" disabled="disabled" placeholder="0"> <strong>%</strong></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_auto_renewal" name="employee_auto_renewal" disabled="disabled" placeholder="0"> <strong>%</strong></div>
 						</div>
 						<br />
 						<div class="table-row">
@@ -109,11 +109,11 @@
 						</div>
 						<div class="table-row">
 							<div class="col" style="width:20%;background-color:#cccccc;"><span class="table-title"><strong>Fire</strong><sup>*</sup></span></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_fire_new" name="employee_fire_new" placeholder="0"> <strong>%</strong></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_fire_added" name="employee_fire_added" placeholder="0"> <strong>%</strong></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_fire_reinstated" name="employee_fire_reinstated" placeholder="0"> <strong>%</strong></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_fire_transferred" name="employee_fire_transferred" placeholder="0"> <strong>%</strong></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_fire_renewal" name="employee_fire_renewal" placeholder="0"> <strong>%</strong></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_fire_new" name="employee_fire_new" disabled="disabled" placeholder="0"> <strong>%</strong></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_fire_added" name="employee_fire_added" disabled="disabled" placeholder="0"> <strong>%</strong></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_fire_reinstated" name="employee_fire_reinstated" disabled="disabled" placeholder="0"> <strong>%</strong></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_fire_transferred" name="employee_fire_transferred" disabled="disabled" placeholder="0"> <strong>%</strong></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_fire_renewal" name="employee_fire_renewal" disabled="disabled" placeholder="0"> <strong>%</strong></div>
 						</div>
 						<br />
 						<div class="table-row">
@@ -126,9 +126,9 @@
 						</div>
 						<div class="table-row">
 							<div class="col" style="width:20%;background-color:#cccccc;"><span class="table-title"><strong>Life</strong><sup>*</sup></span></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_life_new" name="employee_life_new" placeholder="0"> <strong>%</strong></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_life_new" name="employee_life_new" disabled="disabled" placeholder="0"> <strong>%</strong></div>
 							<div class="col" style="width:16%;background-color:#eeeeee;"><em>AND</em></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><strong>$</strong> <input type="text" id="employee_life_policy" name="employee_life_policy" placeholder="0.00"></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><strong>$</strong> <input type="text" id="employee_life_policy" name="employee_life_policy" disabled="disabled" placeholder="0.00"></div>
 							<div class="col" style="width:16%;background-color:#eeeeee;">&nbsp;</div>
 							<div class="col" style="width:16%;background-color:#eeeeee;">&nbsp;</div>
 						</div>
@@ -143,9 +143,9 @@
 						</div>
 						<div class="table-row">
 							<div class="col" style="width:20%;background-color:#cccccc;"><span class="table-title"><strong>Health</strong><sup>*</sup></span></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_health_new" name="employee_health_new" placeholder="0"> <strong>%</strong></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><input type="text" id="employee_health_new" name="employee_health_new" disabled="disabled" placeholder="0"> <strong>%</strong></div>
 							<div class="col" style="width:16%;background-color:#eeeeee;"><em>AND</em></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><strong>$</strong> <input type="text" id="employee_health_policy" name="employee_health_policy" placeholder="0.00"></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><strong>$</strong> <input type="text" id="employee_health_policy" name="employee_health_policy" disabled="disabled" placeholder="0.00"></div>
 							<div class="col" style="width:16%;background-color:#eeeeee;">&nbsp;</div>
 							<div class="col" style="width:16%;background-color:#eeeeee;">&nbsp;</div>
 						</div>
@@ -160,9 +160,9 @@
 						</div>
 						<div class="table-row">
 							<div class="col" style="width:20%;background-color:#cccccc;"><span class="table-title"><strong>Bank</strong><sup>*</sup></span></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><strong>$</strong> <input type="text" id="employee_bank_deposit_product" name="employee_bank_deposit_product" placeholder="0.00"></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><strong>$</strong> <input type="text" id="employee_bank_loan_product" name="employee_bank_loan_product" placeholder="0.00"></div>
-							<div class="col" style="width:16%;background-color:#eeeeee;"><strong>$</strong> <input type="text" id="employee_bank_fund_product" name="employee_bank_fund_product" placeholder="0.00"></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><strong>$</strong> <input type="text" id="employee_bank_deposit_product" name="employee_bank_deposit_product" disabled="disabled" placeholder="0.00"></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><strong>$</strong> <input type="text" id="employee_bank_loan_product" name="employee_bank_loan_product" disabled="disabled" placeholder="0.00"></div>
+							<div class="col" style="width:16%;background-color:#eeeeee;"><strong>$</strong> <input type="text" id="employee_bank_fund_product" name="employee_bank_fund_product" disabled="disabled" placeholder="0.00"></div>
 							<div class="col" style="width:16%;background-color:#eeeeee;">&nbsp;</div>
 							<div class="col" style="width:16%;background-color:#eeeeee;">&nbsp;</div>
 						</div>

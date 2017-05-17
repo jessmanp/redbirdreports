@@ -22,6 +22,7 @@
 <!-- JavaScript -->
 <script src="<?php echo URL; ?>public/js/global.js"></script>
 <script src="<?php echo URL; ?>public/js/application.js"></script>
+<script src="<?php echo URL; ?>public/js/uploadfile.js"></script>
 <?php if (isset($dateScript)) { ?>
 <script src="<?php echo URL; ?>public/js/<?php echo $dateScript; ?>"></script>
 <?php } ?>

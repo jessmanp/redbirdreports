@@ -261,12 +261,19 @@ $(document).ready(function() {
 		populateDates($("#the_frequency").val(),curryear);
 		$("#commission_year").prop("disabled", true);
 		$("#commission_period").prop("disabled", true);
+		loadUserData($("#commission_employees option:selected").val());
 	});
 	
 	$("#commission_year").on("change", function(event) {
 		event.preventDefault();
-		// do stuff here
+		// load date ranges based on year selected
 		populateDates($("#the_frequency").val(),$(this).val());
+	});
+	
+	$("#commission_period").on("change", function(event) {
+		event.preventDefault();
+		// submit search
+		loadUserData($("#commission_employees option:selected").val());
 	});
 
 	// HIGHLIGHT MAIN SECTION

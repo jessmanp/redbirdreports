@@ -98,10 +98,10 @@ include('../application/views/_templates/header.php');
 
 	<label for="user_last_name"><?php echo WORDING_LAST_NAME; ?><span class="small">*Required</span></label>
     <input id="user_last_name" type="text" name="user_last_name" maxlength="64" value="<?php if (isset($user->user_last_name)) echo $user->user_last_name; ?>" required />
-
+<!--
     <label for="user_job_title"><?php echo WORDING_JOB_TITLE; ?><span class="small">*Optional</span></label>
     <input id="user_job_title" type="text" name="user_job_title" maxlength="64" value="<?php if (isset($user->user_job_title)) echo $user->user_job_title; ?>" />
-
+-->
     <label for="user_phone"><?php echo WORDING_PHONE; ?><span class="small">*Optional</span></label>
     <input id="user_phone" type="text" name="user_phone" maxlength="20" value="<?php if (isset($user->user_phone)) echo $user->user_phone; ?>" />
 

@@ -19,7 +19,12 @@
 							<button id="agency_settings_save" data-type="save" class="plain-btn">Update Settings</button>
 							<br /><br />
 							<div class="myagency-required-key"><sup>*</sup>Required Field(s)</div>
-							<br />
+
+							<br /><br /><br /><br />
+							<div id="multipleupload">Upload</div>
+							<div id="status"></div>
+							<div id="eventsmessage"><b>Events:</b></div>
+							
 						</div>
 						<div class="myagency-text-footer">&nbsp;</div>
 					</form>

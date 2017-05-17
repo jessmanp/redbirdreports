@@ -1,0 +1,56 @@
+Delivered-To: jessman+other@gmail.com
+Received: by 10.176.16.153 with SMTP id d25csp428459uab;
+        Thu, 9 Mar 2017 09:04:38 -0800 (PST)
+X-Received: by 10.99.174.2 with SMTP id q2mr15108712pgf.123.1489079078368;
+        Thu, 09 Mar 2017 09:04:38 -0800 (PST)
+Return-Path: <gerritsenhamlini@yahoo.com>
+Received: from nm41-vm1.bullet.mail.gq1.yahoo.com (nm41-vm1.bullet.mail.gq1.yahoo.com. [67.195.87.88])
+        by mx.google.com with ESMTPS id o9si278367pge.380.2017.03.09.09.04.38
+        for <jessman+other@gmail.com>
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 09 Mar 2017 09:04:38 -0800 (PST)
+Received-SPF: pass (google.com: domain of gerritsenhamlini@yahoo.com designates 67.195.87.88 as permitted sender) client-ip=67.195.87.88;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@yahoo.com;
+       spf=pass (google.com: domain of gerritsenhamlini@yahoo.com designates 67.195.87.88 as permitted sender) smtp.mailfrom=gerritsenhamlini@yahoo.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=yahoo.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1489079077; bh=3ZW7cstYVGbRwUvz35JZgrH+O7hulMpNN/RXmqoLqUM=; h=Date:From:Reply-To:To:Subject:References:From:Subject; b=oReXWuGk8DtlKPCxFXFUCWCJh0vWJ8T+HMTlzFr4Ey91fNjCkz95pIUTbZKIX39Sxf4T6mvE1BBfJi/TR/Eh/vBeX7q4zq3Udf+a0wXa/MdLpsL55JAm/2YEeUztp12pWN/YVs0F1b6HWTg+qdQv+UcAO65uCcfycfCbQftHgHuxE6zmOewbxJH/SAWBZ4JnYgg74aniDlGjxPoJTF47fLqzBxy55Cd1juGe4dz5u8ZBysACY4CYhZmfxcwuf5+gXdpD7P0TtiAiQMlhnNPbCSuasKacHxk4ahz8uANnDKdWAiV+AfwwSwPmATHbAWb9PiybB0ZO9bg7iBARJYXGMw==
+Received: from [127.0.0.1] by nm41.bullet.mail.gq1.yahoo.com with NNFMP; 09 Mar 2017 17:04:37 -0000
+Received: from [98.137.12.189] by nm41.bullet.mail.gq1.yahoo.com with NNFMP; 09 Mar 2017 17:01:54 -0000
+Received: from [98.139.215.142] by tm10.bullet.mail.gq1.yahoo.com with NNFMP; 09 Mar 2017 17:01:54 -0000
+Received: from [98.139.212.242] by tm13.bullet.mail.bf1.yahoo.com with NNFMP; 09 Mar 2017 17:01:54 -0000
+Received: from [127.0.0.1] by omp1051.mail.bf1.yahoo.com with NNFMP; 09 Mar 2017 17:01:54 -0000
+X-Yahoo-Newman-Property: ymail-4
+X-Yahoo-Newman-Id: 676892.57772.bm@omp1051.mail.bf1.yahoo.com
+X-YMail-OSG: 533WtsEVM1kXHS3sQEm5Eyx7mG.9Exuy.xHmCvymelTBNfD0pa6VxO3_L84_uFu
+ c3MaYQNpP5JFZzJQrZstTccCm.0rzbP1S_M1uZhbxe0rb33rDZwPT4l9iifezZ2PI2pmS1jv1.0u
+ 2d3NF8OwM4OVawhBS4KSiCWf7QhmNn6MJ6uHmD63ZbQ5DK8Y2qmZ78AdLT_EmsOTY5hLiehgEtjb
+ CQJOHlaN1vzuhTmSw4X0oQd8rhLZQfRywG35H3Cjlnp1v6FR4ts.oUvh3sv2tbeT3lHuF.UjYpsP
+ CnwybVltvI.AofPwXjkuUsLtVqaAToO_JbwWl2IdCZPN4lUiTlItBEU3Sxia0N7onmGUWr_r4jdr
+ 5vY6u0Rghhm8tFv4Z.A615CUcJWJJoMXLaE_EjDF2TQgCyCZvxFq3vMcMbP0.CprOJSmOYSZj5RL
+ lUNriIuo074RkixkZw7Qk4Q1eyIQffSsVhPQxxuIl0NCynjjWXgIFhJIqVHFy3IgMB9B9r84wu.a
+ T_nr4BHFfY6Jf90oBrAqjiXj_TNM9zjgUq0un.2RaICMg0WcArzg-
+Received: from jws400022.mail.bf2.yahoo.com by sendmailws149.mail.bf1.yahoo.com; Thu, 09 Mar 2017 17:01:54 +0000; 1489078914.318
+Date: Thu, 9 Mar 2017 17:01:54 +0000 (UTC)
+From:  <gerritsenhamlini@yahoo.com>
+Reply-To:  <gerritsenhamlini@yahoo.com>
+To: "jessman+other@gmail.com" <jessman+other@gmail.com>
+Message-ID: <539827905.2303222.1489078914140@mail.yahoo.com>
+Subject: test from my yahoo
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_2303221_1914383352.1489078914139"
+References: <539827905.2303222.1489078914140.ref@mail.yahoo.com>
+Content-Length: 541
+
+------=_Part_2303221_1914383352.1489078914139
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+123
+------=_Part_2303221_1914383352.1489078914139
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<html><head></head><body><div style="color:#000; background-color:#fff; font-family:HelveticaNeue, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;font-size:16px"><div id="yui_3_16_0_ym19_1_1489078591636_3406">123</div></div></body></html>
+------=_Part_2303221_1914383352.1489078914139--
