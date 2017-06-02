@@ -1184,6 +1184,7 @@ class App extends Controller
 		// load models
 		$setup_model = $this->loadModel('SetupModel');
 		$myagency_model = $this->loadModel('MyAgencyModel');
+		$file_model = $this->loadModel('FilesModel');
 		
 		// check if logged in and set agency ID
 		if (!empty($_SESSION['user_name']) && ($_SESSION['user_logged_in'] == 1)) {
@@ -1222,7 +1223,7 @@ class App extends Controller
 			$return['msg'] = '';
 			$return['error'] = false;
 			
-			$agency_frequency = @$_POST['agency_frequency'];
+			$agency_frequency = trim(@$_POST['agency_frequency']);
 		
 			// get agency id based on owner
 			$agency_id = $setup_model->getAgencyID($_SESSION['user_id']);
@@ -1237,6 +1238,72 @@ class App extends Controller
 				$return['msg'] .= 'ERROR. Settings Not Saved.';
 			} else {
 				$return['msg'] = '<strong>Success</strong>, your settings have been updated.';
+			}
+
+			//Return json encoded results
+			echo json_encode($return);
+			exit();
+
+		}
+		
+		if ($sub == 'deleteFile') {
+
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+			
+			$file_id = trim(@$_POST['fdelid']);
+		
+			// get agency id based on owner
+			$agency_id = $setup_model->getAgencyID($_SESSION['user_id']);
+
+			if (isset($file_id) && is_numeric($file_id)) {
+				// delete file
+				$delfile = $file_model->deleteFile($agency_id,$file_id);
+			}
+
+			if ($delfile) {
+				$return['error'] = true;
+				$return['msg'] .= 'ERROR. File Not Deleted.';
+			} else {
+				$return['msg'] = '<strong>Success</strong>, File Deleted.';
+			}
+
+			//Return json encoded results
+			echo json_encode($return);
+			exit();
+
+		}
+		
+		if ($sub == 'importFile') {
+
+			// array values that will be returned via ajax
+			$return = array();
+			$return['msg'] = '';
+			$return['error'] = false;
+			
+			$file_id = trim(@$_POST['fimpid']);
+			$employee_id = trim(@$_POST['impempid']);
+			
+			if (!isset($employee_id) || $employee_id == '' || !is_numeric($employee_id)) {
+					$return['error'] = true;
+					$return['msg'] .= '<strong>File Import Failed.</strong> Invalid employee or no employee was selected.<br />';
+			}
+		
+			// get agency id based on owner
+			$agency_id = $setup_model->getAgencyID($_SESSION['user_id']);
+
+			if (isset($file_id) && is_numeric($file_id)) {
+				// import file
+				$importfile = $file_model->importFile($agency_id,$file_id,$employee_id);
+			}
+
+			if ($importfile != true) {
+				$return['error'] = true;
+				$return['msg'] .= '<br /><strong>ERROR.</strong> File Not Imported.';
+			} else {
+				$return['msg'] = '<strong>Success</strong>, File Imported.';
 			}
 
 			//Return json encoded results
@@ -1310,7 +1377,7 @@ class App extends Controller
 
 			if (!isset($employee_id) || $employee_id == '' || !is_numeric($employee_id)) {
 				$return['error'] = true;
-				$return['msg'] .= '<strong>ERROR</strong>, Invalid employee or no employee was selected.';
+				$return['msg'] .= '<strong>ERROR</strong>, Invalid employee or no employee was selected.<br />';
 			}
 			
 			// get employees data
@@ -1622,6 +1689,13 @@ class App extends Controller
 
 		}
 		
+		if ($sub == 'files') {
+			// get agency settings info
+			$agency_advanced = $myagency_model->getAgencyAdvancedSettings($agency_id);
+			require 'application/views/myagency/files.php';
+			exit();
+		}
+		
 		if ($sub == 'index') {
 			// get agency info
 			$agency_data = $setup_model->getAgencyInfo($agency_id);
@@ -1640,6 +1714,11 @@ class App extends Controller
 			require 'application/views/myagency/header.php';
 			if ($sub == 'employees') {
 				require 'application/views/myagency/modal_window.php';
+			}
+			if ($sub == 'agencysettings') {
+				require 'application/views/myagency/modal_window.php';
+				// get agency settings info
+				$agency_advanced = $myagency_model->getAgencyAdvancedSettings($agency_id);
 			}
 			require 'application/views/myagency/'.$sub.'.php';
         } else {
@@ -1697,10 +1776,23 @@ class App extends Controller
 			if(!is_array($_FILES['myfile']['name'])) {
 				// handle single file
 				$fileName = $_FILES['myfile']['name'];
-				// make sure file is plain text and set extension
-				switch($_FILES['myfile']['type']) {
-					case 'text/plain': $ext = 'txt'; break;
-					default: $ext = null; break;
+				// make sure file is a plain text csv and set extension
+				$csv_mimetypes = array(
+					'text/csv',
+					'text/plain',
+					'application/csv',
+					'text/comma-separated-values',
+					'application/excel',
+					'application/vnd.ms-excel',
+					'application/vnd.msexcel',
+					'text/anytext',
+					'application/octet-stream',
+					'application/txt',
+				);
+				if (in_array($_FILES['myfile']['type'], $csv_mimetypes)) {
+					$ext = 'csv';
+				} else {
+					$ext = null;
 				}
 				if ($ext) {
 					// set filename to random
@@ -1717,9 +1809,9 @@ class App extends Controller
 			  $fileCount = count($_FILES['myfile']['name']);
 			  for($i=0; $i < $fileCount; $i++) {
 				$fileName = $_FILES['myfile']['name'][$i];
-				// make sure file is plain text and set extension
+				// make sure file is a plain text csv and set extension
 				switch($_FILES['myfile']['type'][$i]) {
-					case 'text/plain': $ext = 'txt'; break;
+					case 'text/csv': $ext = 'csv'; break;
 					default: $ext = null; break;
 				}
 				if ($ext) {

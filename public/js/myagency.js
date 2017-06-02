@@ -58,8 +58,11 @@ function openWindow(type,message,id,fname,lname,jobtitle) {
 	$(".myagency-message").text(message);
 	
 	if (type == 'edit') {
+		$("#myagency-deletefile").hide();
 		$("#myagency-delete").hide();
 		$("#myagency-undelete").hide();
+		$("#myagency-import").hide();
+		$("#myagency-import-progress").hide();
 		$("#employee-invite").fadeIn();
 	}
 	
@@ -70,6 +73,9 @@ function openWindow(type,message,id,fname,lname,jobtitle) {
 		$("#employee-invite").hide();
 		$("#myagency-save-employee").hide();
 		$("#myagency-undelete").hide();
+		$("#myagency-import").hide();
+		$("#myagency-import-progress").hide();
+		$("#myagency-deletefile").hide();
 		$("#myagency-delete").fadeIn();
 		$("#myagency-delete #delid").val(id);
 		$("#myagency-delete").find("p").text('');
@@ -80,7 +86,10 @@ function openWindow(type,message,id,fname,lname,jobtitle) {
 		$(".modal-required-key").fadeIn();
 		$("#employee-invite").hide();
 		$("#myagency-save-employee").hide();
+		$("#myagency-deletefile").hide();
 		$("#myagency-delete").hide();
+		$("#myagency-import").hide();
+		$("#myagency-import-progress").hide();
 		$("#myagency-undelete").fadeIn();
 		$("#myagency-undelete #udelid").val(id);
 		$("#myagency-undelete").find("p").text('');
@@ -90,9 +99,42 @@ function openWindow(type,message,id,fname,lname,jobtitle) {
 	if (type == 'update') {
 		$(".modal-required-key").hide();
 		$("#employee-invite").hide();
+		$("#myagency-deletefile").hide();
 		$("#myagency-delete").hide();
 		$("#myagency-undelete").hide();
+		$("#myagency-import").hide();
+		$("#myagency-import-progress").hide();
 		$("#myagency-save-employee").fadeIn();
+	}
+	
+	if (type == 'deletefile') {
+		// LOAD DELETE FILE
+		$(".modal-required-key").hide();
+		$("#employee-invite").hide();
+		$("#myagency-delete").hide();
+		$("#myagency-undelete").hide();
+		$("#myagency-save-employee").hide();
+		$("#myagency-import").hide();
+		$("#myagency-import-progress").hide();
+		$("#myagency-deletefile").fadeIn();
+		$("#myagency-deletefile #fdelid").val(id);
+		$("#myagency-deletefile").find("p").text('');
+		$("#myagency-deletefile").find("p").html('<em>File Will Be Permanently Deleted</em><br /><br /><div class="delete-table-container"><div class="delete-table-row"><div class="edit-col"><strong>File Name:</strong></div><div class="delete-col">'+fname+'</div></div></div>');
+	}
+	
+	if (type == 'importfile') {
+		updateEmployeeImportList();
+		$(".modal-required-key").fadeIn();
+		$("#employee-invite").hide();
+		$("#myagency-deletefile").hide();
+		$("#myagency-delete").hide();
+		$("#myagency-undelete").hide();
+		$("#myagency-save-employee").hide();
+		$("#myagency-import-progress").hide();
+		$("#myagency-import").fadeIn();
+		$("#myagency-import #fimpid").val(id);
+		$("#myagency-import").find("p").text('');
+		$("#myagency-import").find("p").html('<em>File Will Be Imported And Then Deleted</em><br /><br /><div class="delete-table-container"><div class="delete-table-row"><div class="edit-col"><strong>File Name:</strong></div><div class="delete-col">'+fname+'</div></div></div>');
 	}
 
 }
@@ -105,6 +147,9 @@ function closeWindow() {
 	$("#employee-invite").fadeOut("fast");
 	$("#myagency-text").fadeOut("fast");
 	$("#myagency-delete").fadeOut("fast");
+	$("#myagency-deletefile").fadeOut("fast");
+	$("#myagency-import").fadeOut("fast");
+	$("#myagency-import-progress").fadeOut("fast");
 }
 
 // LOAD TRANSFER EMPLOYEES AND UPDATE DROPDOWN
@@ -143,6 +188,40 @@ function updateEmployeeTransferList(removeid) {
 	});
 }
 
+// LOAD IMPORT EMPLOYEES AND UPDATE DROPDOWN
+function updateEmployeeImportList() {
+	$.ajax({
+			type: "POST",
+			url: "/app/myagency/getEmployeeTransferList",
+			data: $(this).serialize(),
+			dataType: "json",
+			cache: false,
+				async: true,
+			success: function (data) {
+				console.log(data);
+				if (data.error == true) {
+					// show returned error msg here
+					//openModal('error',data.msg);
+				} else {
+					// update was successful refresh/populate employee drop down
+					$("#impempid").empty();
+					$("#impempid").append(
+						$("<option></option>").val("").html("- Select -")
+					);
+					// loop over employees and add each to dropdown
+					$.each(data, function(key, value) {
+							$("#impempid").append(
+								$("<option></option>").val(value.user_id).html(value.user_first_name+" "+value.user_last_name)
+							);
+					});
+				}	
+			},
+			error: function (request, status, error) {
+					console.log(error);
+			}
+	});
+}
+
 // INVITE EMPLOYEE
 function openInviteWindow() {
 	openWindow('edit','Invite Employee','','','','');
@@ -150,7 +229,17 @@ function openInviteWindow() {
 
 // DELETE EMPLOYEE
 function doEmployeeDelete(id,first,last) {
-	openWindow('delete','Remove Employee',id,first,last);
+	openWindow('delete','Remove Employee',id,first,last,'');
+}
+
+// DELETE FILE
+function doFileDelete(id,filename) {
+	openWindow('deletefile','Delete File',id,filename,'','');
+}
+
+// IMPORT FILE
+function doFileImport(id,filename) {
+	openWindow('importfile','Import File',id,filename,'','');
 }
 
 // LOAD
@@ -278,6 +367,76 @@ $(document).ready(function() {
 							// show returned error msg here
 							openModal('error',data.msg);
 						} else {
+							// show success message...
+							openModal('info',data.msg);
+						}	
+				},
+					error: function (request, status, error) {
+        					console.log(error);
+				}
+                });
+		event.preventDefault();
+	});
+	
+	$("#agency_file_delete").on("click", function(event) {
+		event.preventDefault();
+		$('#file_delete_form').submit();
+	});
+	
+	// FILE DELETE ACTION
+	$('#file_delete_form').submit(function(event) {
+        		$.ajax({
+					type: 'POST',
+					url: '/app/myagency/deleteFile',
+					data: $(this).serialize(),
+					dataType: 'json',
+					cache: false,
+        			//async: true,
+				success: function (data) {
+						console.log(data);
+						if (data.error == true) {
+							// show returned error msg here
+							openModal('error',data.msg);
+						} else {
+							closeWindow();
+							$("#file_listing").load('/app/myagency/files');
+							// show success message...
+							openModal('info',data.msg);
+						}	
+				},
+					error: function (request, status, error) {
+        					console.log(error);
+				}
+                });
+		event.preventDefault();
+	});
+	
+	$("#agency_file_import").on("click", function(event) {
+		event.preventDefault();
+		$('#file_import_form').submit();
+	});
+	
+	// FILE IMPORT ACTION
+	$('#file_import_form').submit(function(event) {
+			// show progress wheel until import is done
+			$("#myagency-import").hide();
+			$('#myagency-import-progress').fadeIn();
+        		$.ajax({
+					type: 'POST',
+					url: '/app/myagency/importFile',
+					data: $(this).serialize(),
+					dataType: 'json',
+					cache: false,
+        			//async: true,
+				success: function (data) {
+						console.log(data);
+						if (data.error == true) {
+							closeWindow();
+							// show returned error msg here
+							openModal('error',data.msg);
+						} else {
+							$("#file_listing").load('/app/myagency/files');
+							closeWindow();
 							// show success message...
 							openModal('info',data.msg);
 						}	

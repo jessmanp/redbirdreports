@@ -10,6 +10,42 @@
 <div class="myagency-edit-bar"></div>
 		<button class="plain-btn-close">Close</button>
 	</div>
+	
+	<div id="myagency-import-progress">
+		<p style="padding:10px 0 0 0;height:200px;">
+		<strong>File Import in Progress&hellip; Please Wait</strong>
+		</p>
+	</div>
+	
+	<div id="myagency-import">
+		<div class="myagency-message"></div>
+			Are you sure you want to &quot;<strong>IMPORT</strong>&quot; this File?<br /><br />Click &quot;<strong>Close</strong>&quot; if you want to cancel importing this file.<br />
+			<p class="myagency-delete-box"></p>
+			<form id="file_import_form" name="file_import_form">
+			<div style="margin:20px 0 25px 0;">
+				You <strong>MUST</strong> assign all policies when you import to an Employee.<br /><br />
+				Select the <strong>EMPLOYEE</strong> you want to <strong>IMPORT</strong> all policies to:<br /><br />
+				<sup>*</sup>
+				<select id="impempid" name="impempid">
+					<option value="0">- Select -</option>
+				</select>
+			</div>
+			<input type="hidden" id="fimpid" name="fimpid" value="-2" />
+			</form>
+<div class="myagency-edit-bar"></div>
+		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="agency_file_import" class="plain-btn">Yes</button>
+	</div>
+	
+	<div id="myagency-deletefile">
+		<div class="myagency-message"></div>
+			Are you sure you want to &quot;<strong>DELETE</strong>&quot; this File?<br /><br />Click &quot;<strong>Close</strong>&quot; if you want to keep this file.<br />
+			<p class="myagency-delete-box"></p>
+			<form id="file_delete_form" name="file_delete_form">
+			<input type="hidden" id="fdelid" name="fdelid" value="-2" />
+			</form>
+<div class="myagency-edit-bar"></div>
+		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="agency_file_delete" class="plain-btn">Yes</button>
+	</div>
 
 
 	<div id="myagency-delete">
@@ -20,6 +56,7 @@
 			<div style="margin:20px 0 25px 0;">
 				You <strong>MUST</strong> transfer all policies when you deactivate an Employee.<br /><br />
 				Select the <strong>EMPLOYEE</strong> you want to <strong>TRANSFER</strong> all policies to:<br /><br />
+				<sup>*</sup>
 				<select id="swapid" name="swapid">
 					<option value="0">- Select -</option>
 				</select>

@@ -6,15 +6,19 @@ $(document).ready(function() {
 		url:"/app/fileUpload",
 		multiple:true,
 		fileName:"myfile",
-		allowedTypes:"txt",
+		maxFileSize:"2100000",
+		allowedTypes:"csv",
 		afterUploadAll:function()
 		{
-			$("#eventsmessage").html($("#eventsmessage").html()+"<br/>All files are uploaded");
-	
+			//$("#eventsmessage").html($("#eventsmessage").html()+"<br/>All files are uploaded");
+			openModal('info','<strong>Success</strong>, All files are uploaded');
+			$("#file_listing").load('/app/myagency/files');
+			$(".ajax-file-upload-statusbar").hide();
 		},
 		onError: function(files,status,errMsg)
 		{
-			$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Error for: "+JSON.stringify(files));
+			//$("#eventsmessage").html($("#eventsmessage").html()+"<br/>Error for: "+JSON.stringify(files));
+			openModal('error','<strong>ERROR</strong>, for File(s):'+JSON.stringify(files));
 		}
 	});
 
@@ -72,7 +76,7 @@ $(document).ready(function() {
             deleteCallback: false,
             afterUploadAll: false,
             uploadButtonClass: "ajax-file-upload",
-            dragDropStr: "<span><b>Drag &amp; Drop Files</b></span>",
+            dragDropStr: "<span><b>Drag &amp; Drop Files Here</b></span>",
             abortStr: "Abort",
             cancelStr: "Cancel",
             deletelStr: "Delete",
@@ -157,19 +161,19 @@ $(document).ready(function() {
             ddObj.on('dragenter', function (e) {
                 e.stopPropagation();
                 e.preventDefault();
-                $(this).css('border', '2px solid #A5A5C7');
+                $(this).css('border', '2px solid #3b99fc');
             });
             ddObj.on('dragover', function (e) {
                 e.stopPropagation();
                 e.preventDefault();
             });
             ddObj.on('drop', function (e) {
-                $(this).css('border', '2px dotted #A5A5C7');
+                $(this).css('border', '2px solid #a20004');
                 e.preventDefault();
                 obj.errorLog.html("");
                 var files = e.originalEvent.dataTransfer.files;
                 if (!s.multiple && files.length > 1) {
-                    if (s.showError) $("<div style='color:red;'>" + s.multiDragErrorStr + "</div>").appendTo(obj.errorLog);
+                    if (s.showError) $("<br /><br /><div style='color:red;'>" + s.multiDragErrorStr + "</div>").appendTo(obj.errorLog);
                     return;
                 }
                 if(s.onSelect(files) == false)
@@ -184,12 +188,12 @@ $(document).ready(function() {
             $(document).on('dragover', function (e) {
                 e.stopPropagation();
                 e.preventDefault();
-                ddObj.css('border', '2px dotted #A5A5C7');
+                ddObj.css('border', '2px solid #a20004');
             });
             $(document).on('drop', function (e) {
                 e.stopPropagation();
                 e.preventDefault();
-                ddObj.css('border', '2px dotted #A5A5C7');
+                ddObj.css('border', '2px solid #a20004');
             });
 
         }
@@ -227,11 +231,11 @@ $(document).ready(function() {
         function serializeAndUploadFiles(s, obj, files) {
             for (var i = 0; i < files.length; i++) {
                 if (!isFileTypeAllowed(obj, s, files[i].name)) {
-                    if (s.showError) $("<div style='color:red;'><b>" + files[i].name + "</b> " + s.extErrorStr + s.allowedTypes + "</div>").appendTo(obj.errorLog);
+                    if (s.showError) $("<br /><br /><div style='color:red;'><b>" + files[i].name + "</b> " + s.extErrorStr + s.allowedTypes + "</div>").appendTo(obj.errorLog);
                     continue;
                 }
                 if (s.maxFileSize != -1 && files[i].size > s.maxFileSize) {
-                    if (s.showError) $("<div style='color:red;'><b>" + files[i].name + "</b> " + s.sizeErrorStr + getSizeStr(s.maxFileSize) + "</div>").appendTo(obj.errorLog);
+                    if (s.showError) $("<br /><br /><div style='color:red;'><b>" + files[i].name + "</b> " + s.sizeErrorStr + getSizeStr(s.maxFileSize) + "</div>").appendTo(obj.errorLog);
                     continue;
                 }
                 var ts = s;
@@ -311,7 +315,7 @@ $(document).ready(function() {
                     var flist = [];
                     fileArray.push(filenameStr);
                     if (!isFileTypeAllowed(obj, s, filenameStr)) {
-                        if (s.showError) $("<div style='color:red;'><b>" + filenameStr + "</b> " + s.extErrorStr + s.allowedTypes + "</div>").appendTo(obj.errorLog);
+                        if (s.showError) $("<br /><br /><div style='color:red;'><b>" + filenameStr + "</b> " + s.extErrorStr + s.allowedTypes + "</div>").appendTo(obj.errorLog);
                         return;
                     }
                     //fallback for browser without FileAPI
@@ -436,7 +440,7 @@ $(document).ready(function() {
                         checkPendingUploads();
                         return true;
                     }
-                    pd.statusbar.append("<div style='color:red;'>" + s.uploadErrorStr + "</div>");
+                    pd.statusbar.append("<br /><br /><div style='color:red;'>" + s.uploadErrorStr + "</div>");
                     pd.cancel.show()
                     form.remove();
                     pd.cancel.click(function () {
@@ -522,7 +526,7 @@ $(document).ready(function() {
                         s.onError.call(this, fileArray, status, errMsg);
                         if (s.showStatusAfterError) {
                             pd.progressDiv.hide();
-                            pd.statusbar.append("<span style='color:red;'>ERROR: " + errMsg + "</span>");
+                            pd.statusbar.append("<br /><br /><span style='color:red;'>ERROR: " + errMsg + "</span>");
                         } else {
                             pd.statusbar.hide();
                             pd.statusbar.remove();

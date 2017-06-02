@@ -53,6 +53,20 @@ class MyAgencyModel
 	}
 	
 	/**
+     * Query agency advanced settings
+     */
+    public function getAgencyAdvancedSettings($agency_id)
+    {
+
+		// query to get agency data
+		$query_get_agency_advanced_settings = $this->db->prepare('SELECT * FROM files WHERE agency_id = :agency_id ORDER BY upload_datetime DESC;');
+		$query_get_agency_advanced_settings->bindValue(':agency_id', $agency_id, PDO::PARAM_INT);
+		$query_get_agency_advanced_settings->execute();
+		return $query_get_agency_advanced_settings->fetchAll();
+
+	}
+	
+	/**
      * Update employee compensation data
      */
     public function saveAgencySettings($agency_id,$period_frequency)
