@@ -44,7 +44,7 @@
 			// do days in policy
 			if ($policy->length_type_id == 1) {
 				$pterm = strtotime('+6 months', strtotime($policy->date_effective)); // effective date + 6 months
-			} else if ($policy->length_type_id == 2) {
+			} else {
 				$pterm = strtotime('+12 months', strtotime($policy->date_effective)); // effective date + 12 months
 			}
 			$date1 = new DateTime($policy->date_effective);
