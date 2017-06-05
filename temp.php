@@ -3,23 +3,38 @@
 
 /* CONNECT TO DATABASE */
 $dbh = new PDO("mysql:host=127.0.0.1;dbname=redbirdreports", "redbird-app", "r3db1rdR3ports", array(PDO::ATTR_PERSISTENT => true,PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-
-		$fields = array('curDate','policyID','status','pendingRenewal','agencyID','userID','oldUserID','firstName','secondName','description','premium','categoryID','businessTypeID','sourceTypeID','lenghtTypeID','notes','policyNumber','zipCode','dateWritten','dateIssued','dateEffective','dateCanceled','dateModified','oldPremiumAmount','dateRenewed');
-		$filename = "cdb9a7ae37c4d2027ed31ac940a57b00.csv";
+		$emp_id = 10001;
+		$fields = array('status','renewal','reinstate','old_user_id','first','last','description','category_id','premium','business_type_id','source_type_id','length_type_id','notes','policy_number','zip_code','date_written','date_issued','date_effective','date_canceled');
+		$filename = "73b1ee9adcb5fa02f228fb8456559a28.csv";
 		$pickup_dir = "/var/www/html/dev.redbirdreports.com/files/";
 		/* Map Rows and Loop Through Them */
 		$rows = array_map('str_getcsv', file($pickup_dir.$filename));
 		$header = array_shift($rows);
 		if ($header == $fields) {
+			$importDate = date("Y-m-d H:i:s", time());
+			array_unshift($header,'user_id');
+			array_push($header,'date_imported');
 			$csv = array();
 			foreach($rows as $row) {
+				array_unshift($row,$emp_id);
+				array_push($row,$importDate);
 				$csv[] = array_combine($header,$row);
 			}
 		}
+
+foreach ($csv as $info) {
+	echo "{".count($info)."}<br />\n";
+	foreach ($info as $col=>$val) {
+		echo ":".$col.",".$val."<br />\n";
+	}
+	echo "<hr />\n";
+}
 		
-		
-echo "@@@<pre>";
+echo "@@@<br /><pre>";
+print_r($fields);
+echo "\n\n----------------------------------------------------------\n\n";
 print_r($header);
+echo "\n\n----------------------------------------------------------\n\n";
 print_r($csv);
 echo "</pre>";		
 

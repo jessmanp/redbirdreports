@@ -78,17 +78,43 @@ class FilesModel
 			$pickup_dir = FILE_UPLOAD_PATH;
 			// load actual file on server into array
 			$filestr = file_get_contents($pickup_dir.$filename);
-			$rows = array_map("str_getcsv", preg_split('/\R/',$filestr));
+			$rows = array_map("str_getcsv", preg_split('/\R/',trim($filestr)));
 			$header = array_shift($rows);
 			if ($header == $fields) {
+				$importDate = date("Y-m-d H:i:s", time());
+				array_unshift($header,'user_id');
+				array_unshift($header,'agency_id');
+				array_push($header,'date_imported');
 				$csv = array();
 				foreach($rows as $row) {
+					array_unshift($row,$emp_id);
+					array_unshift($row,$agency_id);
+					array_push($row,$importDate);
 					$csv[] = array_combine($header,$row);
 				}
 			}
-			// loop over array and insert records using agency id and employee id
-			return false;
-			
+			// make sure there are rows to import
+			if (count($csv) > 0) {
+				// loop over array and insert records using agency id and employee id
+				foreach ($csv as $info) {
+					// make sure row is not blank
+					if (count($info) > 0) {
+						$stmt = $this->db->prepare('INSERT INTO policies (user_id,agency_id,status,renewal,reinstate,old_user_id,first,last,description,category_id,premium,business_type_id,source_type_id,length_type_id,notes,policy_number,zip_code,date_written,date_issued,date_effective,date_canceled,date_imported) VALUES (:user_id,:agency_id,:status,:renewal,:reinstate,:old_user_id,:first,:last,:description,:category_id,:premium,:business_type_id,:source_type_id,:length_type_id,:notes,:policy_number,:zip_code,:date_written,:date_issued,:date_effective,:date_canceled,:date_imported)');
+						foreach ($info as $col=>$val) {
+							if ($val == '') {
+								$stmt->bindValue(':'.$col,null,PDO::PARAM_NULL);
+							} else if (ctype_digit($val)) {
+								$stmt->bindValue(':'.$col,$val,PDO::PARAM_INT);
+							} else {
+								$stmt->bindValue(':'.$col,$val,PDO::PARAM_STR);
+							}
+						}
+						$stmt->execute();
+					}
+				}
+			} else {
+				return false;
+			}
 			// delete actual file on server
 			unlink($pickup_dir.$filename);
 			// remove file record from database
