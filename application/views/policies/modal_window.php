@@ -13,20 +13,20 @@
 
 	<div id="policy-delete">
 		<div class="policy-message"></div>
-			Are you sure you want to &quot;<strong>ERASE</strong>&quot; this Policy?<br /><br />Click &quot;<strong>Close</strong>&quot; if you want to keep this policy.<br />
+			Are you sure you want to &quot;<strong>ERASE</strong>&quot; this Policy?<br /><br /><em><strong>Warning:</strong> This will permanently erase this policy.</em><br /><br />Click &quot;<strong>Cancel</strong>&quot; if you want to keep this policy.<br />
 			<p class="policy-delete-box"></p>
 			<form id="policy_delete_form" name="policy_delete_form">
 			<input type="hidden" id="delete_path" name="delete_path" value="" />
 			<input type="hidden" id="delid" name="delid" value="-2" />
 			</form>
 <div class="policy-edit-bar"></div>
-		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="policy-disable" class="plain-btn">Yes</button>
+		<button class="plain-btn-close">Cancel</button>&nbsp;&nbsp;&nbsp;<button id="policy-disable" class="plain-btn">Yes</button>
 	</div>
 
 
 	<div id="policy-renewal">
 		<div class="policy-message"></div>
-			This policy is up for &quot;<strong>RENEWAL</strong>&quot;. Do you want to &quot;<strong>RENEW</strong>&quot; this Policy?<br /><br />Click &quot;<strong>Close</strong>&quot; if you DO NOT want to renew or cancel this policy.<br />
+			This policy is up for &quot;<strong>RENEWAL</strong>&quot;. Do you want to &quot;<strong>RENEW</strong>&quot; this Policy?<br /><br />Click &quot;<strong>Close</strong>&quot; if you DO NOT want to renew this policy. Click &quot;<strong>No</strong>&quot; if you want to cancel this policy.<br />
 			<form id="policy_renewal_form" name="policy_renewal_form">
 			<input type="hidden" id="renid" name="renid" value="-2" />
 			<input type="hidden" id="renew_cancel_info" name="renew_cancel_info" value="" />
@@ -69,13 +69,13 @@
 
 	<div id="policy-reinstate">
 		<div class="policy-message"></div>
-			This policy is &quot;<strong>CANCELED</strong>&quot;. Do you want to &quot;<strong>REINSTATE</strong>&quot; this Policy?<br /><br />Click &quot;<strong>Close</strong>&quot; if you DO NOT want to reinstate this policy.<br />
+			This policy is &quot;<strong>CANCELED</strong>&quot;. Do you want to &quot;<strong>REINSTATE</strong>&quot; this Policy?<br /><br />Click &quot;<strong>Cancel</strong>&quot; if you DO NOT want to reinstate this policy.<br />
 			<form id="policy_reinstate_form" name="policy_reinstate_form">
 			<input type="hidden" id="reinstate_path" name="reinstate_path" value="" />
 			<input type="hidden" id="uncid" name="uncid" value="-2" />
 			</form>
 <div class="policy-edit-bar"></div>
-		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="policy-uncancel" class="plain-btn">Yes</button>
+		<button class="plain-btn-close">Cancel</button>&nbsp;&nbsp;&nbsp;<button id="policy-uncancel" class="plain-btn">Yes</button>
 	</div>
 	
 	
@@ -164,7 +164,7 @@
 					<select class="policy-entry-select" id="policy_business_type" name="policy_business_type">
 						<option value="0">- Select -</option>
 <?php foreach ($policy_business_types as $business_types) { ?>
-                			<option value="<?php echo $business_types->id; ?>"><?php echo $business_types->name; ?></option>
+                			<option value="<?php echo $business_types->id; ?>" id="<?php echo 'policy_business_type_'.$business_types->id; ?>"><?php echo $business_types->name; ?></option>
 <?php } ?>
 					</select>
 				</div>
@@ -222,7 +222,7 @@
 <!-- end edit right box -->
 			</form>
 <div class="policy-edit-bar"></div>
-		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="policy-add" data-type="add" class="plain-btn">Add</button><button id="policy-save" data-type="edit" class="plain-btn">Save</button>&nbsp;&nbsp;&nbsp;<button id="policy-erase" data-type="delete" class="plain-btn-erase">Erase</button>
+		<button class="plain-btn-close">Cancel</button>&nbsp;&nbsp;&nbsp;<button id="policy-add" data-type="add" class="plain-btn">Add</button><button id="policy-save" data-type="edit" class="plain-btn">Save</button>&nbsp;&nbsp;&nbsp;<button id="policy-erase" data-type="delete" class="plain-btn-erase">Erase</button>
 	</div>
 
 <br />

@@ -628,6 +628,18 @@ input[type=radio]:not(old):checked + label > span > span{
 	background-color:#000000;
 }
 
+.sub-button-disabled {
+	float:left;
+	margin:8px 0 0 20px;
+	width:75px;
+	height:70px;
+	background-color:#cccccc;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	border:2px solid #cccccc;
+}
+
 .sub-button-big {
 	float:left;
 	margin:6px 0 0 20px;

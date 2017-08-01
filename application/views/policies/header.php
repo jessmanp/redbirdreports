@@ -2,7 +2,7 @@
 <div id="policy-header">
 	<div id="sub-menu">
 		<div id="sub-buttons">
-			<div class="sub-button">
+			<div id="addbtn" class="sub-button-disabled">
 				<img id="add" src="/public/img/btn_add.png" class="sub-btn-icon" alt="Add New" />
 				<div class="sub-btn-text">Add New</div>
 			</div>

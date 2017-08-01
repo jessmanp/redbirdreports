@@ -1445,12 +1445,14 @@ class App extends Controller
 			$employee_fire_transferred = @$_POST['employee_fire_transferred']; // must be decimal percent
 			$employee_fire_renewal = @$_POST['employee_fire_renewal']; // must be decimal percent
 			
-			$employee_life_new = @$_POST['employee_life_new']; // must be decimal percent
+			//$employee_life_new = @$_POST['employee_life_new']; // must be decimal percent
+			$employee_life_new = 0; // REMOVED
 			//$employee_life_increase = @$_POST['employee_life_increase']; // must be decimal percent
 			$employee_life_increase = 0; // REMOVED
 			$employee_life_policy = @$_POST['employee_life_policy']; // must be dollar amount
 			
-			$employee_health_new = @$_POST['employee_health_new']; // must be decimal percent
+			//$employee_health_new = @$_POST['employee_health_new']; // must be decimal percent
+			$employee_health_new = 0; // REMOVED
 			$employee_health_policy = @$_POST['employee_health_policy']; // must be dollar amount
 			
 			$employee_bank_deposit_product = @$_POST['employee_bank_deposit_product']; // must be dollar amount
@@ -1543,12 +1545,12 @@ class App extends Controller
 				$return['error'] = true;
 				$return['msg'] .= '<strong>Fire Renewal Commission</strong> Field is Required.<br /><br />';
 			}
-			
+			/*
 			if (!isset($employee_life_new) || !is_numeric($employee_life_new)){
 				$return['error'] = true;
 				$return['msg'] .= '<strong>Life New Commission</strong> Field is Required.<br />';
 			}
-			/*
+			
 			if (!isset($employee_life_increase) || !is_numeric($employee_life_increase)){
 				$return['error'] = true;
 				$return['msg'] .= '<strong>Life Increase Commission</strong> Field is Required.<br />';

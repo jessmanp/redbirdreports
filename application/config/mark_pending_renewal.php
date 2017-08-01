@@ -6,7 +6,7 @@ try {
 	$options = array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING);
 	$dbh = new PDO('mysql:host=127.0.0.1;dbname=redbirdreports', 'redbird-app', 'r3db1rdR3ports', $options);
 
-	$sql = "SELECT id, date_effective, length_type_id FROM policies WHERE status = 2 AND renewal = 0 AND date_effective IS NOT NULL;";
+	$sql = "SELECT id, date_effective, length_type_id FROM policies WHERE category_id <= 25 AND status = 2 AND renewal = 0 AND date_effective IS NOT NULL;";
 	$query = $dbh->prepare($sql);
 	$query->execute();
 	$result = $query->fetchAll();

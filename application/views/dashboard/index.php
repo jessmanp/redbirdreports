@@ -3,7 +3,7 @@
 	<h1><strong>Report Period:</strong> <span id="dash_date"></span></h1>
 	<div id="dashboard-container">
 		<div id="policy-chart-container">
-			<div class="com-title">Policy Type</div>
+			<div class="com-title">Type</div>
 			<div style="background-color:#ffffff;padding:20px 0 15px 0;">
 				<div id="policy_blank_circle"></div>
 				<div id="policy_total" class="chart-center"></div>

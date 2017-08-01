@@ -19,7 +19,7 @@
 	
 	<div id="myagency-import">
 		<div class="myagency-message"></div>
-			Are you sure you want to &quot;<strong>IMPORT</strong>&quot; this File?<br /><br />Click &quot;<strong>Close</strong>&quot; if you want to cancel importing this file.<br />
+			Are you sure you want to &quot;<strong>IMPORT</strong>&quot; this File?<br /><br />Click &quot;<strong>Cancel</strong>&quot; if you want to cancel importing this file.<br />
 			<p class="myagency-delete-box"></p>
 			<form id="file_import_form" name="file_import_form">
 			<div style="margin:20px 0 25px 0;">
@@ -33,24 +33,24 @@
 			<input type="hidden" id="fimpid" name="fimpid" value="-2" />
 			</form>
 <div class="myagency-edit-bar"></div>
-		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="agency_file_import" class="plain-btn">Yes</button>
+		<button class="plain-btn-close">Cancel</button>&nbsp;&nbsp;&nbsp;<button id="agency_file_import" class="plain-btn">Yes</button>
 	</div>
 	
 	<div id="myagency-deletefile">
 		<div class="myagency-message"></div>
-			Are you sure you want to &quot;<strong>DELETE</strong>&quot; this File?<br /><br />Click &quot;<strong>Close</strong>&quot; if you want to keep this file.<br />
+			Are you sure you want to &quot;<strong>DELETE</strong>&quot; this File?<br /><br />Click &quot;<strong>Cancel</strong>&quot; if you want to keep this file.<br />
 			<p class="myagency-delete-box"></p>
 			<form id="file_delete_form" name="file_delete_form">
 			<input type="hidden" id="fdelid" name="fdelid" value="-2" />
 			</form>
 <div class="myagency-edit-bar"></div>
-		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="agency_file_delete" class="plain-btn">Yes</button>
+		<button class="plain-btn-close">Cancel</button>&nbsp;&nbsp;&nbsp;<button id="agency_file_delete" class="plain-btn">Yes</button>
 	</div>
 
 
 	<div id="myagency-delete">
 		<div class="myagency-message"></div>
-			Are you sure you want to &quot;<strong>DEACTIVATE</strong>&quot; this Employee?<br /><br />Click &quot;<strong>Close</strong>&quot; if you want to keep this employee active.<br />
+			Are you sure you want to &quot;<strong>DEACTIVATE</strong>&quot; this Employee?<br /><br />Click &quot;<strong>Cancel</strong>&quot; if you want to keep this employee active.<br />
 			<p class="myagency-delete-box"></p>
 			<form id="employee_delete_form" name="employee_delete_form">
 			<div style="margin:20px 0 25px 0;">
@@ -64,27 +64,27 @@
 			<input type="hidden" id="delid" name="delid" value="-2" />
 			</form>
 <div class="myagency-edit-bar"></div>
-		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="employee_delete" class="plain-btn">Yes</button>
+		<button class="plain-btn-close">Cancel</button>&nbsp;&nbsp;&nbsp;<button id="employee_delete" class="plain-btn">Yes</button>
 	</div>
 	
 	<div id="myagency-undelete">
 		<div class="myagency-message"></div>
-			Are you sure you want to &quot;<strong>REACTIVATE</strong>&quot; this Employee?<br /><br />Click &quot;<strong>Close</strong>&quot; if you want to keep this employee inactive.<br />
+			Are you sure you want to &quot;<strong>REACTIVATE</strong>&quot; this Employee?<br /><br />Click &quot;<strong>Cancel</strong>&quot; if you want to keep this employee inactive.<br />
 			<p class="myagency-delete-box"></p>
 			<form id="employee_undelete_form" name="employee_undelete_form">
 			<input type="hidden" id="udelid" name="udelid" value="-2" />
 			</form>
 <div class="myagency-edit-bar"></div>
-		<button class="plain-btn-close">Close</button>&nbsp;&nbsp;&nbsp;<button id="employee_undelete" class="plain-btn">Yes</button>
+		<button class="plain-btn-close">Cancel</button>&nbsp;&nbsp;&nbsp;<button id="employee_undelete" class="plain-btn">Yes</button>
 	</div>
 	
 	<div id="myagency-save-employee">
 		<div class="myagency-message"></div>
 			<strong>NOTICE:</strong> Commission changes will only effect open and future periods.<br /><br />
-			Do you want to close out any periods before you &quot;<strong>UPDATE</strong>&quot; this Employee?<br /><br />
-			Click &quot;<strong>No</strong>&quot; if you want to update this Employee.<br />
+			Click &quot;<strong>Cancel</strong>&quot; if you need to close any open periods.<br /><br />
+			Click &quot;<strong>Update</strong>&quot; to proceed.<br />
 <div class="myagency-edit-bar"></div>
-		<button id="employee_update" class="plain-btn">No</button>&nbsp;&nbsp;&nbsp;<button id="employee_close_periods" class="plain-btn">Yes</button>
+		<button id="employee_close_periods" class="plain-btn">Cancel</button>&nbsp;&nbsp;&nbsp;<button id="employee_update" class="plain-btn">Update</button>
 	</div>
 	
 	

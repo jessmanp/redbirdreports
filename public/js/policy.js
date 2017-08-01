@@ -28,6 +28,7 @@ function closeModal() {
 	$("#message").fadeOut("fast");
 }
 
+var policyWindowOpen = 0;
 // OPEN/CLOSE POPUP WINDOW
 function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,cat,busi,sold,src,len,dw,di,de,dc,renewal,stat) {
 		
@@ -93,6 +94,8 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 		}
 	});
 	// populate based on category
+	$("#policy_business_type_3").show();
+	$("#policy_business_type_5").show();
 	if (category == 'auto') {
 		$("#policy_sub_category").append($("#captionsauto").val());
 		$("#policy_type option[value=1]").prop("selected", true);
@@ -110,19 +113,26 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 		$("#policy_type option[value=40]").prop("selected", true);
 		$("#policy_type").prop("disabled", true);
 	} else if (category == 'deposit') {
+		$("#policy_business_type_3").hide();
+		$("#policy_business_type_5").hide();
 		$("#policy_sub_category").append($("#captionsdeposit").val());
 		$("#policy_type option[value=58]").prop("selected", true);
 		$("#policy_type").prop("disabled", true);
 	} else if (category == 'loan') {
+		$("#policy_business_type_3").hide();
+		$("#policy_business_type_5").hide();
 		$("#policy_sub_category").append($("#captionsloan").val());
 		$("#policy_type option[value=50]").prop("selected", true);
 		$("#policy_type").prop("disabled", true);
 	} else if (category == 'fund') {
+		$("#policy_business_type_3").hide();
+		$("#policy_business_type_5").hide();
 		$("#policy_sub_category").append($("#captionsfund").val());
 		$("#policy_type option[value=70]").prop("selected", true);
 		$("#policy_type").prop("disabled", true);
 	}
 	if (type == 'add') {
+		policyWindowOpen = 1;
 		$("#policy-edit").fadeIn();
 		$("#policy-edit #id").val(id);
 		$("#policy-save").hide();
@@ -141,28 +151,32 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 		$("#policy_business_type option[value="+busi+"]").prop("selected", true);
 		$("#policy_team_member option[value="+sold+"]").prop("selected", true);
 		$("#policy_source_type option[value="+src+"]").prop("selected", true);
+		if (category == 'All') {
+			// clear out all length options from the dropdown list
+			$('#policy_length_type').empty();
+		}
 		if (category == 'auto') {
-			$("#policy_length_type option[value=1]").prop("selected", true);
+			$("#policy_length_type").html("<option value='1'>Semi-Annual</option><option value='2'>Annual</option>");
 			$("#policy_premium").prop("readonly", false);
 		} else if (category == 'fire') {
-			$("#policy_length_type option[value=2]").prop("selected", true);
+			$("#policy_length_type").html("<option value='2'>Annual</option>");
 			$("#policy_premium").prop("readonly", false);
 		} else if (category == 'life') {
-			$("#policy_length_type option[value=3]").prop("selected", true);
+			$("#policy_length_type").html("<option value='3'>N / A</option>");
 			$("#policy_premium").prop("readonly", false);
 		} else if (category == 'health') {
-			$("#policy_length_type option[value=2]").prop("selected", true);
+			$("#policy_length_type").html("<option value='3'>N / A</option>");
 			$("#policy_premium").prop("readonly", false);
 		} else if (category == 'deposit') {
-			$("#policy_length_type option[value=3]").prop("selected", true);
+			$("#policy_length_type").html("<option value='3'>N / A</option>");
 			$("#policy_premium").val('0.00');
 			$("#policy_premium").prop("readonly", true);
 		} else if (category == 'loan') {
-			$("#policy_length_type option[value=3]").prop("selected", true);
+			$("#policy_length_type").html("<option value='3'>N / A</option>");
 			$("#policy_premium").val('0.00');
 			$("#policy_premium").prop("readonly", true);
 		} else if (category == 'fund') {
-			$("#policy_length_type option[value=3]").prop("selected", true);
+			$("#policy_length_type").html("<option value='3'>N / A</option>");
 			$("#policy_premium").val('0.00');
 			$("#policy_premium").prop("readonly", true);
 		} else {
@@ -185,6 +199,7 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 		$("#status_canceled").prop("disabled", true);
 	}
 	if (type == 'edit') {
+		policyWindowOpen = 1;
 		$("#policy-edit").fadeIn();
 		//$("#policy-edit #icon").html('<img src="/public/img/icon_'+cat+'.png class="policy-entry-icon" />');
 		$("#policy-edit #id").val(id);
@@ -254,7 +269,23 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 		$("#policy_business_type option[value="+busi+"]").prop("selected", true);
 		$("#policy_team_member option[value="+sold+"]").prop("selected", true);
 		$("#policy_source_type option[value="+src+"]").prop("selected", true);
-		$("#policy_length_type option[value="+len+"]").prop("selected", true);
+		
+		if (cat != 0) {
+			if (len == 1) {
+				$("#policy_length_type").html("<option value='1'>Semi-Annual</option><option value='2'>Annual</option>");
+				$("#policy_length_type option[value="+len+"]").prop("selected", true);
+			}
+			if (len == 2) {
+				$("#policy_length_type").html("<option value='1'>Semi-Annual</option><option value='2'>Annual</option>");
+				$("#policy_length_type option[value="+len+"]").prop("selected", true);
+			}
+			if (len == 3) {
+				$("#policy_length_type").html("<option value='3'>N / A</option>");
+			}
+		} else {
+			$("#policy_length_type option[value="+len+"]").prop("selected", true);
+		}
+		
 		$("#writtendate").val(sqlToJsDate(dw));
 		if (di == '' || di == null) {
 			$("#issueddate").val('');
@@ -300,7 +331,11 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 		$("#policy_notes").prop("readonly", false);
 		$("#policy_dropdown_cover").hide();
 		$("#status_issued").prop("disabled", false);
-		$("#status_declined").prop("disabled", false);
+		if (category == 'deposit' || category == 'fund') {
+			$("#status_declined").prop("disabled", true);
+		} else {
+			$("#status_declined").prop("disabled", false);
+		}
 		$("#status_canceled").prop("disabled", false);
 		if (stat == 1) {
 			// set radio btn
@@ -341,6 +376,7 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 	   	$("#canceleddate").css("opacity","0.5");
 	}
 	if (type == 'text') {
+		policyWindowOpen = 0;
 		if (text == '') {
 			text = '&nbsp;';
 		}
@@ -349,17 +385,20 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 		$("#policy-text").find("p").html(formatText(text));
 	}
 	if (type == 'delete') {
+		policyWindowOpen = 0;
 		$("#policy-delete").fadeIn();
 		$("#policy-delete #delid").val(id);
 		$("#policy-delete").find("p").text('');
 		$("#policy-delete").find("p").html('<em>Policy Preview</em><br /><br /><div class="delete-table-container"><div class="delete-table-row"><div class="edit-col"><strong>Customer Name:</strong></div><div class="delete-col">'+fname+'&nbsp;'+lname+'</div></div><div class="delete-table-row"><div class="edit-col"><strong>Description:</strong></div><div class="delete-col">'+desc+'</div></div></div>');
 	}
 	if (type == 'renewal') {
+		policyWindowOpen = 0;
 		$("#policy-renewal").fadeIn();
 		$("#policy-renewal #renid").val(id);
 		$("#policy-renewal #renew_cancel_info").val(fname+"','"+lname+"','"+desc);
 	}
 	if (type == 'renew') {
+		policyWindowOpen = 0;
 		$("#policy-do-renew").fadeIn();
 		$("#policy-do-renew #renpid").val(id);
 		$("#policy-do-renew #renew_premium").val(prem);
@@ -367,6 +406,7 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 		$("#policy-do-renew").find("p").html('<em>Policy Preview</em><br /><br /><div class="delete-table-container"><div class="delete-table-row"><div class="edit-col"><strong>Customer Name:</strong></div><div class="delete-col">'+fname+'&nbsp;'+lname+'</div></div><div class="delete-table-row"><div class="edit-col"><strong>Description:</strong></div><div class="delete-col">'+desc+'</div></div></div>');
 	}
 	if (type == 'renewcancel') {
+		policyWindowOpen = 0;
 		$("#policy-renew-cancel").fadeIn();
 		$("#policy-renew-cancel #rencid").val(id);
 		$("#renew_canceleddate").val('');
@@ -374,12 +414,20 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 		$("#policy-renew-cancel").find("p").html('<em>Policy Preview</em><br /><br /><div class="delete-table-container"><div class="delete-table-row"><div class="edit-col"><strong>Customer Name:</strong></div><div class="delete-col">'+fname+'&nbsp;'+lname+'</div></div><div class="delete-table-row"><div class="edit-col"><strong>Description:</strong></div><div class="delete-col">'+desc+'</div></div></div>');
 	}
 	if (type == 'reinstate') {
+		policyWindowOpen = 0;
 		$("#policy-reinstate").fadeIn();
 		$("#policy-reinstate #uncid").val(id);
 	}
 			
 }
-function closeWindow() {
+function closeWindow(warn) {
+	if (policyWindowOpen == 1 && warn == 1) {
+		var r = confirm("Are you sure you want to close this entry window? All changes will be lost.");
+       	//cancel clicked : stop button default action 
+       	if (r === false) {
+           return false;
+        }
+	}
 	$("#policy-popup").fadeOut("fast");
 	$("#policy-window").fadeOut("fast");
 	$(".policy-message").fadeOut("fast");
@@ -528,7 +576,7 @@ $(document).ready(function() {
 	// CLOSE POPUPS
 	$(".plain-btn-close").on("click", function(event) {
 		event.preventDefault();
-		closeWindow();
+		closeWindow(1);
 	});
 
 	$("#policy_premium").focusout(function() {
@@ -684,7 +732,7 @@ $(document).ready(function() {
 	$('#policy_entry_form').submit(function(event) {
 			// set current path for listing of policies
 			var path = "/"+$("#policy-edit #edit_path").val();
-			
+			// add
 			if ($("#policy-edit #id").val() == 0) {
                 $.ajax({
 					type: 'POST',
@@ -717,7 +765,7 @@ $(document).ready(function() {
                 });
                 
 			} // end if add
-
+			// edit
 			if ($("#policy-edit #id").val() > 0) {
                 $.ajax({
 					type: 'POST',
@@ -975,9 +1023,11 @@ $(document).ready(function() {
 // =============== BEGIN SUB NAV =============== //
 
 	// ADD NEW
-	$("#add").closest(".sub-button").on("click", function(event) {
+	$("#addbtn").on("click", function(event) {
 		event.preventDefault();
-		openPolicyAddWindow(currcat,0);
+		if (currcat != 'listall') {
+			openPolicyAddWindow(currcat,0);
+		}
 		$("#field").val('');
 	});
 
@@ -986,6 +1036,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
+		$("#addbtn").removeClass("sub-button").addClass("sub-button-disabled");
 		$("#auto").closest(".sub-button").removeAttr("style");
 		$("#fire").closest(".sub-button").removeAttr("style");
 		$("#life").closest(".sub-button").removeAttr("style");
@@ -1020,6 +1071,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
+		$("#addbtn").removeClass("sub-button-disabled").addClass("sub-button");
 		$("#all").closest(".sub-button").removeAttr("style");
 		$("#fire").closest(".sub-button").removeAttr("style");
 		$("#life").closest(".sub-button").removeAttr("style");
@@ -1054,6 +1106,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
+		$("#addbtn").removeClass("sub-button-disabled").addClass("sub-button");
 		$("#all").closest(".sub-button").removeAttr("style");
 		$("#auto").closest(".sub-button").removeAttr("style");
 		$("#life").closest(".sub-button").removeAttr("style");
@@ -1088,6 +1141,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
+		$("#addbtn").removeClass("sub-button-disabled").addClass("sub-button");
 		$("#all").closest(".sub-button").removeAttr("style");
 		$("#auto").closest(".sub-button").removeAttr("style");
 		$("#fire").closest(".sub-button").removeAttr("style");
@@ -1122,6 +1176,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
+		$("#addbtn").removeClass("sub-button-disabled").addClass("sub-button");
 		$("#all").closest(".sub-button").removeAttr("style");
 		$("#auto").closest(".sub-button").removeAttr("style");
 		$("#fire").closest(".sub-button").removeAttr("style");
@@ -1156,6 +1211,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
+		$("#addbtn").removeClass("sub-button-disabled").addClass("sub-button");
 		$("#all").closest(".sub-button").removeAttr("style");
 		$("#auto").closest(".sub-button").removeAttr("style");
 		$("#fire").closest(".sub-button").removeAttr("style");
@@ -1190,6 +1246,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
+		$("#addbtn").removeClass("sub-button-disabled").addClass("sub-button");
 		$("#all").closest(".sub-button").removeAttr("style");
 		$("#auto").closest(".sub-button").removeAttr("style");
 		$("#fire").closest(".sub-button").removeAttr("style");
@@ -1224,6 +1281,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		resetSortLinks(0);
 		$(this).closest(".sub-button").css("background-color","#000000");
+		$("#addbtn").removeClass("sub-button-disabled").addClass("sub-button");
 		$("#all").closest(".sub-button").removeAttr("style");
 		$("#auto").closest(".sub-button").removeAttr("style");
 		$("#fire").closest(".sub-button").removeAttr("style");
