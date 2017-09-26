@@ -120,6 +120,7 @@
 				<input type="text" maxlength="100" style="width:345px;" id="policy_description" name="policy_description" placeholder="Enter a Brief Description" value="" />
 			</div>
 			<div class="policy-entry-field">
+				<div id="policy-premium-cover"></div>
 				Premium<sup>*</sup>: 
 				<span style="font-size:12px;font-weight:bold;">$</span> <input style="width:75px;" type="text" maxlength="20" id="policy_premium" name="policy_premium" placeholder="0.00" value="" />
 				<div class="policy-new-premium">

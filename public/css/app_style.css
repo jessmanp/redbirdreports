@@ -238,6 +238,15 @@ h1 {
 	/* for IE 5.5 - 9 */
 	box-shadow:2px 2px 24px #000000;
 }
+#policy-premium-cover {
+	display:none;
+	position:fixed;
+	margin:0;
+	padding:25px;
+	z-index:93;
+	width:390px;
+	background-color:#ffffff;
+}
 #dashboard-header {
 	width:100%;
 	margin:100px 0 0 0;

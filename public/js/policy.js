@@ -148,6 +148,7 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 		$("#policy_number").val(pnum);
 		$("#policy_dropdown_cover").hide();
 		$(".policy-new-premium").hide();
+		$("#policy-premium-cover").hide();
 		$("#policy_business_type option[value="+busi+"]").prop("selected", true);
 		$("#policy_team_member option[value="+sold+"]").prop("selected", true);
 		$("#policy_source_type option[value="+src+"]").prop("selected", true);
@@ -171,14 +172,17 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 			$("#policy_length_type").html("<option value='3'>N / A</option>");
 			$("#policy_premium").val('0.00');
 			$("#policy_premium").prop("readonly", true);
+			$("#policy-premium-cover").fadeIn();
 		} else if (category == 'loan') {
 			$("#policy_length_type").html("<option value='3'>N / A</option>");
 			$("#policy_premium").val('0.00');
 			$("#policy_premium").prop("readonly", true);
+			$("#policy-premium-cover").fadeIn();
 		} else if (category == 'fund') {
 			$("#policy_length_type").html("<option value='3'>N / A</option>");
 			$("#policy_premium").val('0.00');
 			$("#policy_premium").prop("readonly", true);
+			$("#policy-premium-cover").fadeIn();
 		} else {
 			$("#policy_length_type option[value="+len+"]").prop("selected", true);
 		}
@@ -205,6 +209,7 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 		$("#policy-edit #id").val(id);
 		$("#policy-edit #status").val(stat);
 		$("#policy-add").hide();
+		$("#policy-premium-cover").hide();
 		// only show erase button if policy is written
 		if (stat == 1) {
 			$("#policy-erase").fadeIn();
@@ -238,10 +243,13 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 				$("#policy_sub_category").append($("#captionshealth").val());
 			} else if (cat == 58) {
 				$("#policy_sub_category").append($("#captionsdeposit").val());
+				$("#policy-premium-cover").fadeIn();
 			} else if (cat == 50) {
 				$("#policy_sub_category").append($("#captionsloan").val());
+				$("#policy-premium-cover").fadeIn();
 			} else if (cat == 70) {
 				$("#policy_sub_category").append($("#captionsfund").val());
+				$("#policy-premium-cover").fadeIn();
 			}
 		} else {
 			$("#policy_type option[value="+catp+"]").prop("selected", true);
@@ -256,10 +264,13 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 				$("#policy_sub_category").append($("#captionshealth").val());
 			} else if (catp == 58) {
 				$("#policy_sub_category").append($("#captionsdeposit").val());
+				$("#policy-premium-cover").fadeIn();
 			} else if (catp == 50) {
 				$("#policy_sub_category").append($("#captionsloan").val());
+				$("#policy-premium-cover").fadeIn();
 			} else if (catp == 70) {
 				$("#policy_sub_category").append($("#captionsfund").val());
+				$("#policy-premium-cover").fadeIn();
 			}
 		}
 		if (cat != 0) {
@@ -340,7 +351,7 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 		if (stat == 1) {
 			// set radio btn
 			$("#status_pending").prop("checked", true);
-			// diable premium
+			// disable premium
 			$("#policy_premium").prop("readonly", true);
 			$(".policy-new-premium").hide();
 			$("#status_canceled").prop("disabled", true);
@@ -354,7 +365,7 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 		if (stat == 3) {
 			// set radio btn
 			$("#status_declined").prop("checked", true);
-			// diable premium
+			// disable premium
 			$("#policy_premium").prop("readonly", true);
 			$(".policy-new-premium").hide();
 			$("#status_canceled").prop("disabled", true);
@@ -362,7 +373,7 @@ function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,
 		if (stat == 4) {
 			// set radio btn
 			$("#status_canceled").prop("checked", true);
-			// diable premium
+			// disable premium
 			$("#policy_premium").prop("readonly", true);
 			$(".policy-new-premium").hide();
 			$("#status_canceled").prop("disabled", true);
@@ -690,12 +701,18 @@ $(document).ready(function() {
 	$("#policy-save").on("click", function(event) {
 		event.preventDefault();
 		$("#written_premium").text($("#policy_premium_org").val());
-		// check status and do issued premium popup
-		if ($("#policy-edit #status").val() == 1 && $("#policy-edit input[name='policy_status']:checked").val() == 2) {
-			$("#policy-issued-premium").fadeIn();
-			$("#issued-premium").fadeIn();
-		} else {
+		var premcat = currcat.replace(/list/g, "");
+		// check for bank policies and skip premium popup
+		if (premcat == 'deposit' || premcat == 'loan' || premcat == 'fund') {
 			$('#policy_entry_form').submit();
+		} else {
+			// check status and do issued premium popup
+			if ($("#policy-edit #status").val() == 1 && $("#policy-edit input[name='policy_status']:checked").val() == 2) {
+				$("#policy-issued-premium").fadeIn();
+				$("#issued-premium").fadeIn();
+			} else {
+				$('#policy_entry_form').submit();
+			}
 		}
 	});
 	
