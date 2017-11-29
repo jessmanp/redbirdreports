@@ -77,6 +77,13 @@ h1 {
 	/* for IE 5.5 - 9 */
 	box-shadow:2px 2px 24px #000000;
 }
+#loading {
+	position:absolute;
+	z-index:10;
+	top:475px;
+	left:0px;
+	width:100%;
+}
 .agency-setup {
 	display:none;
 	background-color:#000000;
@@ -1192,6 +1199,14 @@ input[type=radio]:not(old):checked + label > span > span{
 	cursor:pointer;
 }
 .policy-listing-button-note {
+	margin:5px 0 5px 0;
+	vertical-align:middle;
+	width:28px;
+	height:28px;
+	border:0;
+	cursor:pointer;
+}
+.policy-listing-button-delete {
 	margin:5px 0 5px 0;
 	vertical-align:middle;
 	width:28px;

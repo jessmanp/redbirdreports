@@ -151,6 +151,8 @@
 				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-renewal-action" data-renewal="<?php echo $policy->id."','".$policy->first."','".$policy->last."','".$policy->description; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button-edit" alt="Renew" /></a></div>
 <?php } elseif ($policy->status == 4) { ?>
 				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-reinstate-action" data-id="<?php echo $policy->id; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button-edit" alt="Reinstate" /></a></div>
+<?php } elseif ($policy->status == 3) { ?>
+				<div class="col" style="width:4%;<?php echo $addStyle; ?>">&nbsp;</div>
 <?php } else { ?>
 				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-edit-action" data-info="<?php echo $policy->id."','".$policy->renewal."','".$policy->first."','".$policy->last."','".$policy->description."','".$policy->category_id."-".$policy->cat_pid."','".$policy->premium."','".$policy->business_type_id."','".$policy->user_id."','".$policy->source_type_id."','".$policy->length_type_id."','".$policy->notes."','".$policy->policy_number."','".$policy->date_written."','".$policy->date_issued."','".$policy->date_effective."','".$policy->date_canceled."','".$policy->zip_code."','".$policy->status; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button-edit" alt="Edit" /></a></div>
 <?php } ?>
@@ -316,6 +318,8 @@ $(document).ready(function() {
 	});
 
 // =============== END LISTING ACTIONS =============== //
+
+	$("#loading").fadeOut("fast");
 
 });
 

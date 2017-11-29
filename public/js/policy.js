@@ -31,7 +31,7 @@ function closeModal() {
 var policyWindowOpen = 0;
 // OPEN/CLOSE POPUP WINDOW
 function openWindow(currcat,type,message,id,text,pnum,fname,lname,desc,prem,zip,cat,busi,sold,src,len,dw,di,de,dc,renewal,stat) {
-		
+
 	$("#policy-window").hide();
 
 	var winh = $(window).height();
@@ -523,8 +523,8 @@ function resetSortLinks(searchSubmit) {
 }
 
 // ADD POLICY
-function openPolicyAddWindow(currcat,id) {
-	openWindow(currcat,'add','Add New',id,'','','','','','','',0,0,0,0,0,'','','','',0,1);
+function openPolicyAddWindow(currcat,id,suid) {
+	openWindow(currcat,'add','Add New',id,'','','','','','','',0,0,suid,0,0,'','','','',0,1);
 }
 
 // EDIT POLICY
@@ -565,6 +565,8 @@ function doPolicyReinstate(id) {
 
 // SET DATE PICKERS AND LOAD LISTING
 function loadListing(currcat){
+		$("#listing-table").html("");
+		loadSpinner();
 		//$("#datepick1").val(setClientDate('first'));
 		//$("#datepick2").val(setClientDate('last'));
 		$("#field").val('');
@@ -1043,7 +1045,7 @@ $(document).ready(function() {
 	$("#addbtn").on("click", function(event) {
 		event.preventDefault();
 		if (currcat != 'listall') {
-			openPolicyAddWindow(currcat,0);
+			openPolicyAddWindow(currcat,0,$("#suid").val());
 		}
 		$("#field").val('');
 	});
@@ -1350,6 +1352,8 @@ $(document).ready(function() {
 		}
 		var path = "/app/policies/"+currcat+"/allwritten/"+dateRange+"/"+phrase;
 		//alert(path);
+		$("#listing-table").html("");
+		loadSpinner();
 		$("#policy-content").load(path);
 	});
 
@@ -1371,6 +1375,8 @@ $(document).ready(function() {
 		}
 		var path = "/app/policies/"+currcat+"/issued/"+dateRange+"/"+phrase;
 		//alert(path);
+		$("#listing-table").html("");
+		loadSpinner();
 		$("#policy-content").load(path);
 	});
 	
@@ -1392,6 +1398,8 @@ $(document).ready(function() {
 		}
 		var path = "/app/policies/"+currcat+"/notissued/"+dateRange+"/"+phrase;
 		//alert(path);
+		$("#listing-table").html("");
+		loadSpinner();
 		$("#policy-content").load(path);
 	});
 
@@ -1413,6 +1421,8 @@ $(document).ready(function() {
 		}
 		var path = "/app/policies/"+currcat+"/pendingrenewal/"+dateRange+"/"+phrase;
 		//alert(path);
+		$("#listing-table").html("");
+		loadSpinner();
 		$("#policy-content").load(path);
 	});
 
@@ -1434,6 +1444,8 @@ $(document).ready(function() {
 		}
 		var path = "/app/policies/"+currcat+"/allcanceled/"+dateRange+"/"+phrase;
 		//alert(path);
+		$("#listing-table").html("");
+		loadSpinner();
 		$("#policy-content").load(path);
 	});
 
@@ -1808,6 +1820,8 @@ $(document).ready(function() {
 		$("#datepick2").val('');
 		$("#field").val('');
 		$(".date-pickers").html("All Time:");
+		$("#listing-table").html("");
+		loadSpinner();
 		$("#policy-content").load("/app/policies/"+currcat);
 		// clear any sorting that might be clicked
 		resetSortLinks(1);
@@ -1839,6 +1853,8 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("Today:");
+		$("#listing-table").html("");
+		loadSpinner();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -1869,6 +1885,8 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("This Week:");
+		$("#listing-table").html("");
+		loadSpinner();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -1899,6 +1917,8 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("Last Week:");
+		//$("#loading").fadeIn("fast");
+		loadSpinner();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -1929,6 +1949,8 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("This Month:");
+		$("#listing-table").html("");
+		loadSpinner();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -1959,6 +1981,8 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("Last Month:");
+		$("#listing-table").html("");
+		loadSpinner();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -1989,6 +2013,8 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("This Quarter:");
+		$("#listing-table").html("");
+		loadSpinner();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -2019,6 +2045,8 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("1st Quarter:");
+		$("#listing-table").html("");
+		loadSpinner();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -2049,6 +2077,8 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("2nd Quarter:");
+		$("#listing-table").html("");
+		loadSpinner();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -2079,6 +2109,8 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("3rd Quarter:");
+		$("#listing-table").html("");
+		loadSpinner();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -2109,6 +2141,8 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("4th Quarter:");
+		$("#listing-table").html("");
+		loadSpinner();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -2139,6 +2173,8 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("Last 6 Mos.:");
+		$("#listing-table").html("");
+		loadSpinner();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -2169,6 +2205,8 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("This Year:");
+		$("#listing-table").html("");
+		loadSpinner();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -2199,6 +2237,8 @@ $(document).ready(function() {
 		$("#datepick1").val(sdate);
 		$("#datepick2").val(edate);
 		$(".date-pickers").html("Last Year:");
+		$("#listing-table").html("");
+		loadSpinner();
 		//$("#policy-content").load("/app/policies/"+currcat+"/default/"+dateRange);
 		$("#search_text_form").submit();
    		$("#pre-dates-container").toggle();
@@ -2222,6 +2262,8 @@ $(document).ready(function() {
 
 	$("#search_text_form").submit(function(event) {
 		event.preventDefault();
+		$("#listing-table").html("");
+		loadSpinner();
 		// set path even if date is blank
 		var path = "/app/policies/"+currcat+"/default/any/";
 			

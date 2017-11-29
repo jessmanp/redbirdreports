@@ -42,6 +42,7 @@
 		<div id="search-area">
 			<button id="pre-dates">Predefined Dates&nbsp;&nbsp;<img src="/public/img/btn_dates.png" class="search-btn-icon" alt="" /></button>
 			<form id="search_text_form" name="search_text_form">
+			<input type="hidden" id="suid" name="suid" value="<?=$_SESSION['user_id'];?>" />
 			<div id="pre-dates-container">
 				<div class="filter-dates">
 				<strong>Search Selected Date(s)</strong><br />
@@ -122,4 +123,5 @@
 			
 
 </div>
+<div id="loading"></div>
 <!-- end sub header area -->

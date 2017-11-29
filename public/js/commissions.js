@@ -247,6 +247,7 @@ $(document).ready(function() {
 			openModal('info',msg);
 		}
 		event.preventDefault();
+		loadUserData($("#commission_employees option:selected").val());
 	});
 	
 	// LOAD PERIOD ON CHANGE
@@ -268,6 +269,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		// load date ranges based on year selected
 		populateDates($("#the_frequency").val(),$(this).val());
+		loadUserData($("#commission_employees option:selected").val());
 	});
 	
 	$("#commission_period").on("change", function(event) {
@@ -734,6 +736,7 @@ $(document).ready(function() {
 			openModal('info',msg);
 		}
 		event.preventDefault();
+		loadUserData($("#commission_employees option:selected").val());
 	});
 	
 	// UPDATE SPECIAL OTHER
@@ -774,6 +777,7 @@ $(document).ready(function() {
 			openModal('info',msg);
 		}
 		event.preventDefault();
+		loadUserData($("#commission_employees option:selected").val());
 	});
 	
 	// do submit action when search button is clicked

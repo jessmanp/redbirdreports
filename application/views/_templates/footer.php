@@ -6,7 +6,6 @@
 </div>
 <!-- Scripts -->
 <script src="<?php echo URL; ?>public/js/retina.js"></script>
-<script src="<?php echo URL; ?>public/js/spin.js"></script>
 <?php if (isset($sectionScript)) { ?>
 <script src="<?php echo URL; ?>public/js/<?php echo $sectionScript; ?>"></script>
 <?php } ?>

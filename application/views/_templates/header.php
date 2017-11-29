@@ -20,6 +20,7 @@
 <!-- Chart.js -->
 <script src="<?php echo URL; ?>/public/js/chart.js"></script>
 <!-- JavaScript -->
+<script src="<?php echo URL; ?>public/js/spin.js"></script>
 <script src="<?php echo URL; ?>public/js/global.js"></script>
 <script src="<?php echo URL; ?>public/js/application.js"></script>
 <script src="<?php echo URL; ?>public/js/uploadfile.js"></script>

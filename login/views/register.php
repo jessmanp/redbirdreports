@@ -23,13 +23,13 @@
 	<input type="hidden" id="register" name="register" value="1" />
 	
 	<label for="user_first_name">First Name<span class="small">*Required</span></label>
-    <input id="user_first_name" type="text" pattern="[a-zA-Z0-9]{2,64}" name="user_first_name" placeholder="Enter First Name" value="<?php if (isset($registration->temp_user_first_name)) { echo $registration->temp_user_first_name; } ?>" required />
+    <input id="user_first_name" type="text" pattern="[a-zA-Z0-9]{2,64}" oninvalid="setCustomValidity('You must use only letters.')" name="user_first_name" placeholder="Enter First Name" value="<?php if (isset($registration->temp_user_first_name)) { echo $registration->temp_user_first_name; } ?>" required />
 	
 	<label for="user_last_name">Last Name<span class="small">*Required</span></label>
-    <input id="user_last_name" type="text" pattern="[a-zA-Z0-9]{2,64}" name="user_last_name" placeholder="Enter Last Name" value="<?php if (isset($registration->temp_user_last_name)) { echo $registration->temp_user_last_name; } ?>" required />
+    <input id="user_last_name" type="text" pattern="[a-zA-Z0-9]{2,64}"  oninvalid="setCustomValidity('You must use only letters.')" name="user_last_name" placeholder="Enter Last Name" value="<?php if (isset($registration->temp_user_last_name)) { echo $registration->temp_user_last_name; } ?>" required />
 	
     <label for="user_name">Username<span class="small">*Required</span></label>
-    <input id="user_name" type="text" pattern="[a-zA-Z0-9]{2,64}" name="user_name" placeholder="Enter Username" value="<?php if (isset($registration->temp_user_name)) { echo $registration->temp_user_name; } ?>" required />
+    <input id="user_name" type="text" pattern="[a-zA-Z0-9]{2,64}" oninvalid="setCustomValidity('You must use only letters or numbers and at least 6 characters total.')" name="user_name" placeholder="Enter Username" value="<?php if (isset($registration->temp_user_name)) { echo $registration->temp_user_name; } ?>" required />
 	
     <label for="user_email">Email<span class="small">*Valid e-mail only</span></label>
     <input id="user_email" type="email" name="user_email" placeholder="Enter Email" value="<?php if (isset($registration->temp_user_email)) { echo $registration->temp_user_email; } ?>" required />
@@ -38,10 +38,10 @@
     <input id="user_email_verfiy" type="email" name="user_email_verfiy" placeholder="Enter Email Again" value="<?php if (isset($registration->temp_user_email)) { echo $registration->temp_user_email; } ?>" required />
 
     <label for="user_password_new">Password<span class="small">*Minimum 6 chars</span></label>
-    <input id="user_password_new" type="password" name="user_password_new" pattern=".{6,}" placeholder="Enter Password" required autocomplete="off" />
+    <input id="user_password_new" type="password" name="user_password_new" pattern=".{6,}" oninvalid="setCustomValidity('You must use at least 6 characters total.')" placeholder="Enter Password" required autocomplete="off" />
 
     <label for="user_password_repeat">Password<span class="small">*Required</span></label>
-    <input id="user_password_repeat" type="password" name="user_password_repeat" pattern=".{6,}" placeholder="Enter Password Again" required autocomplete="off" />
+    <input id="user_password_repeat" type="password" name="user_password_repeat" pattern=".{6,}" oninvalid="setCustomValidity('You must use at least 6 characters total.')" placeholder="Enter Password Again" required autocomplete="off" />
 	
 	<br /><img id="captcha-image" src="tools/showCaptcha.php" alt="captcha" />
 	<div style="clear:both;"></div>

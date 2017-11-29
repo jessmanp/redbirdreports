@@ -1,3 +1,4 @@
+<!-- begin content area -->
 <div id="listing-table" class="table-container">
 <?php
 	$url = filter_var($_GET['url'], FILTER_SANITIZE_URL);
@@ -147,6 +148,8 @@
 				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-renewal-action" data-renewal="<?php echo $policy->id."','".$policy->first."','".$policy->last."','".$policy->description; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button-edit" alt="Renew" /></a></div>
 <?php } elseif ($policy->status == 4) { ?>
 				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-reinstate-action" data-id="<?php echo $policy->id; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button-edit" alt="Reinstate" /></a></div>
+<?php } elseif ($policy->status == 3) { ?>
+				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-delete-action" data-delete="<?php echo $policy->id."','".$policy->first."','".$policy->last."','".$policy->description; ?>"><img src="/public/img/policy_delete_btn.png" class="policy-listing-button-delete" alt="Delete" /></a></div>
 <?php } else { ?>
 				<div class="col" style="width:4%;<?php echo $addStyle; ?>"><a class="policy-edit-action" data-info="<?php echo $policy->id."','".$policy->renewal."','".$policy->first."','".$policy->last."','".$policy->description."','".$policy->category_id."-".$policy->cat_pid."','".$policy->premium."','".$policy->business_type_id."','".$policy->user_id."','".$policy->source_type_id."','".$policy->length_type_id."','".$policy->notes."','".$policy->policy_number."','".$policy->date_written."','".$policy->date_issued."','".$policy->date_effective."','".$policy->date_canceled."','".$policy->zip_code."','".$policy->status; ?>"><img src="/public/img/policy_edit_btn.png" class="policy-listing-button-edit" alt="Edit" /></a></div>
 <?php } ?>
@@ -288,11 +291,16 @@ $(document).ready(function() {
 	if (Retina.isRetina()) {
 		editimg = "/public/img/policy_edit_btn@2x.png";
 		noteimg = "/public/img/policy_note_btn@2x.png";
+		delimg = "/public/img/policy_delete_btn@2x.png";
 		$('.policy-listing-button-edit').attr('src',editimg);
 		$('.policy-listing-button-note').attr('src',noteimg);
+		$('.policy-listing-button-delete').attr('src',delimg);
 	}
+	
+	$("#loading").fadeOut("fast");
 
 });
 
 /* ]]> */
 </script>
+<!-- end content area -->
